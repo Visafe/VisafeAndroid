@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.vn.visafe_android.model.WorkspaceGroupData" />
+
+        <variable
+            name="data"
+            type="WorkspaceGroupData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <View
+            android:enabled="@{data.isSelected}"
+            android:background="@drawable/bg_menu_group"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="@dimen/_0dp"/>
+
+        <TextView
+            android:id="@+id/tvGroup"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="@dimen/_14dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:layout_marginBottom="@dimen/_10dp"
+            android:background="@drawable/bg_stroke_2dp"
+            android:enabled="@{data.isSelected}"
+            android:padding="@dimen/_2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivGroup"
+            android:layout_width="@dimen/_50dp"
+            android:layout_height="@dimen/_50dp"
+            android:src="@drawable/ic_group"
+            app:layout_constraintBottom_toBottomOf="@id/tvGroup"
+            app:layout_constraintEnd_toEndOf="@id/tvGroup"
+            app:layout_constraintStart_toStartOf="@id/tvGroup"
+            app:layout_constraintTop_toTopOf="@id/tvGroup"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tvNameGroup"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10dp"
+            android:layout_marginTop="@dimen/_2dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:maxLines="2"
+            android:text="@{data.name}"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintEnd_toStartOf="@id/tvLevel"
+            app:layout_constraintStart_toEndOf="@id/tvGroup"
+            app:layout_constraintTop_toTopOf="@id/tvGroup"
+            tools:text="Fina Group" />
+
+        <TextView
+            android:id="@+id/tvAmoutGroup"
+            set_amout_group="@{data.amoutGroupChild}"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:textColor="@color/color_808080"
+            android:textSize="@dimen/text_size_14sp"
+            app:layout_constraintEnd_toEndOf="@id/tvNameGroup"
+            app:layout_constraintStart_toStartOf="@id/tvNameGroup"
+            app:layout_constraintTop_toBottomOf="@id/tvNameGroup"
+            tools:text="5 nhóm" />
+
+        <ImageView
+            show_more_action="@{data.isSelected()}"
+            android:id="@+id/ivMore"
+            android:layout_width="@dimen/_24dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_16dp"
+            android:src="@drawable/ic_more_horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/tvGroup"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvGroup"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tvLevel"
+            set_status="@{data.status}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_44dp"
+            android:background="@drawable/bg_radius_4dp"
+            android:backgroundTint="@color/color_F9F1E2"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:paddingStart="@dimen/_8dp"
+            android:paddingTop="@dimen/_4dp"
+            android:paddingEnd="@dimen/_8dp"
+            android:paddingBottom="@dimen/_4dp"
+            android:textColor="@color/color_FFB31F"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvGroup"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvGroup"
+            tools:text="Quản trị" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
