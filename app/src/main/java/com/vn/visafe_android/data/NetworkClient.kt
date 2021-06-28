@@ -33,7 +33,7 @@ class NetworkClient {
         return provideApiService(provideRetrofit(provideHttpClientGen2FA(context)))
     }
 
-    fun clientWithhoutRootUrl(context: Context, url: String): ApiService {
+    fun clientWithoutRootUrl(context: Context, url: String): ApiService {
         return provideApiService(provideRetrofit(provideHttpClient(context), url))
 
     }

@@ -58,6 +58,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    //Rx Binding
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
     implementation("androidmads.library.qrgenearator:QRGenearator:1.0.3")
 
     //glide
@@ -75,4 +77,5 @@ dependencies {
 
     //Cardview
     implementation "androidx.cardview:cardview:1.0.0"
+    implementation 'com.rengwuxian.materialedittext:library:2.1.4'
 }

@@ -17,6 +17,7 @@
         android:layout_height="@dimen/_30sdp"
         android:layout_marginStart="@dimen/_30sdp"
         android:layout_marginTop="@dimen/_8sdp"
+        android:padding="@dimen/_6sdp"
         android:src="@drawable/ic_arrow_left_black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,28 +32,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnBack" />
 
-    <com.google.android.material.textfield.TextInputEditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/edtInputEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_30sdp"
         android:layout_marginEnd="@dimen/_30sdp"
+        android:hint="Email *"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/btnBack"
-        app:layout_constraintTop_toBottomOf="@+id/imgLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/imgLogo"
+        app:met_clearButton="true"
+        app:met_floatingLabel="none"
+        app:met_primaryColor="@color/black"
+        app:met_textColorHint="@color/black" />
 
-    <com.google.android.material.textfield.TextInputEditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/edtInputPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_30sdp"
         android:layout_marginEnd="@dimen/_30sdp"
+        android:hint="Mật khẩu *"
         android:inputType="textPassword"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/btnBack"
-        app:layout_constraintTop_toBottomOf="@+id/edtInputEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/edtInputEmail"
+        app:met_clearButton="false"
+        app:met_floatingLabel="none"
+        app:met_primaryColor="@color/black"
+        app:met_textColorHint="@color/black" />
 
     <ImageView
         android:id="@+id/btnShowHidePassword"
@@ -63,17 +74,22 @@
         app:layout_constraintEnd_toEndOf="@+id/edtInputPassword"
         app:layout_constraintTop_toTopOf="@+id/edtInputPassword" />
 
-    <com.google.android.material.textfield.TextInputEditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/edtInputPasswordAgain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_30sdp"
         android:layout_marginEnd="@dimen/_30sdp"
+        android:hint="Nhập lại mật khẩu *"
         android:inputType="textPassword"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/btnBack"
-        app:layout_constraintTop_toBottomOf="@+id/edtInputPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/edtInputPassword"
+        app:met_clearButton="false"
+        app:met_floatingLabel="none"
+        app:met_primaryColor="@color/black"
+        app:met_textColorHint="@color/black" />
 
     <ImageView
         android:id="@+id/btnShowHidePasswordAgain"

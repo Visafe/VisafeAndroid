@@ -16,14 +16,13 @@
     <string name="support_title">Hỗ trợ</string>
     <string name="introduction_title">Hướng dẫn sử dụng</string>
     <string name="add_workspace">Thêm Workspace</string>
-    <string name="drawer_open"
-        description="Hint for visually impaired users to access the menu.">
+    <string name="drawer_open" description="Hint for visually impaired users to access the menu.">
     Open navigation drawer
   </string>
 
-    <string name="drawer_close"
-        description="Hint for visually impaired users to leave the menu.">
+    <string name="drawer_close" description="Hint for visually impaired users to leave the menu.">
     Close navigation drawer
   </string>
     <string name="ncsc_workspace">NCSC Workspace</string>
+    <string name="mask_character">\u2022</string>
 </resources>

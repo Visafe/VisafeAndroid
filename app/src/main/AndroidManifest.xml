@@ -16,7 +16,6 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity android:name=".ui.MainActivity" />
 
         <activity android:name=".function.LoginActivity">
             <intent-filter>
@@ -27,8 +26,17 @@
         </activity>
 
         <activity
+            android:name=".ui.MainActivity"
+            android:screenOrientation="fullSensor" />
+
+        <activity
             android:name=".function.RegisterActivity"
             android:screenOrientation="fullSensor" />
+
+        <activity
+            android:name=".function.forgotpassword.ForgotPasswordActivity"
+            android:screenOrientation="fullSensor"
+            android:windowSoftInputMode="adjustResize" />
 
     </application>
 

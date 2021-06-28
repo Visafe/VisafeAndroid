@@ -8,6 +8,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 
 abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     protected lateinit var binding: T
@@ -30,5 +31,17 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         initView()
+    }
+
+    open fun backFragment() {
+        activity?.let {
+            (it as BaseActivity).hideKeyboard(it)
+            val manager: FragmentManager = it.supportFragmentManager ?: return
+            if (manager.backStackEntryCount > 1) {
+                manager.popBackStack()
+            } else {
+                it.finish()
+            }
+        }
     }
 }
