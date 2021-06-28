@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity android:name=".MainActivity" />
+        <activity android:name=".ui.MainActivity" />
 
         <activity android:name=".function.LoginActivity">
             <intent-filter>
