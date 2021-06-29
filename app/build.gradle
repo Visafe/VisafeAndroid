@@ -78,4 +78,7 @@ dependencies {
     //Cardview
     implementation "androidx.cardview:cardview:1.0.0"
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+
+    // For go-tun2socks
+    implementation project(":tun2socks")
 }
