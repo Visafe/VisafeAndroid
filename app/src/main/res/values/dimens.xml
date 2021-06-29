@@ -29,6 +29,7 @@
     <dimen name="text_size_26sp">26sp</dimen>
     <dimen name="text_size_24sp">24sp</dimen>
     <dimen name="text_size_28sp">28sp</dimen>
+    <dimen name="text_size_32sp">32sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="app_bar_height">240dp</dimen>
     <dimen name="text_margin">16dp</dimen>
@@ -51,6 +52,7 @@
     <dimen name="_88dp">88dp</dimen>
     <dimen name="_70dp">70dp</dimen>
     <dimen name="_110dp">110dp</dimen>
+    <dimen name="_120dp">120dp</dimen>
     <dimen name="_22dp">22dp</dimen>
     <dimen name="_220dp">220dp</dimen>
     <dimen name="_122dp">122dp</dimen>

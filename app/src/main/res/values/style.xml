@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <!-- Customize your theme here. -->
+        <item name="material_dialog_background">#FFFFFF</item>
+        <item name="material_dialog_title_text_color">#000000</item>
+        <item name="material_dialog_message_text_color">#5F5F5F</item>
+        <item name="material_dialog_positive_button_text_color">#FFFFFF</item>
+    </style>
+
+    <declare-styleable name="MaterialDialog">
+        <attr format="color|reference" name="material_dialog_background"/>
+
+        <attr format="color|reference" name="material_dialog_title_text_color"/>
+        <attr format="color|reference" name="material_dialog_message_text_color"/>
+
+        <attr format="color|reference" name="material_dialog_positive_button_text_color"/>
+        <attr format="color|reference" name="material_dialog_positive_button_color"/>
+
+        <attr format="color|reference" name="material_dialog_negative_button_text_color"/>
+    </declare-styleable>
+
+    <style name="TabLayoutCulture" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/text_size_13sp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+        <item name="android:textColor">@color/color_111111</item>
+        <item name="textAllCaps">false</item>
+    </style>
+</resources>

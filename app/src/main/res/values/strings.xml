@@ -16,14 +16,20 @@
     <string name="support_title">Hỗ trợ</string>
     <string name="introduction_title">Hướng dẫn sử dụng</string>
     <string name="add_workspace">Thêm Workspace</string>
-    <string name="drawer_open"
-        description="Hint for visually impaired users to access the menu.">
+    <string name="drawer_open" description="Hint for visually impaired users to access the menu.">
     Open navigation drawer
   </string>
 
-    <string name="drawer_close"
-        description="Hint for visually impaired users to leave the menu.">
+    <string name="drawer_close" description="Hint for visually impaired users to leave the menu.">
     Close navigation drawer
   </string>
     <string name="ncsc_workspace">NCSC Workspace</string>
+    <string name="quan_tri">Quản trị</string>
+    <string name="protect">Bảo vệ</string>
+    <string name="setting">Cài đặt</string>
+    <string name="no_register">Chưa đăng ký</string>
+    <string name="register_device">Đăng ký thiết bị</string>
+    <string name="update_pin">Cập nhật mã PIN bảo vệ</string>
+    <string name="share_app">Chia sẻ ứng dụng</string>
+    <string name="infomation_product">Thông tin sản phẩm</string>
 </resources>

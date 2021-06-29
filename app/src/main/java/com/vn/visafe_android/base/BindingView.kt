@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.vn.visafe_android.R
 import com.vn.visafe_android.model.StatusGroup
+import com.vn.visafe_android.utils.screenWidth
 import com.vn.visafe_android.utils.setBackgroundTint
 
 object BindingView {
@@ -64,4 +65,12 @@ object BindingView {
         }
     }
 
+    @JvmStatic
+    @BindingAdapter(value = ["set_progress"], requireAll = false)
+    fun setProgress(view: View, progress: Int) {
+        val param = view.layoutParams
+        val screenWidth = screenWidth() / 2
+        param.width = progress * screenWidth / 100
+        view.layoutParams = param
+    }
 }
