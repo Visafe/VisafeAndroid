@@ -36,6 +36,20 @@ class OverViewFragment : BaseFragment<FragmentOverViewBinding>() {
         binding.rvAppMost.adapter = appAdapter
 
         val groupAdapter = GroupListAdapter(createGroupList())
+        groupAdapter.onClickGroup = object : GroupListAdapter.OnClickGroup {
+            override fun openGroup(data: GroupData) {
+
+            }
+
+            override fun createGroup() {
+
+            }
+
+            override fun onClickMore() {
+
+            }
+
+        }
         binding.rvGroup.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.rvGroup.adapter = groupAdapter
     }
@@ -68,10 +82,10 @@ class OverViewFragment : BaseFragment<FragmentOverViewBinding>() {
 
     private fun createGroupList() : List<GroupData> {
         val list : ArrayList<GroupData> = ArrayList()
-        list.add(GroupData("Phòng 1: Marketing", 80, 15))
-        list.add(GroupData("Phòng 2: CNTT", 60, 14))
-        list.add(GroupData("Phòng 3: Kinh tế - Đối ngoại", 20, 13))
-        list.add(GroupData("Phòng 4: Chuyên gia", 20, 13))
+        list.add(GroupData("Phòng 1: Marketing", 80, 15, null))
+        list.add(GroupData("Phòng 2: CNTT", 60, 14, null))
+        list.add(GroupData("Phòng 3: Kinh tế - Đối ngoại", 20, 13, null))
+        list.add(GroupData("Phòng 4: Chuyên gia", 20, 13, null))
         return list
     }
 }

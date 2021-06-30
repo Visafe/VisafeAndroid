@@ -32,4 +32,17 @@
     <string name="update_pin">Cập nhật mã PIN bảo vệ</string>
     <string name="share_app">Chia sẻ ứng dụng</string>
     <string name="infomation_product">Thông tin sản phẩm</string>
+    <string name="create_group">Tạo nhóm mới</string>
+    <string name="thiet_lap_bao_mat">Thiết lập bảo mật</string>
+    <string name="thong_ke_chung">Thống kê chung</string>
+    <string name="in_day">Trong ngày</string>
+    <string name="truy_cap_bao_ve">Lượt truy cập \nđược bảo vệ</string>
+    <string name="quang_cao_da_chan">Quảng cáo\nđã chặn</string>
+    <string name="ma_doc_da_chan">Mã độc, lừa đảo \nđã chặn</string>
+    <string name="noi_dung_da_chan">Nội dung nhạy cảm \nđã chặn</string>
+    <string name="content_most_title">Nội dung dùng nhiều</string>
+    <string name="app_most_title">Ứng dụng dùng nhiều</string>
+    <string name="devices_most_title">Thiết bị dùng nhiều</string>
+    <string name="group_list_title">Danh sách nhóm</string>
+    <string name="create_group_title">Tạo nhóm</string>
 </resources>

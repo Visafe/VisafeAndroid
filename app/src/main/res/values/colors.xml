@@ -31,4 +31,6 @@
     <color name="color_F1F1F1">#F1F1F1</color>
     <color name="color_60_111111">#99111111</color>
     <color name="color_DDDDDD">#DDDDDD</color>
+    <color name="gray">#E5E5E5</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

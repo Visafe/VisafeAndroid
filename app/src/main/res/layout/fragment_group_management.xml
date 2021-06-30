@@ -7,11 +7,13 @@
         android:layout_height="match_parent"
         tools:context=".ui.home.administrator.GroupManagementFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvGroup"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Quản lý nhóm" />
+            android:clipToPadding="false"
+            android:padding="@dimen/_16dp"
+            tools:listitem="@layout/item_group" />
 
     </FrameLayout>
 </layout>

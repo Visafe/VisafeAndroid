@@ -17,6 +17,15 @@
         android:layout_marginTop="@dimen/_8dp"
         android:background="@drawable/bg_stroke_1dp">
 
+        <ImageView
+            android:layout_marginStart="@dimen/_16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/ivGroup"
+            android:layout_width="@dimen/_48dp"
+            android:layout_height="@dimen/_48dp"/>
+
         <TextView
             android:id="@+id/tvName"
             android:maxLines="2"
@@ -28,7 +37,7 @@
             android:text="@{data.name}"
             android:textColor="@color/color_222222"
             android:textSize="@dimen/text_size_16sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivGroup"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/ivMore"
             tools:text="Tên group" />
