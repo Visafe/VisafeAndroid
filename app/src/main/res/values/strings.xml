@@ -160,6 +160,7 @@
     <string name="mask_character">\u2022</string>
 
     <string name="quan_tri">Quản trị</string>
+    <string name="thanh_vien">Thành viên</string>
     <string name="protect">Bảo vệ</string>
     <string name="setting">Cài đặt</string>
     <string name="no_register">Chưa đăng ký</string>
@@ -182,4 +183,5 @@
     <string name="create_group_title">Tạo nhóm</string>
     <string name="phat_trien_boi">Phát triển bởi</string>
     <string name="you_protect">Bạn đã được bảo vệ</string>
+    <string name="bam_de_bat">Bấm để bật tính năng bảo vệ</string>
 </resources>

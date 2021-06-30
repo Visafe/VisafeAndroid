@@ -60,7 +60,7 @@
 
         <activity
             android:name=".ui.authentication.LoginActivity"
-            android:screenOrientation="fullSensor">
+            android:screenOrientation="portrait">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -71,11 +71,11 @@
 
         <activity
             android:name=".ui.authentication.RegisterActivity"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.authentication.forgotpassword.ForgotPasswordActivity"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
     </application>

@@ -14,9 +14,12 @@ import com.vn.visafe_android.data.BaseCallback
 import com.vn.visafe_android.data.BaseResponse
 import com.vn.visafe_android.data.NetworkClient
 import com.vn.visafe_android.databinding.ActivityLoginBinding
-import com.vn.visafe_android.model.LoginRequest
+import com.vn.visafe_android.model.request.LoginRequest
+import com.vn.visafe_android.model.response.LoginResponse
 import com.vn.visafe_android.ui.authentication.forgotpassword.ForgotPasswordActivity
 import com.vn.visafe_android.ui.MainActivity
+import com.vn.visafe_android.utils.PreferenceKey
+import com.vn.visafe_android.utils.SharePreferenceKeyHelper
 import com.vn.visafe_android.utils.isValidEmail
 import retrofit2.Call
 import retrofit2.Response
@@ -66,20 +69,26 @@ class LoginActivity : BaseActivity() {
         loginRequest.password = viewBinding.edtInputPassword.text.toString()
         val client = NetworkClient()
         val call = client.clientWithoutToken(context = applicationContext).doLogin(loginRequest)
-        call.enqueue(BaseCallback(this@LoginActivity, object : retrofit2.Callback<BaseResponse> {
+        call.enqueue(BaseCallback(this@LoginActivity, object : retrofit2.Callback<LoginResponse> {
             override fun onResponse(
-                call: Call<BaseResponse>,
-                response: Response<BaseResponse>
+                call: Call<LoginResponse>,
+                response: Response<LoginResponse>
             ) {
                 dismissProgress()
-                if (response.body()?.status_code == NetworkClient.CODE_SUCCESS) {
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
                     response.body()?.msg?.let { Log.e("onResponse: ", it) }
+                    val token = response.body()?.token
+                    token?.let {
+                        SharePreferenceKeyHelper.getInstance(application).putString(
+                            PreferenceKey.AUTH_TOKEN, it
+                        )
+                    }
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()
                 }
             }
 
-            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 t.message?.let { Log.e("onFailure: ", it) }
                 dismissProgress()
             }

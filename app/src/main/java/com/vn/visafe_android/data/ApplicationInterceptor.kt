@@ -18,7 +18,7 @@ class ApplicationInterceptor(context: Context) : Interceptor {
             val token = pref.getString(PreferenceKey.AUTH_TOKEN)
             token?.let {
                 if (it.isNotBlank()) {
-                    addHeader("Authorization", "token $token")
+                    addHeader("Authorization", token)
                 }
             }
             val method = original.method

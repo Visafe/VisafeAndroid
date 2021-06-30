@@ -17,14 +17,14 @@
         android:background="@color/white">
 
         <View
-            android:enabled="@{data.isSelected}"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="@dimen/_0dp"
             android:background="@drawable/bg_menu_group"
+            android:enabled="@{data.isSelected}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="@dimen/_0dp"
-            android:layout_height="@dimen/_0dp"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvGroup"
@@ -42,9 +42,9 @@
 
         <ImageView
             android:id="@+id/ivGroup"
+            circle_image="@{data.type}"
             android:layout_width="@dimen/_50dp"
             android:layout_height="@dimen/_50dp"
-            android:src="@drawable/ic_group"
             app:layout_constraintBottom_toBottomOf="@id/tvGroup"
             app:layout_constraintEnd_toEndOf="@id/tvGroup"
             app:layout_constraintStart_toStartOf="@id/tvGroup"
@@ -69,8 +69,8 @@
             tools:text="Fina Group" />
 
         <TextView
-            android:id="@+id/tvAmoutGroup"
-            set_amout_group="@{data.amoutGroupChild}"
+            android:id="@+id/tvAmountGroup"
+            set_amount_group="@{data.groupIds.size()}"
             android:layout_width="@dimen/_0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sf_pro_text_regular"
@@ -82,8 +82,8 @@
             tools:text="5 nhóm" />
 
         <ImageView
-            show_more_action="@{data.isSelected()}"
             android:id="@+id/ivMore"
+            show_more_action="@{data.isSelected()}"
             android:layout_width="@dimen/_24dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_16dp"
@@ -95,7 +95,7 @@
 
         <TextView
             android:id="@+id/tvLevel"
-            set_status="@{data.status}"
+            set_type="@{data.isOwner()}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_44dp"

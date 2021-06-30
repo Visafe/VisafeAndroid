@@ -14,7 +14,7 @@ import com.vn.visafe_android.data.BaseCallback
 import com.vn.visafe_android.data.BaseResponse
 import com.vn.visafe_android.data.NetworkClient
 import com.vn.visafe_android.databinding.FragmentResetPasswordBinding
-import com.vn.visafe_android.model.ResetPasswordRequest
+import com.vn.visafe_android.model.request.ResetPasswordRequest
 import com.vn.visafe_android.utils.setSafeClickListener
 import retrofit2.Call
 import retrofit2.Callback

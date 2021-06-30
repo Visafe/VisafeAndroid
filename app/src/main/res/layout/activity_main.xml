@@ -9,9 +9,9 @@
     tools:openDrawer="left">
 
     <LinearLayout
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
@@ -25,11 +25,11 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:layout_marginEnd="@dimen/_16dp"
                     android:id="@+id/tvTitleToolbar"
                     android:layout_width="match_parent"
-                    android:layout_toStartOf="@id/ivNotification"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/_16dp"
+                    android:layout_toStartOf="@id/ivNotification"
                     android:fontFamily="@font/sf_pro_text_regular_bold"
                     android:gravity="center"
                     android:text="@string/ncsc_workspace"
@@ -58,8 +58,9 @@
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 
-        <include layout="@layout/main_content"
-            android:id="@+id/mainContent"/>
+        <include
+            android:id="@+id/mainContent"
+            layout="@layout/main_content" />
     </LinearLayout>
 
     <com.vn.visafe_android.ui.custom.PadNavigationView
@@ -173,7 +174,7 @@
                         android:layout_marginTop="@dimen/_12dp"
                         android:layout_marginBottom="@dimen/_12dp"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/ic_group"
+                        android:src="@drawable/ic_personal"
                         tools:ignore="ContentDescription" />
 
                     <ImageView
@@ -201,7 +202,7 @@
                         android:maxLines="2"
                         android:textColor="@color/color_111111"
                         android:textSize="@dimen/text_size_16sp"
-                        android:text="Đào Thị Hải Yến" />
+                        tools:text="Đào Thị Hải Yến" />
                 </RelativeLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

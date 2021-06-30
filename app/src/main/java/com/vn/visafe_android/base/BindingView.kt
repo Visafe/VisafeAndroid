@@ -1,6 +1,5 @@
 package com.vn.visafe_android.base
 
-import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -8,7 +7,8 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.vn.visafe_android.R
-import com.vn.visafe_android.model.StatusGroup
+import com.vn.visafe_android.model.OWNER
+import com.vn.visafe_android.model.TYPE_WORKSPACES
 import com.vn.visafe_android.utils.screenWidth
 import com.vn.visafe_android.utils.setBackgroundTint
 
@@ -16,9 +16,10 @@ object BindingView {
 
     @JvmStatic
     @BindingAdapter(value = ["circle_image"], requireAll = false)
-    fun circleImage(imageView: ImageView, imageUrl: String?) {
+    fun circleImage(imageView: ImageView, type: String?) {
+        val type = TYPE_WORKSPACES.fromIsTypeWorkSpaces(type)
         Glide.with(imageView.context)
-            .load(imageUrl)
+            .load(type?.resDrawableIcon)
             .apply(
                 RequestOptions()
                     .error(R.drawable.ic_group)
@@ -28,28 +29,22 @@ object BindingView {
     }
 
     @JvmStatic
-    @BindingAdapter(value = ["set_amout_group"], requireAll = false)
+    @BindingAdapter(value = ["set_amount_group"], requireAll = false)
     fun setAmoutGroup(textView: TextView, amout: Int?) {
         textView.text = "$amout nhóm"
     }
 
+
     @JvmStatic
-    @BindingAdapter(value = ["set_status"], requireAll = false)
-    fun setStatus(textView: TextView, status: String?) {
-        textView.text = status
+    @BindingAdapter(value = ["set_type"], requireAll = false)
+    fun setType(textView: TextView, type: Boolean?) {
+        val owner = OWNER.fromIsOwner(type)
+        textView.text = textView.context.getString(owner.title)
         textView.setBackgroundTint(
-            when (status) {
-                StatusGroup.QUAN_TRI.status -> R.color.color_1AFFB31F
-                StatusGroup.THANH_VIEN.status -> R.color.color_1A33B6FF
-                else -> R.color.color_1AFFB31F
-            }
+            owner.backgroundColor
         )
         textView.setTextColor(
-            when (status) {
-                StatusGroup.QUAN_TRI.status -> Color.parseColor("#FFB31F")
-                StatusGroup.THANH_VIEN.status -> Color.parseColor("#33B6FF")
-                else -> Color.parseColor("#FFB31F")
-            }
+            owner.textColor
         )
     }
 

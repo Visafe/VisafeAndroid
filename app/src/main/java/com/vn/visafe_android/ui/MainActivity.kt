@@ -1,9 +1,9 @@
 package com.vn.visafe_android.ui
 
 import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.content.res.AppCompatResources
@@ -11,10 +11,17 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vn.visafe_android.R
 import com.vn.visafe_android.base.BaseActivity
+import com.vn.visafe_android.data.BaseCallback
+import com.vn.visafe_android.data.NetworkClient
 import com.vn.visafe_android.databinding.ActivityMainBinding
+import com.vn.visafe_android.model.UserInfo
 import com.vn.visafe_android.model.WorkspaceGroupData
 import com.vn.visafe_android.ui.home.*
 import com.vn.visafe_android.ui.home.administrator.AdministratorFragment
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : BaseActivity() {
     companion object {
@@ -23,17 +30,22 @@ class MainActivity : BaseActivity() {
         const val POSITION_SETTING = 2
     }
 
+    lateinit var binding: ActivityMainBinding
+
     private var listFragment = mutableListOf<Fragment>()
     private var currentPosition = 0
-    lateinit var binding: ActivityMainBinding
     private var drawerToggle: ActionBarDrawerToggle? = null
     private var adapter: MenuAdapter? = null
+
+    private var listMenu: MutableList<WorkspaceGroupData> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initView()
+        doGetUserInfo()
+        doGetWorkSpaces()
     }
 
     private fun initView() {
@@ -94,7 +106,7 @@ class MainActivity : BaseActivity() {
     private fun initListMenu() {
         binding.rvGroup.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapter = MenuAdapter(createListMenu(), object : OnClickMenu {
+        adapter = MenuAdapter(listMenu, object : OnClickMenu {
             override fun onClickMenu(data: WorkspaceGroupData, position: Int) {
                 adapter?.setSelected(position)
             }
@@ -115,18 +127,6 @@ class MainActivity : BaseActivity() {
         super.onConfigurationChanged(newConfig)
         drawerToggle?.onConfigurationChanged(newConfig)
     }
-
-    private fun createListMenu(): List<WorkspaceGroupData> {
-        val listMenu: ArrayList<WorkspaceGroupData> = ArrayList()
-        listMenu.add(WorkspaceGroupData("NCSC", 5, "Quản trị", false))
-        listMenu.add(WorkspaceGroupData("Fina Group", 4, "Thành viên", false))
-        listMenu.add(WorkspaceGroupData("Cihub Architect", 2, "Thành viên", false))
-        listMenu.add(WorkspaceGroupData("AgileTech", 1, "Thành viên", false))
-        listMenu.add(WorkspaceGroupData("Vinfast", 5, "Thành viên", false))
-        listMenu.add(WorkspaceGroupData("VinGroup", 5, "Quản trị", false))
-        return listMenu
-    }
-
 
     private fun openTab(position: Int) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -168,5 +168,55 @@ class MainActivity : BaseActivity() {
                     AppCompatResources.getColorStateList(this, R.color.color_111111)
             }
         }
+    }
+
+    private fun doGetWorkSpaces() {
+        showProgressDialog()
+        val client = NetworkClient()
+        val call = client.client(context = applicationContext).doGetWorkSpacesOfCurrentUser()
+        call.enqueue(BaseCallback(this@MainActivity, object : Callback<List<WorkspaceGroupData>> {
+            override fun onResponse(
+                call: Call<List<WorkspaceGroupData>>,
+                response: Response<List<WorkspaceGroupData>>
+            ) {
+                dismissProgress()
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    val list = response.body()
+                    list?.toMutableList()?.let { listMenu.addAll(it) }
+                    for (i in listMenu.indices) {
+                        listMenu[i].isSelected = i == 0
+                    }
+                    adapter?.notifyDataSetChanged()
+                }
+            }
+
+            override fun onFailure(call: Call<List<WorkspaceGroupData>>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        }))
+    }
+
+    private fun doGetUserInfo() {
+        showProgressDialog()
+        val client = NetworkClient()
+        val call = client.client(context = applicationContext).doGetUserInfo()
+        call.enqueue(BaseCallback(this@MainActivity, object : Callback<UserInfo> {
+            override fun onResponse(
+                call: Call<UserInfo>,
+                response: Response<UserInfo>
+            ) {
+                dismissProgress()
+                val userInfo = response.body()
+                userInfo?.let {
+                    binding.tvUserName.text = it.fullName.toString()
+                }
+            }
+
+            override fun onFailure(call: Call<UserInfo>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        }))
     }
 }

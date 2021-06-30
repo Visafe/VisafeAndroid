@@ -6,9 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vn.visafe_android.databinding.ItemGroupMenuBinding
 import com.vn.visafe_android.model.WorkspaceGroupData
 
-class MenuAdapter(val groupList: List<WorkspaceGroupData>, val onClickMenu: OnClickMenu) :
+class MenuAdapter(private val groupList: List<WorkspaceGroupData>, private val onClickMenu: OnClickMenu) :
     RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
-    private var currentPreviosPostion = -1
 
     class MenuViewHolder private constructor(val binding: ItemGroupMenuBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -32,9 +31,6 @@ class MenuAdapter(val groupList: List<WorkspaceGroupData>, val onClickMenu: OnCl
     override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
         holder.bind(groupList[position])
         holder.itemView.setOnClickListener {
-            if (currentPreviosPostion == -1) {
-                currentPreviosPostion = position
-            }
             onClickMenu.onClickMenu(groupList[position], position)
         }
         holder.binding.ivMore.setOnClickListener {
@@ -45,12 +41,12 @@ class MenuAdapter(val groupList: List<WorkspaceGroupData>, val onClickMenu: OnCl
     override fun getItemCount(): Int = groupList.size
 
     fun setSelected(position: Int) {
-        groupList.forEachIndexed { index, data ->
-            data.isSelected = index == position
+        groupList[position].isSelected = true
+        for (i in groupList) {
+            if (i != groupList[position])
+                i.isSelected = false
         }
-        notifyItemChanged(position)
-        notifyItemChanged(currentPreviosPostion)
-        currentPreviosPostion = position
+        notifyDataSetChanged()
     }
 }
 

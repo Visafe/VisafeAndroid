@@ -1,4 +1,4 @@
-package com.vn.visafe_android.model
+package com.vn.visafe_android.model.request
 
 import com.google.gson.annotations.SerializedName
 

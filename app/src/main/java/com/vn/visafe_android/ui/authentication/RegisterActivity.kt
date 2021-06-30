@@ -1,6 +1,5 @@
 package com.vn.visafe_android.ui.authentication
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -15,10 +14,9 @@ import com.vn.visafe_android.data.BaseCallback
 import com.vn.visafe_android.data.BaseResponse
 import com.vn.visafe_android.data.NetworkClient
 import com.vn.visafe_android.databinding.ActivityRegisterBinding
-import com.vn.visafe_android.model.ActiveAccountRequest
-import com.vn.visafe_android.model.LoginRequest
-import com.vn.visafe_android.model.RegisterRequest
-import com.vn.visafe_android.ui.MainActivity
+import com.vn.visafe_android.model.request.ActiveAccountRequest
+import com.vn.visafe_android.model.request.LoginRequest
+import com.vn.visafe_android.model.request.RegisterRequest
 import com.vn.visafe_android.ui.authentication.forgotpassword.InputOTPFragment
 import com.vn.visafe_android.utils.isValidEmail
 import com.vn.visafe_android.utils.setSafeClickListener
@@ -230,15 +228,23 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
                 dismissProgress()
                 inputOTPFragment?.dismiss()
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    val intent = Intent(
-                        this@RegisterActivity,
-                        MainActivity::class.java
-                    )
-                    intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                            Intent.FLAG_ACTIVITY_NEW_TASK
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
-                    startActivity(intent)
+                    response.body()?.msg?.let {
+                        Toast.makeText(
+                            applicationContext,
+                            "Đăng ký tài khoản thành công",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                     finish()
+//                    val intent = Intent(
+//                        this@RegisterActivity,
+//                        MainActivity::class.java
+//                    )
+//                    intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_CLEAR_TOP or
+//                            Intent.FLAG_ACTIVITY_NEW_TASK
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
+//                    startActivity(intent)
+//                    finish()
                 }
             }
 
