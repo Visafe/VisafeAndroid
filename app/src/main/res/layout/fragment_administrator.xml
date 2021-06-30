@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".ui.AdministratorFragment">
 
-        <TextView
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabBar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:layout_height="@dimen/_40dp"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginEnd="@dimen/_16dp"
+            android:background="@drawable/bg_stroke_1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabGravity="fill"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/black"
+            app:tabTextAppearance="@style/TabLayoutCulture"
+            app:tabTextColor="@color/color_111111" />
 
-    </FrameLayout>
+        <com.vn.visafe_android.ui.custom.CustomViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
 </layout>

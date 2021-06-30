@@ -55,7 +55,7 @@ class MenuAdapter(val groupList: List<WorkspaceGroupData>, val onClickMenu: OnCl
 }
 
 interface OnClickMenu {
-    fun onClickMenu(data : WorkspaceGroupData, position: Int)
+    fun onClickMenu(data: WorkspaceGroupData, position: Int)
 
     fun onMoreGroup()
 }
