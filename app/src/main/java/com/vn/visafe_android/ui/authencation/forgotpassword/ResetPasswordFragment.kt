@@ -1,4 +1,4 @@
-package com.vn.visafe_android.function.forgotpassword
+package com.vn.visafe_android.ui.authencation.forgotpassword
 
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
@@ -10,13 +10,14 @@ import com.rengwuxian.materialedittext.MaterialEditText
 import com.vn.visafe_android.R
 import com.vn.visafe_android.base.BaseActivity
 import com.vn.visafe_android.base.BaseFragment
+import com.vn.visafe_android.data.BaseCallback
 import com.vn.visafe_android.data.BaseResponse
 import com.vn.visafe_android.data.NetworkClient
 import com.vn.visafe_android.databinding.FragmentResetPasswordBinding
 import com.vn.visafe_android.model.ResetPasswordRequest
-import com.vn.visafe_android.utils.isValidEmail
 import com.vn.visafe_android.utils.setSafeClickListener
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
 class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>() {
@@ -67,26 +68,33 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>() {
             }
             return
         }
+        showProgressDialog()
         val password = binding.edtInputPassword.text.toString()
         val rePassword = binding.edtInputPasswordAgain.text.toString()
         val resetPasswordRequest = ResetPasswordRequest(email, otp, password, rePassword)
         val client = NetworkClient()
         val call = context?.let { client.clientWithoutToken(context = it).doResetPassword(resetPasswordRequest) }
-        call?.enqueue(object : retrofit2.Callback<BaseResponse> {
-            override fun onResponse(
-                call: Call<BaseResponse>,
-                response: Response<BaseResponse>
-            ) {
-                if (response.body()?.status_code == NetworkClient.CODE_SUCCESS) {
-                    response.body()?.msg?.let { Log.e("onResponse: ", it) }
-                    (activity as ForgotPasswordActivity).finish()
-                }
-            }
+        call?.enqueue(
+            BaseCallback(
+                this, object : Callback<BaseResponse> {
+                    override fun onResponse(
+                        call: Call<BaseResponse>,
+                        response: Response<BaseResponse>
+                    ) {
+                        dismissProgress()
+                        if (response.body()?.status_code == NetworkClient.CODE_SUCCESS) {
+                            response.body()?.msg?.let { Log.e("onResponse: ", it) }
+                            (activity as ForgotPasswordActivity).finish()
+                            //auto login with new pass
+                        }
+                    }
 
-            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
-                t.message?.let { Log.e("onFailure: ", it) }
-            }
-        })
+                    override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                        t.message?.let { Log.e("onFailure: ", it) }
+                        dismissProgress()
+                    }
+                })
+        )
     }
 
     private fun validateField(): Boolean {

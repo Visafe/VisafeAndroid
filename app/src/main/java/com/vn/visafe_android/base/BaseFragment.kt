@@ -9,8 +9,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.vn.visafe_android.data.BaseController
+import com.vn.visafe_android.data.BaseResponse
 
-abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
+abstract class BaseFragment<T : ViewDataBinding> : Fragment(), BaseController {
     protected lateinit var binding: T
 
     @LayoutRes
@@ -33,6 +35,18 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
         initView()
     }
 
+    override fun onTimeOutSession() {
+        if (activity != null && activity is BaseActivity) {
+            (activity as BaseActivity?)?.onTimeOutSession()
+        }
+    }
+
+    override fun onError(baseResponse: BaseResponse) {
+        if (activity != null && activity is BaseActivity) {
+            (activity as BaseActivity?)?.onError(baseResponse)
+        }
+    }
+
     open fun backFragment() {
         activity?.let {
             (it as BaseActivity).hideKeyboard(it)
@@ -42,6 +56,18 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
             } else {
                 it.finish()
             }
+        }
+    }
+
+    open fun showProgressDialog() {
+        if (activity is BaseActivity) {
+            (activity as BaseActivity).showProgressDialog()
+        }
+    }
+
+    open fun dismissProgress() {
+        if (activity is BaseActivity) {
+            (activity as BaseActivity).dismissProgress()
         }
     }
 }

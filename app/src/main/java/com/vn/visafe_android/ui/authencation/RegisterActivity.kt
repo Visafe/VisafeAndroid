@@ -1,29 +1,38 @@
-package com.vn.visafe_android.function
+package com.vn.visafe_android.ui.authencation
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.rengwuxian.materialedittext.MaterialEditText
 import com.vn.visafe_android.R
 import com.vn.visafe_android.base.BaseActivity
+import com.vn.visafe_android.data.BaseCallback
 import com.vn.visafe_android.data.BaseResponse
 import com.vn.visafe_android.data.NetworkClient
 import com.vn.visafe_android.databinding.ActivityRegisterBinding
+import com.vn.visafe_android.model.ActiveAccountRequest
+import com.vn.visafe_android.model.LoginRequest
 import com.vn.visafe_android.model.RegisterRequest
+import com.vn.visafe_android.ui.MainActivity
+import com.vn.visafe_android.ui.authencation.forgotpassword.InputOTPFragment
 import com.vn.visafe_android.utils.isValidEmail
 import com.vn.visafe_android.utils.setSafeClickListener
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
-class RegisterActivity : BaseActivity() {
+class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
     lateinit var viewBinding: ActivityRegisterBinding
 
     private var isShowPassword: Boolean = false
     private var isShowPasswordAgain: Boolean = false
     private var listError: MutableList<View> = mutableListOf()
+    private var inputOTPFragment: InputOTPFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,28 +64,76 @@ class RegisterActivity : BaseActivity() {
             }
             return
         }
+        showProgressDialog()
         val registerRequest = RegisterRequest()
         registerRequest.username = viewBinding.edtInputEmail.text.toString()
         registerRequest.email = viewBinding.edtInputEmail.text.toString()
         registerRequest.password = viewBinding.edtInputPassword.text.toString()
-        registerRequest.passwordagain = viewBinding.edtInputPasswordAgain.text.toString()
+        registerRequest.repeatPassword = viewBinding.edtInputPasswordAgain.text.toString()
         val client = NetworkClient()
         val call = client.clientWithoutToken(context = applicationContext).doRegister(registerRequest)
-        call.enqueue(object : retrofit2.Callback<BaseResponse> {
+        call.enqueue(BaseCallback(this, object : Callback<BaseResponse> {
             override fun onResponse(
                 call: Call<BaseResponse>,
                 response: Response<BaseResponse>
             ) {
-                if (response.body()?.status_code == NetworkClient.CODE_CREATED) {
-                    response.body()?.msg?.let { Log.e("onResponse: ", it) }
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    dismissProgress()
+                    response.body()?.msg?.let {
+                        Toast.makeText(
+                            applicationContext,
+                            "Vui lòng nhập mã OTP được gửi về mail của bạn để active tài khoản",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    inputOTPFragment = InputOTPFragment(onInputOtpDialog = this@RegisterActivity)
+                    inputOTPFragment?.show(supportFragmentManager, "inputOTPFragment")
+                } else if (response.code() == NetworkClient.CODE_EXISTS_ACCOUNT) {
+                    doReSendOTP()
                 }
             }
 
             override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
                 t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
             }
 
-        })
+        }))
+    }
+
+    private fun doReSendOTP() {
+        showProgressDialog()
+        val email = viewBinding.edtInputEmail.text.toString()
+        val reSendOTP = LoginRequest(username = email)
+        val client = NetworkClient()
+        val call = client.clientWithoutToken(context = applicationContext).doReActiveAccount(reSendOTP)
+        call.enqueue(BaseCallback(this, object : Callback<BaseResponse> {
+            override fun onResponse(
+                call: Call<BaseResponse>,
+                response: Response<BaseResponse>
+            ) {
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    response.body()?.msg?.let {
+                        Toast.makeText(
+                            applicationContext,
+                            "Vui lòng nhập mã OTP được gửi về mail của bạn để active tài khoản",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    if (inputOTPFragment == null || inputOTPFragment?.isVisible == false) {
+                        inputOTPFragment = InputOTPFragment(onInputOtpDialog = this@RegisterActivity)
+                        inputOTPFragment?.show(supportFragmentManager, "inputOTPFragment")
+                    }
+                }
+                dismissProgress()
+            }
+
+            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+
+        }))
     }
 
     private fun validateField(): Boolean {
@@ -157,5 +214,43 @@ class RegisterActivity : BaseActivity() {
                 )
             )
         }
+    }
+
+    override fun onInputOTP(otp: String) {
+        showProgressDialog()
+        val email = viewBinding.edtInputEmail.text.toString()
+        val activeAccountRequest = ActiveAccountRequest(email = email, otp = otp)
+        val client = NetworkClient()
+        val call = client.clientWithoutToken(context = applicationContext).doActiveAccount(activeAccountRequest)
+        call.enqueue(BaseCallback(this, object : Callback<BaseResponse> {
+            override fun onResponse(
+                call: Call<BaseResponse>,
+                response: Response<BaseResponse>
+            ) {
+                dismissProgress()
+                inputOTPFragment?.dismiss()
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    val intent = Intent(
+                        this@RegisterActivity,
+                        MainActivity::class.java
+                    )
+                    intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                            Intent.FLAG_ACTIVITY_NEW_TASK
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+
+        }))
+    }
+
+    override fun onSendToOtp() {
+        doReSendOTP()
     }
 }

@@ -54,7 +54,10 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".dns.DNSActivity">
+        <activity
+            android:name=".ui.authencation.LoginActivity"
+            android:screenOrientation="fullSensor">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -62,20 +65,20 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".function.LoginActivity"
-            android:screenOrientation="fullSensor" />
+        <!--        <activity-->
+        <!--            android:name=".function.LoginActivity"-->
+        <!--            android:screenOrientation="fullSensor" />-->
 
         <activity
             android:name=".ui.MainActivity"
             android:screenOrientation="fullSensor" />
 
         <activity
-            android:name=".function.RegisterActivity"
+            android:name=".ui.authencation.RegisterActivity"
             android:screenOrientation="fullSensor" />
 
         <activity
-            android:name=".function.forgotpassword.ForgotPasswordActivity"
+            android:name=".ui.authencation.forgotpassword.ForgotPasswordActivity"
             android:screenOrientation="fullSensor"
             android:windowSoftInputMode="adjustResize" />
 

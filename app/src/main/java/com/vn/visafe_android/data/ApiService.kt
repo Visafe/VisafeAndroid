@@ -1,24 +1,36 @@
 package com.vn.visafe_android.data
 
-import com.vn.visafe_android.model.LoginRequest
-import com.vn.visafe_android.model.RegisterRequest
-import com.vn.visafe_android.model.ResetPasswordRequest
+import com.vn.visafe_android.model.*
+import okhttp3.Response
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
 
 interface ApiService {
 
-    @POST("/control/register")
+    @POST("register")
     fun doRegister(@Body registerRequest: RegisterRequest): Call<BaseResponse>
 
-    @POST("/control/login")
+    @POST("login")
     fun doLogin(@Body loginRequest: LoginRequest): Call<BaseResponse>
 
-    @GET("/control/forgot-password")
-    fun doRequestEmailForgotPassword(@Query("email") email: String?): Call<BaseResponse>
+    @GET("forgot-password")
+    fun doRequestEmailForgotPassword(@Query("username") username: String?): Call<ResponseBody>
 
-    @POST("/control/reset-password")
+    @POST("reset-password")
     fun doResetPassword(@Body resetPasswordRequest: ResetPasswordRequest): Call<BaseResponse>
+
+    @POST("active-account")
+    fun doActiveAccount(@Body activeAccountRequest: ActiveAccountRequest): Call<BaseResponse>
+
+    @GET("user/profile")
+    fun doGetUserInfo(): Call<ResponseBody>
+
+    @PATCH("user/change-password")
+    fun doChangePassword(@Body changePasswordRequest: ChangePasswordRequest): Call<ResponseBody>
+
+    @POST("re-activation")
+    fun doReActiveAccount(@Body loginRequest: LoginRequest): Call<BaseResponse>
 
 }

@@ -12,6 +12,8 @@
 
     <color name="underlineColor">#000000</color>
 
+    <color name="colorPrimary">#F5BB16</color>
+    <color name="colorPrimaryDark">#828282</color>
     <color name="accent_color">#F5BB16</color>
     <color name="secondary_color">#828282</color>
 

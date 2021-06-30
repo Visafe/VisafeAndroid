@@ -7,6 +7,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 private const val API_READ_TIMEOUT: Long = 160
@@ -17,11 +18,14 @@ class NetworkClient {
         const val CODE_INCORRECT_CLASSIFY: Int = 422
         const val CODE_CREATED: Int = 201
         const val CODE_SUCCESS: Int = 200
+        const val CODE_EXISTS_ACCOUNT: Int = 400
         const val CODE_DELETE_SUCCESS: Int = 204
         const val CODE_LIMIT_PAYMENT = 402
         const val CODE_SEVER_ERROR = 502
         const val CODE_TIMEOUT_SESSION = 401
-        const val URL_ROOT = "https://staging.visafe.vn/"
+        val ERROR_CODE =
+            listOf(403, 406, 409, 424, 502, 500)
+        const val URL_ROOT = "https://staging.visafe.vn/api/v1/"
 
     }
 
