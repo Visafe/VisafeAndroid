@@ -7,8 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="transparent">#00000000</color>
     <color name="red">#EB5757</color>
+    <color name="color_4D000000">#4D000000</color>
 
     <color name="underlineColor">#000000</color>
 
@@ -20,16 +20,26 @@
     <color name="color_f5bb16">#F5BB16</color>
     <color name="color_d9d9d9">#D9D9D9</color>
     <color name="color_222222">#222222</color>
+    <color name="color_50_222222">#80222222</color>
     <color name="color_808080">#808080</color>
     <color name="color_FFB31F">#FFB31F</color>
     <color name="color_F9F1E2">#F9F1E2</color>
     <color name="color_111111">#111111</color>
+    <color name="color_50_111111">#80111111</color>
     <color name="color_F8F8F8">#F8F8F8</color>
+    <color name="color_F8F8F9">#F8F8F9</color>
     <color name="color_F33C3C">#F33C3C</color>
     <color name="color_33B6FF1A">#33B6FF1A</color>
     <color name="color_33B6FF">#33B6FF</color>
     <color name="color_1A33B6FF">#1A33B6FF</color>
     <color name="color_EBF8FF">#EBF8FF</color>
     <color name="color_1AFFB31F">#1AFFB31F</color>
+    <color name="color_EDEDED">#EDEDED</color>
+    <color name="color_F1F1F1">#F1F1F1</color>
+    <color name="color_60_111111">#99111111</color>
+    <color name="color_DDDDDD">#DDDDDD</color>
+    <color name="color_0B1847">#0B1847</color>
+    <color name="gray">#E5E5E5</color>
+    <color name="transparent">#00FFFFFF</color>
 
 </resources>

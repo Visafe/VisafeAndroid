@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_chart"
+        android:title="@string/quan_tri" />
+
+    <item
+        android:id="@+id/navigation_protect"
+        android:icon="@drawable/ic_shield_done"
+        android:title="@string/protect" />
+
+    <item
+        android:id="@+id/navigation_setting"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/setting" />
+</menu>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_12dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_create_group">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_20dp"
+            android:drawablePadding="@dimen/_4dp"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:text="@string/create_group"
+            android:textColor="@color/color_FFB31F"
+            android:textSize="@dimen/text_size_16sp"
+            app:drawableStartCompat="@drawable/ic_baseline_add_24"
+            app:drawableTint="@color/color_FFB31F" />
+    </FrameLayout>
+</layout>

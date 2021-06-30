@@ -1,112 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/dns_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:scaleX="1.3"
-        android:scaleY="1.3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/indicator"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:includeFontPadding="false"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_40sdp"
-        app:layout_constraintEnd_toStartOf="@id/dns_switch"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dns_switch"
-        tools:text="On" />
-
-    <TextView
-        android:id="@+id/status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:includeFontPadding="false"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_20sdp"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/indicator"
-        tools:text="ABC" />
-
-    <com.vn.visafe_android.ui.custom.HistoryGraph
-        android:id="@+id/graph"
+    <FrameLayout
+        android:id="@+id/fr_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toTopOf="@id/bottom_view"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/status" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/numRequests"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintStart_toStartOf="@+id/graph"
-        app:layout_constraintTop_toBottomOf="@+id/graph"
-        tools:text="10,000" />
-
-    <TextView
-        android:id="@+id/server"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_weight="1"
-        android:ellipsize="none"
-        android:focusable="false"
-        android:scrollbars="horizontal"
-        android:singleLine="true"
-        android:text="dns.google.com"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textIsSelectable="true"
-        app:layout_constraintStart_toStartOf="@+id/numRequests"
-        app:layout_constraintTop_toBottomOf="@+id/numRequests"
-        tools:ignore="HardcodedText" />
-
-    <Button
-        android:id="@+id/try_all_servers_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Thử tất cả các máy chủ tích hợp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@id/server"
-        app:layout_constraintTop_toBottomOf="@id/server"
-        tools:visibility="visible" />
-
-    <TextView
-        android:id="@+id/explanation"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@id/try_all_servers_button"
-        app:layout_constraintTop_toBottomOf="@id/try_all_servers_button"
-        tools:text="@string/explanation_vpn" />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        app:elevation="@dimen/_4dp"
+        app:itemIconTint="@drawable/tab_color"
+        app:itemTextColor="@drawable/tab_color"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/menu_home"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

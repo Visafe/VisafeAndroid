@@ -9,6 +9,7 @@
     tools:openDrawer="left">
 
     <LinearLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -57,7 +58,8 @@
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 
-        <include layout="@layout/main_content" />
+        <include layout="@layout/main_content"
+            android:id="@+id/mainContent"/>
     </LinearLayout>
 
     <com.vn.visafe_android.ui.custom.PadNavigationView
