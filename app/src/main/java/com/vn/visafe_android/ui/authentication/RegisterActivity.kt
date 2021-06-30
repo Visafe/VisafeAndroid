@@ -1,4 +1,4 @@
-package com.vn.visafe_android.ui.authencation
+package com.vn.visafe_android.ui.authentication
 
 import android.content.Intent
 import android.os.Bundle
@@ -19,7 +19,7 @@ import com.vn.visafe_android.model.ActiveAccountRequest
 import com.vn.visafe_android.model.LoginRequest
 import com.vn.visafe_android.model.RegisterRequest
 import com.vn.visafe_android.ui.MainActivity
-import com.vn.visafe_android.ui.authencation.forgotpassword.InputOTPFragment
+import com.vn.visafe_android.ui.authentication.forgotpassword.InputOTPFragment
 import com.vn.visafe_android.utils.isValidEmail
 import com.vn.visafe_android.utils.setSafeClickListener
 import retrofit2.Call

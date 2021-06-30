@@ -59,7 +59,7 @@
             android:screenOrientation="fullSensor"/>
 
         <activity
-            android:name=".ui.authencation.LoginActivity"
+            android:name=".ui.authentication.LoginActivity"
             android:screenOrientation="fullSensor">
 
             <intent-filter>
@@ -70,11 +70,11 @@
         </activity>
 
         <activity
-            android:name=".ui.authencation.RegisterActivity"
+            android:name=".ui.authentication.RegisterActivity"
             android:screenOrientation="fullSensor" />
 
         <activity
-            android:name=".ui.authencation.forgotpassword.ForgotPasswordActivity"
+            android:name=".ui.authentication.forgotpassword.ForgotPasswordActivity"
             android:screenOrientation="fullSensor"
             android:windowSoftInputMode="adjustResize" />
 

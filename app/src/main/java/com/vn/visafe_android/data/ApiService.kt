@@ -21,7 +21,7 @@ interface ApiService {
     @POST("reset-password")
     fun doResetPassword(@Body resetPasswordRequest: ResetPasswordRequest): Call<BaseResponse>
 
-    @POST("active-account")
+    @POST("activate-account")
     fun doActiveAccount(@Body activeAccountRequest: ActiveAccountRequest): Call<BaseResponse>
 
     @GET("user/profile")

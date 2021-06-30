@@ -1,4 +1,4 @@
-package com.vn.visafe_android.ui.authencation.forgotpassword
+package com.vn.visafe_android.ui.authentication.forgotpassword
 
 import android.util.Log
 import com.vn.visafe_android.R
