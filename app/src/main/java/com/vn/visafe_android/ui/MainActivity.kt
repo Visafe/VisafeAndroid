@@ -1,9 +1,12 @@
 package com.vn.visafe_android.ui
 
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vn.visafe_android.R
@@ -143,5 +146,27 @@ class MainActivity : BaseActivity() {
         }
         currentPosition = position
         fragmentTransaction.commitNowAllowingStateLoss()
+        changeColorTab(position)
+    }
+
+    private fun changeColorTab(position: Int) {
+        when (position) {
+            POSITION_PROTECT -> {
+                binding.mainContent.bottomView.setBackgroundResource(R.color.color_0B1847)
+                binding.toolbar.visibility = View.GONE
+                binding.mainContent.bottomView.itemIconTintList =
+                    AppCompatResources.getColorStateList(this, R.color.white)
+                binding.mainContent.bottomView.itemTextColor =
+                    AppCompatResources.getColorStateList(this, R.color.white)
+            }
+            else -> {
+                binding.mainContent.bottomView.setBackgroundResource(R.color.white)
+                binding.toolbar.visibility = View.VISIBLE
+                binding.mainContent.bottomView.itemIconTintList =
+                    AppCompatResources.getColorStateList(this, R.color.color_111111)
+                binding.mainContent.bottomView.itemTextColor =
+                    AppCompatResources.getColorStateList(this, R.color.color_111111)
+            }
+        }
     }
 }
