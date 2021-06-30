@@ -45,4 +45,6 @@
     <string name="devices_most_title">Thiết bị dùng nhiều</string>
     <string name="group_list_title">Danh sách nhóm</string>
     <string name="create_group_title">Tạo nhóm</string>
+    <string name="phat_trien_boi">Phát triển bởi</string>
+    <string name="you_protect">Bạn đã được bảo vệ</string>
 </resources>
