@@ -155,6 +155,7 @@ class ProtectFragment : BaseFragment<FragmentProtectBinding>(), SharedPreference
         prepareVpnIntent = try {
             VpnService.prepare(context)
         } catch (e: NullPointerException) {
+            e.message?.let { Log.e("prepareVpnService: ", it) }
             // This exception is not mentioned in the documentation, but it has been encountered by Intra
             // users and also by other developers, e.g. https://stackoverflow.com/questions/45470113.
             return false
@@ -178,7 +179,8 @@ class ProtectFragment : BaseFragment<FragmentProtectBinding>(), SharedPreference
         isChecked = status.activationRequested
         Log.e("syncDnsStatus: ", "" + isChecked)
         // Change indicator text
-        binding.tvProtect.text = if (status.activationRequested) getString(R.string.you_protect) else getString(R.string.bam_de_bat)
+        binding.tvProtect.text =
+            if (status.activationRequested) getString(R.string.you_protect) else getString(R.string.bam_de_bat)
         context?.let {
             binding.ivEarth.setImageDrawable(
                 if (status.activationRequested) ContextCompat.getDrawable(it, R.drawable.ic_earth) else
