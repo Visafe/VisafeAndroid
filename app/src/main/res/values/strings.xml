@@ -209,6 +209,43 @@
     <string name="child">Trẻ em</string>
     <string name="adult">Người lớn</string>
     <string name="elder">Người cao tuổi</string>
-    <string name="add_new_link">Thêm link website</string>
-    <string name="protect_group_content">Visafe sẽ tự động đưa ra các cấu hình phù hợp với độ tuổi bạn lựa chọn</string>
+  <string name="add_new_link">Thêm link website</string>
+  <string name="protect_group_content">Visafe sẽ tự động đưa ra các cấu hình phù hợp với độ tuổi bạn lựa chọn</string>
+  <string name="edit_workspace">Chỉnh sửa workspace</string>
+  <string name="delete_workspace">Xóa workspace</string>
+  <string name="delete_workspace_content">Bạn có chắc chắn muốn xóa workspace %s</string>
+  <string name="no">Không</string>
+  <string name="input_workspace">Nhập tên workspace</string>
+  <string name="family">Gia đình</string>
+  <string name="school">Trường học</string>
+  <string name="company">Doanh nghiệp</string>
+  <string name="chinh_phu">Tổ chức chính phủ</string>
+  <string name="thiet_lap_an_toan">Thiết lập an toàn, an ninh mạng</string>
+  <string name="create_workspace_success">Tạo cấu hình thành công!</string>
+  <string name="visafe_protect">Visafe đã sẵn sàng bảo vệ bạn.</string>
+  <string name="create_success_button">Đã hiểu</string>
+  <string name="create_workspace_title">Tạo workspace mới</string>
+  <string name="all_day">Cả ngày</string>
+  <string name="change_time">Thay đổi khung giờ truy cập</string>
+  <string name="block_from">Chặn từ</string>
+  <string name="block_to">đến</string>
+  <string name="delete">Xóa</string>
+  <string name="protection_all_day">Bảo vệ cả ngày</string>
+  <string name="add_time">Thêm khung giờ</string>
+  <string name="require_pick_time">Yêu cầu chọn thời gian chặn</string>
+  <string name="time_protection">Khung giờ quản lý truy cập</string>
+  <string name="repeat_daily">Lặp lại hàng ngày</string>
+  <string name="complete">Hoàn tất</string>
+  <array name="day_selector">
+    <item>T2</item>
+    <item>T3</item>
+    <item>T4</item>
+    <item>T5</item>
+    <item>T6</item>
+    <item>T7</item>
+    <item>CN</item>
+  </array>
+  <string name="create_group_complete">Tạo nhóm thành công!</string>
+  <string name="create_group_complete_sub">Nhóm của bạn đã được áp dụng các thiết lập mà bạn khởi tạo.</string>
+  <string name="understood">Đã hiểu</string>
 </resources>

@@ -21,6 +21,7 @@ class SwitchSimpleView @JvmOverloads constructor(
     private var binding: LayoutSwitchSimpleBinding? = null
     private var subjectAdapter: SubjectAdapter? = null
     private var isExpanded = false
+    private var mOnSwitchChangeListener: ((Boolean) -> Unit)? = null
 
     init {
         binding = LayoutSwitchSimpleBinding.inflate(LayoutInflater.from(context), this, true)
@@ -45,10 +46,26 @@ class SwitchSimpleView @JvmOverloads constructor(
         }
 
 
+        binding?.switchWidget?.setOnCheckedChangeListener { _, isChecked ->
+            mOnSwitchChangeListener?.invoke(isChecked)
+        }
+
+    }
+
+    fun setOnSwitchChangeListener(onSwitchChange: (Boolean) -> Unit) {
+        mOnSwitchChangeListener = onSwitchChange
+    }
+
+    fun isChecked() : Boolean {
+        return binding?.switchWidget?.isChecked == true
+    }
+
+    fun setChecked(value: Boolean) {
+        binding?.switchWidget?.isChecked = value
     }
 
     fun setData(data: ArrayList<Subject>) {
-        if (!data.isNullOrEmpty()) {
+        if(!data.isNullOrEmpty()) {
             binding?.ivArrow?.visibility = View.VISIBLE
         }
 
@@ -76,5 +93,6 @@ class SwitchSimpleView @JvmOverloads constructor(
         }
         subjectAdapter?.setData(data)
     }
+
 
 }

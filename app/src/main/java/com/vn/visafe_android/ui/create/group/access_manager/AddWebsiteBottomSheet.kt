@@ -2,18 +2,14 @@ package com.vn.visafe_android.ui.create.group.access_manager
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.DialogFragment
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.vn.visafe_android.R
+import com.vn.visafe_android.base.BaseDialogBottomSheet
 import com.vn.visafe_android.databinding.LayoutAddWebsiteBottomSheetBinding
 import com.vn.visafe_android.model.Subject
 import com.vn.visafe_android.ui.create.group.CreateGroupActivity
 
-class AddWebsiteBottomSheet : BottomSheetDialogFragment() {
+class AddWebsiteBottomSheet : BaseDialogBottomSheet<LayoutAddWebsiteBottomSheetBinding>() {
 
     companion object {
 
@@ -29,8 +25,6 @@ class AddWebsiteBottomSheet : BottomSheetDialogFragment() {
 
     }
 
-    private lateinit var binding: LayoutAddWebsiteBottomSheetBinding
-
     private var mOnClickConfirmListener: ((Subject, Action) -> Unit)? = null
 
     private var mAction: Action? = null
@@ -44,28 +38,7 @@ class AddWebsiteBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.BottomSheetDialogStyle)
-
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = LayoutAddWebsiteBottomSheetBinding.inflate(
-            LayoutInflater.from(context),
-            container,
-            false
-        )
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initView() {
         binding.tvGroup.text = createGroupActivity?.somethingObject?.groupName
 
         val data = arguments?.getParcelable<Subject>("data")
@@ -98,5 +71,7 @@ class AddWebsiteBottomSheet : BottomSheetDialogFragment() {
             Toast.makeText(context, "require input", Toast.LENGTH_SHORT).show()
         }
     }
+
+    override fun layoutRes(): Int = R.layout.layout_add_website_bottom_sheet
 
 }

@@ -1,14 +1,12 @@
 package com.vn.visafe_android.ui.create.group.access_manager
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.vn.visafe_android.R
+import com.vn.visafe_android.base.BaseDialogBottomSheet
 import com.vn.visafe_android.databinding.LayoutEditWebsiteBottomSheetBinding
 import com.vn.visafe_android.model.Subject
 
-class EditWebsiteBottomSheet : BottomSheetDialogFragment() {
+class EditWebsiteBottomSheet : BaseDialogBottomSheet<LayoutEditWebsiteBottomSheetBinding>() {
 
     companion object {
 
@@ -24,27 +22,9 @@ class EditWebsiteBottomSheet : BottomSheetDialogFragment() {
 
     }
 
-    private lateinit var binding: LayoutEditWebsiteBottomSheetBinding
-
     private var mOnClickListener: ((Action) -> Unit)? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding =
-            LayoutEditWebsiteBottomSheetBinding.inflate(
-                LayoutInflater.from(context),
-                container,
-                false
-            )
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initView() {
 
         val data = arguments?.getParcelable<Subject>("data")
         data?.let {
@@ -78,4 +58,6 @@ class EditWebsiteBottomSheet : BottomSheetDialogFragment() {
         mOnClickListener?.invoke(Action.EDIT)
         dismiss()
     }
+
+    override fun layoutRes(): Int = R.layout.layout_edit_website_bottom_sheet
 }
