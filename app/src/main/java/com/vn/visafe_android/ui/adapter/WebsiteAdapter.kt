@@ -62,4 +62,14 @@ class WebsiteAdapter(private val onItemClick: (Subject) -> Unit) :
         oldData.title = newData.title
         notifyItemChanged(mData.indexOf(oldData))
     }
+
+    fun getData(): MutableList<String>? {
+        val list: MutableList<String> = mutableListOf()
+        for (i in mData) {
+            if (i.isChecked) {
+                list.add(i.value)
+            }
+        }
+        return list
+    }
 }

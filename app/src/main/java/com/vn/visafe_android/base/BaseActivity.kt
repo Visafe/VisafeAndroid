@@ -1,8 +1,11 @@
 package com.vn.visafe_android.base
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.util.Log
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +14,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.vn.visafe_android.data.BaseController
 import com.vn.visafe_android.data.BaseResponse
+import com.vn.visafe_android.data.NetworkClient
 import com.vn.visafe_android.widget.ProgressDialogFragment
 
 open class BaseActivity : AppCompatActivity(), BaseController {
@@ -58,7 +62,26 @@ open class BaseActivity : AppCompatActivity(), BaseController {
 
     override fun onError(baseResponse: BaseResponse) {
         dismissProgress()
-        Toast.makeText(applicationContext, baseResponse.msg, Toast.LENGTH_LONG).show()
+        if (baseResponse.status_code == NetworkClient.CODE_SEVER_ERROR) {
+            baseResponse.msg?.let { showAlert(it) }
+        } else {
+            Toast.makeText(applicationContext, baseResponse.msg, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    fun showAlert(msg: String) {
+        val builder = AlertDialog.Builder(this)
+        with(builder)
+        {
+            setTitle("Thông báo")
+            setMessage(msg)
+            setPositiveButton(
+                "OK"
+            ) { _, _ -> finish() }
+            show()
+        }
+
+
     }
 
     fun handlerFragment(fragment: Fragment, rootId: Int, tag: String) {

@@ -1,13 +1,22 @@
 package com.vn.visafe_android.ui.home.administrator
 
 import android.content.Intent
+import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vn.visafe_android.R
 import com.vn.visafe_android.base.BaseFragment
+import com.vn.visafe_android.data.BaseCallback
+import com.vn.visafe_android.data.NetworkClient
 import com.vn.visafe_android.databinding.FragmentGroupManagementBinding
 import com.vn.visafe_android.model.GroupData
+import com.vn.visafe_android.model.WorkspaceGroupData
 import com.vn.visafe_android.ui.adapter.GroupListAdapter
 import com.vn.visafe_android.ui.create.group.CreateGroupActivity
+import com.vn.visafe_android.utils.setOnSingClickListener
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
 
@@ -18,34 +27,71 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
             GroupManagementFragment()
     }
 
+    private var groupListAdapter: GroupListAdapter? = null
+    private var listGroup: MutableList<GroupData?> = mutableListOf()
+
     override fun layoutRes(): Int = R.layout.fragment_group_management
 
     override fun initView() {
-        val groupAdapter = GroupListAdapter(createGroupList())
-        groupAdapter.setEnableImageGroup(true)
-        groupAdapter.onClickGroup = object : GroupListAdapter.OnClickGroup {
+        groupListAdapter = GroupListAdapter(listGroup)
+        groupListAdapter?.setEnableImageGroup(true)
+        groupListAdapter?.onClickGroup = object : GroupListAdapter.OnClickGroup {
             override fun openGroup(data: GroupData) {
 
-            }
-
-            override fun createGroup() {
-                startActivity(Intent(requireContext(), CreateGroupActivity::class.java))
             }
 
             override fun onClickMore() {
             }
         }
         binding.rvGroup.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.rvGroup.adapter = groupAdapter
+        binding.rvGroup.adapter = groupListAdapter
+
+        initControl()
+
     }
 
-    private fun createGroupList() : List<GroupData?> {
-        val list : ArrayList<GroupData?> = ArrayList()
-        list.add(GroupData("Phòng 1: Marketing", 80, 15, null))
-        list.add(GroupData("Phòng 2: CNTT", 60, 14, null))
-        list.add(GroupData("Phòng 3: Kinh tế - Đối ngoại", 20, 13, null))
-        list.add(GroupData("Phòng 4: Chuyên gia", 20, 13, null))
-        list.add(null)
-        return list
+    private fun initControl() {
+        binding.btnAddNewGroup.setOnSingClickListener { startActivity(Intent(requireContext(), CreateGroupActivity::class.java)) }
+    }
+
+    fun loadData(workspaceGroupData: WorkspaceGroupData) {
+        doGetGroupWithId(workspaceGroupData)
+    }
+
+    private fun doGetGroupWithId(workspaceGroupData: WorkspaceGroupData) {
+        showProgressDialog()
+        val client = NetworkClient()
+        val call = context?.let { client.client(context = it).doGetGroupWithId(workspaceGroupData.id) }
+        call?.enqueue(BaseCallback(this, object : Callback<List<GroupData>> {
+            override fun onResponse(
+                call: Call<List<GroupData>>,
+                response: Response<List<GroupData>>
+            ) {
+                dismissProgress()
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    response.body()?.let {
+                        if (it.isNotEmpty()) {
+                            listGroup.addAll(it)
+                            groupListAdapter?.notifyDataSetChanged()
+                            binding.tvTotalGroup.text = String.format(getString(R.string.text_total_group), it.size)
+                            binding.tvTotalGroup.visibility = View.VISIBLE
+                            binding.rvGroup.visibility = View.VISIBLE
+                        } else {
+                            binding.tvTotalGroup.visibility = View.GONE
+                            binding.rvGroup.visibility = View.GONE
+                            listGroup.addAll(it)
+                            groupListAdapter?.notifyDataSetChanged()
+                        }
+
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<List<GroupData>>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        }))
     }
 }

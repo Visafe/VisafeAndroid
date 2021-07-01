@@ -41,10 +41,6 @@ class OverViewFragment : BaseFragment<FragmentOverViewBinding>() {
 
             }
 
-            override fun createGroup() {
-
-            }
-
             override fun onClickMore() {
 
             }

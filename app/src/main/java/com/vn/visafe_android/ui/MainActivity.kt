@@ -10,7 +10,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.vn.visafe_android.R
+import com.vn.visafe_android.ViSafeApp
 import com.vn.visafe_android.base.BaseActivity
 import com.vn.visafe_android.data.BaseCallback
 import com.vn.visafe_android.data.NetworkClient
@@ -23,6 +25,7 @@ import com.vn.visafe_android.ui.create.workspace.dialog.DeleteWorkspaceBottomShe
 import com.vn.visafe_android.ui.create.workspace.dialog.EditWorkspaceBottomSheet
 import com.vn.visafe_android.ui.home.*
 import com.vn.visafe_android.ui.home.administrator.AdministratorFragment
+import com.vn.visafe_android.utils.PreferenceKey
 import com.vn.visafe_android.utils.setOnSingClickListener
 import retrofit2.Call
 import retrofit2.Callback
@@ -34,6 +37,8 @@ class MainActivity : BaseActivity() {
         const val POSITION_PROTECT = 1
         const val POSITION_UTILITIES = 2
         const val POSITION_SETTING = 3
+        const val REQUEST_CODE_CREATE_WORKSPACE = 123
+        const val IS_FIRST_CREATE_WORKSPACE = "IS_FIRST_CREATE_WORKSPACE"
     }
 
     lateinit var binding: ActivityMainBinding
@@ -42,15 +47,18 @@ class MainActivity : BaseActivity() {
     private var currentPosition = 0
     private var drawerToggle: ActionBarDrawerToggle? = null
     private var adapter: MenuAdapter? = null
-
+    private var workspaceGroupData: WorkspaceGroupData? = null
     private var listMenu: MutableList<WorkspaceGroupData> = mutableListOf()
+    private var administratorFragment = AdministratorFragment()
+    private var protectFragment = ProtectFragment()
+    private var utilitiesHomeFragment = UtilitiesHomeFragment()
+    private var settingFragment = SettingFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initView()
-        doGetUserInfo()
         doGetWorkSpaces()
     }
 
@@ -76,10 +84,10 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initTab() {
-        listFragment.add(POSITION_HOME, AdministratorFragment.newInstance())
-        listFragment.add(POSITION_PROTECT, ProtectFragment.newInstance())
-        listFragment.add(POSITION_UTILITIES, UtilitiesHomeFragment.newInstance())
-        listFragment.add(POSITION_SETTING, SettingFragment.newInstance())
+        listFragment.add(POSITION_HOME, administratorFragment)
+        listFragment.add(POSITION_PROTECT, protectFragment)
+        listFragment.add(POSITION_UTILITIES, utilitiesHomeFragment)
+        listFragment.add(POSITION_SETTING, settingFragment)
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         listFragment.forEachIndexed { index, fragment ->
@@ -120,9 +128,14 @@ class MainActivity : BaseActivity() {
     private fun initListMenu() {
         binding.rvGroup.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapter = MenuAdapter((listMenu as ArrayList), object : OnClickMenu {
+//        listMenu = createListMenu()
+        adapter = MenuAdapter(listMenu, object : OnClickMenu {
             override fun onClickMenu(data: WorkspaceGroupData, position: Int) {
                 adapter?.setSelected(position)
+                binding.tvTitleToolbar.text = listMenu[position].name
+                data.let {
+                    administratorFragment.updateDataView(it)
+                }
             }
 
             override fun onMoreGroup(data: WorkspaceGroupData, position: Int) {
@@ -171,6 +184,72 @@ class MainActivity : BaseActivity() {
         super.onConfigurationChanged(newConfig)
         drawerToggle?.onConfigurationChanged(newConfig)
     }
+
+//    private fun createListMenu(): MutableList<WorkspaceGroupData> {
+//        val listMenu: MutableList<WorkspaceGroupData> = mutableListOf()
+//        listMenu.add(
+//            WorkspaceGroupData(
+//                "ce492772-88b5-4c36-9c21-9c2501a7ae4f", "1231213123", false, "PERSONAL",
+//                205,
+//                isOwner = true,
+//                phishingEnabled = true,
+//                malwareEnabled = true,
+//                logEnabled = true,
+//                groupIds = listOf(),
+//                members = listOf(),
+//                createdAt = "",
+//                updatedAt = "",
+//                isSelected = true
+//            )
+//        )
+//        listMenu.add(
+//            WorkspaceGroupData(
+//                "ce492772-88b5-4c36-9c21-9c2501a7ae4f", "1231213ffff", false, "PERSONAL",
+//                205,
+//                isOwner = true,
+//                phishingEnabled = true,
+//                malwareEnabled = true,
+//                logEnabled = false,
+//                groupIds = listOf(),
+//                members = listOf(),
+//                createdAt = "",
+//                updatedAt = "",
+//                isSelected = false
+//            )
+//        )
+//        listMenu.add(
+//            WorkspaceGroupData(
+//                "ce492772-88b5-4c36-9c21-9c2501a7ae4f", "1231213123", false, "PERSONAL",
+//                205,
+//                isOwner = true,
+//                phishingEnabled = false,
+//                malwareEnabled = true,
+//                logEnabled = false,
+//                groupIds = listOf(),
+//                members = listOf(),
+//                createdAt = "",
+//                updatedAt = "",
+//                isSelected = false
+//            )
+//        )
+//        listMenu.add(
+//            WorkspaceGroupData(
+//                "ce492772-88b5-4c36-9c21-9c2501a7ae4f", "1231213123", false, "PERSONAL",
+//                205,
+//                isOwner = true,
+//                phishingEnabled = false,
+//                malwareEnabled = false,
+//                logEnabled = true,
+//                groupIds = listOf(),
+//                members = listOf(),
+//                createdAt = "",
+//                updatedAt = "",
+//                isSelected = false
+//            )
+//        )
+//        return listMenu
+//    }
+
 
     private fun openTab(position: Int) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -227,10 +306,24 @@ class MainActivity : BaseActivity() {
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
                     val list = response.body()
                     list?.toMutableList()?.let { listMenu.addAll(it) }
-                    for (i in listMenu.indices) {
-                        listMenu[i].isSelected = i == 0
+                    if (listMenu.size > 0) {
+                        for (i in listMenu.indices) {
+                            listMenu[i].isSelected = i == 0
+                        }
+                        adapter?.notifyDataSetChanged()
+                        workspaceGroupData = listMenu[0]
+                        binding.tvTitleToolbar.text = listMenu[0].name
+                        workspaceGroupData?.let {
+                            administratorFragment.updateDataView(it)
+                        }
+                    } else {
+                        val intent = Intent(this@MainActivity, CreateWorkspaceActivity::class.java)
+                        intent.putExtra(IS_FIRST_CREATE_WORKSPACE, true)
+                        startActivityForResult(
+                            intent,
+                            REQUEST_CODE_CREATE_WORKSPACE
+                        )
                     }
-                    adapter?.notifyDataSetChanged()
                 }
             }
 
@@ -241,26 +334,49 @@ class MainActivity : BaseActivity() {
         }))
     }
 
-    private fun doGetUserInfo() {
-        showProgressDialog()
-        val client = NetworkClient()
-        val call = client.client(context = applicationContext).doGetUserInfo()
-        call.enqueue(BaseCallback(this@MainActivity, object : Callback<UserInfo> {
-            override fun onResponse(
-                call: Call<UserInfo>,
-                response: Response<UserInfo>
-            ) {
-                dismissProgress()
-                val userInfo = response.body()
-                userInfo?.let {
-                    binding.tvUserName.text = it.fullName.toString()
-                }
-            }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_CREATE_WORKSPACE) {
+            doGetWorkSpaces()
+            doGetUserInfo()
+        }
+    }
 
-            override fun onFailure(call: Call<UserInfo>, t: Throwable) {
-                t.message?.let { Log.e("onFailure: ", it) }
-                dismissProgress()
+    private fun doGetUserInfo() {
+        if (ViSafeApp().getPreference().getUserInfo().toString().isEmpty()) {
+            showProgressDialog()
+            val client = NetworkClient()
+            val call = client.client(context = applicationContext).doGetUserInfo()
+            call.enqueue(BaseCallback(this@MainActivity, object : Callback<UserInfo> {
+                override fun onResponse(
+                    call: Call<UserInfo>,
+                    response: Response<UserInfo>
+                ) {
+                    dismissProgress()
+                    if (response.code() == NetworkClient.CODE_SUCCESS) {
+                        val gson = Gson()
+                        val userInfo = response.body()
+                        userInfo?.let {
+                            binding.tvUserName.text = it.fullName.toString()
+                        }
+                        ViSafeApp().getPreference().putString(
+                            PreferenceKey.USER_INFO,
+                            gson.toJson(userInfo)
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<UserInfo>, t: Throwable) {
+                    t.message?.let { Log.e("onFailure: ", it) }
+                    dismissProgress()
+                }
+            }))
+        } else {
+            val userInfo = ViSafeApp().getPreference().getUserInfo()
+            userInfo.let {
+                binding.tvUserName.text = it.fullName.toString()
             }
-        }))
+        }
+
     }
 }

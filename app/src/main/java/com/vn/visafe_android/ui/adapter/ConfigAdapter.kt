@@ -7,7 +7,7 @@ import com.vn.visafe_android.databinding.ItemConfigBinding
 import com.vn.visafe_android.utils.SetupConfig
 
 class ConfigAdapter : RecyclerView.Adapter<ConfigAdapter.ConfigViewHolder>() {
-    private val list = SetupConfig.values()
+    private var list = SetupConfig.values()
     var onChangeConfig: OnChangeConfig? = null
 
     class ConfigViewHolder private constructor(val binding: ItemConfigBinding) :
@@ -31,6 +31,11 @@ class ConfigAdapter : RecyclerView.Adapter<ConfigAdapter.ConfigViewHolder>() {
                 return ConfigViewHolder(binding)
             }
         }
+    }
+
+    fun addData(data: Array<SetupConfig>) {
+        this.list = data
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConfigViewHolder {

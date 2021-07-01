@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vn.visafe_android.databinding.ItemGroupMenuBinding
 import com.vn.visafe_android.model.WorkspaceGroupData
 
-class MenuAdapter(private val groupList: ArrayList<WorkspaceGroupData>, private val onClickMenu: OnClickMenu) :
+class MenuAdapter(private val groupList: MutableList<WorkspaceGroupData>, private val onClickMenu: OnClickMenu) :
     RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
 
     class MenuViewHolder private constructor(val binding: ItemGroupMenuBinding) :
@@ -42,9 +42,9 @@ class MenuAdapter(private val groupList: ArrayList<WorkspaceGroupData>, private 
 
     fun setSelected(position: Int) {
         groupList[position].isSelected = true
-        for (i in groupList) {
-            if (i != groupList[position])
-                i.isSelected = false
+        for (i in groupList.indices) {
+            if (i != position)
+                groupList[i].isSelected = false
         }
         notifyDataSetChanged()
     }
@@ -52,6 +52,10 @@ class MenuAdapter(private val groupList: ArrayList<WorkspaceGroupData>, private 
     fun deleteItem(data: WorkspaceGroupData, position: Int) {
         groupList.remove(data)
         notifyItemRemoved(position)
+        for (i in groupList.indices) {
+            groupList[i].isSelected = i == 0
+        }
+        notifyDataSetChanged()
     }
 }
 

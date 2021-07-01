@@ -41,28 +41,13 @@ class TimeProtectionFragment : BaseFragment<TimeProtectionFragmentBinding>() {
     }
 
     override fun initView() {
-
         initListDay()
-
         initListTime()
-
         binding.tvAddTime.setOnClickListener {
             showDialog(null)
         }
-
-        binding.tvNext.setOnClickListener {
-            val dialog = SuccessDialogFragment.newInstance()
-            dialog.show(childFragmentManager, "")
-            dialog.setOnClickListener {
-                when (it) {
-                    Action.CONFIRM -> {
-                        createGroupActivity?.finish()
-                    }
-                    else -> {
-                        return@setOnClickListener
-                    }
-                }
-            }
+        binding.tvFinish.setOnClickListener {
+            createGroupActivity?.doCreateGroup()
         }
 
         binding.itemDayRepeat.setOnSwitchChangeListener {

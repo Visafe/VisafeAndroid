@@ -2,6 +2,8 @@ package com.vn.visafe_android.utils
 
 import android.app.Application
 import android.content.SharedPreferences
+import com.google.gson.Gson
+import com.vn.visafe_android.model.UserInfo
 
 
 class SharePreferenceKeyHelper private constructor(context: Application) {
@@ -27,6 +29,16 @@ class SharePreferenceKeyHelper private constructor(context: Application) {
 
     fun getString(key: String): String {
         return sharedPref.getString(key, "")!!
+    }
+
+    fun isLogin(): Boolean {
+        return sharedPref.getBoolean(PreferenceKey.ISLOGGEDIN, false)
+    }
+
+    fun getUserInfo(): UserInfo {
+        val ch = sharedPref.getString(PreferenceKey.USER_INFO, "{}")!!
+        val gson = Gson()
+        return gson.fromJson(ch, UserInfo::class.java)
     }
 
     companion object {

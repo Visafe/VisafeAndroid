@@ -30,11 +30,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_32dp"
+                    android:fontFamily="@font/sf_pro_text_regular_bold"
                     android:gravity="center"
                     android:text="@string/block_tracking"
                     android:textColor="@color/color_111111"
                     android:textSize="@dimen/text_size_20sp"
-                    android:fontFamily="@font/sf_pro_text_regular_bold"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -59,7 +59,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/itemBlockAdsWeb"
                     app:sub_title="Chặn các quảng cáo hiển thị trên các game, ứng dụng trên di động"
-                    app:title="Chặn quảng cáo Game" />
+                    app:title="Chặn quảng cáo game, ứng dụng" />
 
                 <com.vn.visafe_android.ui.custom.SwitchSimpleView
                     android:id="@+id/itemBlockAdsApp"
@@ -70,7 +70,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/itemBlockAdsGame"
                     app:sub_title="Chặn các quảng cáo đặc thù của một số ứng dụng phổ biến"
-                    app:title="Chặn quảng cáo ứng dụng" />
+                    app:title="Chặn quảng cáo nâng cao" />
 
                 <com.vn.visafe_android.ui.custom.SwitchSimpleView
                     android:id="@+id/itemBlockTrackingDevice"

@@ -43,4 +43,14 @@ class SubjectAdapter : RecyclerView.Adapter<SubjectAdapter.ViewHolder>() {
         mData.addAll(data)
         notifyDataSetChanged()
     }
+
+    fun getData(): MutableList<String> {
+        val list: MutableList<String> = mutableListOf()
+        for (i in mData) {
+            if (i.isChecked) {
+                list.add(i.value)
+            }
+        }
+        return list
+    }
 }

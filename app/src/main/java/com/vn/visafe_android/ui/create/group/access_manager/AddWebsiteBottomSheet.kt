@@ -39,7 +39,6 @@ class AddWebsiteBottomSheet : BaseDialogBottomSheet<LayoutAddWebsiteBottomSheetB
     }
 
     override fun initView() {
-        binding.tvGroup.text = createGroupActivity?.somethingObject?.groupName
 
         val data = arguments?.getParcelable<Subject>("data")
         mAction = if (data == null) {
@@ -65,7 +64,7 @@ class AddWebsiteBottomSheet : BaseDialogBottomSheet<LayoutAddWebsiteBottomSheetB
     private fun addNewLink() {
         val link = binding.editLink.text.toString()
         if (link.isNotBlank()) {
-            mAction?.let { mOnClickConfirmListener?.invoke(Subject(link, -1), it) }
+            mAction?.let { mOnClickConfirmListener?.invoke(Subject(link, link, -1), it) }
             dismiss()
         } else {
             Toast.makeText(context, "require input", Toast.LENGTH_SHORT).show()
