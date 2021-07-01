@@ -70,4 +70,16 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(), BaseController {
             (activity as BaseActivity).dismissProgress()
         }
     }
+
+    open fun hiddenKeyboard() {
+        if (activity is BaseActivity) {
+            (activity as BaseActivity).hideKeyboard(activity)
+        }
+    }
+
+    open fun showKeyboard() {
+        if (activity is BaseActivity) {
+            (activity as BaseActivity).showKeyboard()
+        }
+    }
 }

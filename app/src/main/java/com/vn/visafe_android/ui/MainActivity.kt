@@ -27,7 +27,8 @@ class MainActivity : BaseActivity() {
     companion object {
         const val POSITION_HOME = 0
         const val POSITION_PROTECT = 1
-        const val POSITION_SETTING = 2
+        const val POSITION_UTILITIES = 2
+        const val POSITION_SETTING = 3
     }
 
     lateinit var binding: ActivityMainBinding
@@ -69,6 +70,7 @@ class MainActivity : BaseActivity() {
     private fun initTab() {
         listFragment.add(POSITION_HOME, AdministratorFragment.newInstance())
         listFragment.add(POSITION_PROTECT, ProtectFragment.newInstance())
+        listFragment.add(POSITION_UTILITIES, UtilitiesHomeFragment.newInstance())
         listFragment.add(POSITION_SETTING, SettingFragment.newInstance())
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -90,6 +92,10 @@ class MainActivity : BaseActivity() {
                 }
                 R.id.navigation_protect -> {
                     openTab(POSITION_PROTECT)
+                    return@setOnNavigationItemSelectedListener true
+                }
+                R.id.navigation_utilities -> {
+                    openTab(POSITION_UTILITIES)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.navigation_setting -> {
