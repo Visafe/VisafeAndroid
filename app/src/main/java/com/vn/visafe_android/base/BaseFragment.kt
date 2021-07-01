@@ -1,9 +1,12 @@
 package com.vn.visafe_android.base
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -80,6 +83,25 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(), BaseController {
     open fun showKeyboard() {
         if (activity is BaseActivity) {
             (activity as BaseActivity).showKeyboard()
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    fun setHideKeyboardFocus(view: View) {
+        if (view !is EditText) {
+            view.setOnTouchListener { _: View?, _: MotionEvent? ->
+                if (activity != null) {
+                    hiddenKeyboard()
+                }
+                false
+            }
+        }
+
+        if (view is ViewGroup) {
+            for (i in 0 until view.childCount) {
+                val innerView = view.getChildAt(i)
+                setHideKeyboardFocus(innerView)
+            }
         }
     }
 }

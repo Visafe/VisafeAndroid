@@ -11,7 +11,7 @@ import com.vn.visafe_android.ui.create.group.protected_group.ProtectedGroupFragm
 class CreateGroupActivity : BaseActivity() {
     lateinit var binding: ActivityCreateGroupBinding
 
-    private var totalStep = 4
+    private var totalStep = 5
 
     private var step = 0
     var somethingObject = CreateGroup()

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vn.visafe_android.databinding.ItemGroupMenuBinding
 import com.vn.visafe_android.model.WorkspaceGroupData
 
-class MenuAdapter(private val groupList: List<WorkspaceGroupData>, private val onClickMenu: OnClickMenu) :
+class MenuAdapter(private val groupList: ArrayList<WorkspaceGroupData>, private val onClickMenu: OnClickMenu) :
     RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
 
     class MenuViewHolder private constructor(val binding: ItemGroupMenuBinding) :
@@ -34,7 +34,7 @@ class MenuAdapter(private val groupList: List<WorkspaceGroupData>, private val o
             onClickMenu.onClickMenu(groupList[position], position)
         }
         holder.binding.ivMore.setOnClickListener {
-            onClickMenu.onMoreGroup()
+            onClickMenu.onMoreGroup(groupList[position], position)
         }
     }
 
@@ -48,10 +48,15 @@ class MenuAdapter(private val groupList: List<WorkspaceGroupData>, private val o
         }
         notifyDataSetChanged()
     }
+
+    fun deleteItem(data: WorkspaceGroupData, position: Int) {
+        groupList.remove(data)
+        notifyItemRemoved(position)
+    }
 }
 
 interface OnClickMenu {
     fun onClickMenu(data: WorkspaceGroupData, position: Int)
 
-    fun onMoreGroup()
+    fun onMoreGroup(data: WorkspaceGroupData, position: Int)
 }

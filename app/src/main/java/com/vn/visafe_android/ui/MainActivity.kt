@@ -1,5 +1,6 @@
 package com.vn.visafe_android.ui
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -18,9 +19,14 @@ import com.vn.visafe_android.data.NetworkClient
 import com.vn.visafe_android.databinding.ActivityMainBinding
 import com.vn.visafe_android.model.UserInfo
 import com.vn.visafe_android.model.WorkspaceGroupData
+import com.vn.visafe_android.ui.create.group.access_manager.Action
+import com.vn.visafe_android.ui.create.workspace.CreateWorkspaceActivity
+import com.vn.visafe_android.ui.create.workspace.dialog.DeleteWorkspaceBottomSheet
+import com.vn.visafe_android.ui.create.workspace.dialog.EditWorkspaceBottomSheet
 import com.vn.visafe_android.ui.home.*
 import com.vn.visafe_android.ui.home.administrator.AdministratorFragment
 import com.vn.visafe_android.utils.PreferenceKey
+import com.vn.visafe_android.utils.setOnSingClickListener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -71,6 +77,9 @@ class MainActivity : BaseActivity() {
         supportActionBar?.title = ""
         initListMenu()
         initTab()
+        binding.tvAddWorkspace.setOnSingClickListener {
+            startActivity(Intent(this, CreateWorkspaceActivity::class.java))
+        }
     }
 
     private fun initTab() {
@@ -118,17 +127,47 @@ class MainActivity : BaseActivity() {
     private fun initListMenu() {
         binding.rvGroup.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapter = MenuAdapter(listMenu, object : OnClickMenu {
+        adapter = MenuAdapter((listMenu as ArrayList), object : OnClickMenu {
             override fun onClickMenu(data: WorkspaceGroupData, position: Int) {
                 adapter?.setSelected(position)
                 binding.tvTitleToolbar.text = listMenu[position].name
             }
 
-            override fun onMoreGroup() {
+            override fun onMoreGroup(data: WorkspaceGroupData, position: Int) {
+                val bottomSheet = EditWorkspaceBottomSheet.newInstance(data)
+                bottomSheet.show(supportFragmentManager, null)
+                bottomSheet.setOnClickListener {
+                    when (it) {
+                        Action.DELETE -> {
+                            showDialogDeleteWorkSpace(data, position)
+                        }
 
+                        Action.EDIT -> {
+                            //Edit workspace
+                        }
+                        else -> {
+                            return@setOnClickListener
+                        }
+                    }
+                }
             }
         })
         binding.rvGroup.adapter = adapter
+    }
+
+    private fun showDialogDeleteWorkSpace(data: WorkspaceGroupData, position: Int) {
+        val bottomSheet = DeleteWorkspaceBottomSheet.newInstance(data)
+        bottomSheet.show(supportFragmentManager, null)
+        bottomSheet.setOnClickListener {
+            when (it) {
+                Action.CONFIRM -> {
+                    adapter?.deleteItem(data, position)
+                }
+                else -> {
+                    return@setOnClickListener
+                }
+            }
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
