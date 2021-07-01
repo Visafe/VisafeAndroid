@@ -12,6 +12,11 @@
         android:title="@string/protect" />
 
     <item
+        android:id="@+id/navigation_utilities"
+        android:icon="@drawable/ic_utilities"
+        android:title="@string/utilities" />
+
+    <item
         android:id="@+id/navigation_setting"
         android:icon="@drawable/ic_settings"
         android:title="@string/setting" />

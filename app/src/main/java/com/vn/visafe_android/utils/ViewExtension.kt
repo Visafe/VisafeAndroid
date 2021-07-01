@@ -21,3 +21,8 @@ fun View.setOnSingClickListener(onClick: (View) -> Unit) {
         }
     })
 }
+
+fun View.setBackgroundTintExt(@ColorRes color: Int) {
+    backgroundTintList =
+        AppCompatResources.getColorStateList(context, color)
+}

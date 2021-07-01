@@ -1,11 +1,13 @@
 package com.vn.visafe_android.ui.home.administrator
 
+import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vn.visafe_android.R
 import com.vn.visafe_android.base.BaseFragment
 import com.vn.visafe_android.databinding.FragmentGroupManagementBinding
 import com.vn.visafe_android.model.GroupData
 import com.vn.visafe_android.ui.adapter.GroupListAdapter
+import com.vn.visafe_android.ui.create.group.CreateGroupActivity
 
 class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
 
@@ -27,7 +29,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
             }
 
             override fun createGroup() {
-
+                startActivity(Intent(requireContext(), CreateGroupActivity::class.java))
             }
 
             override fun onClickMore() {
