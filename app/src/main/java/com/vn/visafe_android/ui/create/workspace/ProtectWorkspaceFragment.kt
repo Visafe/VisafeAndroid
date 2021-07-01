@@ -8,7 +8,7 @@ import com.vn.visafe_android.R
 import com.vn.visafe_android.base.BaseFragment
 import com.vn.visafe_android.databinding.FragmentProtectWorkspaceBinding
 import com.vn.visafe_android.model.TYPE_WORKSPACES
-import com.vn.visafe_android.ui.create.group.block_tracking.BlockTracingAndAdsFragment
+import com.vn.visafe_android.utils.setOnSingClickListener
 
 class ProtectWorkspaceFragment : BaseFragment<FragmentProtectWorkspaceBinding>() {
     private var type = ""
@@ -35,13 +35,20 @@ class ProtectWorkspaceFragment : BaseFragment<FragmentProtectWorkspaceBinding>()
 
     override fun initView() {
         enableButton()
+        type = TYPE_WORKSPACES.SCHOOL.type
+        binding.ivWorkspace.setImageResource(TYPE_WORKSPACES.SCHOOL.resDrawableIcon)
+        binding.checkBoxChinhPhu.isChecked = false
+        binding.checkBoxCompany.isChecked = false
+        binding.checkBoxFamily.isChecked = false
+        binding.checkBoxSchool.isChecked = true
+
         binding.editNameWorkspace.addTextChangedListener {
             enableButton()
         }
 
-        binding.tvNext.setOnClickListener {
-            createWorkspaceActivity?.groupData?.name = binding.editNameWorkspace.text.toString()
-            createWorkspaceActivity?.groupData?.type = type
+        binding.tvNext.setOnSingClickListener {
+            createWorkspaceActivity?.createWorkSpaceRequest?.name = binding.editNameWorkspace.text.toString()
+            createWorkspaceActivity?.createWorkSpaceRequest?.type = type
             createWorkspaceActivity?.addFragment(SetupProtectWorkspaceFragment.newInstance())
             hiddenKeyboard()
         }

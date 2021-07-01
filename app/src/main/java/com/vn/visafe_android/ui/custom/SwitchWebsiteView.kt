@@ -25,6 +25,8 @@ class SwitchWebsiteView @JvmOverloads constructor(
     private var binding: LayoutSwitchWebsitesBinding? = null
     private var websiteAdapter: WebsiteAdapter? = null
     private var isExpanded = false
+    private var mData: ArrayList<Subject> = arrayListOf()
+    private var isChoose: Boolean = false
 
     init {
         binding = LayoutSwitchWebsitesBinding.inflate(LayoutInflater.from(context), this, true)
@@ -37,17 +39,15 @@ class SwitchWebsiteView @JvmOverloads constructor(
 
         a.recycle()
 
-        if (!title.isNullOrEmpty()) {
-            binding?.tvTitle?.text = title
+        websiteAdapter = WebsiteAdapter {
+            showDialogEdit(it)
         }
-
-        if (!subTitle.isNullOrEmpty()) {
-            binding?.tvSubTitle?.visibility = View.VISIBLE
-            binding?.tvSubTitle?.text = subTitle
-        } else {
-            binding?.tvSubTitle?.visibility = View.GONE
+        binding?.let {
+            with(it.recyclerView) {
+                adapter = websiteAdapter
+                layoutManager = LinearLayoutManager(context)
+            }
         }
-
         setOnClickListener {
             if (isExpanded) {
                 binding?.layoutList?.let {
@@ -62,9 +62,27 @@ class SwitchWebsiteView @JvmOverloads constructor(
             }
             isExpanded = !isExpanded
         }
-
         binding?.tvAddLink?.setOnClickListener {
             showDialogAdd()
+        }
+        if (!title.isNullOrEmpty()) {
+            binding?.tvTitle?.text = title
+        }
+        if (!subTitle.isNullOrEmpty()) {
+            binding?.tvSubTitle?.visibility = View.VISIBLE
+            binding?.tvSubTitle?.text = subTitle
+        } else {
+            binding?.tvSubTitle?.visibility = View.GONE
+        }
+        binding?.switchWidget?.setOnCheckedChangeListener { _, isChecked ->
+            if (mData.isNullOrEmpty()) {
+                isChoose = isChecked
+            } else {
+                for (i in mData) {
+                    i.isChecked = isChecked
+                }
+                websiteAdapter?.notifyDataSetChanged()
+            }
         }
 
     }
@@ -107,19 +125,15 @@ class SwitchWebsiteView @JvmOverloads constructor(
     }
 
     fun setData(data: ArrayList<Subject>) {
+        mData.addAll(data)
         if (!data.isNullOrEmpty()) {
             binding?.ivArrow?.visibility = View.VISIBLE
         }
-        websiteAdapter = WebsiteAdapter {
-            showDialogEdit(it)
-        }
-        binding?.let {
-            with(it.recyclerView) {
-                adapter = websiteAdapter
-                layoutManager = LinearLayoutManager(context)
-            }
-        }
         websiteAdapter?.setData(data)
+    }
+
+    fun getDataListBlockWeb(): MutableList<String>? {
+        return websiteAdapter?.getData()
     }
 
 }

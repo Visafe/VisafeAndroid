@@ -13,7 +13,7 @@ class AdministratorFragment : BaseFragment<FragmentAdministratorBinding>() {
     private var pagerAdapter: ScreenSlidePagerAdapter? = null
     private var overViewFragment = OverViewFragment()
     private var groupManagementFragment = GroupManagementFragment()
-    private var configruationFragment = ConfigruationFragment()
+    private var configruationFragment = ConfigurationFragment()
 
     override fun layoutRes(): Int = R.layout.fragment_administrator
 
@@ -34,5 +34,6 @@ class AdministratorFragment : BaseFragment<FragmentAdministratorBinding>() {
         val gson = Gson()
         Log.e("AdministratorFragment: ", gson.toJson(workspaceGroupData))
         groupManagementFragment.loadData(workspaceGroupData)
+        configruationFragment.loadData(workspaceGroupData)
     }
 }

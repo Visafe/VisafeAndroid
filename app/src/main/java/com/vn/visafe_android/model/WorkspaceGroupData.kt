@@ -25,7 +25,7 @@ data class WorkspaceGroupData(
     @SerializedName("malwareEnabled")
     var malwareEnabled: Boolean? = null,
     @SerializedName("logEnabled")
-    var logEnabled: String? = null,
+    var logEnabled: Boolean? = null,
     @SerializedName("groupIds")
     var groupIds: List<String>? = null,
     @SerializedName("members")

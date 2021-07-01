@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!-- Customize your theme here. -->
@@ -10,15 +11,15 @@
     </style>
 
     <declare-styleable name="MaterialDialog">
-        <attr format="color|reference" name="material_dialog_background"/>
+        <attr name="material_dialog_background" format="color|reference" />
 
-        <attr format="color|reference" name="material_dialog_title_text_color"/>
-        <attr format="color|reference" name="material_dialog_message_text_color"/>
+        <attr name="material_dialog_title_text_color" format="color|reference" />
+        <attr name="material_dialog_message_text_color" format="color|reference" />
 
-        <attr format="color|reference" name="material_dialog_positive_button_text_color"/>
-        <attr format="color|reference" name="material_dialog_positive_button_color"/>
+        <attr name="material_dialog_positive_button_text_color" format="color|reference" />
+        <attr name="material_dialog_positive_button_color" format="color|reference" />
 
-        <attr format="color|reference" name="material_dialog_negative_button_text_color"/>
+        <attr name="material_dialog_negative_button_text_color" format="color|reference" />
     </declare-styleable>
 
     <style name="TabLayoutCulture" parent="TextAppearance.Design.Tab">
@@ -46,5 +47,12 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopRight">@dimen/_24dp</item>
         <item name="cornerSizeTopLeft">@dimen/_24dp</item>
+    </style>
+
+    <style name="Base.Widget.Design.TabLayout" parent="android:Widget">
+        <item name="background">@drawable/bg_stroke_1dp</item>
+        <item name="tabBackground">@drawable/tab_background</item>
+        <item name="tabIndicatorColor">#000000</item>
+        <item name="tabIndicatorHeight">5dp</item>
     </style>
 </resources>

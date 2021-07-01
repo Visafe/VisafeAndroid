@@ -37,6 +37,8 @@ class MainActivity : BaseActivity() {
         const val POSITION_PROTECT = 1
         const val POSITION_UTILITIES = 2
         const val POSITION_SETTING = 3
+        const val REQUEST_CODE_CREATE_WORKSPACE = 123
+        const val IS_FIRST_CREATE_WORKSPACE = "IS_FIRST_CREATE_WORKSPACE"
     }
 
     lateinit var binding: ActivityMainBinding
@@ -57,7 +59,6 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initView()
-        doGetUserInfo()
         doGetWorkSpaces()
     }
 
@@ -127,10 +128,14 @@ class MainActivity : BaseActivity() {
     private fun initListMenu() {
         binding.rvGroup.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapter = MenuAdapter((listMenu as ArrayList), object : OnClickMenu {
+//        listMenu = createListMenu()
+        adapter = MenuAdapter(listMenu, object : OnClickMenu {
             override fun onClickMenu(data: WorkspaceGroupData, position: Int) {
                 adapter?.setSelected(position)
                 binding.tvTitleToolbar.text = listMenu[position].name
+                data.let {
+                    administratorFragment.updateDataView(it)
+                }
             }
 
             override fun onMoreGroup(data: WorkspaceGroupData, position: Int) {
@@ -179,6 +184,72 @@ class MainActivity : BaseActivity() {
         super.onConfigurationChanged(newConfig)
         drawerToggle?.onConfigurationChanged(newConfig)
     }
+
+//    private fun createListMenu(): MutableList<WorkspaceGroupData> {
+//        val listMenu: MutableList<WorkspaceGroupData> = mutableListOf()
+//        listMenu.add(
+//            WorkspaceGroupData(
+//                "ce492772-88b5-4c36-9c21-9c2501a7ae4f", "1231213123", false, "PERSONAL",
+//                205,
+//                isOwner = true,
+//                phishingEnabled = true,
+//                malwareEnabled = true,
+//                logEnabled = true,
+//                groupIds = listOf(),
+//                members = listOf(),
+//                createdAt = "",
+//                updatedAt = "",
+//                isSelected = true
+//            )
+//        )
+//        listMenu.add(
+//            WorkspaceGroupData(
+//                "ce492772-88b5-4c36-9c21-9c2501a7ae4f", "1231213ffff", false, "PERSONAL",
+//                205,
+//                isOwner = true,
+//                phishingEnabled = true,
+//                malwareEnabled = true,
+//                logEnabled = false,
+//                groupIds = listOf(),
+//                members = listOf(),
+//                createdAt = "",
+//                updatedAt = "",
+//                isSelected = false
+//            )
+//        )
+//        listMenu.add(
+//            WorkspaceGroupData(
+//                "ce492772-88b5-4c36-9c21-9c2501a7ae4f", "1231213123", false, "PERSONAL",
+//                205,
+//                isOwner = true,
+//                phishingEnabled = false,
+//                malwareEnabled = true,
+//                logEnabled = false,
+//                groupIds = listOf(),
+//                members = listOf(),
+//                createdAt = "",
+//                updatedAt = "",
+//                isSelected = false
+//            )
+//        )
+//        listMenu.add(
+//            WorkspaceGroupData(
+//                "ce492772-88b5-4c36-9c21-9c2501a7ae4f", "1231213123", false, "PERSONAL",
+//                205,
+//                isOwner = true,
+//                phishingEnabled = false,
+//                malwareEnabled = false,
+//                logEnabled = true,
+//                groupIds = listOf(),
+//                members = listOf(),
+//                createdAt = "",
+//                updatedAt = "",
+//                isSelected = false
+//            )
+//        )
+//        return listMenu
+//    }
+
 
     private fun openTab(position: Int) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -235,16 +306,23 @@ class MainActivity : BaseActivity() {
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
                     val list = response.body()
                     list?.toMutableList()?.let { listMenu.addAll(it) }
-                    for (i in listMenu.indices) {
-                        listMenu[i].isSelected = i == 0
-                    }
-                    adapter?.notifyDataSetChanged()
                     if (listMenu.size > 0) {
+                        for (i in listMenu.indices) {
+                            listMenu[i].isSelected = i == 0
+                        }
+                        adapter?.notifyDataSetChanged()
                         workspaceGroupData = listMenu[0]
                         binding.tvTitleToolbar.text = listMenu[0].name
                         workspaceGroupData?.let {
                             administratorFragment.updateDataView(it)
                         }
+                    } else {
+                        val intent = Intent(this@MainActivity, CreateWorkspaceActivity::class.java)
+                        intent.putExtra(IS_FIRST_CREATE_WORKSPACE, true)
+                        startActivityForResult(
+                            intent,
+                            REQUEST_CODE_CREATE_WORKSPACE
+                        )
                     }
                 }
             }
@@ -254,6 +332,14 @@ class MainActivity : BaseActivity() {
                 dismissProgress()
             }
         }))
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_CREATE_WORKSPACE) {
+            doGetWorkSpaces()
+            doGetUserInfo()
+        }
     }
 
     private fun doGetUserInfo() {

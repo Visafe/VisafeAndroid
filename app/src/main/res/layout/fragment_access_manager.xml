@@ -38,7 +38,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.vn.visafe_android.ui.custom.SwitchWebsiteView
+                <com.vn.visafe_android.ui.custom.SwitchSimpleView
                     android:id="@+id/itemApp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -51,17 +51,6 @@
                     app:title="@string/application" />
 
                 <com.vn.visafe_android.ui.custom.SwitchWebsiteView
-                    android:id="@+id/itemGame"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_24dp"
-                    android:layout_marginTop="@dimen/_32dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/itemApp"
-                    app:title="Game" />
-
-                <com.vn.visafe_android.ui.custom.SwitchWebsiteView
                     android:id="@+id/itemWeb"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -69,7 +58,7 @@
                     android:layout_marginTop="@dimen/_32dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/itemGame"
+                    app:layout_constraintTop_toBottomOf="@+id/itemApp"
                     app:sub_title="@string/block_websites"
                     app:title="@string/websites" />
 
@@ -84,7 +73,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/itemWeb" />
 
-                <com.vn.visafe_android.ui.custom.SwitchWebsiteView
+                <com.vn.visafe_android.ui.custom.SwitchSimpleView
                     android:id="@+id/itemLimit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -107,8 +96,8 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/itemLimit" />
 
-                <com.vn.visafe_android.ui.custom.SwitchWebsiteView
-                    android:id="@+id/itemByPass"
+                <com.vn.visafe_android.ui.custom.SwitchSimpleView
+                    android:id="@+id/itemSensitive"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_24dp"
@@ -116,6 +105,18 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/viewTwo"
+                    app:sub_title="@string/sub_block_sensitive"
+                    app:title="@string/block_sensitive" />
+
+                <com.vn.visafe_android.ui.custom.SwitchSimpleView
+                    android:id="@+id/itemByPass"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/itemSensitive"
                     app:sub_title="@string/block_by_pass_sub"
                     app:title="@string/block_by_pass" />
 
@@ -124,7 +125,7 @@
         </androidx.core.widget.NestedScrollView>
 
         <TextView
-            android:id="@+id/tvSave"
+            android:id="@+id/tvNext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -134,7 +135,7 @@
             android:backgroundTint="@color/color_FFB31F"
             android:gravity="center"
             android:padding="12dp"
-            android:text="@string/save"
+            android:text="@string/next"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold" />

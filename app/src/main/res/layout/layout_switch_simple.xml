@@ -24,48 +24,62 @@
             app:barrierDirection="left"
             app:constraint_referenced_ids="switchWidget" />
 
-        <TextView
-            android:id="@+id/tvTitle"
+        <LinearLayout
+            android:id="@+id/rllCell"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_18dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/sf_pro_text_regular_bold"
-            android:maxLines="1"
-            android:textColor="@color/color_111111"
-            android:textSize="@dimen/text_size_16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/switchWidget"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/switchWidget"
-            tools:text="Thông báo Thông báo Thông báo" />
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@+id/switchWidget"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/switchWidget">
 
-        <ImageView
-            android:id="@+id/ivArrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:rotation="90"
-            android:src="@drawable/ic_stroke"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
-            app:layout_constraintLeft_toRightOf="@+id/tvTitle"
-            app:layout_constraintTop_toTopOf="@+id/tvTitle"
-            app:tint="@color/color_111111" />
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:maxWidth="@dimen/_210sdp"
+                android:maxLines="2"
+                android:textColor="@color/color_111111"
+                android:textSize="@dimen/text_size_16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ivArrow"
+                tools:text="Thông báo Thông báo Thông báo Thông sda asd asdáo Thông báo Thông báo" />
+
+            <ImageView
+                android:id="@+id/ivArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:maxWidth="@dimen/_20sdp"
+                android:rotation="90"
+                android:src="@drawable/ic_stroke"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+                app:layout_constraintLeft_toRightOf="@+id/tvTitle"
+                app:layout_constraintTop_toTopOf="@+id/tvTitle"
+                app:tint="@color/color_111111"
+                tools:visibility="visible" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvSubTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="@dimen/_32dp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:fontFamily="@font/sf_pro_text_regular"
             android:textColor="@color/color_222222"
             android:textSize="@dimen/text_size_12sp"
-            android:fontFamily="@font/sf_pro_text_regular"
             android:visibility="gone"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/barrier"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-            tools:text="Thông báo" />
+            app:layout_constraintEnd_toStartOf="@+id/barrier"
+            app:layout_constraintStart_toStartOf="@+id/rllCell"
+            app:layout_constraintTop_toBottomOf="@+id/rllCell"
+            tools:text="Thông báo"
+            tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -76,7 +90,8 @@
             android:visibility="gone"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvSubTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/tvSubTitle"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

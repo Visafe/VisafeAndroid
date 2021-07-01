@@ -13,13 +13,17 @@ class BaseCallback<T>(private val baseController: BaseController, private val mC
             }
             isError(response.code()) -> {
                 response.errorBody()?.let {
-                    val jsonObject = JSONObject(it.string())
-                    val statusCode = jsonObject.getString("status_code")
-                    val msg = jsonObject.getString("msg")
-                    val baseResponse = BaseResponse(statusCode.toInt(), msg)
-                    baseController.onError(baseResponse)
+                    if (it is JSONObject) {
+                        val jsonObject = JSONObject(it.string())
+                        val statusCode = jsonObject.getString("status_code")
+                        val msg = jsonObject.getString("msg")
+                        val baseResponse = BaseResponse(statusCode.toInt(), msg)
+                        baseController.onError(baseResponse)
+                    } else {
+                        val baseResponse = BaseResponse(response.code(), "Có lỗi xảy ra, vui lòng thử lại")
+                        baseController.onError(baseResponse)
+                    }
                 }
-
             }
             else -> {
                 mCallback.onResponse(call, response)

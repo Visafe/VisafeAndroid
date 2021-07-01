@@ -40,6 +40,14 @@ interface ApiService {
     fun doGetWorkSpacesOfCurrentUser(): Call<List<WorkspaceGroupData>>
 
     @GET("group")
-    fun doGetGroupWithId(@Query("groupid") groupid: String?): Call<List<GroupData>>
+    fun doGetAGroupWithId(@Query("groupid") groupid: String?): Call<List<GroupData>>
 
+    @GET("group")
+    fun doGetGroupWithId(@Query("wsId") wsId: String?): Call<List<GroupData>>
+
+    @POST("group/add")
+    fun doCreateGroup(@Body createGroupRequest: CreateGroupRequest): Call<ResponseBody>
+
+    @POST("workspace/add")
+    fun doCreateWorkspace(@Body createWorkSpaceRequest: CreateWorkSpaceRequest): Call<ResponseBody>
 }

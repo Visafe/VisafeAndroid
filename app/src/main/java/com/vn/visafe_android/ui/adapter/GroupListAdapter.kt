@@ -20,7 +20,6 @@ class GroupListAdapter(val groupList: List<GroupData?>) :
 
     companion object {
         const val TYPE_GROUP = 0
-        const val TYPE_CREATE_GROUP = 1
     }
 
     fun setEnableImageGroup(enableImageGroup: Boolean) {
@@ -56,24 +55,8 @@ class GroupListAdapter(val groupList: List<GroupData?>) :
         }
     }
 
-    class CreateGroupViewHolder private constructor(val binding: ItemCreateGroupBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        companion object {
-            fun from(parent: ViewGroup): CreateGroupViewHolder {
-                val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ItemCreateGroupBinding.inflate(layoutInflater, parent, false)
-                return CreateGroupViewHolder(binding)
-            }
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType) {
-            TYPE_GROUP -> GroupViewHolder.from(parent)
-            TYPE_CREATE_GROUP -> CreateGroupViewHolder.from(parent)
-            else -> GroupViewHolder.from(parent)
-        }
+        return GroupViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -85,18 +68,6 @@ class GroupListAdapter(val groupList: List<GroupData?>) :
             holder.binding.ivMore.setOnClickListener {
                 onClickGroup?.onClickMore()
             }
-        } else {
-            (holder as CreateGroupViewHolder).itemView.setOnSingClickListener {
-                onClickGroup?.createGroup()
-            }
-        }
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return if (groupList[position] != null) {
-            TYPE_GROUP
-        } else {
-            TYPE_CREATE_GROUP
         }
     }
 
@@ -104,7 +75,6 @@ class GroupListAdapter(val groupList: List<GroupData?>) :
 
     interface OnClickGroup {
         fun openGroup(data: GroupData)
-        fun createGroup()
         fun onClickMore()
     }
 }

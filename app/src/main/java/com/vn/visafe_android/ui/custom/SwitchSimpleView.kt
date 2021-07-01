@@ -21,6 +21,7 @@ class SwitchSimpleView @JvmOverloads constructor(
     private var binding: LayoutSwitchSimpleBinding? = null
     private var subjectAdapter: SubjectAdapter? = null
     private var isExpanded = false
+    private var mData: ArrayList<Subject> = arrayListOf()
     private var mOnSwitchChangeListener: ((Boolean) -> Unit)? = null
 
     init {
@@ -34,41 +35,13 @@ class SwitchSimpleView @JvmOverloads constructor(
 
         a.recycle()
 
-        if (!title.isNullOrEmpty()) {
-            binding?.tvTitle?.text = title
+        subjectAdapter = SubjectAdapter()
+        binding?.let {
+            with(it.recyclerView) {
+                adapter = subjectAdapter
+                layoutManager = LinearLayoutManager(context)
+            }
         }
-
-        if (!subTitle.isNullOrEmpty()) {
-            binding?.tvSubTitle?.visibility = View.VISIBLE
-            binding?.tvSubTitle?.text = subTitle
-        } else {
-            binding?.tvSubTitle?.visibility = View.GONE
-        }
-
-
-        binding?.switchWidget?.setOnCheckedChangeListener { _, isChecked ->
-            mOnSwitchChangeListener?.invoke(isChecked)
-        }
-
-    }
-
-    fun setOnSwitchChangeListener(onSwitchChange: (Boolean) -> Unit) {
-        mOnSwitchChangeListener = onSwitchChange
-    }
-
-    fun isChecked() : Boolean {
-        return binding?.switchWidget?.isChecked == true
-    }
-
-    fun setChecked(value: Boolean) {
-        binding?.switchWidget?.isChecked = value
-    }
-
-    fun setData(data: ArrayList<Subject>) {
-        if(!data.isNullOrEmpty()) {
-            binding?.ivArrow?.visibility = View.VISIBLE
-        }
-
         setOnClickListener {
             if (isExpanded) {
                 binding?.recyclerView?.let {
@@ -83,16 +56,49 @@ class SwitchSimpleView @JvmOverloads constructor(
             }
             isExpanded = !isExpanded
         }
+        if (!title.isNullOrEmpty()) {
+            binding?.tvTitle?.text = title
+        }
 
-        subjectAdapter = SubjectAdapter()
-        binding?.let {
-            with(it.recyclerView) {
-                adapter = subjectAdapter
-                layoutManager = LinearLayoutManager(context)
+        if (!subTitle.isNullOrEmpty()) {
+            binding?.tvSubTitle?.visibility = View.VISIBLE
+            binding?.tvSubTitle?.text = subTitle
+        } else {
+            binding?.tvSubTitle?.visibility = View.GONE
+        }
+        binding?.switchWidget?.setOnCheckedChangeListener { _, isChecked ->
+            if (mData.isNullOrEmpty()) {
+                mOnSwitchChangeListener?.invoke(isChecked)
+            } else {
+                for (i in mData) {
+                    i.isChecked = isChecked
+                }
+                subjectAdapter?.notifyDataSetChanged()
             }
+        }
+    }
+
+    fun setOnSwitchChangeListener(onSwitchChange: (Boolean) -> Unit) {
+        mOnSwitchChangeListener = onSwitchChange
+    }
+
+    fun isChecked(): Boolean {
+        return binding?.switchWidget?.isChecked == true
+    }
+
+    fun setChecked(value: Boolean) {
+        binding?.switchWidget?.isChecked = value
+    }
+
+    fun setData(data: ArrayList<Subject>) {
+        mData.addAll(data)
+        if (!data.isNullOrEmpty()) {
+            binding?.ivArrow?.visibility = View.VISIBLE
         }
         subjectAdapter?.setData(data)
     }
 
-
+    fun getDataListSubject(): MutableList<String>? {
+        return subjectAdapter?.getData()
+    }
 }

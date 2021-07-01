@@ -1,23 +1,39 @@
 package com.vn.visafe_android.ui.create.workspace
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import com.vn.visafe_android.R
 import com.vn.visafe_android.base.BaseActivity
+import com.vn.visafe_android.data.BaseCallback
+import com.vn.visafe_android.data.NetworkClient
 import com.vn.visafe_android.databinding.ActivityCreateWorkspaceBinding
 import com.vn.visafe_android.model.WorkspaceGroupData
+import com.vn.visafe_android.model.request.CreateWorkSpaceRequest
+import com.vn.visafe_android.ui.MainActivity
 import com.vn.visafe_android.ui.create.group.CreateGroupActivity
+import com.vn.visafe_android.ui.create.group.SuccessDialogFragment
+import com.vn.visafe_android.ui.create.group.access_manager.Action
+import com.vn.visafe_android.ui.create.workspace.dialog.DialogCreateSuccessWorkSpace
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class CreateWorkspaceActivity : BaseActivity() {
     lateinit var binding: ActivityCreateWorkspaceBinding
     private var totalStep = 2
     private var step = 0
-    var groupData = WorkspaceGroupData()
+    var createWorkSpaceRequest = CreateWorkSpaceRequest()
+    private var isFirst = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateWorkspaceBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        intent?.let {
+            isFirst = it.getBooleanExtra(MainActivity.IS_FIRST_CREATE_WORKSPACE, false)
+        }
         initView()
     }
 
@@ -35,6 +51,48 @@ class CreateWorkspaceActivity : BaseActivity() {
             .add(R.id.frameContainer, fragment)
             .addToBackStack(tag)
             .commitAllowingStateLoss()
+    }
+
+    fun doCreateGroup() {
+        showProgressDialog()
+        val client = NetworkClient()
+        val call = client.client(context = applicationContext).doCreateWorkspace(createWorkSpaceRequest)
+        call.enqueue(BaseCallback(this@CreateWorkspaceActivity, object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                dismissProgress()
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    showDialog()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        }))
+    }
+
+    private fun showDialog() {
+        val bottomSheet = DialogCreateSuccessWorkSpace()
+        bottomSheet.isCancelable = false
+        bottomSheet.show(supportFragmentManager, null)
+        bottomSheet.setOnClickListener {
+            when (it) {
+                Action.CONFIRM -> {
+                    if (isFirst) {
+                        setResult(RESULT_OK)
+                    }
+                    finish()
+
+                }
+                else -> {
+                    return@setOnClickListener
+                }
+            }
+        }
     }
 
     private fun setProgressView() {
