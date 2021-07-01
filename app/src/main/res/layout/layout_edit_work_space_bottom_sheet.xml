@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/_24dp">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24dp"
+            android:text="@string/workspaces"
+            android:textSize="@dimen/text_size_14sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvNameGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_24dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:text="@string/websites"
+            android:textColor="@color/color_111111"
+            android:textSize="@dimen/text_size_18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            tools:text="NCSC" />
+
+        <TextView
+            android:id="@+id/tvEdit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_32dp"
+            android:drawablePadding="12dp"
+            android:ellipsize="end"
+            android:gravity="center|start"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:maxLines="1"
+            android:text="@string/edit_workspace"
+            android:textColor="@color/color_111111"
+            android:textSize="@dimen/text_size_14sp"
+            app:drawableStartCompat="@drawable/ic_edit"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNameGroup" />
+
+        <View
+            android:id="@+id/viewOne"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/_18dp"
+            android:background="@color/color_EDEDED"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvEdit" />
+
+        <TextView
+            android:id="@+id/tvDelete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_18dp"
+            android:drawablePadding="12dp"
+            android:ellipsize="end"
+            android:gravity="center|start"
+            android:maxLines="1"
+            android:text="@string/delete_workspace"
+            android:textColor="@color/color_111111"
+            android:textSize="@dimen/text_size_14sp"
+            app:drawableStartCompat="@drawable/ic_delete"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewOne" />
+
+        <View
+            android:id="@+id/viewTwo"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/_18dp"
+            android:background="#EDEDED"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDelete" />
+
+        <TextView
+            android:id="@+id/tvCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_24dp"
+            android:background="@drawable/bg_radius_24dp"
+            android:backgroundTint="#1A111111"
+            android:gravity="center"
+            android:padding="@dimen/_14dp"
+            android:text="@string/cancel"
+            android:textColor="@color/color_111111"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewTwo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

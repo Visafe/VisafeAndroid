@@ -1,9 +1,12 @@
 package com.vn.visafe_android.model
 
 import android.graphics.Color
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.vn.visafe_android.R
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class WorkspaceGroupData(
     @SerializedName("id")
     var id: String? = null,
@@ -32,7 +35,7 @@ data class WorkspaceGroupData(
     @SerializedName("updatedAt")
     var updatedAt: String? = null,
     var isSelected: Boolean? = null
-)
+) : Parcelable
 
 enum class OWNER(val title: Int, val textColor: Int, val backgroundColor: Int) {
     QUAN_TRI(R.string.quan_tri, Color.parseColor("#FFB31F"), R.color.color_1AFFB31F),

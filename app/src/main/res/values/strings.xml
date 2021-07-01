@@ -211,4 +211,18 @@
     <string name="elder">Người cao tuổi</string>
     <string name="add_new_link">Thêm link website</string>
     <string name="protect_group_content">Visafe sẽ tự động đưa ra các cấu hình phù hợp với độ tuổi bạn lựa chọn</string>
+  <string name="edit_workspace">Chỉnh sửa workspace</string>
+  <string name="delete_workspace">Xóa workspace</string>
+  <string name="delete_workspace_content">Bạn có chắc chắn muốn xóa workspace %s</string>
+  <string name="no">Không</string>
+  <string name="input_workspace">Nhập tên workspace</string>
+  <string name="family">Gia đình</string>
+  <string name="school">Trường học</string>
+  <string name="company">Doanh nghiệp</string>
+  <string name="chinh_phu">Tổ chức chính phủ</string>
+  <string name="thiet_lap_an_toan">Thiết lập an toàn, an ninh mạng</string>
+    <string name="create_workspace_success">Tạo cấu hình thành công!</string>
+  <string name="visafe_protect">Visafe đã sẵn sàng bảo vệ bạn.</string>
+  <string name="create_success_button">Đã hiểu</string>
+  <string name="create_workspace_title">Tạo workspace mới</string>
 </resources>

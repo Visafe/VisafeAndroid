@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_32dp"
+            android:gravity="center"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:text="@string/thiet_lap_an_toan"
+            android:textColor="@color/color_111111"
+            android:textSize="@dimen/text_size_20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvConfig"
+            tools:listitem="@layout/item_config"
+            tools:itemCount="3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tvNext"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="@dimen/_0dp"/>
+
+        <TextView
+            android:id="@+id/tvNext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16dp"
+            android:background="@drawable/bg_radius_8dp"
+            android:backgroundTint="@color/color_FFB31F"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="@string/next"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
