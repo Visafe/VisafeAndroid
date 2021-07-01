@@ -82,6 +82,7 @@ class LoginActivity : BaseActivity() {
                         SharePreferenceKeyHelper.getInstance(application).putString(
                             PreferenceKey.AUTH_TOKEN, it
                         )
+                        SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.ISLOGGEDIN, true)
                     }
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()

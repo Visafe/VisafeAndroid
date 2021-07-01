@@ -9,7 +9,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.vn.visafe_android.R
+import com.vn.visafe_android.ViSafeApp
 import com.vn.visafe_android.base.BaseActivity
 import com.vn.visafe_android.data.BaseCallback
 import com.vn.visafe_android.data.NetworkClient
@@ -18,7 +20,7 @@ import com.vn.visafe_android.model.UserInfo
 import com.vn.visafe_android.model.WorkspaceGroupData
 import com.vn.visafe_android.ui.home.*
 import com.vn.visafe_android.ui.home.administrator.AdministratorFragment
-import okhttp3.ResponseBody
+import com.vn.visafe_android.utils.PreferenceKey
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,8 +39,12 @@ class MainActivity : BaseActivity() {
     private var currentPosition = 0
     private var drawerToggle: ActionBarDrawerToggle? = null
     private var adapter: MenuAdapter? = null
-
+    private var workspaceGroupData: WorkspaceGroupData? = null
     private var listMenu: MutableList<WorkspaceGroupData> = mutableListOf()
+    private var administratorFragment = AdministratorFragment()
+    private var protectFragment = ProtectFragment()
+    private var utilitiesHomeFragment = UtilitiesHomeFragment()
+    private var settingFragment = SettingFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,10 +74,10 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initTab() {
-        listFragment.add(POSITION_HOME, AdministratorFragment.newInstance())
-        listFragment.add(POSITION_PROTECT, ProtectFragment.newInstance())
-        listFragment.add(POSITION_UTILITIES, UtilitiesHomeFragment.newInstance())
-        listFragment.add(POSITION_SETTING, SettingFragment.newInstance())
+        listFragment.add(POSITION_HOME, administratorFragment)
+        listFragment.add(POSITION_PROTECT, protectFragment)
+        listFragment.add(POSITION_UTILITIES, utilitiesHomeFragment)
+        listFragment.add(POSITION_SETTING, settingFragment)
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         listFragment.forEachIndexed { index, fragment ->
@@ -115,6 +121,7 @@ class MainActivity : BaseActivity() {
         adapter = MenuAdapter(listMenu, object : OnClickMenu {
             override fun onClickMenu(data: WorkspaceGroupData, position: Int) {
                 adapter?.setSelected(position)
+                binding.tvTitleToolbar.text = listMenu[position].name
             }
 
             override fun onMoreGroup() {
@@ -193,6 +200,13 @@ class MainActivity : BaseActivity() {
                         listMenu[i].isSelected = i == 0
                     }
                     adapter?.notifyDataSetChanged()
+                    if (listMenu.size > 0) {
+                        workspaceGroupData = listMenu[0]
+                        binding.tvTitleToolbar.text = listMenu[0].name
+                        workspaceGroupData?.let {
+                            administratorFragment.updateDataView(it)
+                        }
+                    }
                 }
             }
 
@@ -204,25 +218,40 @@ class MainActivity : BaseActivity() {
     }
 
     private fun doGetUserInfo() {
-        showProgressDialog()
-        val client = NetworkClient()
-        val call = client.client(context = applicationContext).doGetUserInfo()
-        call.enqueue(BaseCallback(this@MainActivity, object : Callback<UserInfo> {
-            override fun onResponse(
-                call: Call<UserInfo>,
-                response: Response<UserInfo>
-            ) {
-                dismissProgress()
-                val userInfo = response.body()
-                userInfo?.let {
-                    binding.tvUserName.text = it.fullName.toString()
+        if (ViSafeApp().getPreference().getUserInfo().toString().isEmpty()) {
+            showProgressDialog()
+            val client = NetworkClient()
+            val call = client.client(context = applicationContext).doGetUserInfo()
+            call.enqueue(BaseCallback(this@MainActivity, object : Callback<UserInfo> {
+                override fun onResponse(
+                    call: Call<UserInfo>,
+                    response: Response<UserInfo>
+                ) {
+                    dismissProgress()
+                    if (response.code() == NetworkClient.CODE_SUCCESS) {
+                        val gson = Gson()
+                        val userInfo = response.body()
+                        userInfo?.let {
+                            binding.tvUserName.text = it.fullName.toString()
+                        }
+                        ViSafeApp().getPreference().putString(
+                            PreferenceKey.USER_INFO,
+                            gson.toJson(userInfo)
+                        )
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<UserInfo>, t: Throwable) {
-                t.message?.let { Log.e("onFailure: ", it) }
-                dismissProgress()
+                override fun onFailure(call: Call<UserInfo>, t: Throwable) {
+                    t.message?.let { Log.e("onFailure: ", it) }
+                    dismissProgress()
+                }
+            }))
+        } else {
+            val userInfo = ViSafeApp().getPreference().getUserInfo()
+            userInfo.let {
+                binding.tvUserName.text = it.fullName.toString()
             }
-        }))
+        }
+
     }
 }

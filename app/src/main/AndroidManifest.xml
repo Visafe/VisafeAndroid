@@ -53,13 +53,9 @@
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
-        <activity android:name=".ui.create.workspace.CreateWorkspaceActivity" />
-        <activity android:name=".ui.create.group.CreateGroupActivity" />
-        <activity android:name=".ui.MainActivity"
-            android:screenOrientation="fullSensor"/>
 
         <activity
-            android:name=".ui.authentication.LoginActivity"
+            android:name=".ui.SplashActivity"
             android:screenOrientation="portrait">
 
             <intent-filter>
@@ -70,13 +66,30 @@
         </activity>
 
         <activity
+            android:name=".ui.authentication.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
             android:name=".ui.authentication.RegisterActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".ui.authentication.forgotpassword.ForgotPasswordActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.MainActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.create.workspace.CreateWorkspaceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.create.group.CreateGroupActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

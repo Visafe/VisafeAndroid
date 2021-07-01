@@ -1,5 +1,6 @@
 package com.vn.visafe_android.data
 
+import com.vn.visafe_android.model.GroupData
 import com.vn.visafe_android.model.UserInfo
 import com.vn.visafe_android.model.WorkspaceGroupData
 import com.vn.visafe_android.model.request.*
@@ -37,5 +38,8 @@ interface ApiService {
 
     @GET("workspaces")
     fun doGetWorkSpacesOfCurrentUser(): Call<List<WorkspaceGroupData>>
+
+    @GET("group")
+    fun doGetGroupWithId(@Query("groupid") groupid: String?): Call<List<GroupData>>
 
 }

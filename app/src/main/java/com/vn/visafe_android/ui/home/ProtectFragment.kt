@@ -174,23 +174,30 @@ class ProtectFragment : BaseFragment<FragmentProtectBinding>(), SharedPreference
 
     // Sets the UI DNS status on/off.
     private fun syncDnsStatus() {
-        val status: VpnState = VpnController.getInstance().getState(context)
-        // Change switch-button state
-        isChecked = status.activationRequested
-        Log.e("syncDnsStatus: ", "" + isChecked)
-        // Change indicator text
-        binding.tvProtect.text =
-            if (status.activationRequested) getString(R.string.you_protect) else getString(R.string.bam_de_bat)
-        context?.let {
-            binding.ivEarth.setImageDrawable(
-                if (status.activationRequested) ContextCompat.getDrawable(it, R.drawable.ic_earth) else
-                    ContextCompat.getDrawable(it, R.drawable.ic_earth_off)
-            )
-            binding.ivBtnProtect.setImageDrawable(
-                if (status.activationRequested) ContextCompat.getDrawable(it, R.drawable.ic_button_protect) else
-                    ContextCompat.getDrawable(it, R.drawable.ic_button_protect_off)
-            )
+        try {
+            val status = VpnController.getInstance().getState(context)
+            status?.let {
+                // Change switch-button state
+                isChecked = status.activationRequested
+                Log.e("syncDnsStatus: ", "" + isChecked)
+                // Change indicator text
+                binding.tvProtect.text =
+                    if (status.activationRequested) getString(R.string.you_protect) else getString(R.string.bam_de_bat)
+                context?.let {
+                    binding.ivEarth.setImageDrawable(
+                        if (status.activationRequested) ContextCompat.getDrawable(it, R.drawable.ic_earth) else
+                            ContextCompat.getDrawable(it, R.drawable.ic_earth_off)
+                    )
+                    binding.ivBtnProtect.setImageDrawable(
+                        if (status.activationRequested) ContextCompat.getDrawable(it, R.drawable.ic_button_protect) else
+                            ContextCompat.getDrawable(it, R.drawable.ic_button_protect_off)
+                    )
+                }
+            }
+        } catch (e: Exception) {
+            e.message?.let { Log.e("syncDnsStatus: ", it) }
         }
+
     }
 
 
