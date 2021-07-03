@@ -3,11 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.vn.visafe_android">
 
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:name=".ViSafeApp"
@@ -20,6 +24,17 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
+
+        <activity
+            android:name=".ui.group.detail.GroupDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.group.join.JoinGroupActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.group.join.ScanQRJoinGroupActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".dns.sys.IntraVpnService"

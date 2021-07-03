@@ -251,4 +251,8 @@
     <string name="create_group_complete_sub">Nhóm của bạn đã được áp dụng các thiết lập mà bạn khởi tạo.</string>
     <string name="understood">Đã hiểu</string>
     <string name="text_total_group">Số nhóm: %s</string>
+    <string name="add_devices_to_group">Thêm thiết bị vào nhóm</string>
+  <string name="input_name_user">Nhập tên của bạn</string>
+  <string name="join_group_success">Tham gia nhóm thành công</string>
+  <string name="content_join_group_success">Bây giờ, thiết bị của bạn sẽ được bảo vệ bởi nhóm %s</string>
 </resources>

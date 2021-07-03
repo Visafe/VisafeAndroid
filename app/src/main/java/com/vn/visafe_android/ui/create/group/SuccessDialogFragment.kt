@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.vn.visafe_android.databinding.SuccessDialogFragmentBinding
 import com.vn.visafe_android.ui.create.group.access_manager.Action
@@ -14,11 +14,23 @@ class SuccessDialogFragment : DialogFragment() {
     private var mOnClickListener: ((Action) -> Unit)? = null
 
     companion object {
+        const val TITLE_DIALOG = "TITLE_DIALOG"
+        const val CONTENT_DIALOG = "CONTENT_DIALOG"
+
         fun newInstance(): SuccessDialogFragment {
             val args = Bundle()
 
             val fragment = SuccessDialogFragment()
             fragment.arguments = args
+            return fragment
+        }
+
+        fun newInstance(title: String, content: String) : SuccessDialogFragment {
+            val fragment = SuccessDialogFragment()
+            fragment.arguments = bundleOf(
+                Pair(TITLE_DIALOG, title),
+                Pair(CONTENT_DIALOG, content)
+            )
             return fragment
         }
     }
@@ -63,10 +75,14 @@ class SuccessDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tvNext.setOnClickListener {
-            binding.tvNext.setOnClickListener {
-                mOnClickListener?.invoke(Action.CONFIRM)
-                dismiss()
-            }
+            mOnClickListener?.invoke(Action.CONFIRM)
+            dismiss()
+        }
+        if (arguments != null && requireArguments().getString(TITLE_DIALOG, "").isNotEmpty()) {
+            binding.tvTitle.text = requireArguments().getString(TITLE_DIALOG, "")
+        }
+        if (arguments != null && requireArguments().getString(CONTENT_DIALOG, "").isNotEmpty()) {
+            binding.tvTitle2.text = requireArguments().getString(CONTENT_DIALOG, "")
         }
     }
 

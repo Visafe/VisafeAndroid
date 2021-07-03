@@ -8,11 +8,8 @@ import com.vn.visafe_android.base.BaseActivity
 import com.vn.visafe_android.data.BaseCallback
 import com.vn.visafe_android.data.NetworkClient
 import com.vn.visafe_android.databinding.ActivityCreateWorkspaceBinding
-import com.vn.visafe_android.model.WorkspaceGroupData
 import com.vn.visafe_android.model.request.CreateWorkSpaceRequest
 import com.vn.visafe_android.ui.MainActivity
-import com.vn.visafe_android.ui.create.group.CreateGroupActivity
-import com.vn.visafe_android.ui.create.group.SuccessDialogFragment
 import com.vn.visafe_android.ui.create.group.access_manager.Action
 import com.vn.visafe_android.ui.create.workspace.dialog.DialogCreateSuccessWorkSpace
 import okhttp3.ResponseBody
