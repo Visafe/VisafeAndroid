@@ -13,8 +13,7 @@ import com.vn.visafe_android.databinding.LayoutSwitchWebsitesBinding
 import com.vn.visafe_android.model.Subject
 import com.vn.visafe_android.ui.adapter.WebsiteAdapter
 import com.vn.visafe_android.ui.create.group.access_manager.Action
-import com.vn.visafe_android.ui.create.group.access_manager.AddWebsiteBottomSheet
-import com.vn.visafe_android.ui.create.group.access_manager.EditWebsiteBottomSheet
+import com.vn.visafe_android.ui.dialog.VisafeDialogBottomSheet
 
 class SwitchWebsiteView @JvmOverloads constructor(
     context: Context,
@@ -63,7 +62,7 @@ class SwitchWebsiteView @JvmOverloads constructor(
             isExpanded = !isExpanded
         }
         binding?.tvAddLink?.setOnClickListener {
-            showDialogAdd()
+            showDialog(null)
         }
         if (!title.isNullOrEmpty()) {
             binding?.tvTitle?.text = title
@@ -88,38 +87,53 @@ class SwitchWebsiteView @JvmOverloads constructor(
     }
 
     private fun showDialogEdit(data: Subject) {
-        val bottomSheet = EditWebsiteBottomSheet.newInstance(data)
+        val bottomSheet = VisafeDialogBottomSheet.newInstance(
+            context.getString(R.string.websites),
+            data.title,
+            VisafeDialogBottomSheet.TYPE_EDIT,
+            context.getString(R.string.edit_websites),
+            context.getString(R.string.delete_websites)
+        )
         bottomSheet.show(
             (binding?.root?.context as FragmentActivity).supportFragmentManager,
-            EditWebsiteBottomSheet.TAG
+            null
         )
-        bottomSheet.setOnClickListener {
-            when (it) {
+        bottomSheet.setOnClickListener { text, action ->
+            when (action) {
                 Action.DELETE -> {
                     websiteAdapter?.deleteItem(data)
                 }
-
                 Action.EDIT -> {
-                    showDialogAdd(data)
+                    showDialog(data)
                 }
             }
         }
     }
 
-    private fun showDialogAdd(data: Subject? = null) {
-        val bottomSheet = AddWebsiteBottomSheet.newInstance(data)
+    private fun showDialog(data: Subject? = null) {
+        val bottomSheet = VisafeDialogBottomSheet.newInstanceEdit(
+            context.getString(R.string.block_websites_group),
+            context.getString(R.string.websites),
+            VisafeDialogBottomSheet.TYPE_ADD,
+            context.getString(R.string.input_website),
+            data?.title ?: ""
+        )
         bottomSheet.show(
             (binding?.root?.context as FragmentActivity).supportFragmentManager,
-            EditWebsiteBottomSheet.TAG
+            null
         )
-        bottomSheet.setOnConfirmListener { subject, action ->
+        bottomSheet.setOnClickListener { link, action ->
             when (action) {
-                Action.ADD -> {
-                    websiteAdapter?.addItem(subject)
+                Action.CONFIRM -> {
+                    if (data == null) {
+                        if (link.isNotBlank()) {
+                            websiteAdapter?.addItem(Subject(link, link, -1))
+                        }
+                    } else {
+                        data.let { websiteAdapter?.editItem(it, Subject(link, link, -1)) }
+                    }
                 }
-                Action.EDIT -> {
-                    data?.let { websiteAdapter?.editItem(it, subject) }
-                }
+                else -> return@setOnClickListener
             }
         }
     }
