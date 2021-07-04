@@ -1,5 +1,6 @@
 package com.vn.visafe_android.ui.home.administrator
 
+import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vn.visafe_android.R
 import com.vn.visafe_android.base.BaseFragment
@@ -12,6 +13,7 @@ import com.vn.visafe_android.ui.adapter.ApplicationMostAdapter
 import com.vn.visafe_android.ui.adapter.ContentMostAdapter
 import com.vn.visafe_android.ui.adapter.DeviceMostAdapter
 import com.vn.visafe_android.ui.adapter.GroupListAdapter
+import com.vn.visafe_android.ui.group.dashboard.GroupDashboardActivity
 
 class OverViewFragment : BaseFragment<FragmentOverViewBinding>() {
 
@@ -38,7 +40,9 @@ class OverViewFragment : BaseFragment<FragmentOverViewBinding>() {
         val groupAdapter = GroupListAdapter(createGroupList())
         groupAdapter.onClickGroup = object : GroupListAdapter.OnClickGroup {
             override fun openGroup(data: GroupData) {
-
+                val intent = Intent(requireContext(), GroupDashboardActivity::class.java)
+                intent.putExtra(GroupDashboardActivity.GROUP_DATA_KEY, data)
+                startActivity(intent)
             }
 
             override fun onClickMore() {

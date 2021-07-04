@@ -42,9 +42,9 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/_72dp"
                 android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:text="Iphone XS"
                 android:textColor="@color/color_111111"
-                android:textSize="@dimen/text_size_20sp"
-                tools:text="Iphone XS" />
+                android:textSize="@dimen/text_size_20sp" />
 
             <TextView
                 android:id="@+id/tvNoRegister"
@@ -55,8 +55,7 @@
                 android:text="@string/no_register"
                 android:textColor="@color/color_50_111111" />
 
-            <Button
-                android:id="@+id/btnRegisterDevice"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_24dp"
@@ -65,13 +64,24 @@
                 android:layout_marginBottom="@dimen/_12dp"
                 android:background="@drawable/bg_radius_8dp"
                 android:backgroundTint="@color/color_FFB31F"
-                android:fontFamily="@font/sf_pro_text_regular_bold"
-                android:gravity="center"
-                android:padding="@dimen/_12dp"
-                android:text="@string/register_device"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_16sp" />
+                android:elevation="@dimen/_2dp">
+
+                <TextView
+                    android:id="@+id/btnRegisterDevice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawablePadding="@dimen/_12dp"
+                    android:fontFamily="@font/sf_pro_text_regular_bold"
+                    android:gravity="center"
+                    android:padding="@dimen/_12dp"
+                    android:text="@string/register_device"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16sp"
+                    app:drawableStartCompat="@drawable/ic_qr_join_group" />
+            </FrameLayout>
+
         </LinearLayout>
 
         <RelativeLayout
@@ -131,7 +141,7 @@
             android:paddingTop="@dimen/_16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rlPin">
+            app:layout_constraintTop_toBottomOf="@id/rlInfo">
 
             <ImageView
                 android:id="@+id/ivShare"
@@ -158,15 +168,6 @@
                 android:padding="@dimen/_4dp"
                 android:src="@drawable/ic_stroke"
                 app:tint="@color/color_111111" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@id/tvShareTitle"
-                android:layout_marginStart="@dimen/_12dp"
-                android:layout_marginTop="@dimen/_16dp"
-                android:layout_marginEnd="@dimen/_12dp"
-                android:background="@color/color_EDEDED" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -178,7 +179,7 @@
             android:paddingTop="@dimen/_16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rlShare">
+            app:layout_constraintTop_toBottomOf="@id/rlPin">
 
             <ImageView
                 android:id="@+id/ivInfo"
@@ -216,6 +217,52 @@
                 android:background="@color/color_EDEDED" />
         </RelativeLayout>
 
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:background="@color/color_EDEDED"
+            app:layout_constraintTop_toBottomOf="@id/rlShare" />
+
+        <RelativeLayout
+            android:id="@+id/rlVip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:paddingTop="@dimen/_16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view">
+
+            <ImageView
+                android:id="@+id/ivVip"
+                android:layout_width="@dimen/_24dp"
+                android:layout_height="@dimen/_24dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_vip" />
+
+            <TextView
+                android:id="@+id/tvVipTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_14dp"
+                android:layout_toEndOf="@id/ivVip"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:text="@string/vip_title"
+                android:textColor="@color/color_111111"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchWidget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@null"
+                android:thumb="@drawable/thumb_selector"
+                app:track="@drawable/track_selector" />
+        </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
