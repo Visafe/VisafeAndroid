@@ -2,6 +2,7 @@ package com.vn.visafe_android.ui.group.dashboard
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import com.vn.visafe_android.base.BaseActivity
 import com.vn.visafe_android.databinding.ActivityGroupDashboardBinding
 import com.vn.visafe_android.model.GroupData
@@ -16,7 +17,8 @@ class GroupDashboardActivity : BaseActivity() {
     lateinit var binding: ActivityGroupDashboardBinding
     private var pagerAdapter: ScreenSlidePagerAdapter? = null
     private var groupDashboardOverViewFragment = GroupDashboardOverViewFragment()
-    private var groupDashboardConfigurationFragment = GroupDashboardConfigurationFragment()
+    private var groupDashboardConfigurationFragment: GroupDashboardConfigurationFragment? = null
+    private var groupData: GroupData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,9 +28,15 @@ class GroupDashboardActivity : BaseActivity() {
     }
 
     private fun initView() {
+        groupData = intent.getParcelableExtra<GroupData>(GROUP_DATA_KEY)
+        if (groupData != null) {
+            binding.toolbar.setTitleToolbar(groupData?.name!!)
+        }
+
         pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
         pagerAdapter?.addFragment(groupDashboardOverViewFragment, "Tổng quan")
-        pagerAdapter?.addFragment(groupDashboardConfigurationFragment, "Cấu hình nhóm")
+        groupDashboardConfigurationFragment = GroupDashboardConfigurationFragment.newInstance(groupData!!)
+        pagerAdapter?.addFragment(groupDashboardConfigurationFragment!!, "Cấu hình nhóm")
 
         binding.viewPager.swipeable = false
         binding.viewPager.offscreenPageLimit = 2
@@ -36,10 +44,6 @@ class GroupDashboardActivity : BaseActivity() {
 
         binding.tabBar.setupWithViewPager(binding.viewPager)
 
-        val groupData = intent.getParcelableExtra<GroupData>(GROUP_DATA_KEY)
-        if (groupData != null) {
-            binding.toolbar.setTitleToolbar(groupData.name!!)
-        }
         binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
                 finish()
