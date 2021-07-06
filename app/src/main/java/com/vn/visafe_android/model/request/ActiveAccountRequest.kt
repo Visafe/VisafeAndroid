@@ -3,7 +3,7 @@ package com.vn.visafe_android.model.request
 import com.google.gson.annotations.SerializedName
 
 open class ActiveAccountRequest(
-    @SerializedName("email")
+    @SerializedName("username")
     var email: String? = null,
     @SerializedName("otp")
     var otp: String? = null,
