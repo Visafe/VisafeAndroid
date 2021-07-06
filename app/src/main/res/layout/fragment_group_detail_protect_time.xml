@@ -13,7 +13,7 @@
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/tvFinish"
+            android:layout_above="@+id/tvSave"
             android:background="@color/white"
             android:clipToPadding="false"
             android:paddingBottom="40dp">
@@ -106,7 +106,7 @@
         </androidx.core.widget.NestedScrollView>
 
         <TextView
-            android:id="@+id/tvFinish"
+            android:id="@+id/tvSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -117,7 +117,7 @@
             android:fontFamily="@font/sf_pro_text_regular_bold"
             android:gravity="center"
             android:padding="12dp"
-            android:text="@string/complete"
+            android:text="@string/save_change"
             android:textColor="@color/white"
             android:textSize="16sp" />
     </RelativeLayout>
