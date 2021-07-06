@@ -21,8 +21,7 @@ import com.vn.visafe_android.model.UserInfo
 import com.vn.visafe_android.model.WorkspaceGroupData
 import com.vn.visafe_android.ui.create.group.access_manager.Action
 import com.vn.visafe_android.ui.create.workspace.CreateWorkspaceActivity
-import com.vn.visafe_android.ui.create.workspace.dialog.DeleteWorkspaceBottomSheet
-import com.vn.visafe_android.ui.create.workspace.dialog.EditWorkspaceBottomSheet
+import com.vn.visafe_android.ui.dialog.VisafeDialogBottomSheet
 import com.vn.visafe_android.ui.home.*
 import com.vn.visafe_android.ui.home.administrator.AdministratorFragment
 import com.vn.visafe_android.utils.PreferenceKey
@@ -139,10 +138,16 @@ class MainActivity : BaseActivity() {
             }
 
             override fun onMoreGroup(data: WorkspaceGroupData, position: Int) {
-                val bottomSheet = EditWorkspaceBottomSheet.newInstance(data)
+                val bottomSheet = VisafeDialogBottomSheet.newInstance(
+                    getString(R.string.workspaces),
+                    data.name!!,
+                    VisafeDialogBottomSheet.TYPE_EDIT,
+                    getString(R.string.edit_workspace),
+                    getString(R.string.delete_workspace)
+                )
                 bottomSheet.show(supportFragmentManager, null)
-                bottomSheet.setOnClickListener {
-                    when (it) {
+                bottomSheet.setOnClickListener { inputText, action ->
+                    when (action) {
                         Action.DELETE -> {
                             showDialogDeleteWorkSpace(data, position)
                         }
@@ -161,10 +166,14 @@ class MainActivity : BaseActivity() {
     }
 
     private fun showDialogDeleteWorkSpace(data: WorkspaceGroupData, position: Int) {
-        val bottomSheet = DeleteWorkspaceBottomSheet.newInstance(data)
+        val bottomSheet = VisafeDialogBottomSheet.newInstance(
+            "",
+            getString(R.string.delete_workspace_content, data.name),
+            VisafeDialogBottomSheet.TYPE_CONFIRM
+        )
         bottomSheet.show(supportFragmentManager, null)
-        bottomSheet.setOnClickListener {
-            when (it) {
+        bottomSheet.setOnClickListener { inputText, action ->
+            when (action) {
                 Action.CONFIRM -> {
                     adapter?.deleteItem(data, position)
                 }
@@ -277,18 +286,18 @@ class MainActivity : BaseActivity() {
             POSITION_PROTECT -> {
                 binding.mainContent.bottomView.setBackgroundResource(R.color.color_0B1847)
                 binding.toolbar.visibility = View.GONE
-                binding.mainContent.bottomView.itemIconTintList =
-                    AppCompatResources.getColorStateList(this, R.color.white)
-                binding.mainContent.bottomView.itemTextColor =
-                    AppCompatResources.getColorStateList(this, R.color.white)
+//                binding.mainContent.bottomView.itemIconTintList =
+//                    AppCompatResources.getColorStateList(this, R.color.white)
+//                binding.mainContent.bottomView.itemTextColor =
+//                    AppCompatResources.getColorStateList(this, R.color.white)
             }
             else -> {
                 binding.mainContent.bottomView.setBackgroundResource(R.color.white)
                 binding.toolbar.visibility = View.VISIBLE
-                binding.mainContent.bottomView.itemIconTintList =
-                    AppCompatResources.getColorStateList(this, R.color.color_111111)
-                binding.mainContent.bottomView.itemTextColor =
-                    AppCompatResources.getColorStateList(this, R.color.color_111111)
+//                binding.mainContent.bottomView.itemIconTintList =
+//                    AppCompatResources.getColorStateList(this, R.color.color_111111)
+//                binding.mainContent.bottomView.itemTextColor =
+//                    AppCompatResources.getColorStateList(this, R.color.color_111111)
             }
         }
     }

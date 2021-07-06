@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.group.dashboard.GroupDashboardConfigurationFragment">
+
+        <TextView
+            android:id="@+id/tvNameGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_24dp"
+            android:layout_marginEnd="@dimen/_16dp"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:gravity="center"
+            android:textColor="@color/color_111111"
+            android:textSize="@dimen/text_size_20sp"
+            tools:text="Phòng 1: Marketing" />
+
+        <RelativeLayout
+            android:id="@+id/rlBlockTracking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16dp">
+
+            <ImageView
+                android:id="@+id/ivBlockTracking"
+                android:layout_width="@dimen/_32dp"
+                android:layout_height="@dimen/_32dp"
+                android:layout_marginStart="@dimen/_16dp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:src="@drawable/ic_block_tracking"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tvBlockTrackingTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12dp"
+                android:layout_toEndOf="@id/ivBlockTracking"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:text="@string/block_tracking"
+                android:textColor="@color/color_111111"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <TextView
+                android:id="@+id/tvBlockTrackingContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvBlockTrackingTitle"
+                android:layout_marginStart="@dimen/_12dp"
+                android:layout_toEndOf="@id/ivBlockTracking"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:text="@string/block_tracking_content"
+                android:textColor="@color/color_222222"
+                android:textSize="@dimen/text_size_12sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:rotation="180"
+                android:src="@drawable/ic_back" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/tvBlockTrackingContent"
+                android:layout_marginStart="@dimen/_16dp"
+                android:layout_marginTop="@dimen/_16dp"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:background="@color/color_EDEDED" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlAccessManagement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16dp">
+
+            <ImageView
+                android:id="@+id/ivAccessManagement"
+                android:layout_width="@dimen/_32dp"
+                android:layout_height="@dimen/_32dp"
+                android:layout_marginStart="@dimen/_16dp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:src="@drawable/ic_access_management"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tvAccessManagementTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12dp"
+                android:layout_toEndOf="@id/ivAccessManagement"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:text="@string/access_manager"
+                android:textColor="@color/color_111111"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <TextView
+                android:id="@+id/tvAccessManagementContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvAccessManagementTitle"
+                android:layout_marginStart="@dimen/_12dp"
+                android:layout_toEndOf="@id/ivAccessManagement"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:text="@string/access_manager_content"
+                android:textColor="@color/color_222222"
+                android:textSize="@dimen/text_size_12sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:rotation="180"
+                android:src="@drawable/ic_back" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/tvAccessManagementContent"
+                android:layout_marginStart="@dimen/_16dp"
+                android:layout_marginTop="@dimen/_16dp"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:background="@color/color_EDEDED" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlProtectTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16dp">
+
+            <ImageView
+                android:id="@+id/ivProtectTime"
+                android:layout_width="@dimen/_32dp"
+                android:layout_height="@dimen/_32dp"
+                android:layout_marginStart="@dimen/_16dp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:src="@drawable/ic_protect_time"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tvProtectTimeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12dp"
+                android:layout_toEndOf="@id/ivProtectTime"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:text="@string/protect_time_title"
+                android:textColor="@color/color_111111"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <TextView
+                android:id="@+id/tvProtectTimeContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvProtectTimeTitle"
+                android:layout_marginStart="@dimen/_12dp"
+                android:layout_toEndOf="@id/ivProtectTime"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:text="@string/protect_time_content"
+                android:textColor="@color/color_222222"
+                android:textSize="@dimen/text_size_12sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:rotation="180"
+                android:src="@drawable/ic_back" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/tvProtectTimeContent"
+                android:layout_marginStart="@dimen/_16dp"
+                android:layout_marginTop="@dimen/_16dp"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:background="@color/color_EDEDED" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlByPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16dp">
+
+            <ImageView
+                android:id="@+id/ivByPass"
+                android:layout_width="@dimen/_32dp"
+                android:layout_height="@dimen/_32dp"
+                android:layout_marginStart="@dimen/_16dp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:src="@drawable/ic_by_pass"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tvByPassTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12dp"
+                android:layout_toEndOf="@id/ivByPass"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:text="@string/block_by_pass"
+                android:textColor="@color/color_111111"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <TextView
+                android:id="@+id/tvByPassContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvByPassTitle"
+                android:layout_marginStart="@dimen/_12dp"
+                android:layout_toEndOf="@id/ivByPass"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:text="@string/block_by_pass_sub"
+                android:textColor="@color/color_222222"
+                android:textSize="@dimen/text_size_12sp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:background="@null"
+                app:track="@drawable/track_selector"
+                android:thumb="@drawable/thumb_selector" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_below="@id/tvByPassContent"
+                android:layout_marginTop="@dimen/_16dp"
+                android:background="@color/color_EDEDED" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlDeviceManagement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16dp">
+
+            <ImageView
+                android:id="@+id/ivDeviceManagement"
+                android:layout_width="@dimen/_32dp"
+                android:layout_height="@dimen/_32dp"
+                android:layout_marginStart="@dimen/_16dp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:src="@drawable/ic_device_management"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tvDeviceManagementTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12dp"
+                android:layout_toEndOf="@id/ivDeviceManagement"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:text="@string/quan_ly_thiet_bi"
+                android:textColor="@color/color_111111"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <TextView
+                android:id="@+id/tvDeviceManagementContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvDeviceManagementTitle"
+                android:layout_marginStart="@dimen/_12dp"
+                android:layout_toEndOf="@id/ivDeviceManagement"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:text="12 thiết bị"
+                android:textColor="@color/color_222222"
+                android:textSize="@dimen/text_size_12sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:rotation="180"
+                android:src="@drawable/ic_back" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/tvDeviceManagementContent"
+                android:layout_marginStart="@dimen/_16dp"
+                android:layout_marginTop="@dimen/_16dp"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:background="@color/color_EDEDED" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlMemberManagement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16dp">
+
+            <ImageView
+                android:id="@+id/ivMemberManagement"
+                android:layout_width="@dimen/_32dp"
+                android:layout_height="@dimen/_32dp"
+                android:layout_marginStart="@dimen/_16dp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:src="@drawable/ic_member_management"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tvMemberManagementTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12dp"
+                android:layout_toEndOf="@id/ivMemberManagement"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:text="@string/member_management_title"
+                android:textColor="@color/color_111111"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <TextView
+                android:id="@+id/tvMemberManagementContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvMemberManagementTitle"
+                android:layout_marginStart="@dimen/_12dp"
+                android:layout_toEndOf="@id/ivMemberManagement"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:text="12 thành viên"
+                android:textColor="@color/color_222222"
+                android:textSize="@dimen/text_size_12sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:rotation="180"
+                android:src="@drawable/ic_back" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

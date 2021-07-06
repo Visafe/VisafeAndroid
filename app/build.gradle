@@ -79,6 +79,9 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
 
+    //Scan QR
+    implementation 'me.dm7.barcodescanner:zxing:1.9.13'
+
     // For go-tun2socks
     implementation project(":tun2socks")
 }

@@ -84,7 +84,9 @@ class CreateGroupActivity : BaseActivity() {
         super.onBackPressed()
         step--
         setProgressView()
-
+        if (step == 0) {
+            finish()
+        }
     }
 
     fun doCreateGroup() {

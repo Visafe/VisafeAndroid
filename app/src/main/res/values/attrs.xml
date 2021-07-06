@@ -19,4 +19,12 @@
         <attr name="color" format="color" />
         <attr name="percent" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="VisafeToolbar">
+        <attr name="toolbar_title" format="string" />
+        <attr name="toolbar_visible_title" format="boolean" />
+        <attr name="toolbar_right_icon_src" format="reference" />
+        <attr name="toolbar_left_icon_src" format="reference" />
+        <attr name="toolbar_background" format="reference" />
+    </declare-styleable>
 </resources>

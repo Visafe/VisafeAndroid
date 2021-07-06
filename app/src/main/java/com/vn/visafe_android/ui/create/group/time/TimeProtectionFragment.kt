@@ -12,9 +12,7 @@ import com.vn.visafe_android.model.TimeProtection
 import com.vn.visafe_android.ui.adapter.DaySelectorAdapter
 import com.vn.visafe_android.ui.adapter.TimeProtectionAdapter
 import com.vn.visafe_android.ui.create.group.CreateGroupActivity
-import com.vn.visafe_android.ui.create.group.SuccessDialogFragment
 import com.vn.visafe_android.ui.create.group.access_manager.Action
-import com.vn.visafe_android.ui.create.group.access_manager.EditWebsiteBottomSheet
 
 class TimeProtectionFragment : BaseFragment<TimeProtectionFragmentBinding>() {
 
@@ -63,7 +61,7 @@ class TimeProtectionFragment : BaseFragment<TimeProtectionFragmentBinding>() {
         val bottomSheet = TimePickerBottomSheet.newInstance(data)
         bottomSheet.show(
             childFragmentManager,
-            EditWebsiteBottomSheet.TAG
+            null
         )
 
         bottomSheet.setOnConfirmListener { timeProtection, action ->

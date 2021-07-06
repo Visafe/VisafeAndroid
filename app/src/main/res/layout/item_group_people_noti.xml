@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.vn.visafe_android.model.GroupPeopleNotiData" />
+
+        <variable
+            name="data"
+            type="GroupPeopleNotiData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16dp">
+
+        <TextView
+            android:id="@+id/ivDot"
+            android:layout_width="@dimen/_10dp"
+            android:layout_height="@dimen/_10dp"
+            android:layout_marginTop="@dimen/_8dp"
+            android:background="@drawable/bg_dot"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12dp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:text="@{data.title}"
+            android:textColor="@color/color_696565"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivDot"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Thiết bị Iphone đã cố gắng truy cập trang" />
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12dp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:text="@{data.contentWeb}"
+            android:textColor="@color/color_696565"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivDot"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            tools:text="Thiết bị Iphone đã cố gắng truy cập trang" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
