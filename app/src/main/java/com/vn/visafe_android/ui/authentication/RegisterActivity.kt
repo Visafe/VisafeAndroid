@@ -1,11 +1,15 @@
 package com.vn.visafe_android.ui.authentication
 
 import android.os.Bundle
+import android.text.*
 import android.text.method.HideReturnsTransformationMethod
+import android.text.method.LinkMovementMethod
 import android.text.method.PasswordTransformationMethod
+import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
 import com.rengwuxian.materialedittext.MaterialEditText
 import com.vn.visafe_android.R
@@ -41,7 +45,64 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
     }
 
     private fun initView() {
+        viewBinding.edtInputEmail.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
 
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                viewBinding.tvInputEmailError.visibility = View.GONE
+                viewBinding.edtInputEmail.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_custom_edittext)
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                viewBinding.btnClearTextInputEmail.visibility = if (p0.isNullOrEmpty()) View.GONE else View.VISIBLE
+            }
+
+        })
+        viewBinding.edtInputEmail.setOnFocusChangeListener { v, hasFocus ->
+            viewBinding.btnClearTextInputEmail.visibility = if (hasFocus && !viewBinding.edtInputEmail.text.isNullOrEmpty()) View.VISIBLE else View.GONE
+        }
+
+        viewBinding.edtInputPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                viewBinding.tvInputPasswordError.visibility = View.GONE
+                viewBinding.edtInputPassword.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_custom_edittext)
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+        })
+        setupTextPolicyHandleClick()
+        viewBinding.tvTerm.text = getString(R.string.note_term)
+            .let { androidx.core.text.HtmlCompat.fromHtml(it, 0) }
+    }
+
+    private fun setupTextPolicyHandleClick() {
+        val textSpan1 = getString(R.string.text_have_acc)
+        val textSpan2 = getString(R.string.login)
+        val stringSpan = SpannableString(textSpan1)
+        val start = textSpan1.indexOf(textSpan2)
+        val end = start + textSpan2.length
+        stringSpan.setSpan(object : ClickableSpan() {
+
+            override fun updateDrawState(@NonNull ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.isUnderlineText = false
+                ds.color = ContextCompat.getColor(applicationContext, R.color.colorPrimary)
+            }
+
+            override fun onClick(widget: View) {
+                finish()
+            }
+        }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        viewBinding.tvLogin.linksClickable = true
+        viewBinding.tvLogin.isClickable = true
+        viewBinding.tvLogin.movementMethod = LinkMovementMethod.getInstance()
+        viewBinding.tvLogin.text = stringSpan
     }
 
     private fun initControl() {
@@ -49,9 +110,8 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
         setSafeClickListener(viewBinding.btnRegister) {
             doRegister()
         }
-        setSafeClickListener(viewBinding.btnCancelRegister) { finish() }
         setSafeClickListener(viewBinding.btnShowHidePassword) { onShowHidePassword() }
-        setSafeClickListener(viewBinding.btnShowHidePasswordAgain) { onShowHidePasswordAgain() }
+        viewBinding.btnClearTextInputEmail.setOnClickListener { viewBinding.edtInputEmail.setText("") }
     }
 
     private fun doRegister() {
@@ -67,7 +127,7 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
         registerRequest.username = viewBinding.edtInputEmail.text.toString()
         registerRequest.email = viewBinding.edtInputEmail.text.toString()
         registerRequest.password = viewBinding.edtInputPassword.text.toString()
-        registerRequest.repeatPassword = viewBinding.edtInputPasswordAgain.text.toString()
+        registerRequest.repeatPassword = viewBinding.edtInputPassword.text.toString()
         val client = NetworkClient()
         val call = client.clientWithoutToken(context = applicationContext).doRegister(registerRequest)
         call.enqueue(BaseCallback(this, object : Callback<BaseResponse> {
@@ -84,7 +144,10 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
                             Toast.LENGTH_LONG
                         ).show()
                     }
-                    inputOTPFragment = InputOTPFragment(onInputOtpDialog = this@RegisterActivity)
+                    inputOTPFragment = InputOTPFragment(
+                        onInputOtpDialog = this@RegisterActivity, InputOTPFragment.TypeOTP.REGISTER, "Xác thực tài khoản",
+                        viewBinding.edtInputEmail.text.toString()
+                    )
                     inputOTPFragment?.show(supportFragmentManager, "inputOTPFragment")
                 } else if (response.code() == NetworkClient.CODE_EXISTS_ACCOUNT) {
                     doReSendOTP()
@@ -119,7 +182,10 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
                         ).show()
                     }
                     if (inputOTPFragment == null || inputOTPFragment?.isVisible == false) {
-                        inputOTPFragment = InputOTPFragment(onInputOtpDialog = this@RegisterActivity)
+                        inputOTPFragment = InputOTPFragment(
+                            onInputOtpDialog = this@RegisterActivity, InputOTPFragment.TypeOTP.REGISTER, "Xác thực tài khoản",
+                            viewBinding.edtInputEmail.text.toString()
+                        )
                         inputOTPFragment?.show(supportFragmentManager, "inputOTPFragment")
                     }
                 }
@@ -138,32 +204,28 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
         var isValidField = true
         listError.clear()
         if (viewBinding.edtInputEmail.text.isNullOrEmpty()) {
-            viewBinding.edtInputEmail.error = "Vui lòng nhập email!"
+            viewBinding.edtInputEmail.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
+            viewBinding.tvInputEmailError.visibility = View.VISIBLE
+            viewBinding.tvInputEmailError.text = "Vui lòng nhập email!"
             listError.add(viewBinding.edtInputEmail)
             isValidField = false
         } else {
             if (!isValidEmail(viewBinding.edtInputEmail.text.toString())) {
-                viewBinding.edtInputEmail.error = "Email không hợp lệ, vui lòng nhập lại!"
+                viewBinding.edtInputEmail.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
+                viewBinding.tvInputEmailError.visibility = View.VISIBLE
+                viewBinding.tvInputEmailError.text = "Email không hợp lệ, vui lòng nhập lại!"
                 listError.add(viewBinding.edtInputEmail)
                 isValidField = false
             }
         }
         if (viewBinding.edtInputPassword.text.isNullOrEmpty()) {
-            viewBinding.edtInputPassword.error = "Vui lòng nhập mật khẩu!"
+            viewBinding.edtInputPassword.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
+            viewBinding.tvInputPasswordError.visibility = View.VISIBLE
+            viewBinding.tvInputPasswordError.text = "Vui lòng nhập mật khẩu!"
             listError.add(viewBinding.edtInputPassword)
             isValidField = false
         }
-        if (viewBinding.edtInputPasswordAgain.text.isNullOrEmpty()) {
-            viewBinding.edtInputPasswordAgain.error = "Vui lòng nhập lại mật khẩu!"
-            listError.add(viewBinding.edtInputPasswordAgain)
-            isValidField = false
-        } else if (viewBinding.edtInputPasswordAgain.text.toString() != viewBinding.edtInputPassword.text.toString()) {
-            viewBinding.edtInputPassword.error = "Mật khẩu nhập lại không trùng khớp!"
-            listError.add(viewBinding.edtInputPasswordAgain)
-            isValidField = false
-        }
         return isValidField
-
     }
 
     private fun onShowHidePassword() {
@@ -174,7 +236,7 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
             viewBinding.btnShowHidePassword.setImageDrawable(
                 ContextCompat.getDrawable(
                     this,
-                    R.drawable.ic_eye_open
+                    R.drawable.ic_eye_on
                 )
             )
         } else {
@@ -184,31 +246,7 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
             viewBinding.btnShowHidePassword.setImageDrawable(
                 ContextCompat.getDrawable(
                     this,
-                    R.drawable.ic_eye_close
-                )
-            )
-        }
-    }
-
-    private fun onShowHidePasswordAgain() {
-        if (!isShowPasswordAgain) {
-            isShowPasswordAgain = true
-            viewBinding.edtInputPasswordAgain.transformationMethod =
-                HideReturnsTransformationMethod.getInstance()
-            viewBinding.btnShowHidePasswordAgain.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.ic_eye_open
-                )
-            )
-        } else {
-            isShowPasswordAgain = false
-            viewBinding.edtInputPasswordAgain.transformationMethod =
-                PasswordTransformationMethod.getInstance()
-            viewBinding.btnShowHidePasswordAgain.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.ic_eye_close
+                    R.drawable.ic_eye_off
                 )
             )
         }
@@ -216,8 +254,8 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
 
     override fun onInputOTP(otp: String) {
         showProgressDialog()
-        val email = viewBinding.edtInputEmail.text.toString()
-        val activeAccountRequest = ActiveAccountRequest(email = email, otp = otp)
+        val username = viewBinding.edtInputEmail.text.toString()
+        val activeAccountRequest = ActiveAccountRequest(username = username, otp = otp)
         val client = NetworkClient()
         val call = client.clientWithoutToken(context = applicationContext).doActiveAccount(activeAccountRequest)
         call.enqueue(BaseCallback(this, object : Callback<BaseResponse> {
@@ -226,8 +264,8 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
                 response: Response<BaseResponse>
             ) {
                 dismissProgress()
-                inputOTPFragment?.dismiss()
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    inputOTPFragment?.dismiss()
                     response.body()?.msg?.let {
                         Toast.makeText(
                             applicationContext,
@@ -245,6 +283,8 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
 //                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
 //                    startActivity(intent)
 //                    finish()
+                } else {
+                    inputOTPFragment?.setErrorOtp("Mã xác thực không chính xác")
                 }
             }
 

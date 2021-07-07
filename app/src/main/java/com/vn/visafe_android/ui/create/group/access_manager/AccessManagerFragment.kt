@@ -101,15 +101,24 @@ class AccessManagerFragment : BaseFragment<FragmentAccessManagerBinding>() {
         binding.tvNext.setOnSingClickListener {
             createGroupActivity?.createGroupRequest?.blocked_services = binding.itemApp.getDataListSubject()
             createGroupActivity?.createGroupRequest?.block_webs = binding.itemWeb.getDataListBlockWeb()
-            createGroupActivity?.createGroupRequest?.safesearch_enabled = binding.itemLimit.isChecked()
+            if (binding.itemLimit.isChecked()) {
+                createGroupActivity?.createGroupRequest?.safesearch_enabled = binding.itemLimit.isChecked()
+                createGroupActivity?.createGroupRequest?.youtuberestrict_enabled = binding.itemLimit.isChecked()
+            } else {
+                createGroupActivity?.createGroupRequest?.safesearch_enabled = binding.itemLimit.getDataListSubject()?.equals("google")
+                createGroupActivity?.createGroupRequest?.youtuberestrict_enabled = binding.itemLimit.getDataListSubject()?.equals("youtube")
+            }
+
+
             createGroupActivity?.createGroupRequest?.porn_enabled = binding.itemSensitive.isChecked()
             createGroupActivity?.createGroupRequest?.bypass_enabled = binding.itemByPass.isChecked()
             val gson = Gson()
             Log.e(
-                "initView: ",
+                "AccessManagerFragment: ",
                 "" + gson.toJson(createGroupActivity?.createGroupRequest)
             )
-            createGroupActivity?.addFragment(TimeProtectionFragment.newInstance())
+//            createGroupActivity?.addFragment(TimeProtectionFragment.newInstance())
+            createGroupActivity?.doCreateGroup()
         }
     }
 

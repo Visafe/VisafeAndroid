@@ -50,6 +50,6 @@ Thumbs.db
 
 /.gradle/
 # Local configuration file (sdk path, etc)
-local.properties
+/local.properties
 /tun2socks/build/.transforms/
 /build/

@@ -21,6 +21,7 @@ import retrofit2.Response
 class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
 
     companion object {
+        const val DATA_WORKSPACE = "DATA_WORKSPACE"
 
         @JvmStatic
         fun newInstance() =
@@ -29,6 +30,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
 
     private var groupListAdapter: GroupListAdapter? = null
     private var listGroup: MutableList<GroupData?> = mutableListOf()
+    private var workspaceGroupData: WorkspaceGroupData? = null
 
     override fun layoutRes(): Int = R.layout.fragment_group_management
 
@@ -51,10 +53,15 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
     }
 
     private fun initControl() {
-        binding.btnAddNewGroup.setOnSingClickListener { startActivity(Intent(requireContext(), CreateGroupActivity::class.java)) }
+        binding.btnAddNewGroup.setOnSingClickListener {
+            val intent = Intent(requireContext(), CreateGroupActivity::class.java)
+            intent.putExtra(DATA_WORKSPACE, workspaceGroupData)
+            startActivity(intent)
+        }
     }
 
     fun loadData(workspaceGroupData: WorkspaceGroupData) {
+        this.workspaceGroupData = workspaceGroupData
         doGetGroupWithId(workspaceGroupData)
     }
 

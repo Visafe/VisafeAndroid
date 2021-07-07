@@ -49,5 +49,19 @@ interface ApiService {
     fun doCreateGroup(@Body createGroupRequest: CreateGroupRequest): Call<ResponseBody>
 
     @POST("workspace/add")
-    fun doCreateWorkspace(@Body createWorkSpaceRequest: CreateWorkSpaceRequest): Call<ResponseBody>
+    fun doCreateWorkspace(@Body createWorkSpaceRequest: CreateWorkSpaceRequest): Call<WorkspaceGroupData>
+
+    @HTTP(
+        method = "DELETE",
+        path = "workspace/delete",
+        hasBody = true
+    )
+    fun doDeleteWorkspace(@Body deleteWorkSpaceRequest: DeleteWorkSpaceRequest): Call<ResponseBody>
+
+    @PATCH("workspace/update/rename")
+    fun doUpdateNameWorkSpace(@Body updateNameWorkspaceRequest: UpdateNameWorkspaceRequest): Call<ResponseBody>
+
+    @PATCH("workspace/update")
+    fun doUpdateWorkspace(@Body updateWorkspaceRequest: WorkspaceGroupData): Call<ResponseBody>
+
 }

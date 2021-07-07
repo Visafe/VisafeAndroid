@@ -141,7 +141,7 @@ class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSh
     }
 
     private fun showLayoutSave() {
-        binding.tvTitle.visibility = View.VISIBLE
+        binding.tvTitle.visibility = View.GONE
         binding.llEdit.visibility = View.GONE
         binding.edtInput.visibility = View.VISIBLE
         binding.tvConfirm.visibility = View.GONE
