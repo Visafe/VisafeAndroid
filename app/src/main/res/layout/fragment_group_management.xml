@@ -14,7 +14,7 @@
             android:layout_marginStart="@dimen/_13sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_13sdp"
-            android:background="@drawable/bg_button_border_color_primary_radius_10"
+            android:background="@drawable/bg_button_border_color_primary_radius_8"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

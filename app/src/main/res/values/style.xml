@@ -61,4 +61,12 @@
         <item name="android:textCursorDrawable">@drawable/custom_cursor_edittext</item>
     </style>
 
+    <style name="AppThemeSplash">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
 </resources>

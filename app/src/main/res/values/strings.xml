@@ -271,4 +271,27 @@
     <string name="protect_time_content">12 khung giờ</string>
     <string name="quan_ly_thiet_bi">Quản lý thiết bị</string>
     <string name="member_management_title">Quản lý thành viên</string>
+    <string name="text_have_not_acc_need_register">Bạn chưa có tài khoản? Đăng ký</string>
+    <string name="text_remember_password">Bạn đã nhớ lại mật khẩu? Đăng nhập</string>
+    <string name="register">Đăng ký</string>
+    <string name="text_forgot_password">Quên mật khẩu?</string>
+    <string name="quick_login_with">Hoặc đăng nhập nhanh với</string>
+    <string name="hint_input_password">Nhập mật khẩu</string>
+    <string name="hint_input_email_or_numberphone">Nhập số điện thoại/email</string>
+    <string name="text_have_acc">Bạn đã có tài khoản? Đăng nhập</string>
+    <string name="login">Đăng nhập</string>
+    <string name="note_term"><![CDATA[Khi nhấn Đăng ký nghĩa là bạn đồng ý với\n<b><font color=\'#222222\'>điều khoản và điều kiện </font></b>
+    sử dụng của ViSafe]]></string>
+    <string name="splash_title1">Chống lừa đảo, mã độc,\ntấn công mạng</string>
+    <string name="splash_title2">Chặn theo dõi, quảng cáo</string>
+    <string name="splash_title3">Quản lý truy cập, nội dung</string>
+    <string name="splash_content1">Phòng tránh nguy cơ, thiệt hại từ các cuộc tấn công mạng, lừa đảo trực tuyến</string>
+    <string name="splash_content2">Bảo đảm quyền riêng tư trên mạng &amp; chặn các quảng cáo độc hại, khó chịu</string>
+    <string name="splash_content3">Tự quản lý, bảo đảm một không gian mạng xanh, sạch cho gia đình, tổ chức</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="start">Bắt đầu</string>
+    <string name="text_input_pass_for_acc">Hãy nhập mật khẩu mới cho tài khoản %s</string>
+    <string name="xac_thuc_tai_khoan">Xác thực tài khoản</string>
+    <string name="visafe_gui_ma_xac_thuc">ViSafe đã gửi mã xác thực OTP đến email %s</string>
 </resources>

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 open class ActiveAccountRequest(
     @SerializedName("username")
-    var email: String? = null,
+    var username: String? = null,
     @SerializedName("otp")
     var otp: String? = null,
     @SerializedName("phone_number")

@@ -70,13 +70,28 @@
         style="@style/myEditText"
         android:layout_width="0dp"
         android:layout_height="@dimen/_38sdp"
+        android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_16sdp"
-        android:hint="Nhập số điện thoại/email"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:hint="@string/hint_input_email_or_numberphone"
         android:padding="@dimen/_5sdp"
+        android:singleLine="true"
         android:textSize="@dimen/_12sdp"
-        app:layout_constraintEnd_toEndOf="@+id/tv2"
-        app:layout_constraintStart_toStartOf="@+id/tv2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv2" />
+
+    <ImageView
+        android:id="@+id/btnClearTextInputEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_9sdp"
+        android:src="@drawable/ic_close_circle"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/edtInputEmail"
+        app:layout_constraintEnd_toEndOf="@+id/edtInputEmail"
+        app:layout_constraintTop_toTopOf="@+id/edtInputEmail"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/tvInputEmailError"
@@ -85,13 +100,13 @@
         android:layout_marginStart="@dimen/_6sdp"
         android:layout_marginTop="@dimen/_2sdp"
         android:gravity="start"
-        android:text="Bạn chưa có tài khoản? Đăng ký"
         android:textColor="@color/color_FF4451"
         android:textSize="@dimen/_11sdp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/edtInputEmail"
         app:layout_constraintStart_toStartOf="@+id/edtInputEmail"
         app:layout_constraintTop_toBottomOf="@+id/edtInputEmail"
+        tools:text="Bạn chưa có tài khoản? Đăng ký"
         tools:visibility="visible" />
 
     <com.google.android.material.textfield.TextInputEditText
@@ -100,9 +115,10 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/_38sdp"
         android:layout_marginTop="@dimen/_8sdp"
-        android:hint="Nhập mật khẩu"
+        android:hint="@string/hint_input_password"
         android:inputType="textPassword"
         android:padding="@dimen/_5sdp"
+        android:singleLine="true"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintEnd_toEndOf="@+id/edtInputEmail"
         app:layout_constraintStart_toStartOf="@+id/edtInputEmail"
@@ -115,20 +131,21 @@
         android:layout_marginStart="@dimen/_6sdp"
         android:layout_marginTop="@dimen/_2sdp"
         android:gravity="start"
-        android:text="Bạn chưa có tài khoản? Đăng ký"
         android:textColor="@color/color_FF4451"
         android:textSize="@dimen/_11sdp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/edtInputPassword"
         app:layout_constraintStart_toStartOf="@+id/edtInputPassword"
         app:layout_constraintTop_toBottomOf="@+id/edtInputPassword"
+        tools:text="Bạn chưa có tài khoản? Đăng ký"
         tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/btnShowHidePassword"
-        android:layout_width="@dimen/_20sdp"
-        android:layout_height="@dimen/_20sdp"
-        android:src="@drawable/ic_eye_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_9sdp"
+        android:src="@drawable/ic_eye_off"
         app:layout_constraintBottom_toBottomOf="@+id/edtInputPassword"
         app:layout_constraintEnd_toEndOf="@+id/edtInputPassword"
         app:layout_constraintTop_toTopOf="@+id/edtInputPassword" />
@@ -138,9 +155,9 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/_35sdp"
         android:layout_marginTop="@dimen/_13sdp"
-        android:background="@drawable/bg_button_color_primary_radius_10"
+        android:background="@drawable/bg_button_color_primary_radius_8"
         android:gravity="center"
-        android:text="Đăng nhập"
+        android:text="@string/login"
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="@dimen/_13sdp"
@@ -154,20 +171,21 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
         android:gravity="center"
-        android:text="Bạn chưa có tài khoản? Đăng ký"
         android:textColor="@color/color_666666"
         android:textSize="@dimen/_11sdp"
         app:layout_constraintEnd_toEndOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
+        tools:text="@string/text_have_not_acc_need_register" />
 
     <TextView
         android:id="@+id/btnForgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_13sdp"
+        android:fontFamily="@font/sf_pro_text_regular_medium"
         android:gravity="center"
-        android:text="Quên mật khẩu?"
+        android:text="@string/text_forgot_password"
         android:textColor="@color/color_444444"
         android:textSize="@dimen/_11sdp"
         app:layout_constraintEnd_toEndOf="@+id/guideline"
@@ -180,7 +198,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_22sdp"
         android:gravity="center"
-        android:text="Hoặc đăng nhập nhanh với"
+        android:text="@string/quick_login_with"
         android:textColor="@color/color_aaaaaa"
         android:textSize="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="@+id/guideline"
@@ -204,7 +222,7 @@
         android:layout_marginStart="@dimen/_8sdp"
         android:background="@color/color_d9d9d9"
         app:layout_constraintBottom_toBottomOf="@+id/tvOr"
-        app:layout_constraintEnd_toEndOf="@+id/btnRegister"
+        app:layout_constraintEnd_toEndOf="@+id/btnLogin"
         app:layout_constraintStart_toEndOf="@+id/tvOr"
         app:layout_constraintTop_toTopOf="@+id/tvOr" />
 
@@ -212,20 +230,20 @@
         android:id="@+id/btnLoginSocialFacebook"
         android:layout_width="@dimen/_45sdp"
         android:layout_height="@dimen/_45sdp"
+        android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_18sdp"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:src="@drawable/ic_logo_social_fb"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        android:src="@drawable/ic_logo_social_facebook"
+        app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/tvOr" />
 
     <ImageView
         android:id="@+id/btnLoginSocialGoogle"
         android:layout_width="@dimen/_45sdp"
         android:layout_height="@dimen/_45sdp"
-        android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_18sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
         android:src="@drawable/ic_logo_social_google"
-        app:layout_constraintStart_toEndOf="@+id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/tvOr" />
 
 
