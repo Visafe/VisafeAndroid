@@ -25,7 +25,6 @@
             android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:gravity="center"
-            android:maxLines="2"
             android:text="@string/websites"
             android:textColor="@color/color_111111"
             android:textSize="@dimen/text_size_18sp"

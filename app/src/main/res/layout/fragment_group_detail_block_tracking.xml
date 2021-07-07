@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,7 +12,7 @@
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/tvFinish"
+            android:layout_above="@+id/tvSave"
             android:background="@color/white"
             android:clipToPadding="false"
             android:paddingBottom="40dp">
@@ -33,93 +32,78 @@
                     android:layout_marginTop="@dimen/_32dp"
                     android:fontFamily="@font/sf_pro_text_regular_bold"
                     android:gravity="center"
-                    android:text="@string/time_protection"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:text="@string/block_tracking"
+                    android:textColor="@color/color_111111"
+                    android:textSize="@dimen/text_size_20sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.vn.visafe_android.ui.custom.SwitchSimpleView
-                    android:id="@+id/itemDayRepeat"
+                    android:id="@+id/itemBlockAdsWeb"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_32dp"
-                    android:background="@drawable/bg_radius_16dp"
-                    android:backgroundTint="@color/color_ECECEC"
-                    android:padding="10dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-                    app:title="@string/repeat_daily" />
+                    app:sub_title="Chặn các quảng cáo hiển thị trên các website"
+                    app:title="Chặn quảng cáo Website" />
 
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvDay"
+                <com.vn.visafe_android.ui.custom.SwitchSimpleView
+                    android:id="@+id/itemBlockAdsGame"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_12dp"
-                    android:background="@drawable/bg_radius_16dp"
-                    android:backgroundTint="@color/color_ECECEC"
-                    android:nestedScrollingEnabled="false"
-                    android:paddingHorizontal="@dimen/_10dp"
-                    android:paddingVertical="@dimen/_14dp"
+                    android:layout_marginTop="@dimen/_32dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/itemDayRepeat"
-                    app:spanCount="7"
-                    tools:itemCount="7"
-                    tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    tools:listitem="@layout/item_day_selector" />
+                    app:layout_constraintTop_toBottomOf="@+id/itemBlockAdsWeb"
+                    app:sub_title="Chặn các quảng cáo hiển thị trên các game, ứng dụng trên di động"
+                    app:title="Chặn quảng cáo game, ứng dụng" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvTime"
+                <com.vn.visafe_android.ui.custom.SwitchSimpleView
+                    android:id="@+id/itemBlockAdsApp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_marginTop="@dimen/_32dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rvDay"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/item_time" />
+                    app:layout_constraintTop_toBottomOf="@+id/itemBlockAdsGame"
+                    app:sub_title="Chặn các quảng cáo đặc thù của một số ứng dụng phổ biến"
+                    app:title="Chặn quảng cáo nâng cao" />
 
-                <TextView
-                    android:id="@+id/tvAddTime"
+                <com.vn.visafe_android.ui.custom.SwitchSimpleView
+                    android:id="@+id/itemBlockTrackingDevice"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16dp"
-                    android:background="@drawable/bg_button_add_link"
-                    android:fontFamily="@font/sf_pro_text_regular_bold"
-                    android:gravity="center"
-                    android:padding="12dp"
-                    android:text="@string/add_time"
-                    android:textColor="@color/color_FFB31F"
-                    android:textSize="16sp"
-                    app:drawableStartCompat="@drawable/ic_plus"
+                    android:layout_marginTop="@dimen/_32dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rvTime" />
+                    app:layout_constraintTop_toBottomOf="@+id/itemBlockAdsApp"
+                    app:sub_title="Chặn theo dõi, thu thập dữ liệu thông tin cá nhân trên các thiết bị, hệ điều hành"
+                    app:title="Chặn theo dõi trên thiết bị" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
 
+
         <TextView
-            android:id="@+id/tvFinish"
+            android:id="@+id/tvSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="@dimen/_24dp"
             android:layout_marginVertical="10dp"
-            android:background="@drawable/bg_radius_16dp"
+            android:background="@drawable/bg_radius_8dp"
             android:backgroundTint="@color/color_FFB31F"
-            android:fontFamily="@font/sf_pro_text_regular_bold"
             android:gravity="center"
-            android:padding="12dp"
-            android:text="@string/complete"
+            android:padding="@dimen/_12dp"
+            android:text="@string/save_change"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="@dimen/text_size_16sp"
+            android:textStyle="bold" />
     </RelativeLayout>
+
 
 </layout>
