@@ -2,6 +2,8 @@ package com.vn.visafe_android.ui.authentication
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
@@ -21,6 +23,7 @@ import com.vn.visafe_android.ui.MainActivity
 import com.vn.visafe_android.utils.PreferenceKey
 import com.vn.visafe_android.utils.SharePreferenceKeyHelper
 import com.vn.visafe_android.utils.isValidEmail
+import kotlinx.android.synthetic.main.item_config.*
 import retrofit2.Call
 import retrofit2.Response
 
@@ -39,6 +42,34 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun initView() {
+        viewBinding.edtInputEmail.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                viewBinding.tvInputEmailError.visibility = View.GONE
+                viewBinding.edtInputEmail.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_custom_edittext)
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+        })
+
+        viewBinding.edtInputPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                viewBinding.tvInputPasswordError.visibility = View.GONE
+                viewBinding.edtInputPassword.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_custom_edittext)
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+        })
+
 
     }
 
@@ -49,9 +80,9 @@ class LoginActivity : BaseActivity() {
             doLogin()
         }
         viewBinding.btnForgotPassword.setOnClickListener { startActivity(Intent(this, ForgotPasswordActivity::class.java)) }
-        viewBinding.btnRegister.setOnClickListener {
-            startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
-        }
+//        viewBinding.btnRegister.setOnClickListener {
+//            startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+//        }
         viewBinding.btnShowHidePassword.setOnClickListener { onShowHidePassword() }
     }
 
@@ -100,18 +131,24 @@ class LoginActivity : BaseActivity() {
         var isValidField = true
         listError.clear()
         if (viewBinding.edtInputEmail.text.isNullOrEmpty()) {
-            viewBinding.edtInputEmail.error = "Vui lòng nhập email!"
+            viewBinding.edtInputEmail.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
+            viewBinding.tvInputEmailError.visibility = View.VISIBLE
+            viewBinding.tvInputEmailError.text = "Vui lòng nhập email!"
             listError.add(viewBinding.edtInputEmail)
             isValidField = false
         } else {
             if (!isValidEmail(viewBinding.edtInputEmail.text.toString())) {
-                viewBinding.edtInputEmail.error = "Email không hợp lệ, vui lòng nhập lại!"
+                viewBinding.edtInputEmail.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
+                viewBinding.tvInputEmailError.visibility = View.VISIBLE
+                viewBinding.tvInputEmailError.text = "Email không hợp lệ, vui lòng nhập lại!"
                 listError.add(viewBinding.edtInputEmail)
                 isValidField = false
             }
         }
         if (viewBinding.edtInputPassword.text.isNullOrEmpty()) {
-            viewBinding.edtInputPassword.error = "Vui lòng nhập mật khẩu!"
+            viewBinding.edtInputPassword.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
+            viewBinding.tvInputPasswordError.visibility = View.VISIBLE
+            viewBinding.tvInputPasswordError.text = "Vui lòng nhập mật khẩu!"
             listError.add(viewBinding.edtInputPassword)
             isValidField = false
         }

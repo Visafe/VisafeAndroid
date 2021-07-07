@@ -106,7 +106,7 @@
         android:layout_height="@dimen/_35sdp"
         android:layout_marginTop="@dimen/_18sdp"
         android:layout_marginEnd="@dimen/_6sdp"
-        android:background="@drawable/bg_button_f5bb16_radius_10"
+        android:background="@drawable/bg_button_color_primary_radius_10"
         android:gravity="center"
         android:text="Đăng ký"
         android:textColor="@color/white"

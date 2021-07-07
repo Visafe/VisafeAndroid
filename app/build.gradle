@@ -11,10 +11,11 @@ android {
 
     defaultConfig {
         applicationId "com.vn.visafe_android"
-        minSdkVersion 25
+        minSdkVersion 23
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        //sửa trong manifest
+//        versionCode 1
+//        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
