@@ -45,7 +45,7 @@ class BlockFollowCreateGroupFragment : BaseFragment<FragmentBlockFollowCreateGro
                 "initView: ",
                 "" + gson.toJson(createGroupActivity?.createGroupRequest)
             )
-            createGroupActivity?.addFragment(AccessManagerFragment.newInstance())
+            createGroupActivity?.onBackPressed()
         }
 
         binding.itemBlockTrackingDevice.setData(

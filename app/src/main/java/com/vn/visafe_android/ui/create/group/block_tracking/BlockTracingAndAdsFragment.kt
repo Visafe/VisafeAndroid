@@ -49,7 +49,7 @@ class BlockTracingAndAdsFragment : BaseFragment<FragmentBlockTracingAndAdsBindin
                 "initView: ",
                 "" + gson.toJson(createGroupActivity?.createGroupRequest)
             )
-            createGroupActivity?.addFragment(AccessManagerFragment.newInstance())
+            createGroupActivity?.onBackPressed()
         }
         binding.itemBlockAdsApp.setData(
             arrayListOf(
