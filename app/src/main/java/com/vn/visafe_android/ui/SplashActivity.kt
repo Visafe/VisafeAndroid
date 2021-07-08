@@ -18,6 +18,7 @@ import com.vn.visafe_android.base.BaseActivity
 import com.vn.visafe_android.databinding.ActivitySplashBinding
 import com.vn.visafe_android.ui.adapter.SectionsPagerAdapter
 import com.vn.visafe_android.ui.authentication.LoginActivity
+import com.vn.visafe_android.utils.PreferenceKey
 import com.vn.visafe_android.utils.SharePreferenceKeyHelper
 
 class SplashActivity : BaseActivity() {
@@ -29,9 +30,14 @@ class SplashActivity : BaseActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         viewBinding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-        if (SharePreferenceKeyHelper.getInstance(application).isLogin()) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
+        if (SharePreferenceKeyHelper.getInstance(application).isLogin()
+            || SharePreferenceKeyHelper.getInstance(application).isFirstShowOnBoarding()
+        ) {
+            viewBinding.imgLogo.visibility = View.VISIBLE
+            Handler(Looper.getMainLooper()).postDelayed({
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }, 2000)
         } else {
             viewBinding.imgLogo.visibility = View.VISIBLE
             Handler(Looper.getMainLooper()).postDelayed({
@@ -50,8 +56,9 @@ class SplashActivity : BaseActivity() {
 
         viewBinding.fab.setOnClickListener {
             if (viewBinding.fab.text.equals(getString(R.string.start))) {
+                SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.IS_FIRST_SHOW_ON_BOARDING, true)
+                startActivity(Intent(this, MainActivity::class.java))
                 finish()
-                startActivity(Intent(this, LoginActivity::class.java))
             } else {
                 val currentItem = viewBinding.viewPager.currentItem
                 viewBinding.viewPager.currentItem = currentItem + 1

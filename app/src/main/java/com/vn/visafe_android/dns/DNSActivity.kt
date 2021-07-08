@@ -1,27 +1,7 @@
 package com.vn.visafe_android.dns
 
-import android.annotation.SuppressLint
-import android.content.*
-import android.net.ConnectivityManager
-import android.net.LinkProperties
-import android.net.NetworkCapabilities
-import android.net.VpnService
-import android.os.Build
-import android.os.Bundle
-import android.preference.PreferenceManager
-import android.util.Log
-import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.vn.visafe_android.R
+import android.content.SharedPreferences
 import com.vn.visafe_android.base.BaseActivity
-import com.vn.visafe_android.databinding.MainContentBinding
-import com.vn.visafe_android.dns.net.doh.Transaction
-import com.vn.visafe_android.dns.sys.*
-import java.net.NetworkInterface
-import java.net.SocketException
-import java.util.*
 
 class DNSActivity : BaseActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {

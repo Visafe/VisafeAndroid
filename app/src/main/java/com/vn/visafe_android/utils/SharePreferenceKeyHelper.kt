@@ -32,7 +32,11 @@ class SharePreferenceKeyHelper private constructor(context: Application) {
     }
 
     fun isLogin(): Boolean {
-        return sharedPref.getBoolean(PreferenceKey.ISLOGGEDIN, false)
+        return sharedPref.getBoolean(PreferenceKey.ISLOGIN, false)
+    }
+
+    fun isFirstShowOnBoarding(): Boolean {
+        return sharedPref.getBoolean(PreferenceKey.IS_FIRST_SHOW_ON_BOARDING, false)
     }
 
     fun getUserInfo(): UserInfo {

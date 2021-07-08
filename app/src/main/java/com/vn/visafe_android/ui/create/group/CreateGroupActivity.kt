@@ -11,8 +11,7 @@ import com.vn.visafe_android.databinding.ActivityCreateGroupBinding
 import com.vn.visafe_android.model.WorkspaceGroupData
 import com.vn.visafe_android.model.request.CreateGroupRequest
 import com.vn.visafe_android.ui.create.group.access_manager.Action
-import com.vn.visafe_android.ui.create.group.protected_group.ProtectedGroupFragment
-import com.vn.visafe_android.ui.home.administrator.GroupManagementFragment
+import com.vn.visafe_android.ui.home.GroupManagementFragment
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -57,10 +56,11 @@ class CreateGroupActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        step--
-        if (step == 1) {
+        if (step == 0) {
             finish()
+        } else {
+            step--
+            super.onBackPressed()
         }
     }
 

@@ -96,12 +96,13 @@
             tools:text="Bạn chưa có tài khoản? Đăng ký"
             tools:visibility="visible" />
 
-        <Button
+        <TextView
             android:id="@+id/btnSendRequest"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_35sdp"
             android:layout_marginTop="@dimen/_13sdp"
             android:background="@drawable/bg_button_color_primary_radius_8"
+            android:gravity="center"
             android:text="@string/next"
             android:textAllCaps="true"
             android:textColor="@color/white"

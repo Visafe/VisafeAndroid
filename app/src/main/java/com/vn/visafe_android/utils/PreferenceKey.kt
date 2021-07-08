@@ -5,7 +5,7 @@ class PreferenceKey {
         const val AUTH_TOKEN = "AUTH_TOKEN"
         const val ISLOGIN = "ISLOGIN"
         const val IS_SOCIAL_LOGIN = "IS_SOCIAL_LOGIN"
-        const val ISLOGGEDIN = "ISLOGGEDIN"
+        const val IS_FIRST_SHOW_ON_BOARDING = "IS_FIRST_SHOW_ON_BOARDING"
 
         const val HAVEEVERLOGGEDIN = "HAVE_EVER_LOGGED_IN"
         const val PRIVATE_MODE = 0
