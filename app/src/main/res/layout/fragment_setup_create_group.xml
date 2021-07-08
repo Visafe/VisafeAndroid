@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".ui.create.group.SetupCreateGroupFragment">
+
+        <RelativeLayout
+            android:id="@+id/layoutToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="@dimen/_28dp"
+                android:layout_height="@dimen/_28dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_18dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_arrow_left_black"
+                app:tint="@color/color_111111" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:gravity="center"
+                android:text="@string/create_group"
+                android:textColor="@color/color_222222"
+                android:textSize="@dimen/text_size_16sp" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_below="@id/layoutToolbar"
+            android:id="@+id/vDivider"
+            android:background="@color/color_EEEEEE"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+
+        <com.vn.visafe_android.ui.custom.ProgressView
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@id/layoutToolbar"
+            app:percent="80" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/btnComplete"
+            android:layout_below="@id/progress">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:layout_marginEnd="@dimen/_24dp"
+                    android:layout_marginBottom="@dimen/_16dp"
+                    android:fontFamily="@font/sf_pro_text_regular_bold"
+                    android:gravity="center_horizontal"
+                    android:text="@string/setup_create_group"
+                    android:textColor="@color/color_222222"
+                    android:textSize="@dimen/text_size_20sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvSetup"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_setup_create_group" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <TextView
+            android:id="@+id/btnComplete"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:layout_marginBottom="@dimen/_16dp"
+            android:background="@drawable/bg_radius_34dp"
+            android:backgroundTint="@color/color_FFB31F"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:gravity="center"
+            android:text="@string/complete"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16sp" />
+
+    </RelativeLayout>
+</layout>

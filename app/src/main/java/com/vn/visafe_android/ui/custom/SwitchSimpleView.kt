@@ -21,6 +21,7 @@ class SwitchSimpleView @JvmOverloads constructor(
     private var binding: LayoutSwitchSimpleBinding? = null
     private var subjectAdapter: SubjectAdapter? = null
     private var isExpanded = false
+    private var disableExpanded = false
     private var mData: ArrayList<Subject> = arrayListOf()
     private var mOnSwitchChangeListener: ((Boolean) -> Unit)? = null
 
@@ -43,6 +44,9 @@ class SwitchSimpleView @JvmOverloads constructor(
             }
         }
         setOnClickListener {
+            if (disableExpanded) {
+                return@setOnClickListener
+            }
             if (isExpanded) {
                 binding?.recyclerView?.let {
                     it.visibility = GONE
@@ -100,5 +104,25 @@ class SwitchSimpleView @JvmOverloads constructor(
 
     fun getDataListSubject(): MutableList<String>? {
         return subjectAdapter?.getData()
+    }
+
+    fun setExpanded(isExpanded: Boolean) {
+        if (isExpanded) {
+            binding?.recyclerView?.let {
+                it.visibility = GONE
+                binding?.ivArrow?.animate()?.rotation(90f)?.start();
+            }
+        } else {
+            binding?.recyclerView?.let {
+                it.visibility = VISIBLE
+                binding?.ivArrow?.animate()?.rotation(-90f)?.start();
+            }
+        }
+        this.isExpanded = !isExpanded
+    }
+
+    fun disableExpanded() {
+        this.disableExpanded = true
+        binding?.ivArrow?.visibility = View.INVISIBLE
     }
 }

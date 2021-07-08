@@ -5,14 +5,52 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:clickable="true"
         android:focusable="true">
 
+        <RelativeLayout
+            android:id="@+id/layoutToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:adjustViewBounds="true"
+                android:layout_width="@dimen/_28dp"
+                android:layout_height="@dimen/_28dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_18dp"
+                android:src="@drawable/ic_arrow_left_black"
+                app:tint="@color/color_111111" />
+
+            <TextView
+                android:textColor="@color/color_222222"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:textSize="@dimen/text_size_16sp"
+                android:gravity="center"
+                android:text="@string/thiet_lap_chan_truy_cap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_below="@id/layoutToolbar"
+            android:id="@+id/vDivider"
+            android:background="@color/color_EEEEEE"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+
         <androidx.core.widget.NestedScrollView
+            android:layout_below="@id/vDivider"
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/tvNext"
+            android:layout_above="@+id/btnSave"
             android:background="@color/white"
             android:clipToPadding="false"
             android:paddingBottom="40dp">
@@ -34,6 +72,7 @@
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -50,8 +89,8 @@
                     app:sub_title="@string/block_application"
                     app:title="@string/application" />
 
-                <com.vn.visafe_android.ui.custom.SwitchWebsiteView
-                    android:id="@+id/itemWeb"
+                <com.vn.visafe_android.ui.custom.SwitchSimpleView
+                    android:id="@+id/itemGame"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_24dp"
@@ -59,86 +98,145 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/itemApp"
-                    app:sub_title="@string/block_websites"
-                    app:title="@string/websites" />
-
+                    app:title="Game" />
 
                 <View
-                    android:id="@+id/viewOne"
-                    android:layout_width="0dp"
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
                     android:layout_height="6dp"
-                    android:layout_marginTop="@dimen/_24dp"
-                    android:background="#F6F6F6"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/itemWeb" />
+                    android:layout_marginTop="@dimen/_12dp"
+                    android:background="@color/color_EEEEEE"
+                    app:layout_constraintTop_toBottomOf="@id/itemGame" />
 
-                <com.vn.visafe_android.ui.custom.SwitchSimpleView
-                    android:id="@+id/itemLimit"
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/btnBlockWebsite"
+                    android:layout_width="@dimen/_0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_24dp"
-                    android:layout_marginTop="@dimen/_16dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/viewOne"
-                    app:sub_title="@string/limit_search_content_sub"
-                    app:title="@string/limit_search_content" />
+                    android:fontFamily="@font/sf_pro_text_regular_bold"
+                    android:gravity="center"
+                    android:padding="@dimen/_16dp"
+                    android:text="@string/block_website"
+                    android:textColor="@color/color_222222"
+                    android:textSize="@dimen/text_size_16sp"
+                    app:layout_constraintEnd_toStartOf="@id/btnPrioritizeWebsite"
+                    app:layout_constraintStart_toStartOf="@id/itemGame"
+                    app:layout_constraintTop_toBottomOf="@id/view" />
 
+                <TextView
+                    android:alpha="0.5"
+                    android:id="@+id/btnPrioritizeWebsite"
+                    android:layout_width="@dimen/_0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf_pro_text_regular_bold"
+                    android:gravity="center"
+                    android:padding="@dimen/_16dp"
+                    android:text="@string/uu_tien_website"
+                    android:textColor="@color/color_222222"
+                    android:textSize="@dimen/text_size_16sp"
+                    app:layout_constraintEnd_toEndOf="@id/itemGame"
+                    app:layout_constraintStart_toEndOf="@id/btnBlockWebsite"
+                    app:layout_constraintTop_toBottomOf="@id/view" />
 
                 <View
-                    android:id="@+id/viewTwo"
-                    android:layout_width="0dp"
-                    android:layout_height="6dp"
-                    android:layout_marginTop="@dimen/_24dp"
-                    android:background="#F6F6F6"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/itemLimit" />
+                    android:id="@+id/viewBlock"
+                    app:layout_constraintTop_toBottomOf="@id/btnBlockWebsite"
+                    app:layout_constraintEnd_toEndOf="@id/btnBlockWebsite"
+                    app:layout_constraintStart_toStartOf="@id/btnBlockWebsite"
+                    android:background="@color/color_FFB31F"
+                    android:layout_width="@dimen/_48dp"
+                    android:layout_height="3dp"/>
 
-                <com.vn.visafe_android.ui.custom.SwitchSimpleView
-                    android:id="@+id/itemSensitive"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_24dp"
-                    android:layout_marginTop="@dimen/_16dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/viewTwo"
-                    app:sub_title="@string/sub_block_sensitive"
-                    app:title="@string/block_sensitive" />
+                <View
+                    android:visibility="invisible"
+                    android:id="@+id/viewPrioritize"
+                    app:layout_constraintTop_toBottomOf="@id/btnPrioritizeWebsite"
+                    app:layout_constraintEnd_toEndOf="@id/btnPrioritizeWebsite"
+                    app:layout_constraintStart_toStartOf="@id/btnPrioritizeWebsite"
+                    android:background="@color/color_FFB31F"
+                    android:layout_width="@dimen/_48dp"
+                    android:layout_height="3dp"/>
 
-                <com.vn.visafe_android.ui.custom.SwitchSimpleView
-                    android:id="@+id/itemByPass"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_24dp"
-                    android:layout_marginTop="@dimen/_16dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/itemSensitive"
-                    app:sub_title="@string/block_by_pass_sub"
-                    app:title="@string/block_by_pass" />
+                <LinearLayout
+                    android:id="@+id/llList"
+                    app:layout_constraintTop_toBottomOf="@id/viewBlock"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvBlock"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvPrioritize"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/btnAddLink"
+                        android:gravity="center_horizontal"
+                        android:drawablePadding="@dimen/_8dp"
+                        android:textSize="@dimen/text_size_14sp"
+                        android:textColor="@color/color_FFB31F"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:padding="@dimen/_12dp"
+                        android:layout_marginStart="@dimen/_12dp"
+                        android:text="@string/add_new_link"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:drawableTint="@color/color_FFB31F"
+                        app:drawableStartCompat="@drawable/ic_baseline_add_24" />
+
+                </LinearLayout>
+
+
+                <FrameLayout
+                    android:id="@+id/btnReset"
+                    android:layout_width="@dimen/_0dp"
+                    android:layout_height="@dimen/_48dp"
+                    android:layout_marginTop="@dimen/_12dp"
+                    android:background="@drawable/bg_radius_8dp"
+                    android:backgroundTint="@color/color_ECF7FE"
+                    app:layout_constraintEnd_toEndOf="@id/itemApp"
+                    app:layout_constraintStart_toStartOf="@id/itemApp"
+                    app:layout_constraintTop_toBottomOf="@id/llList">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawablePadding="@dimen/_8dp"
+                        android:fontFamily="@font/sf_pro_text_regular_bold"
+                        android:text="@string/reset"
+                        android:textColor="@color/color_15A1FA"
+                        android:textSize="@dimen/text_size_14sp"
+                        app:drawableStartCompat="@drawable/ic_refesh" />
+                </FrameLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
 
         <TextView
-            android:id="@+id/tvNext"
+            android:id="@+id/btnSave"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_48dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginHorizontal="@dimen/_24dp"
-            android:layout_marginVertical="10dp"
-            android:background="@drawable/bg_radius_8dp"
+            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:layout_marginBottom="@dimen/_16dp"
+            android:background="@drawable/bg_radius_34dp"
             android:backgroundTint="@color/color_FFB31F"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
             android:gravity="center"
             android:padding="12dp"
-            android:text="@string/next"
+            android:text="@string/save"
             android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/text_size_16sp" />
     </RelativeLayout>
 
 
