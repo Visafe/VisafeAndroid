@@ -5,9 +5,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
         android:background="@color/white"
+        android:clickable="true"
         android:focusable="true">
+
 
         <RelativeLayout
             android:id="@+id/layoutToolbar"
@@ -32,7 +33,7 @@
                 android:fontFamily="@font/sf_pro_text_regular_bold"
                 android:textSize="@dimen/text_size_16sp"
                 android:gravity="center"
-                android:text="@string/thiet_lap_chan_quang_cao"
+                android:text="@string/thiet_lap_chan_noi_dung"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
@@ -50,8 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/btnSave"
-            android:layout_below="@id/vDivider"
             android:background="@color/white"
+            android:layout_below="@id/vDivider"
             android:clipToPadding="false"
             android:paddingBottom="40dp">
 
@@ -60,80 +61,91 @@
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:clickable="true"
-                android:focusable="true"
-                android:paddingHorizontal="24dp">
+                android:focusable="true">
 
                 <TextView
                     android:id="@+id/tvTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_32dp"
-                    android:fontFamily="@font/sf_pro_text_regular_bold"
                     android:gravity="center"
-                    android:text="@string/block_tracking"
-                    android:textColor="@color/color_111111"
-                    android:textSize="@dimen/text_size_20sp"
+                    android:text="@string/access_manager"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
                     android:visibility="gone"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.vn.visafe_android.ui.custom.SwitchSimpleView
-                    android:id="@+id/itemBlockAdsWeb"
+                    android:id="@+id/itemLimit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_32dp"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_16dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-                    app:sub_title="Chặn các quảng cáo hiển thị trên các website"
-                    app:title="Chặn quảng cáo Website" />
+                    app:sub_title="@string/limit_search_content_sub"
+                    app:title="@string/limit_search_content" />
 
                 <com.vn.visafe_android.ui.custom.SwitchSimpleView
-                    android:id="@+id/itemBlockAdsGame"
+                    android:id="@+id/itemSensitive"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_32dp"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_16dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/itemBlockAdsWeb"
-                    app:sub_title="Chặn các quảng cáo hiển thị trên các game, ứng dụng trên di động"
-                    app:title="Chặn quảng cáo Game" />
+                    app:layout_constraintTop_toBottomOf="@+id/itemLimit"
+                    app:sub_title="@string/sub_block_sensitive"
+                    app:title="@string/block_sensitive" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="@dimen/_0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8dp"
+                    android:background="@color/color_EEEEEE"
+                    app:layout_constraintEnd_toEndOf="@id/itemSensitive"
+                    app:layout_constraintStart_toStartOf="@id/itemSensitive"
+                    app:layout_constraintTop_toBottomOf="@id/itemSensitive" />
 
                 <com.vn.visafe_android.ui.custom.SwitchSimpleView
-                    android:id="@+id/itemBlockAdsApp"
+                    android:id="@+id/itemByPass"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_32dp"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_16dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/itemBlockAdsGame"
-                    app:sub_title="Chặn các quảng cáo đặc thù của một số ứng dụng phổ biến"
-                    app:title="Chặn quảng cáo ứng dụng" />
+                    app:layout_constraintTop_toBottomOf="@+id/view"
+                    app:sub_title="Ngăn chặn các tin tức giả, không chính thống"
+                    app:title="Chặn tin tức giả" />
 
                 <FrameLayout
                     android:id="@+id/btnReset"
-                    android:layout_width="match_parent"
+                    android:layout_width="@dimen/_0dp"
                     android:layout_height="@dimen/_48dp"
                     android:layout_marginTop="@dimen/_12dp"
                     android:background="@drawable/bg_radius_8dp"
                     android:backgroundTint="@color/color_ECF7FE"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/itemBlockAdsApp"
-                    app:layout_constraintTop_toBottomOf="@id/itemBlockAdsApp">
+                    app:layout_constraintEnd_toEndOf="@id/itemByPass"
+                    app:layout_constraintStart_toStartOf="@id/itemByPass"
+                    app:layout_constraintTop_toBottomOf="@id/itemByPass">
 
                     <TextView
-                        android:drawablePadding="@dimen/_8dp"
-                        android:textSize="@dimen/text_size_14sp"
-                        android:fontFamily="@font/sf_pro_text_regular_bold"
-                        android:textColor="@color/color_15A1FA"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawablePadding="@dimen/_8dp"
+                        android:fontFamily="@font/sf_pro_text_regular_bold"
                         android:text="@string/reset"
+                        android:textColor="@color/color_15A1FA"
+                        android:textSize="@dimen/text_size_14sp"
                         app:drawableStartCompat="@drawable/ic_refesh" />
                 </FrameLayout>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
@@ -141,18 +153,20 @@
         <TextView
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_48dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginHorizontal="@dimen/_24dp"
-            android:layout_marginVertical="10dp"
-            android:background="@drawable/bg_radius_8dp"
+            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:layout_marginBottom="@dimen/_16dp"
+            android:background="@drawable/bg_radius_34dp"
             android:backgroundTint="@color/color_FFB31F"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
             android:gravity="center"
-            android:padding="@dimen/_12dp"
+            android:padding="12dp"
             android:text="@string/save"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_16sp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/text_size_16sp" />
     </RelativeLayout>
 
 

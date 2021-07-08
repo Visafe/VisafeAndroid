@@ -36,17 +36,20 @@ class BlockTracingAndAdsFragment : BaseFragment<FragmentBlockTracingAndAdsBindin
 
 
     override fun initView() {
-        binding.tvNext.setOnSingClickListener {
+        binding.ivBack.setOnClickListener {
+            createGroupActivity?.onBackPressed()
+        }
+        binding.btnSave.setOnSingClickListener {
             createGroupActivity?.createGroupRequest?.adblock_enabled = binding.itemBlockAdsWeb.isChecked()
             createGroupActivity?.createGroupRequest?.game_ads_enabled = binding.itemBlockAdsGame.isChecked()
             createGroupActivity?.createGroupRequest?.app_ads = binding.itemBlockAdsApp.getDataListSubject()
-            createGroupActivity?.createGroupRequest?.native_tracking = binding.itemBlockTrackingDevice.getDataListSubject()
+//            createGroupActivity?.createGroupRequest?.native_tracking = binding.itemBlockTrackingDevice.getDataListSubject()
             val gson = Gson()
             Log.e(
                 "initView: ",
                 "" + gson.toJson(createGroupActivity?.createGroupRequest)
             )
-            createGroupActivity?.addFragment(AccessManagerFragment.newInstance())
+            createGroupActivity?.onBackPressed()
         }
         binding.itemBlockAdsApp.setData(
             arrayListOf(
@@ -72,36 +75,8 @@ class BlockTracingAndAdsFragment : BaseFragment<FragmentBlockTracingAndAdsBindin
                 )
             )
         )
-
-        binding.itemBlockTrackingDevice.setData(
-            arrayListOf(
-                Subject(
-                    "Apple",
-                    "apple",
-                    R.drawable.ic_apple
-                ),
-                Subject(
-                    "Samsung",
-                    "samsung",
-                    R.drawable.ic_samsung
-                ),
-                Subject(
-                    "Xiaomi",
-                    "xiaomi",
-                    R.drawable.ic_xiaomi
-                ),
-                Subject(
-                    "Huawei",
-                    "huawei",
-                    R.drawable.ic_huawei
-                ),
-                Subject(
-                    "Microsoft",
-                    "microsoft",
-                    R.drawable.ic_microsoft
-                ),
-            )
-        )
+        binding.itemBlockAdsApp.setExpanded(false)
+        binding.itemBlockAdsApp.disableExpanded()
     }
 
 }

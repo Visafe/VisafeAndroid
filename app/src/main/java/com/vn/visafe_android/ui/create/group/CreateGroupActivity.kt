@@ -2,8 +2,6 @@ package com.vn.visafe_android.ui.create.group
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import androidx.databinding.ObservableField
 import androidx.fragment.app.Fragment
 import com.vn.visafe_android.R
 import com.vn.visafe_android.base.BaseActivity
@@ -23,9 +21,6 @@ import java.util.*
 
 class CreateGroupActivity : BaseActivity() {
     lateinit var binding: ActivityCreateGroupBinding
-
-    private var totalStep = 5
-
     private var step = 0
     var createGroupRequest = CreateGroupRequest()
     private var workspaceGroupData: WorkspaceGroupData? = null
@@ -46,55 +41,25 @@ class CreateGroupActivity : BaseActivity() {
     }
 
     private fun initView() {
-        supportFragmentManager.addOnBackStackChangedListener {
-            val fragments = supportFragmentManager.fragments
-            if (fragments.isNullOrEmpty()) {
-                return@addOnBackStackChangedListener
-            }
-            if (fragments[fragments.size - 1] is ProtectedGroupFragment) {
-                binding.tvReset.visibility = View.GONE
-            } else {
-                binding.tvReset.visibility = View.VISIBLE
-            }
-        }
-
-        addFragment(ProtectedGroupFragment.newInstance())
-
-
-        binding.ivBack.setOnClickListener {
-//            supportFragmentManager.popBackStack()
-//            step--
-//            setProgressView()
-            finish()
-        }
-
-        binding.tvReset.setOnClickListener {
-            // TODO: 6/30/2021  reset
-        }
+        addFragment(WelcomeCreateGroupFragment())
     }
 
     fun addFragment(fragment: Fragment, tag: String = "") {
         step++
-        setProgressView()
         supportFragmentManager.beginTransaction()
             .add(R.id.frameContainer, fragment)
+            .setCustomAnimations(
+                R.anim.slide_in_left_1, R.anim.slide_out_left_1,
+                R.anim.slide_out_right_1, R.anim.slide_in_right_1
+            )
             .addToBackStack(tag)
             .commitAllowingStateLoss()
-    }
-
-    fun showReset() {
-        binding.tvReset.visibility = View.VISIBLE
-    }
-
-    private fun setProgressView() {
-        binding.progress.setProgress(step * (100 / totalStep))
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
         step--
-        setProgressView()
-        if (step == 0) {
+        if (step == 1) {
             finish()
         }
     }
