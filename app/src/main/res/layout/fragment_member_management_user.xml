@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.group.detail.GroupDetailDeviceManagementFragment">
+
+        <EditText
+            android:id="@+id/etSearchMember"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_42dp"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:layout_marginEnd="@dimen/_16dp"
+            android:background="@drawable/bg_button_border_color_primary_radius_8"
+            android:hint="@string/search_member"
+            android:inputType="text"
+            android:paddingStart="@dimen/_12dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            app:met_hideUnderline="true"
+            app:met_textColorHint="#111111"
+            tools:ignore="Autofill,RtlSymmetry" />
+
+        <FrameLayout
+            android:id="@+id/btnAddDevice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_16dp"
+            android:background="@drawable/bg_create_group"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@+id/llSearchNameGroup"
+            app:layout_constraintStart_toStartOf="@+id/llSearchNameGroup"
+            app:layout_constraintTop_toBottomOf="@+id/llSearchNameGroup">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_20dp"
+                android:drawablePadding="@dimen/_4dp"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:text="@string/add_admin"
+                android:textColor="@color/color_FFB31F"
+                android:textSize="@dimen/text_size_16sp"
+                app:drawableStartCompat="@drawable/ic_baseline_add_24"
+                app:drawableTint="@color/color_FFB31F" />
+        </FrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_8dp"
+            android:layout_marginEnd="@dimen/_16dp"
+            android:id="@+id/rvPeople"
+            tools:listitem="@layout/item_device"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</layout>

@@ -12,7 +12,7 @@
 
     <color name="underlineColor">#000000</color>
 
-    <color name="colorPrimary">#F5BB16</color>
+    <color name="colorPrimary">#FFB31F</color>
     <color name="colorPrimaryDark">#828282</color>
     <color name="accent_color">#F5BB16</color>
     <color name="secondary_color">#828282</color>
@@ -57,5 +57,9 @@
     <color name="color_EEEEEE">#EEEEEE</color>
     <color name="color_ECF7FE">#ECF7FE</color>
     <color name="color_F6F6F6">#F6F6F6</color>
+    <color name="color_aaaaaa">#AAAAAA</color>
+    <color name="color_444444">#444444</color>
+    <color name="color_666666">#666666</color>
+    <color name="color_FF4451">#FF4451</color>
 
 </resources>

@@ -57,6 +57,11 @@ class MenuAdapter(private val groupList: MutableList<WorkspaceGroupData>, privat
         }
         notifyDataSetChanged()
     }
+
+    fun updateName(newName: String, position: Int) {
+        groupList[position].name = newName
+        notifyDataSetChanged()
+    }
 }
 
 interface OnClickMenu {

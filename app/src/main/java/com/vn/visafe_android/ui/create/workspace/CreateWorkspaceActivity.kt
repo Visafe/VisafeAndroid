@@ -8,11 +8,11 @@ import com.vn.visafe_android.base.BaseActivity
 import com.vn.visafe_android.data.BaseCallback
 import com.vn.visafe_android.data.NetworkClient
 import com.vn.visafe_android.databinding.ActivityCreateWorkspaceBinding
+import com.vn.visafe_android.model.WorkspaceGroupData
 import com.vn.visafe_android.model.request.CreateWorkSpaceRequest
 import com.vn.visafe_android.ui.MainActivity
 import com.vn.visafe_android.ui.create.group.access_manager.Action
 import com.vn.visafe_android.ui.create.workspace.dialog.DialogCreateSuccessWorkSpace
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -54,18 +54,18 @@ class CreateWorkspaceActivity : BaseActivity() {
         showProgressDialog()
         val client = NetworkClient()
         val call = client.client(context = applicationContext).doCreateWorkspace(createWorkSpaceRequest)
-        call.enqueue(BaseCallback(this@CreateWorkspaceActivity, object : Callback<ResponseBody> {
+        call.enqueue(BaseCallback(this@CreateWorkspaceActivity, object : Callback<WorkspaceGroupData> {
             override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
+                call: Call<WorkspaceGroupData>,
+                response: Response<WorkspaceGroupData>
             ) {
                 dismissProgress()
-                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                if (response.code() == NetworkClient.CODE_CREATED) {
                     showDialog()
                 }
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<WorkspaceGroupData>, t: Throwable) {
                 t.message?.let { Log.e("onFailure: ", it) }
                 dismissProgress()
             }
@@ -79,9 +79,7 @@ class CreateWorkspaceActivity : BaseActivity() {
         bottomSheet.setOnClickListener {
             when (it) {
                 Action.CONFIRM -> {
-                    if (isFirst) {
-                        setResult(RESULT_OK)
-                    }
+                    setResult(RESULT_OK)
                     finish()
 
                 }

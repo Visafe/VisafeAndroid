@@ -1,6 +1,8 @@
 package com.vn.visafe_android.ui.authentication.forgotpassword
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
@@ -15,6 +17,7 @@ import com.vn.visafe_android.data.BaseResponse
 import com.vn.visafe_android.data.NetworkClient
 import com.vn.visafe_android.databinding.FragmentResetPasswordBinding
 import com.vn.visafe_android.model.request.ResetPasswordRequest
+import com.vn.visafe_android.utils.isValidEmail
 import com.vn.visafe_android.utils.setSafeClickListener
 import retrofit2.Call
 import retrofit2.Callback
@@ -54,10 +57,39 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>() {
     }
 
     override fun initView() {
+        binding.tvContent.text = String.format(getString(R.string.text_input_pass_for_acc), email)
         setSafeClickListener(binding.btnShowHidePassword) { onShowHidePassword() }
         setSafeClickListener(binding.btnShowHidePasswordAgain) { onShowHidePasswordAgain() }
         setSafeClickListener(binding.btnBack) { backFragment() }
         setSafeClickListener(binding.btnConfirm) { doConfirm() }
+
+        binding.edtInputPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.tvInputPasswordError.visibility = View.GONE
+                binding.edtInputPassword.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_custom_edittext)
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+        })
+
+        binding.edtInputPasswordAgain.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.tvInputPasswordErrorAgain.visibility = View.GONE
+                binding.edtInputPasswordAgain.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_custom_edittext)
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+        })
     }
 
     private fun doConfirm() {
@@ -101,18 +133,34 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>() {
         var isValidField = true
         listError.clear()
         if (binding.edtInputPassword.text.isNullOrEmpty()) {
-            binding.edtInputPassword.error = "Vui lòng nhập mật khẩu!"
+            binding.edtInputPassword.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_error)
+            binding.tvInputPasswordError.visibility = View.VISIBLE
+            binding.tvInputPasswordError.text = "Vui lòng nhập mật khẩu"
             listError.add(binding.edtInputPassword)
             isValidField = false
+        } else {
+            if (binding.edtInputPassword.text!!.length in 33 downTo 5) {
+                binding.edtInputPassword.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_error)
+                binding.tvInputPasswordError.visibility = View.VISIBLE
+                binding.tvInputPasswordError.text = "Mật khẩu phải có độ dài từ 6-32 ký tự"
+                listError.add(binding.edtInputPassword)
+                isValidField = false
+            }
         }
         if (binding.edtInputPasswordAgain.text.isNullOrEmpty()) {
-            binding.edtInputPasswordAgain.error = "Vui lòng nhập lại mật khẩu!"
+            binding.edtInputPasswordAgain.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_error)
+            binding.tvInputPasswordErrorAgain.visibility = View.VISIBLE
+            binding.tvInputPasswordErrorAgain.text = "Vui lòng nhập mật khẩu"
             listError.add(binding.edtInputPasswordAgain)
             isValidField = false
-        } else if (binding.edtInputPasswordAgain.text.toString() != binding.edtInputPassword.text.toString()) {
-            binding.edtInputPassword.error = "Mật khẩu nhập lại không trùng khớp!"
-            listError.add(binding.edtInputPasswordAgain)
-            isValidField = false
+        } else {
+            if (binding.edtInputPasswordAgain.text!!.length in 33 downTo 5) {
+                binding.edtInputPasswordAgain.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_error)
+                binding.tvInputPasswordErrorAgain.visibility = View.VISIBLE
+                binding.tvInputPasswordErrorAgain.text = "Mật khẩu phải có độ dài từ 6-32 ký tự"
+                listError.add(binding.edtInputPasswordAgain)
+                isValidField = false
+            }
         }
         return isValidField
     }
@@ -127,7 +175,7 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>() {
                 context?.let {
                     ContextCompat.getDrawable(
                         it,
-                        R.drawable.ic_eye_open
+                        R.drawable.ic_eye_on
                     )
                 }
             )
@@ -139,7 +187,7 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>() {
                 context?.let {
                     ContextCompat.getDrawable(
                         it,
-                        R.drawable.ic_eye_close
+                        R.drawable.ic_eye_off
                     )
                 }
             )
@@ -155,7 +203,7 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>() {
                 context?.let {
                     ContextCompat.getDrawable(
                         it,
-                        R.drawable.ic_eye_open
+                        R.drawable.ic_eye_on
                     )
                 }
             )
@@ -167,7 +215,7 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>() {
                 context?.let {
                     ContextCompat.getDrawable(
                         it,
-                        R.drawable.ic_eye_close
+                        R.drawable.ic_eye_off
                     )
                 }
             )

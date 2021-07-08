@@ -8,8 +8,11 @@ import com.vn.visafe_android.base.BaseActivity
 import com.vn.visafe_android.data.BaseCallback
 import com.vn.visafe_android.data.NetworkClient
 import com.vn.visafe_android.databinding.ActivityCreateGroupBinding
+import com.vn.visafe_android.model.WorkspaceGroupData
 import com.vn.visafe_android.model.request.CreateGroupRequest
 import com.vn.visafe_android.ui.create.group.access_manager.Action
+import com.vn.visafe_android.ui.create.group.protected_group.ProtectedGroupFragment
+import com.vn.visafe_android.ui.home.administrator.GroupManagementFragment
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,11 +23,20 @@ class CreateGroupActivity : BaseActivity() {
     lateinit var binding: ActivityCreateGroupBinding
     private var step = 0
     var createGroupRequest = CreateGroupRequest()
+    private var workspaceGroupData: WorkspaceGroupData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateGroupBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        intent?.let {
+            workspaceGroupData = it.getParcelableExtra(GroupManagementFragment.DATA_WORKSPACE)
+        }
+        workspaceGroupData?.let {
+            createGroupRequest.workspace_id = it.id
+            createGroupRequest.malware_enabled = it.malwareEnabled
+            createGroupRequest.phishing_enabled = it.phishingEnabled
+        }
         initView()
     }
 

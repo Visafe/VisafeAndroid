@@ -55,4 +55,18 @@
         <item name="tabIndicatorColor">#000000</item>
         <item name="tabIndicatorHeight">5dp</item>
     </style>
+
+    <style name="myEditText" parent="android:Widget.EditText">
+        <item name="android:background">@drawable/bg_custom_edittext</item>
+        <item name="android:textCursorDrawable">@drawable/custom_cursor_edittext</item>
+    </style>
+
+    <style name="AppThemeSplash">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
 </resources>
