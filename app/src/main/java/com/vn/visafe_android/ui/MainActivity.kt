@@ -11,6 +11,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import com.vn.visafe_android.R
@@ -23,6 +24,7 @@ import com.vn.visafe_android.model.UserInfo
 import com.vn.visafe_android.model.WorkspaceGroupData
 import com.vn.visafe_android.model.request.DeleteWorkSpaceRequest
 import com.vn.visafe_android.model.request.UpdateNameWorkspaceRequest
+import com.vn.visafe_android.ui.authentication.splash.PlaceholderFragment
 import com.vn.visafe_android.ui.create.group.access_manager.Action
 import com.vn.visafe_android.ui.dialog.VisafeDialogBottomSheet
 import com.vn.visafe_android.ui.home.*
@@ -52,9 +54,12 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private var adapter: MenuAdapter? = null
     private var workspaceGroupData: WorkspaceGroupData? = null
     private var listMenu: MutableList<WorkspaceGroupData> = mutableListOf()
-    private var overViewProtectFragment = OverViewProtectFragment()
-    private var groupManagementFragment = GroupManagementFragment()
+    private var overViewProtectFragment = OverViewProtectFragment.newInstance()
+    private var groupManagementFragment = GroupManagementFragment.newInstance()
     private var settingFragment = SettingFragment()
+    private var profileFragment = ProfileFragment()
+
+    var user: MutableLiveData<UserInfo> = MutableLiveData()
 
 //    var resultLauncherCreateWorkspaceActivity =
 //        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -76,6 +81,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         setContentView(binding.root)
         initView()
 //        doGetWorkSpaces()
+        doGetUserInfo()
     }
 
     private fun initView() {
@@ -90,7 +96,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         listFragment.add(POSITION_GROUP, groupManagementFragment)
         listFragment.add(POSITION_SCAN, HomeFragment())
         listFragment.add(POSITION_NOTIFICATION, PlaceholderFragment())
-        listFragment.add(POSITION_PROFILE, settingFragment)
+        listFragment.add(POSITION_PROFILE, profileFragment)
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         listFragment.forEachIndexed { index, fragment ->
             fragmentTransaction.add(R.id.fr_container, fragment, fragment.javaClass.simpleName)
@@ -232,7 +238,8 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private fun doDeleteWorkSpace(data: WorkspaceGroupData, position: Int) {
         showProgressDialog()
         val client = NetworkClient()
-        val call = client.client(context = applicationContext).doDeleteWorkspace(DeleteWorkSpaceRequest(data.id))
+        val call = client.client(context = applicationContext)
+            .doDeleteWorkspace(DeleteWorkSpaceRequest(data.id))
         call.enqueue(BaseCallback(this@MainActivity, object : Callback<ResponseBody> {
             override fun onResponse(
                 call: Call<ResponseBody>,
@@ -268,7 +275,8 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             createdAt = data.createdAt
         )
         val client = NetworkClient()
-        val call = client.client(context = applicationContext).doUpdateWorkspace(updateWorkspaceRequest)
+        val call =
+            client.client(context = applicationContext).doUpdateWorkspace(updateWorkspaceRequest)
         call.enqueue(BaseCallback(this@MainActivity, object : Callback<ResponseBody> {
             override fun onResponse(
                 call: Call<ResponseBody>,
@@ -288,7 +296,8 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         showProgressDialog()
         val updateNameWorkspaceRequest = UpdateNameWorkspaceRequest(data.id, newName)
         val client = NetworkClient()
-        val call = client.client(context = applicationContext).doUpdateNameWorkSpace(updateNameWorkspaceRequest)
+        val call = client.client(context = applicationContext)
+            .doUpdateNameWorkSpace(updateNameWorkspaceRequest)
         call.enqueue(BaseCallback(this@MainActivity, object : Callback<ResponseBody> {
             override fun onResponse(
                 call: Call<ResponseBody>,
@@ -320,6 +329,9 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                     if (response.code() == NetworkClient.CODE_SUCCESS) {
                         val gson = Gson()
                         val userInfo = response.body()
+                        userInfo?.let {
+                            user.value = it
+                        }
                         ViSafeApp().getPreference().putString(
                             PreferenceKey.USER_INFO,
                             gson.toJson(userInfo)
@@ -335,8 +347,10 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         } else {
             dismissProgress()
             val userInfo = ViSafeApp().getPreference().getUserInfo()
+            userInfo.let {
+                user.value = it
+            }
         }
-
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -380,9 +394,15 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             }
         }
         if (position > currentPosition) {
-            fragmentTransaction.setCustomAnimations(R.anim.trans_right_in, R.anim.trans_right_in)
+            fragmentTransaction.setCustomAnimations(
+                R.anim.trans_right_in,
+                R.anim.trans_right_in
+            )
         } else {
-            fragmentTransaction.setCustomAnimations(R.anim.trans_right_out, R.anim.trans_right_out)
+            fragmentTransaction.setCustomAnimations(
+                R.anim.trans_right_out,
+                R.anim.trans_right_out
+            )
         }
         currentPosition = position
         fragmentTransaction.commitNowAllowingStateLoss()
@@ -410,4 +430,5 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             }
         }
     }
+
 }

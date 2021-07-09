@@ -79,4 +79,15 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="Title">
+        <item name="android:textSize">@dimen/text_size_16sp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular_bold</item>
+        <item name="android:textColor">@color/color_222222</item>
+    </style>
+
+    <style name="Content">
+        <item name="android:textSize">@dimen/text_size_14sp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+    </style>
+
 </resources>

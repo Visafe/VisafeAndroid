@@ -56,10 +56,10 @@ class CreateGroupActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
+        step--
         if (step == 0) {
             finish()
         } else {
-            step--
             super.onBackPressed()
         }
     }

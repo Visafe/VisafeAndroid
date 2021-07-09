@@ -18,11 +18,12 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:padding="@dimen/_4sdp"
                 android:id="@+id/ivBack"
                 android:layout_width="@dimen/_28dp"
                 android:layout_height="@dimen/_28dp"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/_18dp"
+                android:layout_marginStart="@dimen/_16sdp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/ic_baseline_clear_24"
                 app:tint="@color/color_111111" />
@@ -141,7 +142,7 @@
         <TextView
             android:id="@+id/tvNext"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_48dp"
+            android:layout_height="@dimen/_44sdp"
             android:layout_marginStart="@dimen/_24dp"
             android:layout_marginTop="@dimen/_32dp"
             android:layout_marginEnd="@dimen/_24dp"

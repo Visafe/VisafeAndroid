@@ -334,4 +334,17 @@
     <string name="thiet_lap_chan_theo_doi">Thiết lập chặn theo dõi</string>
     <string name="thiet_lap_chan_truy_cap">Thiết lập chặn truy cập</string>
     <string name="thiet_lap_chan_noi_dung">Thiết lập chặn nội dung</string>
+    <string name="account">Tài khoản</string>
+    <string name="login_content">Đăng nhập để bảo mật toàn diện</string>
+    <string name="loai_tai_khoan">Loại tài khoản</string>
+    <string name="nang_cap_goi">Nâng cấp gói</string>
+    <string name="mat_khau_bao_mat">Mật khẩu &amp; bảo mật</string>
+    <string name="trung_tam_tro_giup">Trung tâm trợ giúp</string>
+    <string name="rate_app">Đánh giá ứng dụng</string>
+    <string name="register_free">Hoặc đăng ký dùng thử miễn phí 3 tháng</string>
+    <string name="register_account">Đăng ký tài khoản</string>
+    <string name="upgrade_now">Nâng cấp lên</string>
+    <string name="upgrade_now_v2">Nâng cấp ngay</string>
+    <string name="premium">PREMIUM</string>
+    <string name="premium_content">Nâng cấp lên phiên bản Premium cho phép bạn truy cập không giới hạn tính năng của ứng dụng</string>
 </resources>
