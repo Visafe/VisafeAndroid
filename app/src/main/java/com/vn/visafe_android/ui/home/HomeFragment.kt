@@ -33,21 +33,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //Sync old settings into new preferences if necessary.
-        PersistentState.syncLegacyState(context)
+        context?.let { PersistentState.instance.syncLegacyState(it) }
 
         // Export defaults into preferences.  See https://developer.android.com/guide/topics/ui/settings#Defaults
         PreferenceManager.setDefaultValues(context, R.xml.preferences, false)
 
         // Registers this class as a listener for user preference changes.
-
-        // Registers this class as a listener for user preference changes.
         PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(this)
 
         // Enable SVG support on very old versions of Android.
-
-        // Enable SVG support on very old versions of Android.
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
-        // Register broadcast receiver
 
         // Register broadcast receiver
         val intentFilter = IntentFilter(InternalNames.RESULT.name)
@@ -71,9 +66,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
     }
 
     private fun maybeAutostart() {
-        val controller = VpnController.getInstance()
+        val controller = VpnController.instance
         val state = controller.getState(context)
-        if (state.activationRequested && !state.on) {
+        if (state.activationRequested == true && !state.on) {
             prepareAndStartDnsVpn()
         }
     }
@@ -83,38 +78,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
             val transaction = intent.getSerializableExtra(InternalNames.TRANSACTION.name) as Transaction?
             if (InternalNames.RESULT.name == intent.action) {
                 transaction?.let {
-                    updateStatsDisplay(
-                        getNumRequests(), it
-                    )
+                    Log.e("onReceive: ", "" + it)
                 }
             } else if (InternalNames.DNS_STATUS.name == intent.action) {
                 syncDnsStatus()
             }
         }
-    }
-
-    private fun getNumRequests(): Long {
-        val controller = VpnController.getInstance()
-        return controller.getTracker(context).numRequests
-    }
-
-    private fun updateStatsDisplay(numRequests: Long, transaction: Transaction) {
-        showNumRequests(numRequests)
-        showTransaction(transaction)
-    }
-
-    private fun isHistoryEnabled(): Boolean {
-        return VpnController.getInstance().getTracker(context).isHistoryEnabled
-    }
-
-    private fun showTransaction(transaction: Transaction) {
-        if (isHistoryEnabled()) {
-            Log.e("showTransaction: ", transaction.toString())
-        }
-    }
-
-    private fun showNumRequests(numRequests: Long) {
-//        viewBinding.numRequests.text = String.format(Locale.getDefault(), "%,d", numRequests)
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
@@ -124,19 +93,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
     }
 
     private fun startDnsVpnService() {
-        VpnController.getInstance().start(context)
+        context?.let { VpnController.instance.start(it) }
     }
 
     private fun stopDnsVpnService() {
-        VpnController.getInstance().stop(context)
+        context?.let { VpnController.instance.stop(it) }
     }
 
     private fun prepareAndStartDnsVpn() {
         if (hasVpnService()) {
             if (prepareVpnService()) {
                 startDnsVpnService()
-//                updateServerName()
-//                syncDnsStatus()
             }
         } else {
             Log.e("prepareAndStartDnsVpn: ", "Device does not support system-wide VPN mode.")
@@ -174,27 +141,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
     // Sets the UI DNS status on/off.
     private fun syncDnsStatus() {
         try {
-            val status = VpnController.getInstance().getState(context)
-            status?.let {
+            val status = VpnController.instance.getState(context)
+            status.let {
                 // Change switch-button state
-                isChecked = status.activationRequested
+                isChecked = status.activationRequested == true
                 Log.e("syncDnsStatus: ", "" + isChecked)
                 // Change indicator text
                 binding.tvProtect.text =
-                    if (status.activationRequested) getString(R.string.you_protect) else getString(R.string.bam_de_bat)
+                    if (status.activationRequested == true) getString(R.string.you_protect) else getString(R.string.bam_de_bat)
                 context?.let {
                     binding.ivEarth.setImageDrawable(
-                        if (status.activationRequested) ContextCompat.getDrawable(it, R.drawable.ic_earth) else
+                        if (status.activationRequested == true) ContextCompat.getDrawable(it, R.drawable.ic_earth) else
                             ContextCompat.getDrawable(it, R.drawable.ic_earth_off)
                     )
                     binding.ivBtnProtect.setImageDrawable(
-                        if (status.activationRequested) ContextCompat.getDrawable(it, R.drawable.ic_button_protect) else
+                        if (status.activationRequested == true) ContextCompat.getDrawable(it, R.drawable.ic_button_protect) else
                             ContextCompat.getDrawable(it, R.drawable.ic_button_protect_off)
                     )
                 }
             }
         } catch (e: Exception) {
-            e.message?.let { Log.e("syncDnsStatus: ", it) }
+            e.message?.let { Log.e("Ex syncDnsStatus: ", it) }
         }
 
     }

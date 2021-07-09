@@ -1,4 +1,4 @@
-package com.vn.visafe_android.ui
+package com.vn.visafe_android.ui.authentication.splash
 
 import android.content.Intent
 import android.os.Build
@@ -7,19 +7,18 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import com.vn.visafe_android.R
 import com.vn.visafe_android.base.BaseActivity
 import com.vn.visafe_android.databinding.ActivitySplashBinding
+import com.vn.visafe_android.ui.MainActivity
 import com.vn.visafe_android.ui.adapter.SectionsPagerAdapter
 import com.vn.visafe_android.ui.authentication.LoginActivity
 import com.vn.visafe_android.utils.PreferenceKey
 import com.vn.visafe_android.utils.SharePreferenceKeyHelper
+import com.vn.visafe_android.utils.setOnSingClickListener
 
 class SplashActivity : BaseActivity() {
 
@@ -54,7 +53,7 @@ class SplashActivity : BaseActivity() {
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
         viewBinding.viewPager.adapter = sectionsPagerAdapter
 
-        viewBinding.fab.setOnClickListener {
+        viewBinding.fab.setOnSingClickListener {
             if (viewBinding.fab.text.equals(getString(R.string.start))) {
                 SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.IS_FIRST_SHOW_ON_BOARDING, true)
                 startActivity(Intent(this, MainActivity::class.java))
@@ -64,9 +63,6 @@ class SplashActivity : BaseActivity() {
                 viewBinding.viewPager.currentItem = currentItem + 1
             }
         }
-        val tab1: TextView = findViewById(R.id.tab1);
-        val tab2: TextView = findViewById(R.id.tab2);
-        val tab3: TextView = findViewById(R.id.tab3);
 
         viewBinding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
@@ -85,29 +81,29 @@ class SplashActivity : BaseActivity() {
             override fun onPageSelected(position: Int) {
                 when (position) {
                     0 -> {
-                        tab1.background =
+                        viewBinding.tab1.background =
                             ContextCompat.getDrawable(applicationContext, R.drawable.bg_active)
-                        tab2.background =
+                        viewBinding.tab2.background =
                             ContextCompat.getDrawable(applicationContext, R.drawable.bg_inactive)
-                        tab3.background =
+                        viewBinding.tab3.background =
                             ContextCompat.getDrawable(applicationContext, R.drawable.bg_inactive)
                         viewBinding.fab.text = getString(R.string.next)
                     }
                     1 -> {
-                        tab1.background =
+                        viewBinding.tab1.background =
                             ContextCompat.getDrawable(applicationContext, R.drawable.bg_inactive)
-                        tab2.background =
+                        viewBinding.tab2.background =
                             ContextCompat.getDrawable(applicationContext, R.drawable.bg_active)
-                        tab3.background =
+                        viewBinding.tab3.background =
                             ContextCompat.getDrawable(applicationContext, R.drawable.bg_inactive)
                         viewBinding.fab.text = getString(R.string.next)
                     }
                     2 -> {
-                        tab1.background =
+                        viewBinding.tab1.background =
                             ContextCompat.getDrawable(applicationContext, R.drawable.bg_inactive)
-                        tab2.background =
+                        viewBinding.tab2.background =
                             ContextCompat.getDrawable(applicationContext, R.drawable.bg_inactive)
-                        tab3.background =
+                        viewBinding.tab3.background =
                             ContextCompat.getDrawable(applicationContext, R.drawable.bg_active)
                         viewBinding.fab.text = getString(R.string.start)
 
