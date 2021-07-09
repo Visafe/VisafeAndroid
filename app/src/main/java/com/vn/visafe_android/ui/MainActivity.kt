@@ -10,6 +10,7 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.vn.visafe_android.R
@@ -60,6 +61,8 @@ class MainActivity : BaseActivity() {
     private var settingFragment = SettingFragment()
     private var profileFragment = ProfileFragment()
 
+    var user: MutableLiveData<UserInfo> = MutableLiveData()
+
     var resultLauncherCreateWorkspaceActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             // There are no request codes
@@ -73,6 +76,7 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
         initView()
         doGetWorkSpaces()
+        doGetUserInfo()
     }
 
     private fun initView() {
@@ -408,7 +412,7 @@ class MainActivity : BaseActivity() {
                         val userInfo = response.body()
                         userInfo?.let {
                             binding.tvUserName.text = it.fullName.toString()
-                            profileFragment.setUserProfile()
+                            user.value = it
                         }
                         ViSafeApp().getPreference().putString(
                             PreferenceKey.USER_INFO,
@@ -426,6 +430,7 @@ class MainActivity : BaseActivity() {
             val userInfo = ViSafeApp().getPreference().getUserInfo()
             userInfo.let {
                 binding.tvUserName.text = it.fullName.toString()
+                user.value = it
             }
         }
 
