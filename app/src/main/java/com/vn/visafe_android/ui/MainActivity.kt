@@ -41,6 +41,7 @@ class MainActivity : BaseActivity() {
         const val POSITION_PROTECT = 1
         const val POSITION_UTILITIES = 2
         const val POSITION_SETTING = 3
+        const val POSITION_PROFILE = 4
         const val REQUEST_CODE_CREATE_WORKSPACE = 123
         const val IS_FIRST_CREATE_WORKSPACE = "IS_FIRST_CREATE_WORKSPACE"
     }
@@ -57,6 +58,7 @@ class MainActivity : BaseActivity() {
     private var protectFragment = ProtectFragment()
     private var utilitiesHomeFragment = UtilitiesHomeFragment()
     private var settingFragment = SettingFragment()
+    private var profileFragment = ProfileFragment()
 
     var resultLauncherCreateWorkspaceActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -99,6 +101,7 @@ class MainActivity : BaseActivity() {
         listFragment.add(POSITION_PROTECT, protectFragment)
         listFragment.add(POSITION_UTILITIES, utilitiesHomeFragment)
         listFragment.add(POSITION_SETTING, settingFragment)
+        listFragment.add(POSITION_PROFILE, profileFragment)
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         listFragment.forEachIndexed { index, fragment ->
@@ -127,6 +130,10 @@ class MainActivity : BaseActivity() {
                 }
                 R.id.navigation_setting -> {
                     openTab(POSITION_SETTING)
+                    return@setOnNavigationItemSelectedListener true
+                }
+                R.id.navigation_profile -> {
+                    openTab(POSITION_PROFILE)
                     return@setOnNavigationItemSelectedListener true
                 }
                 else -> {
@@ -401,6 +408,7 @@ class MainActivity : BaseActivity() {
                         val userInfo = response.body()
                         userInfo?.let {
                             binding.tvUserName.text = it.fullName.toString()
+                            profileFragment.setUserProfile()
                         }
                         ViSafeApp().getPreference().putString(
                             PreferenceKey.USER_INFO,

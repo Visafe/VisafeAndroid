@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_16dp"
+    app:cardCornerRadius="@dimen/_16dp"
+    app:cardElevation="@dimen/_8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_background_upgrade"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_32dp"
+                android:orientation="horizontal"
+                android:padding="@dimen/_4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvUpgradeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_8dp"
+                    android:fontFamily="@font/sf_pro_text_regular_bold"
+                    android:text="@string/upgrade_now"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_18sp" />
+
+                <TextView
+                    android:id="@+id/tvUpgradeStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_radius_16dp"
+                    android:backgroundTint="@color/color_FFB31F"
+                    android:drawablePadding="@dimen/_4dp"
+                    android:fontFamily="@font/sf_pro_text_regular_bold"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_2dp"
+                    android:paddingTop="@dimen/_4dp"
+                    android:paddingEnd="@dimen/_8dp"
+                    android:paddingBottom="@dimen/_4dp"
+                    android:text="@string/premium"
+                    android:textAllCaps="true"
+                    android:textColor="#061448"
+                    android:textSize="@dimen/text_size_10sp"
+                    app:drawableStartCompat="@drawable/ic_subtract" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_16dp"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:gravity="center"
+                android:text="@string/premium_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12sp" />
+
+            <TextView
+                android:id="@+id/btnUpgradeNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_4dp"
+                android:layout_marginBottom="@dimen/_24dp"
+                android:background="@drawable/bg_radius_34dp"
+                android:backgroundTint="@color/color_FFB31F"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:paddingStart="@dimen/_20dp"
+                android:paddingTop="@dimen/_10dp"
+                android:paddingEnd="@dimen/_20dp"
+                android:paddingBottom="@dimen/_10dp"
+                android:text="@string/upgrade_now_v2"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_14sp" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16dp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:gravity="center_horizontal"
+            android:text="@string/register_free"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/text_size_12sp" />
+
+        <TextView
+            android:id="@+id/btnRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/_24dp"
+            android:background="@drawable/bg_radius_stroke_32dp"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:paddingStart="@dimen/_16dp"
+            android:paddingTop="@dimen/_8dp"
+            android:paddingEnd="@dimen/_16dp"
+            android:paddingBottom="@dimen/_8dp"
+            android:text="@string/register_account"
+            android:textAllCaps="true"
+            android:textColor="@color/color_FFB31F"
+            android:textSize="@dimen/text_size_14sp" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

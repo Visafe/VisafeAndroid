@@ -20,4 +20,9 @@
         android:id="@+id/navigation_setting"
         android:icon="@drawable/ic_settings"
         android:title="@string/setting" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/account" />
 </menu>
