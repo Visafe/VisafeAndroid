@@ -1,4 +1,4 @@
-package com.vn.visafe_android.ui
+package com.vn.visafe_android.ui.authentication.splash
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

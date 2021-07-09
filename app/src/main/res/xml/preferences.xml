@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <com.vn.visafe_android.ui.setting.ServerChooser
+    <com.vn.visafe_android.dns.net.setting.ServerChooser
         android:dialogTitle="@string/server_choice"
         android:key="@string/server_choice_key"
         android:title="@string/server_choice" />

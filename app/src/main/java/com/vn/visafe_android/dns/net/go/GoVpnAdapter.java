@@ -28,17 +28,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.vn.visafe_android.R;
-import com.vn.visafe_android.dns.sys.CountryCode;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Locale;
-
 import com.vn.visafe_android.dns.sys.IntraVpnService;
 import com.vn.visafe_android.dns.sys.PersistentState;
 import com.vn.visafe_android.dns.sys.VpnController;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Locale;
 
 import doh.Transport;
 import protect.Protector;
@@ -129,36 +125,11 @@ public class GoVpnAdapter {
                     transport, getProtector(), listener);
         } catch (Exception e) {
             Log.d("connectTunnel: ", e.getMessage());
-            VpnController.getInstance().onConnectionStateChanged(vpnService, IntraVpnService.State.FAILING);
+            VpnController.Companion.getInstance().onConnectionStateChanged(vpnService, IntraVpnService.State.FAILING);
             return;
         }
 
-//        if (RemoteConfig.getChoirEnabled()) {
-//            enableChoir();
-//        }
     }
-
-//    // Set up failure reporting with Choir.
-//    private void enableChoir() {
-//        CountryCode countryCode = new CountryCode(vpnService);
-//        @NonNull String country = countryCode.getNetworkCountry();
-//        if (country.isEmpty()) {
-//            country = countryCode.getDeviceCountry();
-//        }
-//        if (country.isEmpty()) {
-//            // Country code is mandatory for Choir.
-//            Log.i(LOG_TAG, "No country code found");
-//            return;
-//        }
-//        String file = vpnService.getFilesDir() + File.separator + CHOIR_FILENAME;
-//        try {
-//            tunnel.enableSNIReporter(file, "intra.metrics.gstatic.com", country);
-//        } catch (Exception e) {
-//            // Choir setup failure is logged but otherwise ignored, because it does not prevent Intra
-//            // from functioning correctly.
-//            LogWrapper.logException(e);
-//        }
-//    }
 
     private static ParcelFileDescriptor establishVpn(IntraVpnService vpnService) {
         try {
@@ -206,7 +177,7 @@ public class GoVpnAdapter {
     }
 
     private doh.Transport makeDohTransport(@Nullable String url) throws Exception {
-        @NonNull String realUrl = PersistentState.expandUrl(vpnService, url);
+        @NonNull String realUrl = PersistentState.Companion.getInstance().expandUrl(vpnService, url);
         String dohIPs = getIpString(vpnService, realUrl);
         String host = new URL(realUrl).getHost();
         long startTime = SystemClock.elapsedRealtime();
@@ -214,7 +185,7 @@ public class GoVpnAdapter {
         try {
             transport = Tun2socks.newDoHTransport(realUrl, dohIPs, getProtector(), null, listener);
         } catch (Exception e) {
-            Log.e("Exception makeDohTransport: ", e.getMessage());
+            Log.e("Exp makeDohTransport: ", e.getMessage());
             throw e;
         }
         int delta = (int) (SystemClock.elapsedRealtime() - startTime);
@@ -242,14 +213,14 @@ public class GoVpnAdapter {
         // is called on network changes, and it's important to switch to a fresh transport because the
         // old transport may be using sockets on a deleted interface, which may block until they time
         // out.
-        String url = PersistentState.getServerUrl(vpnService);
+        String url = PersistentState.Companion.getInstance().getServerUrl(vpnService);
         try {
             tunnel.setDNS(makeDohTransport(url));
         } catch (Exception e) {
             Log.e("updateDohUrl: ", e.getMessage());
             tunnel.disconnect();
             tunnel = null;
-            VpnController.getInstance().onConnectionStateChanged(vpnService, IntraVpnService.State.FAILING);
+            VpnController.Companion.getInstance().onConnectionStateChanged(vpnService, IntraVpnService.State.FAILING);
         }
     }
 
@@ -266,18 +237,6 @@ public class GoVpnAdapter {
                 break;
             }
         }
-
-//        try {
-//            String domain = new URL(url).getHost();
-//            String extraIPs = RemoteConfig.getExtraIPs(domain);
-//            if (ret.isEmpty()) {
-//                ret = extraIPs;
-//            } else if (!extraIPs.isEmpty()) {
-//                ret += "," + extraIPs;
-//            }
-//        } catch (MalformedURLException e) {
-////            LogWrapper.logException(e);
-//        }
 
         return ret;
     }
