@@ -12,7 +12,6 @@ import com.vn.visafe_android.base.BaseFragment
 import com.vn.visafe_android.databinding.FragmentProtectedGroupBinding
 import com.vn.visafe_android.ui.create.group.CreateGroupActivity
 import com.vn.visafe_android.ui.create.group.SetupCreateGroupFragment
-import com.vn.visafe_android.ui.create.group.block_tracking.BlockTracingAndAdsFragment
 
 class ProtectedGroupFragment : BaseFragment<FragmentProtectedGroupBinding>() {
     companion object {
