@@ -97,7 +97,7 @@
                         android:layout_width="@dimen/_20dp"
                         android:layout_height="@dimen/_20dp"
                         android:layout_margin="@dimen/_16dp"
-                        android:src="@drawable/ic_shield_done"
+                        android:src="@drawable/ic_shield_blue"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="ContentDescription" />

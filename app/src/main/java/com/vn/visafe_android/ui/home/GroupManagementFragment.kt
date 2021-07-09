@@ -1,4 +1,4 @@
-package com.vn.visafe_android.ui.home.administrator
+package com.vn.visafe_android.ui.home
 
 import android.content.Intent
 import android.util.Log
@@ -49,21 +49,21 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
         binding.rvGroup.adapter = groupListAdapter
 
         initControl()
-
+        workspaceGroupData?.let { doGetGroupWithId(it) }
     }
 
     private fun initControl() {
-        binding.btnAddNewGroup.setOnSingClickListener {
+        binding.btnCreateNewGroup.setOnSingClickListener {
             val intent = Intent(requireContext(), CreateGroupActivity::class.java)
             intent.putExtra(DATA_WORKSPACE, workspaceGroupData)
             startActivity(intent)
         }
+
+        binding.btnJoinGroup.setOnSingClickListener {
+
+        }
     }
 
-    fun loadData(workspaceGroupData: WorkspaceGroupData) {
-        this.workspaceGroupData = workspaceGroupData
-        doGetGroupWithId(workspaceGroupData)
-    }
 
     private fun doGetGroupWithId(workspaceGroupData: WorkspaceGroupData) {
         showProgressDialog()
@@ -80,11 +80,8 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
                         if (it.isNotEmpty()) {
                             listGroup.addAll(it)
                             groupListAdapter?.notifyDataSetChanged()
-                            binding.tvTotalGroup.text = String.format(getString(R.string.text_total_group), it.size)
-                            binding.tvTotalGroup.visibility = View.VISIBLE
                             binding.rvGroup.visibility = View.VISIBLE
                         } else {
-                            binding.tvTotalGroup.visibility = View.GONE
                             binding.rvGroup.visibility = View.GONE
                             listGroup.addAll(it)
                             groupListAdapter?.notifyDataSetChanged()

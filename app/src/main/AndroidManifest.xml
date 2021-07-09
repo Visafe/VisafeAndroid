@@ -86,28 +86,33 @@
         <activity
             android:name=".ui.authentication.LoginActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".ui.authentication.RegisterActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".ui.authentication.forgotpassword.ForgotPasswordActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".ui.MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".ui.create.workspace.CreateWorkspaceActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.create.group.CreateGroupActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash" />
 
     </application>
 

@@ -1,4 +1,4 @@
-package com.vn.visafe_android.ui.home.administrator
+package com.vn.visafe_android.ui.home
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vn.visafe_android.R

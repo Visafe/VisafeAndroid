@@ -8,25 +8,26 @@ import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.vn.visafe_android.R
 import com.vn.visafe_android.base.BaseFragment
-import com.vn.visafe_android.databinding.FragmentProtectBinding
+import com.vn.visafe_android.databinding.FragmentHomeBinding
 import com.vn.visafe_android.dns.net.doh.Transaction
 import com.vn.visafe_android.dns.sys.InternalNames
 import com.vn.visafe_android.dns.sys.PersistentState
 import com.vn.visafe_android.dns.sys.VpnController
 import com.vn.visafe_android.utils.setOnSingClickListener
 
-class ProtectFragment : BaseFragment<FragmentProtectBinding>(), SharedPreferences.OnSharedPreferenceChangeListener {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private var isChecked: Boolean = false
 
     companion object {
         const val REQUEST_CODE_PREPARE_VPN = 100
-        fun newInstance() = ProtectFragment()
+        fun newInstance() = HomeFragment()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +50,7 @@ class ProtectFragment : BaseFragment<FragmentProtectBinding>(), SharedPreference
         context?.let { LocalBroadcastManager.getInstance(it).registerReceiver(messageReceiver, intentFilter) }
     }
 
-    override fun layoutRes(): Int = R.layout.fragment_protect
+    override fun layoutRes(): Int = R.layout.fragment_home
 
     override fun initView() {
         syncDnsStatus()

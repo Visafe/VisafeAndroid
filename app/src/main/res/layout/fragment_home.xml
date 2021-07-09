@@ -7,11 +7,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/ic_on"
-        tools:context=".ui.home.ProtectFragment">
+        tools:context=".ui.home.HomeFragment">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_10sdp"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_frame_protect"
             tools:ignore="ContentDescription" />
@@ -20,7 +21,8 @@
             android:id="@+id/ivVisafe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_16dp"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_38sdp"
             android:src="@drawable/ic_visafe"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -74,8 +76,7 @@
             android:id="@+id/tvProtect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginBottom="@dimen/_36dp"
+            android:layout_marginBottom="@dimen/_38sdp"
             android:fontFamily="@font/sf_pro_text_regular"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_14sp"

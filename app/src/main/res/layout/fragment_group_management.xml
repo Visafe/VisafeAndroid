@@ -1,89 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.home.administrator.GroupManagementFragment">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/llSearchNameGroup"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bgTop"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_40dp"
-            android:layout_marginStart="@dimen/_13sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_13sdp"
-            android:background="@drawable/bg_button_border_color_primary_radius_8"
-            android:orientation="vertical"
+            android:layout_height="@dimen/_170sdp"
+            android:background="@drawable/bg_top_protect_family_group"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/edtSearchNameGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:hint="Tìm kiếm nhanh tên nhóm"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                app:met_hideUnderline="true"
-                app:met_textColorHint="#111111" />
-        </LinearLayout>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_20sdp"
+                android:background="@drawable/bg_intersect"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/btnAddNewGroup"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/bg_create_group"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="@+id/llSearchNameGroup"
-            app:layout_constraintStart_toStartOf="@+id/llSearchNameGroup"
-            app:layout_constraintTop_toBottomOf="@+id/llSearchNameGroup">
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/_20dp"
-                android:drawablePadding="@dimen/_4dp"
-                android:fontFamily="@font/sf_pro_text_regular_bold"
-                android:text="@string/create_group"
-                android:textColor="@color/color_FFB31F"
-                android:textSize="@dimen/text_size_16sp"
-                app:drawableStartCompat="@drawable/ic_baseline_add_24"
-                app:drawableTint="@color/color_FFB31F" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvTotalGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/_13dp"
-            android:drawablePadding="@dimen/_4dp"
-            android:fontFamily="@font/sf_pro_text_regular_bold"
-            android:text="Số nhóm: 04"
-            android:textColor="@color/color_111111"
-            android:textSize="@dimen/text_size_16sp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@+id/btnAddNewGroup"
-            app:layout_constraintTop_toBottomOf="@+id/btnAddNewGroup" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvGroup"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:clipToPadding="false"
-            android:padding="@dimen/_13sdp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTotalGroup"
-            tools:listitem="@layout/item_group" />
+            app:layout_constraintTop_toBottomOf="@+id/bgTop">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+                android:id="@+id/tvGroupName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:text="Gia đình &amp; nhóm"
+                android:textColor="@color/color_222222"
+                android:textSize="@dimen/_18sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvGroupDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.7"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:text="Bảo vệ gia đình &amp; người thân trên môi trường mạng"
+                android:textColor="@color/color_222222"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvGroupName" />
+
+            <TextView
+                android:id="@+id/btnCreateNewGroup"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:background="@drawable/bg_button_color_primary_radius_32"
+                android:gravity="center"
+                android:text="Tạo nhóm mới"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/tvGroupDescription" />
+
+            <TextView
+                android:id="@+id/btnJoinGroup"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:background="@drawable/bg_button_border_color_primary_radius_32"
+                android:gravity="center"
+                android:text="Tham gia nhóm"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintStart_toEndOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/tvGroupDescription" />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnCreateNewGroup">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvGroupTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_13sdp"
+                        android:layout_marginTop="@dimen/_26sdp"
+                        android:fontFamily="@font/sf_pro_text_regular_bold"
+                        android:text="@string/group_list_title"
+                        android:textColor="@color/color_222222"
+                        android:textSize="@dimen/text_size_16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_13sdp"
+                        android:layout_marginTop="@dimen/_8dp"
+                        android:layout_marginEnd="@dimen/_13sdp"
+                        android:nestedScrollingEnabled="false"
+                        app:layout_constraintTop_toBottomOf="@id/tvGroupTitle"
+                        tools:itemCount="1"
+                        tools:listitem="@layout/item_group" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

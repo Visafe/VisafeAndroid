@@ -1,216 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/dlMain"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="left">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <FrameLayout
+        android:id="@+id/fr_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="@dimen/_0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toTopOf="@id/bottom_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/tvTitleToolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/_16dp"
-                    android:layout_toStartOf="@id/ivNotification"
-                    android:fontFamily="@font/sf_pro_text_regular_bold"
-                    android:gravity="center"
-                    android:text="@string/ncsc_workspace"
-                    android:textColor="@color/color_222222"
-                    android:textSize="@dimen/text_size_16sp" />
-
-                <ImageView
-                    android:id="@+id/ivNotification"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/_16dp"
-                    android:src="@drawable/ic_notification"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:id="@+id/tvDotNoti"
-                    android:layout_width="@dimen/_8dp"
-                    android:layout_height="@dimen/_8dp"
-                    android:layout_alignTop="@id/ivNotification"
-                    android:layout_alignEnd="@id/ivNotification"
-                    android:background="@drawable/bg_circle"
-                    android:backgroundTint="@color/color_F33C3C" />
-
-            </RelativeLayout>
-        </androidx.appcompat.widget.Toolbar>
-
-        <include
-            android:id="@+id/mainContent"
-            layout="@layout/main_content" />
-    </LinearLayout>
-
-    <com.vn.visafe_android.ui.custom.PadNavigationView
-        android:id="@+id/outer_drawer"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:fitsSystemWindows="true"
-        android:visibility="visible">
+        app:elevation="@dimen/_4dp"
+        app:itemIconTint="@drawable/tab_color"
+        app:itemTextColor="@drawable/tab_color"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu_home" />
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:scrollbars="vertical">
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:src="@drawable/ic_scan"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabCustomSize="@dimen/_43sdp"
+        app:layout_anchor="@id/bottom_view"
+        app:layout_constraintEnd_toEndOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/bottom_view"
+        app:maxImageSize="@dimen/_30sdp"
+        app:shapeAppearanceOverlay="@style/fab_square" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/tvTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="?actionBarSize"
-                    android:layout_marginStart="@dimen/_16dp"
-                    android:fontFamily="@font/sf_pro_text_regular_bold"
-                    android:gravity="center_vertical"
-                    android:text="@string/workspaces"
-                    android:textColor="@color/color_111111"
-                    android:textSize="@dimen/text_size_20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvGroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_0dp"
-                    app:layout_constraintBottom_toTopOf="@id/rlUser"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvTitle"
-                    tools:itemCount="5"
-                    tools:listitem="@layout/item_group_menu" />
-
-                <TextView
-                    android:id="@+id/tvSupport"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/_12dp"
-                    android:fontFamily="@font/sf_pro_text_regular"
-                    android:paddingStart="@dimen/_16dp"
-                    android:paddingTop="@dimen/_8dp"
-                    android:paddingBottom="@dimen/_8dp"
-                    android:text="@string/support_title"
-                    android:textColor="@color/color_111111"
-                    android:textSize="@dimen/text_size_16sp"
-                    android:visibility="gone"
-                    app:drawableStartCompat="@drawable/ic_help_circle"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvIntroduction"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_20sdp"
-                    android:drawablePadding="@dimen/_12dp"
-                    android:fontFamily="@font/sf_pro_text_regular"
-                    android:paddingStart="@dimen/_16dp"
-                    android:paddingTop="@dimen/_8dp"
-                    android:paddingBottom="@dimen/_8dp"
-                    android:text="@string/introduction_title"
-                    android:textColor="@color/color_111111"
-                    android:textSize="@dimen/text_size_16sp"
-                    app:drawableStartCompat="@drawable/ic_hdsd"
-                    app:layout_constraintBottom_toTopOf="@id/tvSupport"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvAddWorkspace"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/_12dp"
-                    android:fontFamily="@font/sf_pro_text_regular"
-                    android:paddingStart="@dimen/_16dp"
-                    android:paddingTop="@dimen/_8dp"
-                    android:paddingBottom="@dimen/_8dp"
-                    android:text="@string/add_workspace"
-                    android:textColor="@color/color_111111"
-                    android:textSize="@dimen/text_size_16sp"
-                    app:drawableStartCompat="@drawable/ic_plus"
-                    app:layout_constraintBottom_toTopOf="@id/tvIntroduction"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:ignore="RtlSymmetry" />
-
-                <RelativeLayout
-                    android:id="@+id/rlUser"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/color_F8F8F8"
-                    app:layout_constraintBottom_toTopOf="@id/tvAddWorkspace"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
-
-                    <ImageView
-                        android:id="@+id/ivAvatar"
-                        android:layout_width="@dimen/_24dp"
-                        android:layout_height="@dimen/_24dp"
-                        android:layout_marginStart="@dimen/_16dp"
-                        android:layout_marginTop="@dimen/_12dp"
-                        android:layout_marginBottom="@dimen/_12dp"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/ic_personal"
-                        tools:ignore="ContentDescription" />
-
-                    <ImageView
-                        android:id="@+id/ivArrow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/_24dp"
-                        android:src="@drawable/ic_stroke"
-                        app:tint="@color/color_111111"
-                        tools:ignore="ContentDescription" />
-
-                    <TextView
-                        android:id="@+id/tvUserName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_12dp"
-                        android:layout_toStartOf="@id/ivArrow"
-                        android:layout_toEndOf="@id/ivAvatar"
-                        android:fontFamily="@font/sf_pro_text_regular_bold"
-                        android:gravity="center_vertical"
-                        android:lines="2"
-                        android:maxLines="2"
-                        android:textColor="@color/color_111111"
-                        android:textSize="@dimen/text_size_16sp"
-                        tools:text="Đào Thị Hải Yến" />
-                </RelativeLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.core.widget.NestedScrollView>
-
-    </com.vn.visafe_android.ui.custom.PadNavigationView>
-
-</androidx.drawerlayout.widget.DrawerLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

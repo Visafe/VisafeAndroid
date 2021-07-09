@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -15,6 +16,8 @@ import androidx.fragment.app.FragmentTransaction
 import com.vn.visafe_android.data.BaseController
 import com.vn.visafe_android.data.BaseResponse
 import com.vn.visafe_android.data.NetworkClient
+import com.vn.visafe_android.ui.authentication.LoginActivity
+import com.vn.visafe_android.utils.SharePreferenceKeyHelper
 import com.vn.visafe_android.widget.ProgressDialogFragment
 
 open class BaseActivity : AppCompatActivity(), BaseController {
@@ -97,5 +100,12 @@ open class BaseActivity : AppCompatActivity(), BaseController {
             ft.addToBackStack(tag)
             ft.commit()
         }
+    }
+
+    fun needLogin(): Boolean {
+        if (SharePreferenceKeyHelper.getInstance(application).isLogin())
+            return false
+        startActivity(Intent(this, LoginActivity::class.java))
+        return true
     }
 }

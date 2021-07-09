@@ -18,12 +18,13 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:padding="@dimen/_4sdp"
                 android:id="@+id/ivBack"
-                android:adjustViewBounds="true"
                 android:layout_width="@dimen/_28dp"
                 android:layout_height="@dimen/_28dp"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/_18dp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:adjustViewBounds="true"
                 android:src="@drawable/ic_arrow_left_black"
                 app:tint="@color/color_111111" />
 

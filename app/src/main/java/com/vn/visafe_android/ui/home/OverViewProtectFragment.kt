@@ -1,10 +1,10 @@
-package com.vn.visafe_android.ui.home.administrator
+package com.vn.visafe_android.ui.home
 
 import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vn.visafe_android.R
 import com.vn.visafe_android.base.BaseFragment
-import com.vn.visafe_android.databinding.FragmentOverViewBinding
+import com.vn.visafe_android.databinding.FragmentOverViewProtectBinding
 import com.vn.visafe_android.model.ApplicationMostData
 import com.vn.visafe_android.model.ContentMostData
 import com.vn.visafe_android.model.DeviceMostData
@@ -15,14 +15,14 @@ import com.vn.visafe_android.ui.adapter.DeviceMostAdapter
 import com.vn.visafe_android.ui.adapter.GroupListAdapter
 import com.vn.visafe_android.ui.group.dashboard.GroupDashboardActivity
 
-class OverViewFragment : BaseFragment<FragmentOverViewBinding>() {
+class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = OverViewFragment()
+        fun newInstance() = OverViewProtectFragment()
     }
 
-    override fun layoutRes(): Int = R.layout.fragment_over_view
+    override fun layoutRes(): Int = R.layout.fragment_over_view_protect
 
     override fun initView() {
         val contentAdapter = ContentMostAdapter(createContentList())

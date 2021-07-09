@@ -7,9 +7,9 @@
     <solid
         android:color="#ffffff"/>
     <size
-        android:width="@dimen/_30dp"
-        android:height="@dimen/_30dp" />
+        android:width="@dimen/_20sdp"
+        android:height="@dimen/_20sdp" />
     <stroke
-        android:width="@dimen/_4dp"
+        android:width="@dimen/_2sdp"
         android:color="#0000ffff" />
 </shape>
