@@ -1,4 +1,4 @@
-package com.vn.visafe_android.ui
+package com.vn.visafe_android.ui.authentication.splash
 
 import android.os.Bundle
 import android.view.LayoutInflater
