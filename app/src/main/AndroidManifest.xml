@@ -26,14 +26,17 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity android:name=".ui.group.dashboard.GroupDashboardActivity" />
+        <activity android:name=".ui.setting.SettingActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.group.dashboard.GroupDashboardActivity"
+            android:screenOrientation="portrait"  />
         <activity
             android:name=".ui.group.detail.GroupDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.group.join.JoinGroupActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.group.join.ScanQRJoinGroupActivity"
             android:screenOrientation="portrait" />
@@ -47,7 +50,6 @@
                 <action android:name="android.net.VpnService" />
             </intent-filter>
         </service>
-
         <service
             android:name=".dns.sys.IntraTileService"
             android:label="@string/app_name"
@@ -55,6 +57,7 @@
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.service.quicksettings.ACTIVE_TILE"
                 android:value="true" />
@@ -75,37 +78,31 @@
             android:name=".ui.authentication.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeSplash">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.authentication.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeSplash"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".ui.authentication.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeSplash"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".ui.authentication.forgotpassword.ForgotPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeSplash"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.create.workspace.CreateWorkspaceActivity"
             android:screenOrientation="portrait" />
@@ -113,7 +110,6 @@
             android:name=".ui.create.group.CreateGroupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeSplash" />
-
     </application>
 
 </manifest>

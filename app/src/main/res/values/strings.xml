@@ -347,4 +347,15 @@
     <string name="upgrade_now_v2">Nâng cấp ngay</string>
     <string name="premium">PREMIUM</string>
     <string name="premium_content">Nâng cấp lên phiên bản Premium cho phép bạn truy cập không giới hạn tính năng của ứng dụng</string>
+  <string name="chosse_account_type">Chọn loại tài khoản</string>
+  <string name="add_account_type">Thêm loại tài khoản mới</string>
+    <string name="nhap_ten_loai_tai_khoan">Nhập tên loại tài khoản</string>
+  <string name="create_account_type">Bạn muốn tên hiển thị của loại tài khoản là gì?</string>
+  <string name="create">Tạo</string>
+  <string name="change_pass">Đổi mật khẩu</string>
+  <string name="update_pin_title">Cập nhật mã PIN</string>
+  <string name="setup_noti">Cấu hình thông báo</string>
+  <string name="language">Ngôn ngữ</string>
+  <string name="vietnamese">Tiếng Việt</string>
+  <string name="logout">Đăng xuất</string>
 </resources>

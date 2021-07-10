@@ -14,7 +14,7 @@
             android:id="@+id/iv_left"
             android:layout_width="@dimen/_40dp"
             android:layout_height="@dimen/_40dp"
-            android:layout_marginStart="@dimen/_10dp"
+            android:layout_marginStart="@dimen/_4sdp"
             android:padding="@dimen/_10dp"
             android:src="@drawable/ic_back"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -37,6 +37,7 @@
             tools:ignore="ContentDescription" />
 
         <TextView
+            android:visibility="invisible"
             android:id="@+id/tvDotNoti"
             android:layout_width="@dimen/_8dp"
             android:layout_height="@dimen/_8dp"

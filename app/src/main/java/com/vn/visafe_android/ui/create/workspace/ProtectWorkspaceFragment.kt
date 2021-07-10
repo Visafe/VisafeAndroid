@@ -3,6 +3,7 @@ package com.vn.visafe_android.ui.create.workspace
 import android.content.Context
 import android.os.Bundle
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.core.widget.addTextChangedListener
 import com.vn.visafe_android.R
 import com.vn.visafe_android.base.BaseFragment
@@ -34,6 +35,7 @@ class ProtectWorkspaceFragment : BaseFragment<FragmentProtectWorkspaceBinding>()
     }
 
     override fun initView() {
+        binding.tvContent.text = HtmlCompat.fromHtml(getString(R.string.protect_group_content), HtmlCompat.FROM_HTML_MODE_LEGACY)
         enableButton()
         type = TYPE_WORKSPACES.SCHOOL.type
         binding.ivWorkspace.setImageResource(TYPE_WORKSPACES.SCHOOL.resDrawableIcon)
@@ -49,7 +51,8 @@ class ProtectWorkspaceFragment : BaseFragment<FragmentProtectWorkspaceBinding>()
         binding.tvNext.setOnSingClickListener {
             createWorkspaceActivity?.createWorkSpaceRequest?.name = binding.editNameWorkspace.text.toString()
             createWorkspaceActivity?.createWorkSpaceRequest?.type = type
-            createWorkspaceActivity?.addFragment(SetupProtectWorkspaceFragment.newInstance())
+//            createWorkspaceActivity?.addFragment(SetupProtectWorkspaceFragment.newInstance())
+            createWorkspaceActivity?.finish()
             hiddenKeyboard()
         }
 
@@ -100,10 +103,10 @@ class ProtectWorkspaceFragment : BaseFragment<FragmentProtectWorkspaceBinding>()
         val workspaceName = binding.editNameWorkspace.text.toString()
 
         if (workspaceName.isNotBlank()
-            && (binding.checkBoxChinhPhu.isChecked
-                    || binding.checkBoxCompany.isChecked
-                    || binding.checkBoxSchool.isChecked
-                    || binding.checkBoxFamily.isChecked)
+//            && (binding.checkBoxChinhPhu.isChecked
+//                    || binding.checkBoxCompany.isChecked
+//                    || binding.checkBoxSchool.isChecked
+//                    || binding.checkBoxFamily.isChecked)
         ) {
 
             with(binding.tvNext) {

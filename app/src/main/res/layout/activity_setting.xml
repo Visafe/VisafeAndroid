@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F7F8FA"
+    android:orientation="vertical"
+    tools:context=".ui.setting.SettingActivity">
+
+    <com.vn.visafe_android.ui.custom.VisafeToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:toolbar_background="@color/white"
+        app:toolbar_left_icon_src="@drawable/ic_arrow_left_black"
+        app:toolbar_title="@string/setting"
+        app:toolbar_visible_title="true" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clChangePass"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivChangePass"
+            android:layout_width="@dimen/_20dp"
+            android:layout_height="@dimen/_20dp"
+            android:layout_margin="@dimen/_16dp"
+            android:src="@drawable/ic_lock"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            style="@style/Content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8dp"
+            android:text="@string/change_pass"
+            android:textColor="@color/color_222222"
+            app:layout_constraintBottom_toBottomOf="@id/ivChangePass"
+            app:layout_constraintStart_toEndOf="@id/ivChangePass"
+            app:layout_constraintTop_toTopOf="@id/ivChangePass" />
+
+        <ImageView
+            android:id="@+id/ivArrow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:src="@drawable/ic_stroke"
+            app:layout_constraintBottom_toBottomOf="@id/ivChangePass"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivChangePass"
+            tools:ignore="ContentDescription" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:background="@color/color_EEEEEE"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivChangePass" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clUpdatePin"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivUpdatePin"
+            android:layout_width="@dimen/_20dp"
+            android:layout_height="@dimen/_20dp"
+            android:layout_margin="@dimen/_16dp"
+            android:src="@drawable/ic_password_v2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            style="@style/Content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8dp"
+            android:text="@string/update_pin_title"
+            android:textColor="@color/color_222222"
+            app:layout_constraintBottom_toBottomOf="@id/ivUpdatePin"
+            app:layout_constraintStart_toEndOf="@id/ivUpdatePin"
+            app:layout_constraintTop_toTopOf="@id/ivUpdatePin" />
+
+        <ImageView
+            android:id="@+id/ivArrow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:src="@drawable/ic_stroke"
+            app:layout_constraintBottom_toBottomOf="@id/ivUpdatePin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivUpdatePin"
+            tools:ignore="ContentDescription" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:background="@color/color_EEEEEE"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivUpdatePin" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clNoti"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivNoti"
+            android:layout_width="@dimen/_20dp"
+            android:layout_height="@dimen/_20dp"
+            android:layout_margin="@dimen/_16dp"
+            android:src="@drawable/ic_notification_v2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription"/>
+
+        <TextView
+            style="@style/Content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8dp"
+            android:text="@string/setup_noti"
+            android:textColor="@color/color_222222"
+            app:layout_constraintBottom_toBottomOf="@id/ivNoti"
+            app:layout_constraintStart_toEndOf="@id/ivNoti"
+            app:layout_constraintTop_toTopOf="@id/ivNoti" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:src="@drawable/ic_stroke"
+            app:layout_constraintBottom_toBottomOf="@id/ivNoti"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivNoti"
+            tools:ignore="ContentDescription" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:background="@color/color_EEEEEE"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivNoti" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/ivLanguage"
+            android:layout_width="@dimen/_20dp"
+            android:layout_height="@dimen/_20dp"
+            android:layout_margin="@dimen/_16dp"
+            android:src="@drawable/ic_language"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            style="@style/Content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8dp"
+            android:text="@string/language"
+            android:textColor="@color/color_222222"
+            app:layout_constraintBottom_toBottomOf="@id/ivLanguage"
+            app:layout_constraintStart_toEndOf="@id/ivLanguage"
+            app:layout_constraintTop_toTopOf="@id/ivLanguage" />
+
+        <ImageView
+            android:id="@+id/ivArrow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:src="@drawable/ic_stroke"
+            app:layout_constraintBottom_toBottomOf="@id/ivLanguage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivLanguage"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tvTypeAccount"
+            style="@style/Content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_12dp"
+            android:textColor="@color/color_666666"
+            app:layout_constraintBottom_toBottomOf="@id/ivLanguage"
+            app:layout_constraintEnd_toStartOf="@id/ivArrow4"
+            app:layout_constraintTop_toTopOf="@id/ivLanguage"
+            android:text="@string/vietnamese" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:background="@color/color_EEEEEE"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivLanguage" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clLogout"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivLogout"
+            android:layout_width="@dimen/_20dp"
+            android:layout_height="@dimen/_20dp"
+            android:layout_margin="@dimen/_16dp"
+            android:src="@drawable/ic_logout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            style="@style/Content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8dp"
+            android:text="@string/logout"
+            android:textColor="@color/color_222222"
+            app:layout_constraintBottom_toBottomOf="@id/ivLogout"
+            app:layout_constraintStart_toEndOf="@id/ivLogout"
+            app:layout_constraintTop_toTopOf="@id/ivLogout" />
+
+        <View
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:background="@color/color_EEEEEE"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivLogout" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
