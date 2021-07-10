@@ -358,4 +358,16 @@
   <string name="language">Ngôn ngữ</string>
   <string name="vietnamese">Tiếng Việt</string>
   <string name="logout">Đăng xuất</string>
+  <string name="dieu_khoan_chinh_sach">Điều khoản và chính sách</string>
+  <string name="cau_hoi_thuong_gap">Câu hỏi thường gặp</string>
+  <string name="dieu_khoan_dieu_kien">Điều khoản &amp; điều kiện</string>
+  <string name="chinh_sach_bao_mat">Chính sách bảo mật</string>
+  <string name="support_now">Bạn cần hỗ trợ ngay</string>
+  <string name="tong_dai_cskh">Tổng đài CSKH</string>
+  <string name="hotline">(+84) 24 3209 1616</string>
+  <string name="email_support">ncsc@ais.gov.vn</string>
+  <string name="email">Email</string>
+  <string name="fb_com_govsoc">fb.com/govSOC</string>
+  <string name="messenger">Messenger</string>
+  <string name="facebook">Facebook</string>
 </resources>

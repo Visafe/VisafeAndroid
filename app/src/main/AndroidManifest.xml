@@ -26,11 +26,14 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity android:name=".ui.setting.SettingActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".ui.group.dashboard.GroupDashboardActivity"
-            android:screenOrientation="portrait"  />
+        <activity android:name=".ui.support.SupportCenterActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.setting.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.group.dashboard.GroupDashboardActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.group.detail.GroupDetailActivity"
             android:screenOrientation="portrait" />

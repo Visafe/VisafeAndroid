@@ -10,6 +10,7 @@ import com.vn.visafe_android.ui.create.workspace.CreateWorkspaceActivity
 import com.vn.visafe_android.ui.dialog.AccountTypeDialogBottomSheet
 import com.vn.visafe_android.ui.dialog.OnClickItemAccountType
 import com.vn.visafe_android.ui.setting.SettingActivity
+import com.vn.visafe_android.ui.support.SupportCenterActivity
 import com.vn.visafe_android.utils.setOnSingClickListener
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
@@ -53,6 +54,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         }
         binding.clSetting.setOnSingClickListener {
             startActivity(Intent(context, SettingActivity::class.java))
+        }
+        binding.clSupport.setOnSingClickListener {
+            startActivity(Intent(context, SupportCenterActivity::class.java))
         }
     }
 
