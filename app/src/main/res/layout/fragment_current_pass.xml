@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:context=".ui.pin.CurrentPinFragment">
+
+        <com.vn.visafe_android.ui.custom.VisafeToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:toolbar_background="@color/white"
+            app:toolbar_left_icon_src="@drawable/ic_arrow_left_black"
+            app:toolbar_title="@string/change_pass"
+            app:toolbar_visible_title="true" />
+
+        <View
+            android:id="@+id/view"
+            style="@style/Divider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/toolbar" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view"
+            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:gravity="center_horizontal"
+            android:text="@string/current_pass"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/text_size_20sp" />
+
+        <TextView
+            android:id="@+id/tvInputContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTitle"
+            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:gravity="center_horizontal"
+            android:text="@string/input_pass_for_account"
+            android:textColor="@color/color_50_222222"
+            android:textSize="@dimen/text_size_14sp" />
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvInputContent"
+            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:gravity="center_horizontal"
+            android:text="PitStudio.co@gmail.vn"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/text_size_14sp" />
+
+
+        <EditText
+            android:id="@+id/edtPass"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_below="@id/tvEmail"
+            android:layout_margin="@dimen/_24dp"
+            android:background="@drawable/bg_edittext"
+            android:ellipsize="end"
+            android:textSize="@dimen/text_size_16sp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:hint="@string/input_current_pass"
+            android:inputType="textPassword"
+            android:maxLength="32"
+            android:paddingHorizontal="@dimen/_16dp"
+            android:singleLine="true"
+            android:textColor="@color/color_111111" />
+
+        <TextView
+            android:id="@+id/btnNext"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_44sdp"
+            android:layout_below="@id/edtPass"
+            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:background="@drawable/bg_radius_8dp"
+            android:backgroundTint="@color/color_FFB31F"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="@string/next"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16sp" />
+
+    </RelativeLayout>
+</layout>

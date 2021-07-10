@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:context=".ui.pin.CurrentPinFragment">
+
+        <com.vn.visafe_android.ui.custom.VisafeToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:toolbar_background="@color/white"
+            app:toolbar_left_icon_src="@drawable/ic_arrow_left_black"
+            app:toolbar_title="Cập nhật mã Pin"
+            app:toolbar_visible_title="true" />
+
+        <View
+            android:id="@+id/view"
+            style="@style/Divider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/toolbar" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view"
+            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:gravity="center_horizontal"
+            android:text="@string/confirm_new_pin"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/text_size_20sp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_otp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTitle"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_24dp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_otp_1"
+                style="@style/EditText_OTP"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginEnd="@dimen/_4dp"
+                android:layout_weight="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_otp_2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_otp_2"
+                style="@style/EditText_OTP"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginEnd="@dimen/_4dp"
+                android:layout_weight="1"
+                app:layout_constraintEnd_toStartOf="@id/tv_otp_3"
+                app:layout_constraintStart_toEndOf="@id/tv_otp_1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_otp_3"
+                style="@style/EditText_OTP"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginEnd="@dimen/_4dp"
+                android:layout_weight="1"
+                app:layout_constraintEnd_toStartOf="@id/tv_otp_4"
+                app:layout_constraintStart_toEndOf="@id/tv_otp_2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_otp_4"
+                style="@style/EditText_OTP"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginEnd="@dimen/_4dp"
+                android:layout_weight="1"
+                app:layout_constraintEnd_toStartOf="@id/tv_otp_5"
+                app:layout_constraintStart_toEndOf="@id/tv_otp_3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_otp_5"
+                style="@style/EditText_OTP"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginEnd="@dimen/_4dp"
+                android:layout_weight="1"
+                app:layout_constraintEnd_toStartOf="@id/tv_otp_6"
+                app:layout_constraintStart_toEndOf="@id/tv_otp_4"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_otp_6"
+                style="@style/EditText_OTP"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginEnd="@dimen/_4dp"
+                android:layout_weight="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_otp_5"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <EditText
+            android:id="@+id/etPinCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/cl_otp"
+            android:layout_alignBottom="@id/cl_otp"
+            android:background="@color/transparent"
+            android:cursorVisible="false"
+            android:digits="0123456789"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textColor="@color/transparent"
+            tools:ignore="LabelFor" />
+
+        <TextView
+            android:id="@+id/btnDeletePin"
+            android:drawablePadding="@dimen/_6sdp"
+            android:gravity="center_vertical"
+            style="@style/Content"
+            android:textColor="@color/color_FFB31F"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_below="@id/etPinCode"
+            android:text="@string/delete_pin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:drawableStartCompat="@drawable/ic_delete"
+            app:drawableTint="@color/color_FFB31F" />
+
+    </RelativeLayout>
+</layout>

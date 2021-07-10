@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F7F8FA"
+    android:orientation="vertical"
+    tools:context=".ui.setting.SettingActivity">
+
+    <com.vn.visafe_android.ui.custom.VisafeToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:toolbar_background="@color/white"
+        app:toolbar_left_icon_src="@drawable/ic_arrow_left_black"
+        app:toolbar_title="@string/setup_noti"
+        app:toolbar_visible_title="true" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/_6sdp"
+        android:paddingBottom="@dimen/_16sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitle1"
+                style="@style/Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/nhan_canh_bao" />
+
+            <TextView
+                android:id="@+id/tvProtectTitle"
+                style="@style/Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvTitle1"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="@string/protect_device"
+                android:textColor="@color/color_222222" />
+
+            <View
+                android:id="@+id/view1"
+                style="@style/Divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@id/tvProtectTitle"
+                android:layout_marginTop="@dimen/_16sdp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchProtect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/tvProtectTitle"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="-4dp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:background="@null"
+                android:thumb="@drawable/thumb_selector"
+                app:track="@drawable/track_selector" />
+
+            <TextView
+                android:id="@+id/tvProtectWifiTitle"
+                style="@style/Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view1"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/protect_wifi"
+                android:textColor="@color/color_222222" />
+
+            <View
+                android:id="@+id/view2"
+                style="@style/Divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@id/tvProtectWifiTitle"
+                android:layout_marginTop="@dimen/_16sdp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchProtectWifi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/tvProtectWifiTitle"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="-4dp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:background="@null"
+                android:thumb="@drawable/thumb_selector"
+                app:track="@drawable/track_selector" />
+
+            <TextView
+                android:id="@+id/tvBlockAds"
+                style="@style/Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view2"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/chan_quang_cao_theo_doi"
+                android:textColor="@color/color_222222" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchBlockAds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/tvBlockAds"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="-4dp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:background="@null"
+                android:thumb="@drawable/thumb_selector"
+                app:track="@drawable/track_selector" />
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_6sdp"
+                android:layout_below="@id/switchBlockAds"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="@color/color_F7F8FA" />
+
+            <TextView
+                android:id="@+id/tv2"
+                style="@style/Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view3"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/noti_group_title" />
+
+            <TextView
+                android:id="@+id/tvProtectGroup"
+                style="@style/Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv2"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/protect_device"
+                android:textColor="@color/color_222222" />
+
+            <View
+                android:id="@+id/view4"
+                style="@style/Divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@id/tvProtectGroup"
+                android:layout_marginTop="@dimen/_16sdp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchProtectDeviceGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/tvProtectGroup"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="-4dp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:background="@null"
+                android:thumb="@drawable/thumb_selector"
+                app:track="@drawable/track_selector" />
+
+            <TextView
+                android:id="@+id/tvBlockAdsGroup"
+                style="@style/Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view4"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/chan_quang_cao_theo_doi"
+                android:textColor="@color/color_222222" />
+
+            <View
+                android:id="@+id/view5"
+                style="@style/Divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@id/tvBlockAdsGroup"
+                android:layout_marginTop="@dimen/_16sdp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchBlockAdsGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/tvBlockAdsGroup"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="-4dp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:background="@null"
+                android:thumb="@drawable/thumb_selector"
+                app:track="@drawable/track_selector" />
+
+            <TextView
+                android:id="@+id/tvBlockAccessGroup"
+                style="@style/Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view5"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/chan_truy_cap"
+                android:textColor="@color/color_222222" />
+
+            <View
+                android:id="@+id/view6"
+                style="@style/Divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@id/tvBlockAccessGroup"
+                android:layout_marginTop="@dimen/_16sdp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchBlockAccessGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/tvBlockAccessGroup"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="-4dp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:background="@null"
+                android:thumb="@drawable/thumb_selector"
+                app:track="@drawable/track_selector" />
+
+            <TextView
+                android:id="@+id/tvBlockContentGroup"
+                style="@style/Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view6"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:text="@string/chan_noi_dung"
+                android:textColor="@color/color_222222" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchBlockContentGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/tvBlockContentGroup"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="-4dp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:background="@null"
+                android:thumb="@drawable/thumb_selector"
+                app:track="@drawable/track_selector" />
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
