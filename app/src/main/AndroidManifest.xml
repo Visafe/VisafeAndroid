@@ -26,8 +26,11 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity android:name=".ui.support.SupportCenterActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.pin.UpdatePinActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.support.SupportCenterActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.setting.SettingActivity"
             android:screenOrientation="portrait" />

@@ -370,4 +370,8 @@
   <string name="fb_com_govsoc">fb.com/govSOC</string>
   <string name="messenger">Messenger</string>
   <string name="facebook">Facebook</string>
+  <string name="pin_current_title">Nhập mã PIN hiện tại</string>
+  <string name="create_new_pin">Tạo mã PIN mới</string>
+  <string name="delete_pin">Xóa mã PIN bảo vệ</string>
+  <string name="confirm_new_pin">Xác nhận mã PIN mới</string>
 </resources>
