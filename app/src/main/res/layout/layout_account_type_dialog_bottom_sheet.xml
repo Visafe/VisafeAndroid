@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/Title"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:gravity="center"
+            android:text="@string/chosse_account_type" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/tvTitle"
+            android:background="@color/color_EEEEEE" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_account_type" />
+
+        <TextView
+            android:id="@+id/btnAdd"
+            style="@style/Content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rvGroup"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/sf_pro_text_regular_medium"
+            android:gravity="center_vertical"
+            android:padding="@dimen/_12sdp"
+            android:text="@string/add_account_type"
+            android:textColor="@color/color_15A1FA"
+            app:drawableStartCompat="@drawable/ic_plus"
+            app:drawableTint="@color/color_15A1FA" />
+
+    </RelativeLayout>
+</layout>
