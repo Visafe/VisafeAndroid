@@ -379,4 +379,13 @@
   <string name="protect_wifi">Bảo vệ Wi-Fi</string>
   <string name="chan_quang_cao_theo_doi">Chặn quảng cáo, theo dõi</string>
   <string name="noti_group_title">Thông báo nhóm</string>
+  <string name="current_pass">Mật khẩu hiện tại</string>
+  <string name="input_pass_for_account">Hãy nhập mật khẩu cho tài khoản</string>
+  <string name="input_current_pass">Nhập mật khẩu hiện tại</string>
+  <string name="create_new_pass">Tạo mật khẩu mới</string>
+  <string name="create_new_pass_content">Hãy nhập mật khẩu mới cho tài khoản</string>
+  <string name="save_content">Lưu lại</string>
+  <string name="input_new_pass">Nhập mật khẩu mới</string>
+  <string name="input_new_pass_again">Nhập lại mật khẩu mới</string>
+  <string name="pass_warning">Mật khẩu phải có độ dài từ 6-32 ký tự</string>
 </resources>

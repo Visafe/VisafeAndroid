@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import com.vn.visafe_android.base.BaseActivity
 import com.vn.visafe_android.databinding.ActivitySettingBinding
+import com.vn.visafe_android.ui.authentication.changepass.ChangePasswordActivity
 import com.vn.visafe_android.ui.noti.NotificationConfigActivity
 import com.vn.visafe_android.ui.pin.UpdatePinActivity
 import com.vn.visafe_android.utils.OnSingleClickListener
@@ -33,6 +34,9 @@ class SettingActivity : BaseActivity() {
         }
         binding.clNoti.setOnSingClickListener {
             startActivity(Intent(this, NotificationConfigActivity::class.java))
+        }
+        binding.clChangePass.setOnSingClickListener {
+            startActivity(Intent(this, ChangePasswordActivity::class.java))
         }
     }
 }

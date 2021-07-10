@@ -26,7 +26,10 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity android:name=".ui.noti.NotificationConfigActivity"
+        <activity android:name=".ui.authentication.changepass.ChangePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.noti.NotificationConfigActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.pin.UpdatePinActivity"
