@@ -374,4 +374,9 @@
   <string name="create_new_pin">Tạo mã PIN mới</string>
   <string name="delete_pin">Xóa mã PIN bảo vệ</string>
   <string name="confirm_new_pin">Xác nhận mã PIN mới</string>
+  <string name="nhan_canh_bao">Nhận cảnh báo</string>
+  <string name="protect_device">Bảo vệ thiết bị</string>
+  <string name="protect_wifi">Bảo vệ Wi-Fi</string>
+  <string name="chan_quang_cao_theo_doi">Chặn quảng cáo, theo dõi</string>
+  <string name="noti_group_title">Thông báo nhóm</string>
 </resources>

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import com.vn.visafe_android.base.BaseActivity
 import com.vn.visafe_android.databinding.ActivitySettingBinding
+import com.vn.visafe_android.ui.noti.NotificationConfigActivity
 import com.vn.visafe_android.ui.pin.UpdatePinActivity
 import com.vn.visafe_android.utils.OnSingleClickListener
 import com.vn.visafe_android.utils.setOnSingClickListener
@@ -29,6 +30,9 @@ class SettingActivity : BaseActivity() {
         })
         binding.clUpdatePin.setOnSingClickListener {
             startActivity(Intent(this, UpdatePinActivity::class.java))
+        }
+        binding.clNoti.setOnSingClickListener {
+            startActivity(Intent(this, NotificationConfigActivity::class.java))
         }
     }
 }
