@@ -92,6 +92,10 @@ class SwitchSimpleView @JvmOverloads constructor(
 
     fun setChecked(value: Boolean) {
         binding?.switchWidget?.isChecked = value
+        for (i in mData) {
+            i.isChecked = value
+        }
+        subjectAdapter?.notifyDataSetChanged()
     }
 
     fun setData(data: ArrayList<Subject>) {

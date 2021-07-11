@@ -13,6 +13,7 @@
             style="@style/Title"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
+            android:layout_marginTop="@dimen/_26sdp"
             android:gravity="center"
             android:text="@string/account" />
 

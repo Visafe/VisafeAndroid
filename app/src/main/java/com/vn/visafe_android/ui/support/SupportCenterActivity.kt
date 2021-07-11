@@ -32,7 +32,7 @@ class SupportCenterActivity : BaseActivity() {
             callPhone(getString(R.string.hotline), this)
         }
         binding.clEmail.setOnSingClickListener {
-            sendEmail(this, getString(R.string.email_support), "", "")
+            sendEmail(this, getString(R.string.email_support), "")
         }
         binding.clMessenger.setOnSingClickListener {
             openWebsite("https://www.facebook.com/govSOC", this)

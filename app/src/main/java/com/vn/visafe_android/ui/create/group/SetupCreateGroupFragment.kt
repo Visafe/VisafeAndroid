@@ -9,7 +9,9 @@ import com.vn.visafe_android.ui.adapter.SetupCreateGroupAdapter
 import com.vn.visafe_android.ui.create.group.access_manager.AccessManagerFragment
 import com.vn.visafe_android.ui.create.group.block_tracking.BlockTracingAndAdsFragment
 
-class SetupCreateGroupFragment : BaseFragment<FragmentSetupCreateGroupBinding>() {
+class SetupCreateGroupFragment : BaseFragment<FragmentSetupCreateGroupBinding>(),
+    BlockTracingAndAdsFragment.OnSaveBlockTrackingAndAds, BlockFollowCreateGroupFragment.OnSaveBlockFollowCreateGroup,
+    AccessManagerFragment.OnSaveAccessManager, BlockContentCreateGroupFragment.OnSaveBlockContent {
     companion object {
         fun newInstance(): SetupCreateGroupFragment {
             val args = Bundle()
@@ -20,7 +22,12 @@ class SetupCreateGroupFragment : BaseFragment<FragmentSetupCreateGroupBinding>()
         }
     }
 
+    private var isSaveBlockTracingAndAds = false
+    private var isSaveBlockFollowCreateGroup = false
+    private var isSaveAccessManager = false
+    private var isSaveBlockContent = false
     private var createGroupActivity: CreateGroupActivity? = null
+    private var adapter: SetupCreateGroupAdapter? = null
 
     override fun layoutRes(): Int = R.layout.fragment_setup_create_group
 
@@ -35,22 +42,42 @@ class SetupCreateGroupFragment : BaseFragment<FragmentSetupCreateGroupBinding>()
         binding.ivBack.setOnClickListener {
             createGroupActivity?.onBackPressed()
         }
-        val adapter = SetupCreateGroupAdapter(requireContext())
+        adapter = SetupCreateGroupAdapter(requireContext())
         binding.rvSetup.adapter = adapter
-        adapter.onClickSetupGroup = object : SetupCreateGroupAdapter.OnClickSetupGroup {
-            override fun onClickSetupGroup(data: SetupCreateGroup) {
-                when (data) {
+        adapter?.onClickSetupGroup = object : SetupCreateGroupAdapter.OnClickSetupGroup {
+            override fun onClickSetupGroup(group: SetupCreateGroup) {
+                when (group) {
                     SetupCreateGroup.CHAN_QUANG_CAO -> {
-                        createGroupActivity?.addFragment(BlockTracingAndAdsFragment.newInstance())
+                        createGroupActivity?.addFragment(
+                            BlockTracingAndAdsFragment.newInstance(
+                                group.isSelected,
+                                this@SetupCreateGroupFragment
+                            )
+                        )
                     }
                     SetupCreateGroup.CHAN_THEO_DOI -> {
-                        createGroupActivity?.addFragment(BlockFollowCreateGroupFragment.newInstance())
+                        createGroupActivity?.addFragment(
+                            BlockFollowCreateGroupFragment.newInstance(
+                                group.isSelected,
+                                this@SetupCreateGroupFragment
+                            )
+                        )
                     }
                     SetupCreateGroup.CHAN_TRUY_CAP -> {
-                        createGroupActivity?.addFragment(AccessManagerFragment.newInstance())
+                        createGroupActivity?.addFragment(
+                            AccessManagerFragment.newInstance(
+                                group.isSelected,
+                                this@SetupCreateGroupFragment
+                            )
+                        )
                     }
                     SetupCreateGroup.CHAN_NOI_DUNG -> {
-                        createGroupActivity?.addFragment(BlockContentCreateGroupFragment.newInstance())
+                        createGroupActivity?.addFragment(
+                            BlockContentCreateGroupFragment.newInstance(
+                                group.isSelected,
+                                this@SetupCreateGroupFragment
+                            )
+                        )
                     }
                     else -> return
                 }
@@ -58,10 +85,106 @@ class SetupCreateGroupFragment : BaseFragment<FragmentSetupCreateGroupBinding>()
 
         }
         //Lấy data
-//        adapter.dataList
         binding.btnComplete.setOnClickListener {
+            adapter?.let {
+                for (group in it.dataList) {
+                    when (group) {
+                        SetupCreateGroup.CHAN_QUANG_CAO -> {
+                            if (!isSaveBlockTracingAndAds) {
+                                createGroupActivity?.createGroupRequest?.adblock_enabled = group.isSelected
+                                createGroupActivity?.createGroupRequest?.game_ads_enabled = group.isSelected
+                                createGroupActivity?.createGroupRequest?.app_ads =
+                                    if (group.isSelected) listOf("instagram", "youtube", "spotify", "facebook") else listOf()
+                            }
+                        }
+                        SetupCreateGroup.CHAN_THEO_DOI -> {
+                            if (!isSaveBlockFollowCreateGroup) {
+                                createGroupActivity?.createGroupRequest?.native_tracking =
+                                    if (group.isSelected) listOf(
+                                        "alexa",
+                                        "apple",
+                                        "huawei",
+                                        "roku",
+                                        "samsung",
+                                        "sonos",
+                                        "windows",
+                                        "xiaomi"
+                                    ) else listOf()
+                            }
+                        }
+                        SetupCreateGroup.CHAN_TRUY_CAP -> {
+                            if (!isSaveAccessManager) {
+                                createGroupActivity?.createGroupRequest?.blocked_services =
+                                    if (group.isSelected) listOf(
+                                        "facebook",
+                                        "zalo",
+                                        "tiktok",
+                                        "instagram",
+                                        "tinder",
+                                        "twitter",
+                                        "netflix",
+                                        "reddit",
+                                        "9gag",
+                                        "discord"
+                                    ) else listOf()
+                                createGroupActivity?.createGroupRequest?.block_webs =
+                                    if (group.isSelected) listOf(
+                                        "https://www.youtube.com/",
+                                        "https://www.facebook.com/",
+                                        "https://gmail.com/",
+                                        "https://www.youtube.com/"
+                                    ) else listOf()
+                            }
+                        }
+                        SetupCreateGroup.CHAN_NOI_DUNG -> {
+                            if (!isSaveBlockContent) {
+                                createGroupActivity?.createGroupRequest?.porn_enabled = group.isSelected
+                                if (group.isSelected) {
+                                    createGroupActivity?.createGroupRequest?.safesearch_enabled = true
+                                    createGroupActivity?.createGroupRequest?.youtuberestrict_enabled = true
+                                } else {
+                                    createGroupActivity?.createGroupRequest?.safesearch_enabled = false
+                                    createGroupActivity?.createGroupRequest?.youtuberestrict_enabled = false
+                                }
+                                createGroupActivity?.createGroupRequest?.gambling_enabled = group.isSelected
+                                createGroupActivity?.createGroupRequest?.bypass_enabled = group.isSelected
+                            }
+                        }
+                        SetupCreateGroup.CHAN_VPN_PROXY -> {
+                            if (group.isSelected) {
+
+                            }
+                        }
+
+                    }
+                }
+            }
             createGroupActivity?.doCreateGroup()
         }
+    }
+
+    override fun onSaveBlockTrackingAndAds(isSave: Boolean) {
+        isSaveBlockTracingAndAds = isSave
+        SetupCreateGroup.CHAN_QUANG_CAO.isSelected = isSave
+        adapter?.notifyDataSetChanged()
+    }
+
+    override fun onSaveBlockFollowCreateGroup(isSave: Boolean) {
+        isSaveBlockFollowCreateGroup = isSave
+        SetupCreateGroup.CHAN_THEO_DOI.isSelected = isSave
+        adapter?.notifyDataSetChanged()
+    }
+
+    override fun onSaveAccessManager(isSave: Boolean) {
+        isSaveAccessManager = isSave
+        SetupCreateGroup.CHAN_TRUY_CAP.isSelected = isSave
+        adapter?.notifyDataSetChanged()
+    }
+
+    override fun onSaveBlockContent(isSave: Boolean) {
+        isSaveBlockContent = isSave
+        SetupCreateGroup.CHAN_NOI_DUNG.isSelected = isSave
+        adapter?.notifyDataSetChanged()
     }
 }
 
@@ -77,7 +200,7 @@ enum class SetupCreateGroup(
         R.string.chan_quang_cao,
         R.string.chan_quang_cao_content,
         true,
-        true
+        true,
     ),
     CHAN_THEO_DOI(
         R.drawable.ic_chan_theo_doi,

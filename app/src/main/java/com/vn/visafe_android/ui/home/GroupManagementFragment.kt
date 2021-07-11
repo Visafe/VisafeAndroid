@@ -1,8 +1,10 @@
 package com.vn.visafe_android.ui.home
 
+import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vn.visafe_android.R
 import com.vn.visafe_android.base.BaseFragment
@@ -11,8 +13,11 @@ import com.vn.visafe_android.data.NetworkClient
 import com.vn.visafe_android.databinding.FragmentGroupManagementBinding
 import com.vn.visafe_android.model.GroupData
 import com.vn.visafe_android.model.WorkspaceGroupData
+import com.vn.visafe_android.model.response.GroupsDataResponse
 import com.vn.visafe_android.ui.adapter.GroupListAdapter
 import com.vn.visafe_android.ui.create.group.CreateGroupActivity
+import com.vn.visafe_android.ui.group.detail.GroupDetailActivity
+import com.vn.visafe_android.ui.group.join.ScanQRJoinGroupActivity
 import com.vn.visafe_android.utils.setOnSingClickListener
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,74 +33,127 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
             GroupManagementFragment()
     }
 
-    private var groupListAdapter: GroupListAdapter? = null
-    private var listGroup: MutableList<GroupData?> = mutableListOf()
+    private var resultLauncherCreateGroupActivity =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                workspaceGroupData?.let { doGetGroupWithId(it) }
+            }
+        }
+
+    private var resultLauncherDeleteGroupActivity =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                workspaceGroupData?.let { doGetGroupWithId(it) }
+            }
+        }
+
+    private var groupIsOwnerAdapter: GroupListAdapter? = null
+    private var groupIsMemberAdapter: GroupListAdapter? = null
     private var workspaceGroupData: WorkspaceGroupData? = null
+    private var listGroupIsOwner: MutableList<GroupData?> = mutableListOf()
+    private var listGroupIsMember: MutableList<GroupData?> = mutableListOf()
 
     override fun layoutRes(): Int = R.layout.fragment_group_management
 
     override fun initView() {
-        groupListAdapter = GroupListAdapter(listGroup)
-        groupListAdapter?.setEnableImageGroup(true)
-        groupListAdapter?.onClickGroup = object : GroupListAdapter.OnClickGroup {
-            override fun openGroup(data: GroupData) {
-
+        updateView()
+        groupIsOwnerAdapter = GroupListAdapter(listGroupIsOwner)
+        groupIsOwnerAdapter?.setEnableImageGroup(true)
+        groupIsOwnerAdapter?.onClickGroup = object : GroupListAdapter.OnClickGroup {
+            override fun openGroup(data: GroupData, position: Int) {
+                data.groupid?.let { gotoDetailGroup(it, position) }
             }
 
             override fun onClickMore() {
             }
         }
-        binding.rvGroup.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.rvGroup.adapter = groupListAdapter
+        binding.rcvGroupIsOwner.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.rcvGroupIsOwner.adapter = groupIsOwnerAdapter
+        //group list member
+        groupIsMemberAdapter = GroupListAdapter(listGroupIsMember)
+        groupIsMemberAdapter?.setEnableImageGroup(true)
+        groupIsMemberAdapter?.onClickGroup = object : GroupListAdapter.OnClickGroup {
+            override fun openGroup(data: GroupData, position: Int) {
+                data.groupid?.let { gotoDetailGroup(it, position) }
+            }
+
+            override fun onClickMore() {
+            }
+        }
+        binding.rcvGroupIsMember.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.rcvGroupIsMember.adapter = groupIsMemberAdapter
 
         initControl()
-        workspaceGroupData?.let { doGetGroupWithId(it) }
     }
 
     private fun initControl() {
         binding.btnCreateNewGroup.setOnSingClickListener {
             val intent = Intent(requireContext(), CreateGroupActivity::class.java)
             intent.putExtra(DATA_WORKSPACE, workspaceGroupData)
-            startActivity(intent)
+            resultLauncherCreateGroupActivity.launch(intent)
         }
 
         binding.btnJoinGroup.setOnSingClickListener {
-
+            startActivity(Intent(requireContext(), ScanQRJoinGroupActivity::class.java))
         }
     }
 
+    private fun gotoDetailGroup(groupId: String, position: Int) {
+        val intent = Intent(context, GroupDetailActivity::class.java)
+        intent.putExtra(GroupDetailActivity.DATA_ID, groupId)
+        intent.putExtra(GroupDetailActivity.DATA_POSITION, position)
+        resultLauncherDeleteGroupActivity.launch(intent)
+    }
 
     private fun doGetGroupWithId(workspaceGroupData: WorkspaceGroupData) {
         showProgressDialog()
         val client = NetworkClient()
-        val call = context?.let { client.client(context = it).doGetGroupWithId(workspaceGroupData.id) }
-        call?.enqueue(BaseCallback(this, object : Callback<List<GroupData>> {
+        val call = context?.let { client.client(context = it).doGetGroupsWithId(workspaceGroupData.id) }
+        call?.enqueue(BaseCallback(this, object : Callback<GroupsDataResponse> {
             override fun onResponse(
-                call: Call<List<GroupData>>,
-                response: Response<List<GroupData>>
+                call: Call<GroupsDataResponse>,
+                response: Response<GroupsDataResponse>
             ) {
                 dismissProgress()
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    response.body()?.let {
-                        if (it.isNotEmpty()) {
-                            listGroup.addAll(it)
-                            groupListAdapter?.notifyDataSetChanged()
-                            binding.rvGroup.visibility = View.VISIBLE
-                        } else {
-                            binding.rvGroup.visibility = View.GONE
-                            listGroup.addAll(it)
-                            groupListAdapter?.notifyDataSetChanged()
+                    listGroupIsOwner.clear()
+                    listGroupIsMember.clear()
+                    response.body()?.clients?.let {
+                        for (group in it) {
+                            if (group.isOwner == true) {
+                                listGroupIsOwner.add(group)
+                            } else {
+                                listGroupIsMember.add(group)
+                            }
                         }
-
+                        groupIsOwnerAdapter?.notifyDataSetChanged()
+                        groupIsMemberAdapter?.notifyDataSetChanged()
                     }
+                    updateView()
+                    Log.e("doGetGroupWithId", "onResponse: " + listGroupIsOwner.size + " | " + listGroupIsMember.size)
                 }
 
             }
 
-            override fun onFailure(call: Call<List<GroupData>>, t: Throwable) {
+            override fun onFailure(call: Call<GroupsDataResponse>, t: Throwable) {
                 t.message?.let { Log.e("onFailure: ", it) }
                 dismissProgress()
             }
         }))
+    }
+
+    private fun updateView() {
+        binding.tvGroupIsOwner.visibility = if (listGroupIsOwner.isEmpty()) View.GONE else View.VISIBLE
+        binding.rcvGroupIsOwner.visibility = if (listGroupIsOwner.isEmpty()) View.GONE else View.VISIBLE
+        binding.tvGroupIsMember.visibility = if (listGroupIsMember.isEmpty()) View.GONE else View.VISIBLE
+        binding.rcvGroupIsMember.visibility = if (listGroupIsMember.isEmpty()) View.GONE else View.VISIBLE
+        binding.viewLine.visibility = if (listGroupIsMember.isEmpty()) View.GONE else View.VISIBLE
+    }
+
+    fun updateWorkspace(data: WorkspaceGroupData) {
+        this.workspaceGroupData = data
+        workspaceGroupData?.let { doGetGroupWithId(it) }
     }
 }

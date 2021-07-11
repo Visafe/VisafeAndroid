@@ -16,5 +16,5 @@ data class UserInfo(
     @SerializedName("IsVerify")
     var isVerify: Boolean? = null,
     @SerializedName("IsActive")
-    var ssActive: Boolean? = null
+    var isActive: Boolean? = null
 )

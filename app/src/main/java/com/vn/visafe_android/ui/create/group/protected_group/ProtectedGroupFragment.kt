@@ -24,11 +24,7 @@ class ProtectedGroupFragment : BaseFragment<FragmentProtectedGroupBinding>() {
         }
     }
 
-    private var children: String = ""
-    private var adult: String = ""
-    private var elderly: String = ""
     private var createGroupActivity: CreateGroupActivity? = null
-    private var objectTypeList: MutableList<String> = mutableListOf()
 
     override fun layoutRes(): Int = R.layout.fragment_protected_group
 
@@ -50,17 +46,7 @@ class ProtectedGroupFragment : BaseFragment<FragmentProtectedGroupBinding>() {
         }
 
         binding.tvNext.setOnClickListener {
-            if (adult.isNotEmpty()) {
-                objectTypeList.add(adult)
-            }
-            if (children.isNotEmpty()) {
-                objectTypeList.add(children)
-            }
-            if (elderly.isNotEmpty()) {
-                objectTypeList.add(elderly)
-            }
             createGroupActivity?.createGroupRequest?.name = binding.editNameGroup.text.toString()
-            createGroupActivity?.createGroupRequest?.object_type = objectTypeList
             val gson = Gson()
             Log.e(
                 "initView: ",
@@ -68,21 +54,6 @@ class ProtectedGroupFragment : BaseFragment<FragmentProtectedGroupBinding>() {
             )
             createGroupActivity?.addFragment(SetupCreateGroupFragment.newInstance())
             hiddenKeyboard()
-        }
-
-        binding.checkBoxChild.setOnCheckedChangeListener { _, isCheck ->
-            children = if (isCheck) "children" else ""
-            enableButton()
-        }
-
-        binding.checkBoxAdult.setOnCheckedChangeListener { _, isCheck ->
-            adult = if (isCheck) "adult" else ""
-            enableButton()
-        }
-
-        binding.checkBoxElder.setOnCheckedChangeListener { _, isCheck ->
-            elderly = if (isCheck) "elderly" else ""
-            enableButton()
         }
     }
 

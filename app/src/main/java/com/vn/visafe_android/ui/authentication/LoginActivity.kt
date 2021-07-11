@@ -163,13 +163,13 @@ class LoginActivity : BaseActivity() {
             listError.add(viewBinding.edtInputEmail)
             isValidField = false
         } else {
-            if (!isValidEmail(viewBinding.edtInputEmail.text.toString())) {
-                viewBinding.edtInputEmail.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
-                viewBinding.tvInputEmailError.visibility = View.VISIBLE
-                viewBinding.tvInputEmailError.text = "Email không hợp lệ, vui lòng nhập lại!"
-                listError.add(viewBinding.edtInputEmail)
-                isValidField = false
-            }
+//            if (!isValidEmail(viewBinding.edtInputEmail.text.toString())) {
+//                viewBinding.edtInputEmail.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
+//                viewBinding.tvInputEmailError.visibility = View.VISIBLE
+//                viewBinding.tvInputEmailError.text = "Email không hợp lệ, vui lòng nhập lại!"
+//                listError.add(viewBinding.edtInputEmail)
+//                isValidField = false
+//            }
         }
         if (viewBinding.edtInputPassword.text.isNullOrEmpty()) {
             viewBinding.edtInputPassword.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)

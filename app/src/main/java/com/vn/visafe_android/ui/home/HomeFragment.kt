@@ -8,7 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -20,6 +19,7 @@ import com.vn.visafe_android.dns.sys.InternalNames
 import com.vn.visafe_android.dns.sys.PersistentState
 import com.vn.visafe_android.dns.sys.VpnController
 import com.vn.visafe_android.utils.setOnSingClickListener
+
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSharedPreferenceChangeListener {
 

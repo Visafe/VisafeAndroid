@@ -16,6 +16,7 @@ class SuccessDialogFragment : DialogFragment() {
     companion object {
         const val TITLE_DIALOG = "TITLE_DIALOG"
         const val CONTENT_DIALOG = "CONTENT_DIALOG"
+        const val TEXT_BUTTON_DIALOG = "TEXT_BUTTON_DIALOG"
 
         fun newInstance(): SuccessDialogFragment {
             val args = Bundle()
@@ -25,11 +26,21 @@ class SuccessDialogFragment : DialogFragment() {
             return fragment
         }
 
-        fun newInstance(title: String, content: String) : SuccessDialogFragment {
+        fun newInstance(title: String, content: String): SuccessDialogFragment {
             val fragment = SuccessDialogFragment()
             fragment.arguments = bundleOf(
                 Pair(TITLE_DIALOG, title),
                 Pair(CONTENT_DIALOG, content)
+            )
+            return fragment
+        }
+
+        fun newInstance(title: String, content: String, textButton: String): SuccessDialogFragment {
+            val fragment = SuccessDialogFragment()
+            fragment.arguments = bundleOf(
+                Pair(TITLE_DIALOG, title),
+                Pair(CONTENT_DIALOG, content),
+                Pair(TEXT_BUTTON_DIALOG, textButton)
             )
             return fragment
         }
@@ -83,6 +94,9 @@ class SuccessDialogFragment : DialogFragment() {
         }
         if (arguments != null && requireArguments().getString(CONTENT_DIALOG, "").isNotEmpty()) {
             binding.tvTitle2.text = requireArguments().getString(CONTENT_DIALOG, "")
+        }
+        if (arguments != null && requireArguments().getString(TEXT_BUTTON_DIALOG, "").isNotEmpty()) {
+            binding.tvNext.text = requireArguments().getString(TEXT_BUTTON_DIALOG, "")
         }
     }
 

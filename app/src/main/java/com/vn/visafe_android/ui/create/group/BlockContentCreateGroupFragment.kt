@@ -8,27 +8,38 @@ import com.vn.visafe_android.R
 import com.vn.visafe_android.base.BaseFragment
 import com.vn.visafe_android.databinding.FragmentBlockContentCreateGroupBinding
 import com.vn.visafe_android.model.Subject
-import com.vn.visafe_android.ui.create.group.time.TimeProtectionFragment
+import com.vn.visafe_android.ui.create.group.access_manager.AccessManagerFragment
 import com.vn.visafe_android.utils.setOnSingClickListener
 
 class BlockContentCreateGroupFragment : BaseFragment<FragmentBlockContentCreateGroupBinding>() {
 
     companion object {
-        fun newInstance(): BlockContentCreateGroupFragment {
+        const val KEY_SELECTED = "KEY_SELECTED"
+        fun newInstance(selected: Boolean, onSaveBlockContent: OnSaveBlockContent): BlockContentCreateGroupFragment {
             val args = Bundle()
-
+            args.putBoolean(KEY_SELECTED, selected)
             val fragment = BlockContentCreateGroupFragment()
             fragment.arguments = args
+            fragment.onSaveBlockContent = onSaveBlockContent
             return fragment
         }
     }
 
+    private var isSelected: Boolean = false
+    private lateinit var onSaveBlockContent: OnSaveBlockContent
     private var createGroupActivity: CreateGroupActivity? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is CreateGroupActivity) {
             createGroupActivity = context
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            isSelected = it.getBoolean(KEY_SELECTED)
         }
     }
 
@@ -57,8 +68,22 @@ class BlockContentCreateGroupFragment : BaseFragment<FragmentBlockContentCreateG
         binding.itemSensitive.disableExpanded()
 
         binding.btnSave.setOnSingClickListener {
-            createGroupActivity?.createGroupRequest?.safesearch_enabled = binding.itemLimit.isChecked()
-            createGroupActivity?.createGroupRequest?.porn_enabled = binding.itemSensitive.isChecked()
+            createGroupActivity?.createGroupRequest?.porn_enabled = binding.itemLimit.isChecked()
+            if (binding.itemLimit.getDataListSubject()?.size == 2) {
+                createGroupActivity?.createGroupRequest?.safesearch_enabled = true
+                createGroupActivity?.createGroupRequest?.youtuberestrict_enabled = true
+            } else if (binding.itemLimit.getDataListSubject()?.size == 1) {
+                binding.itemLimit.getDataListSubject()?.let {
+                    for (i in it) {
+                        if (i == "google") {
+                            createGroupActivity?.createGroupRequest?.safesearch_enabled = true
+                        } else {
+                            createGroupActivity?.createGroupRequest?.youtuberestrict_enabled = true
+                        }
+                    }
+                }
+            }
+            createGroupActivity?.createGroupRequest?.gambling_enabled = binding.itemSensitive.isChecked()
             createGroupActivity?.createGroupRequest?.bypass_enabled = binding.itemByPass.isChecked()
             val gson = Gson()
             Log.e(
@@ -67,5 +92,19 @@ class BlockContentCreateGroupFragment : BaseFragment<FragmentBlockContentCreateG
             )
             createGroupActivity?.onBackPressed()
         }
+        setCheckedForAll(isSelected)
+        binding.btnReset.setOnSingClickListener {
+            setCheckedForAll(false)
+        }
+    }
+
+    private fun setCheckedForAll(isSelected: Boolean) {
+        binding.itemLimit.setChecked(isSelected)
+        binding.itemSensitive.setChecked(isSelected)
+        binding.itemByPass.setChecked(isSelected)
+    }
+
+    interface OnSaveBlockContent {
+        fun onSaveBlockContent(isSave: Boolean)
     }
 }

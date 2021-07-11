@@ -4,18 +4,26 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 
 object Utils {
 
-    fun sendEmail(activity: Activity, email: String, subject: String?, content: String?) {
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "message/rfc822"
-        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
-        intent.putExtra(Intent.EXTRA_TEXT, content)
+    fun sendEmail(activity: Activity, email: String, subject: String?) {
         try {
-            activity.startActivity(Intent.createChooser(intent, "Sending..."))
-        } catch (e: ActivityNotFoundException) {
+            activity.startActivity(
+                Intent(Intent.ACTION_SENDTO).apply {
+                    data = (Uri.parse("mailto:$email"))
+                        .buildUpon()
+                        .appendQueryParameter(
+                            "subject", subject
+                        ).appendQueryParameter(
+                            "to", email
+                        )
+                        .build()
+                }
+            )
+        } catch (e: Exception) {
+            Log.e("sendEmail", "failed to open mail client")
         }
     }
 
