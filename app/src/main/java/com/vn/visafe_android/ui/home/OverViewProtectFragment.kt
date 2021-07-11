@@ -1,15 +1,17 @@
 package com.vn.visafe_android.ui.home
 
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.content.Intent
+import android.widget.Toast
 import com.vn.visafe_android.R
 import com.vn.visafe_android.base.BaseFragment
 import com.vn.visafe_android.databinding.FragmentOverViewProtectBinding
 import com.vn.visafe_android.model.ApplicationMostData
 import com.vn.visafe_android.model.ContentMostData
 import com.vn.visafe_android.model.DeviceMostData
-import com.vn.visafe_android.ui.adapter.ApplicationMostAdapter
-import com.vn.visafe_android.ui.adapter.ContentMostAdapter
-import com.vn.visafe_android.ui.adapter.DeviceMostAdapter
+import com.vn.visafe_android.ui.create.group.CreateGroupActivity
+import com.vn.visafe_android.ui.dialog.ImageDialog
+import com.vn.visafe_android.utils.ChartUtil
+import com.vn.visafe_android.utils.setOnSingClickListener
 
 class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
 
@@ -21,18 +23,61 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
     override fun layoutRes(): Int = R.layout.fragment_over_view_protect
 
     override fun initView() {
-        val contentAdapter = ContentMostAdapter(createContentList())
-        binding.rvContentMost.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.rvContentMost.adapter = contentAdapter
-
-        val deviceAdapter = DeviceMostAdapter(createDeviceList())
-        binding.rvDeviceMost.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.rvDeviceMost.adapter = deviceAdapter
-
-        val appAdapter = ApplicationMostAdapter(createAppList())
-        binding.rvAppMost.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.rvAppMost.adapter = appAdapter
-
+//        val contentAdapter = ContentMostAdapter(createContentList())
+//        binding.rvContentMost.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+//        binding.rvContentMost.adapter = contentAdapter
+//
+//        val deviceAdapter = DeviceMostAdapter(createDeviceList())
+//        binding.rvDeviceMost.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+//        binding.rvDeviceMost.adapter = deviceAdapter
+//
+//        val appAdapter = ApplicationMostAdapter(createAppList())
+//        binding.rvAppMost.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+//        binding.rvAppMost.adapter = appAdapter
+//
+//        val groupAdapter = GroupListAdapter(createGroupList())
+//        groupAdapter.onClickGroup = object : GroupListAdapter.OnClickGroup {
+//            override fun openGroup(data: GroupData) {
+//                val intent = Intent(requireContext(), GroupDashboardActivity::class.java)
+//                intent.putExtra(GroupDashboardActivity.GROUP_DATA_KEY, data)
+//                startActivity(intent)
+//            }
+//
+//            override fun onClickMore() {
+//
+//            }
+//
+//        }
+//        binding.rvGroup.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+//        binding.rvGroup.adapter = groupAdapter
+        binding.layoutAddVpn.btnHomeVpnAdd.setOnSingClickListener {
+            showAddVpn()
+        }
+        binding.layoutHomeProtectFamily.btnHomeFamilyAddGroup.setOnSingClickListener {
+            startActivity(Intent(requireContext(), CreateGroupActivity::class.java))
+        }
+        binding.layoutHomeProtect.switchHomeProtectDevice.setOnCheckedChangeListener { _, isChecked ->
+            binding.layoutHomeProtect.ivHomeProtectDevice.setImageResource(
+                if (isChecked) {
+                    R.drawable.ic_mobile
+                } else {
+                    R.drawable.ic_info_circle
+                }
+            )
+        }
+        val dataChart = LinkedHashMap<String, Int>()
+        dataChart["1"] = 10
+        dataChart["2"] = 20
+        dataChart["3"] = 30
+        dataChart["4"] = 40
+        dataChart["5"] = 50
+        dataChart["6"] = 60
+        dataChart["7"] = 70
+        dataChart["8"] = 75
+        dataChart["9"] = 65
+        dataChart["10"] = 70
+        dataChart["11"] = 20
+        ChartUtil.initBarChart(binding.layoutHomeChart.hiChartView, dataChart, ChartUtil.getArrayColor(dataChart.size))
     }
 
     private fun createContentList(): List<ContentMostData> {
@@ -59,5 +104,22 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
         list.add(DeviceMostData("Iphone", 20, "32s"))
         list.add(DeviceMostData("Samsung", 20, "32s"))
         return list
+    }
+
+    private fun showAddVpn() {
+        val dialog = ImageDialog.newsIntance(ImageDialog.TYPE_ADD_VPN)
+        dialog.setOnClickListener {
+            Toast.makeText(requireContext(), "Add VPN", Toast.LENGTH_SHORT).show()
+        }
+        dialog.show(parentFragmentManager, null)
+    }
+
+    //Hiển thị dialog bật thông báo
+    private fun showDialogTurnOnNoti() {
+        val dialog = ImageDialog.newsIntance(ImageDialog.TYPE_TURN_ON_NOTI)
+        dialog.setOnClickListener {
+            Toast.makeText(requireContext(), "Add VPN", Toast.LENGTH_SHORT).show()
+        }
+        dialog.show(parentFragmentManager, null)
     }
 }

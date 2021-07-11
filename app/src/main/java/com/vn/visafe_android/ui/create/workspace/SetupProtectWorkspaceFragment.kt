@@ -7,8 +7,6 @@ import com.vn.visafe_android.R
 import com.vn.visafe_android.base.BaseFragment
 import com.vn.visafe_android.databinding.FragmentSetupProtectWorkspaceBinding
 import com.vn.visafe_android.ui.adapter.ConfigAdapter
-import com.vn.visafe_android.ui.create.group.access_manager.Action
-import com.vn.visafe_android.ui.create.workspace.dialog.DialogCreateSuccessWorkSpace
 import com.vn.visafe_android.utils.SetupConfig
 import com.vn.visafe_android.utils.setOnSingClickListener
 

@@ -89,4 +89,7 @@ dependencies {
 
     // 1.6.0 is the main
     implementation 'com.jcodecraeer:xrecyclerview:1.6.0'
+
+    //Chart
+    compile(name: 'highcharts-release', ext: 'aar')
 }
