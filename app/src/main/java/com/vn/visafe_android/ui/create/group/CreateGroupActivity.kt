@@ -20,7 +20,7 @@ import java.util.*
 
 class CreateGroupActivity : BaseActivity() {
     lateinit var binding: ActivityCreateGroupBinding
-    private var step = 0
+    private var step = -1
     var createGroupRequest = CreateGroupRequest()
     private var workspaceGroupData: WorkspaceGroupData? = null
 
@@ -56,10 +56,10 @@ class CreateGroupActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        step--
-        if (step == 0) {
+        if (step == 0 || step == 1) {
             finish()
         } else {
+            step--
             super.onBackPressed()
         }
     }
@@ -80,6 +80,7 @@ class CreateGroupActivity : BaseActivity() {
                     dialog.setOnClickListener {
                         when (it) {
                             Action.CONFIRM -> {
+                                setResult(RESULT_OK)
                                 finish()
                             }
                             else -> {

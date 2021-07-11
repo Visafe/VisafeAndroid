@@ -18,6 +18,7 @@
     <color name="accent_color">#F5BB16</color>
     <color name="secondary_color">#828282</color>
 
+    <color name="color_F3F3F3">#F3F3F3</color>
     <color name="color_0F1733">#0F1733</color>
     <color name="color_f5bb16">#F5BB16</color>
     <color name="color_d9d9d9">#D9D9D9</color>
@@ -66,5 +67,6 @@
     <color name="color_130F26">#130F26</color>
     <color name="color_061448">#061448</color>
     <color name="color_F7F8FA">#F7F8FA</color>
+    <color name="color_FFF9ED">#FFF9ED</color>
 
 </resources>

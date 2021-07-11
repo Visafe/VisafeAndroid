@@ -1,5 +1,6 @@
 package com.vn.visafe_android.ui.authentication
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.*
 import android.text.method.HideReturnsTransformationMethod
@@ -21,7 +22,11 @@ import com.vn.visafe_android.databinding.ActivityRegisterBinding
 import com.vn.visafe_android.model.request.ActiveAccountRequest
 import com.vn.visafe_android.model.request.LoginRequest
 import com.vn.visafe_android.model.request.RegisterRequest
+import com.vn.visafe_android.model.response.LoginResponse
+import com.vn.visafe_android.ui.MainActivity
 import com.vn.visafe_android.ui.authentication.forgotpassword.InputOTPFragment
+import com.vn.visafe_android.utils.PreferenceKey
+import com.vn.visafe_android.utils.SharePreferenceKeyHelper
 import com.vn.visafe_android.utils.isValidEmail
 import com.vn.visafe_android.utils.setSafeClickListener
 import retrofit2.Call
@@ -51,7 +56,8 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 viewBinding.tvInputEmailError.visibility = View.GONE
-                viewBinding.edtInputEmail.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_custom_edittext)
+                viewBinding.edtInputEmail.background =
+                    ContextCompat.getDrawable(applicationContext, R.drawable.bg_custom_edittext)
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -60,7 +66,8 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
 
         })
         viewBinding.edtInputEmail.setOnFocusChangeListener { v, hasFocus ->
-            viewBinding.btnClearTextInputEmail.visibility = if (hasFocus && !viewBinding.edtInputEmail.text.isNullOrEmpty()) View.VISIBLE else View.GONE
+            viewBinding.btnClearTextInputEmail.visibility =
+                if (hasFocus && !viewBinding.edtInputEmail.text.isNullOrEmpty()) View.VISIBLE else View.GONE
         }
 
         viewBinding.edtInputPassword.addTextChangedListener(object : TextWatcher {
@@ -69,7 +76,8 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 viewBinding.tvInputPasswordError.visibility = View.GONE
-                viewBinding.edtInputPassword.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_custom_edittext)
+                viewBinding.edtInputPassword.background =
+                    ContextCompat.getDrawable(applicationContext, R.drawable.bg_custom_edittext)
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -273,16 +281,7 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
                             Toast.LENGTH_LONG
                         ).show()
                     }
-                    finish()
-//                    val intent = Intent(
-//                        this@RegisterActivity,
-//                        MainActivity::class.java
-//                    )
-//                    intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_CLEAR_TOP or
-//                            Intent.FLAG_ACTIVITY_NEW_TASK
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
-//                    startActivity(intent)
-//                    finish()
+                    autoLogin()
                 } else {
                     inputOTPFragment?.setErrorOtp("Mã xác thực không chính xác")
                 }
@@ -293,6 +292,40 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
                 dismissProgress()
             }
 
+        }))
+    }
+
+    private fun autoLogin() {
+        showProgressDialog()
+        val loginRequest = LoginRequest()
+        loginRequest.username = viewBinding.edtInputEmail.text.toString()
+        loginRequest.password = viewBinding.edtInputPassword.text.toString()
+        val client = NetworkClient()
+        val call = client.clientWithoutToken(context = applicationContext).doLogin(loginRequest)
+        call.enqueue(BaseCallback(this@RegisterActivity, object : Callback<LoginResponse> {
+            override fun onResponse(
+                call: Call<LoginResponse>,
+                response: Response<LoginResponse>
+            ) {
+                dismissProgress()
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    response.body()?.msg?.let { Log.e("onResponse: ", it) }
+                    val token = response.body()?.token
+                    token?.let {
+                        SharePreferenceKeyHelper.getInstance(application).putString(
+                            PreferenceKey.AUTH_TOKEN, it
+                        )
+                        SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.ISLOGIN, true)
+                    }
+                    startActivity(Intent(this@RegisterActivity, MainActivity::class.java))
+                    finish()
+                }
+            }
+
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
         }))
     }
 

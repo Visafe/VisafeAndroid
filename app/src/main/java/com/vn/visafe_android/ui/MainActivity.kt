@@ -1,15 +1,12 @@
 package com.vn.visafe_android.ui
 
 import android.annotation.SuppressLint
-import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
-import android.view.MenuItem
-import android.view.WindowManager
-import androidx.appcompat.app.ActionBarDrawerToggle
+import android.view.*
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -29,12 +26,14 @@ import com.vn.visafe_android.ui.create.group.access_manager.Action
 import com.vn.visafe_android.ui.dialog.VisafeDialogBottomSheet
 import com.vn.visafe_android.ui.home.*
 import com.vn.visafe_android.utils.PreferenceKey
+import com.vn.visafe_android.utils.SharePreferenceKeyHelper
 import com.vn.visafe_android.utils.setBackgroundTint
 import kotlinx.android.synthetic.main.fragment_splash.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     companion object {
@@ -49,53 +48,36 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     lateinit var binding: ActivityMainBinding
 
     private var listFragment = mutableListOf<Fragment>()
-    private var currentPosition = 0
-    private var drawerToggle: ActionBarDrawerToggle? = null
-    private var adapter: MenuAdapter? = null
-    private var workspaceGroupData: WorkspaceGroupData? = null
     private var listMenu: MutableList<WorkspaceGroupData> = mutableListOf()
-    private var overViewProtectFragment = OverViewProtectFragment.newInstance()
-    private var groupManagementFragment = GroupManagementFragment.newInstance()
-    private var settingFragment = SettingFragment()
+    private var currentPosition = 0
+    private var overViewProtectFragment = OverViewProtectFragment()
+    private var groupManagementFragment = GroupManagementFragment()
     private var profileFragment = ProfileFragment()
 
     var user: MutableLiveData<UserInfo> = MutableLiveData()
 
-//    var resultLauncherCreateWorkspaceActivity =
-//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//            if (result.resultCode == Activity.RESULT_OK) {
-//                // There are no request codes
-//                doGetWorkSpaces()
-//            }
-//        }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-            )
-        }
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initView()
-//        doGetWorkSpaces()
+        doGetWorkSpaces()
         doGetUserInfo()
     }
 
     private fun initView() {
         initTab()
-//        binding.tvAddWorkspace.setOnSingClickListener {
-//            resultLauncherCreateWorkspaceActivity.launch(Intent(this, CreateWorkspaceActivity::class.java))
-//        }
     }
 
     private fun initTab() {
         listFragment.add(POSITION_PROTECT, overViewProtectFragment)
         listFragment.add(POSITION_GROUP, groupManagementFragment)
         listFragment.add(POSITION_SCAN, HomeFragment())
-        listFragment.add(POSITION_NOTIFICATION, PlaceholderFragment())
+        listFragment.add(POSITION_NOTIFICATION, NotificationFragment())
         listFragment.add(POSITION_PROFILE, profileFragment)
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         listFragment.forEachIndexed { index, fragment ->
@@ -110,45 +92,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         openTab(POSITION_SCAN)
         binding.bottomView.setOnNavigationItemSelectedListener(this)
     }
-
-//    private fun initListMenu() {
-//        binding.rvGroup.layoutManager =
-//            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-//        adapter = MenuAdapter(listMenu, object : OnClickMenu {
-//            override fun onClickMenu(data: WorkspaceGroupData, position: Int) {
-//                adapter?.setSelected(position)
-//                binding.tvTitleToolbar.text = listMenu[position].name
-//                data.let {
-//                    administratorFragment.updateDataView(it)
-//                }
-//            }
-//
-//            override fun onMoreGroup(data: WorkspaceGroupData, position: Int) {
-//                val bottomSheet = VisafeDialogBottomSheet.newInstance(
-//                    getString(R.string.workspaces),
-//                    data.name!!,
-//                    VisafeDialogBottomSheet.TYPE_EDIT,
-//                    getString(R.string.edit_workspace),
-//                    getString(R.string.delete_workspace)
-//                )
-//                bottomSheet.show(supportFragmentManager, null)
-//                bottomSheet.setOnClickListener { _, action ->
-//                    when (action) {
-//                        Action.DELETE -> {
-//                            showDialogDeleteWorkSpace(data, position)
-//                        }
-//                        Action.EDIT -> {
-//                            showDialogUpdateNameWorkSpace(data, position)
-//                        }
-//                        else -> {
-//                            return@setOnClickListener
-//                        }
-//                    }
-//                }
-//            }
-//        })
-//        binding.rvGroup.adapter = adapter
-//    }
 
     private fun showDialogDeleteWorkSpace(data: WorkspaceGroupData, position: Int) {
         val bottomSheet = VisafeDialogBottomSheet.newInstance(
@@ -191,49 +134,41 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         }
     }
 
-    override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onPostCreate(savedInstanceState, persistentState)
-        drawerToggle?.syncState()
-    }
+    private fun doGetWorkSpaces() {
+        if (!SharePreferenceKeyHelper.getInstance(application).isLogin())
+            return
+        showProgressDialog()
+        val client = NetworkClient()
+        val call = client.client(context = applicationContext).doGetWorkSpacesOfCurrentUser()
+        call.enqueue(BaseCallback(this@MainActivity, object : Callback<List<WorkspaceGroupData>> {
+            override fun onResponse(
+                call: Call<List<WorkspaceGroupData>>,
+                response: Response<List<WorkspaceGroupData>>
+            ) {
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    listMenu.clear()
+                    response.body()?.toMutableList()?.let { listMenu.addAll(it) }
+                    if (listMenu.size > 0) {
+                        for (i in listMenu.indices) {
+                            listMenu[i].isSelected = i == 0
+                        }
+                        listMenu[0].let { workspaceGroupData ->
+                            if (groupManagementFragment != null) {
+                                groupManagementFragment.updateWorkspace(workspaceGroupData)
+                            }
+                        }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        drawerToggle?.onConfigurationChanged(newConfig)
-    }
+                    }
+                }
+                dismissProgress()
+            }
 
-//    private fun doGetWorkSpaces() {
-//        showProgressDialog()
-//        val client = NetworkClient()
-//        val call = client.client(context = applicationContext).doGetWorkSpacesOfCurrentUser()
-//        call.enqueue(BaseCallback(this@MainActivity, object : Callback<List<WorkspaceGroupData>> {
-//            override fun onResponse(
-//                call: Call<List<WorkspaceGroupData>>,
-//                response: Response<List<WorkspaceGroupData>>
-//            ) {
-//                if (response.code() == NetworkClient.CODE_SUCCESS) {
-//                    listMenu.clear()
-//                    response.body()?.toMutableList()?.let { listMenu.addAll(it) }
-//                    if (listMenu.size > 0) {
-//                        for (i in listMenu.indices) {
-//                            listMenu[i].isSelected = i == 0
-//                        }
-//                        adapter?.notifyDataSetChanged()
-//                        workspaceGroupData = listMenu[0]
-//                        doGetUserInfo()
-//                    } else {
-//                        val intent = Intent(this@MainActivity, CreateWorkspaceActivity::class.java)
-//                        intent.putExtra(IS_FIRST_CREATE_WORKSPACE, true)
-//                        resultLauncherCreateWorkspaceActivity.launch(intent)
-//                    }
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<List<WorkspaceGroupData>>, t: Throwable) {
-//                t.message?.let { Log.e("onFailure: ", it) }
-//                dismissProgress()
-//            }
-//        }))
-//    }
+            override fun onFailure(call: Call<List<WorkspaceGroupData>>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        }))
+    }
 
     private fun doDeleteWorkSpace(data: WorkspaceGroupData, position: Int) {
         showProgressDialog()
@@ -247,7 +182,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             ) {
                 dismissProgress()
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    adapter?.deleteItem(data, position)
                 }
             }
 
@@ -305,7 +239,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             ) {
                 dismissProgress()
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    adapter?.updateName(newName, position)
                 }
             }
 
@@ -317,6 +250,8 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     private fun doGetUserInfo() {
+        if (!SharePreferenceKeyHelper.getInstance(application).isLogin())
+            return
         if (ViSafeApp().getPreference().getUserInfo().userID == null) {
             val client = NetworkClient()
             val call = client.client(context = applicationContext).doGetUserInfo()

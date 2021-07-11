@@ -36,13 +36,20 @@ class SharePreferenceKeyHelper private constructor(context: Application) {
     }
 
     fun isFirstShowOnBoarding(): Boolean {
-        return sharedPref.getBoolean(PreferenceKey.IS_FIRST_SHOW_ON_BOARDING, false)
+        return sharedPref.getBoolean(PreferenceKey.IS_FIRST_SHOW_ON_BOARDING, true)
     }
 
     fun getUserInfo(): UserInfo {
         val ch = sharedPref.getString(PreferenceKey.USER_INFO, "{}")!!
         val gson = Gson()
         return gson.fromJson(ch, UserInfo::class.java)
+    }
+
+    fun clearAllData() {
+        val editor = sharedPref.edit()
+        editor.clear()
+        editor.putBoolean(PreferenceKey.IS_FIRST_SHOW_ON_BOARDING, false)
+        editor.apply()
     }
 
     companion object {

@@ -30,7 +30,7 @@ class SplashActivity : BaseActivity() {
         viewBinding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
         if (SharePreferenceKeyHelper.getInstance(application).isLogin()
-            || SharePreferenceKeyHelper.getInstance(application).isFirstShowOnBoarding()
+            || !SharePreferenceKeyHelper.getInstance(application).isFirstShowOnBoarding()
         ) {
             viewBinding.imgLogo.visibility = View.VISIBLE
             Handler(Looper.getMainLooper()).postDelayed({

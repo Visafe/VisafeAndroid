@@ -66,7 +66,7 @@ dependencies {
 
     //glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
-    kapt 'com.github.bumptech.glide:compiler:4.9.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
     // retrofit
     implementation "com.squareup.retrofit2:adapter-rxjava2:$RETROFIT_VERSION"
@@ -86,4 +86,7 @@ dependencies {
 
     // For go-tun2socks
     implementation project(":tun2socks")
+
+    // 1.6.0 is the main
+    implementation 'com.jcodecraeer:xrecyclerview:1.6.0'
 }

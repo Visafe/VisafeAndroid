@@ -33,7 +33,13 @@ class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSh
             return fragment
         }
 
-        fun newInstance(title: String, name: String, type: String, titleEdit: String, titleDelete: String): VisafeDialogBottomSheet {
+        fun newInstance(
+            title: String,
+            name: String,
+            type: String,
+            titleEdit: String,
+            titleDelete: String
+        ): VisafeDialogBottomSheet {
             val fragment = VisafeDialogBottomSheet()
             fragment.arguments = bundleOf(
                 Pair(TYPE_DIALOG_KEY, type),
@@ -57,6 +63,7 @@ class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSh
             return fragment
         }
     }
+
     private var mOnClickListener: ((String, Action) -> Unit)? = null
 
     override fun layoutRes(): Int = R.layout.layout_visafe_dialog_bottom_sheet
@@ -89,8 +96,10 @@ class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSh
 
         val title = arguments?.getString(TITLE, "")
         binding.tvTitle.text = title
+        binding.tvTitle.visibility = if (title.isNullOrEmpty()) View.GONE else View.VISIBLE
         val name = arguments?.getString(NAME, "")
         binding.tvName.text = name
+        binding.tvName.visibility = if (name.isNullOrEmpty()) View.GONE else View.VISIBLE
         val titleEdit = arguments?.getString(TITLE_EDIT, "")
         binding.tvEdit.text = titleEdit
         val titleDelete = arguments?.getString(TITLE_DELETE, "")
