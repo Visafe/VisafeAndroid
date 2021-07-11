@@ -10,6 +10,7 @@ import com.vn.visafe_android.model.ContentMostData
 import com.vn.visafe_android.model.DeviceMostData
 import com.vn.visafe_android.ui.create.group.CreateGroupActivity
 import com.vn.visafe_android.ui.dialog.ImageDialog
+import com.vn.visafe_android.utils.setOnSingClickListener
 
 class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
 
