@@ -413,4 +413,5 @@
     <string name="turn_on_noti_title">Bật thông báo để nhận cảnh báo về các nguy hại</string>
     <string name="turn_on_noti_content">ViSafe sẽ gửi các thông báo, cảnh báo khi có nguy hại tấn công thiết bị của bạn</string>
     <string name="bat_thong_bao">Bật thông báo</string>
+    <string name="nguy_hai_da_chan">Số nguy hại đã chặn</string>
 </resources>

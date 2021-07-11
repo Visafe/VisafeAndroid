@@ -10,6 +10,7 @@ import com.vn.visafe_android.model.ContentMostData
 import com.vn.visafe_android.model.DeviceMostData
 import com.vn.visafe_android.ui.create.group.CreateGroupActivity
 import com.vn.visafe_android.ui.dialog.ImageDialog
+import com.vn.visafe_android.utils.ChartUtil
 import com.vn.visafe_android.utils.setOnSingClickListener
 
 class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
@@ -64,6 +65,19 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
                 }
             )
         }
+        val dataChart = LinkedHashMap<String, Int>()
+        dataChart["1"] = 10
+        dataChart["2"] = 20
+        dataChart["3"] = 30
+        dataChart["4"] = 40
+        dataChart["5"] = 50
+        dataChart["6"] = 60
+        dataChart["7"] = 70
+        dataChart["8"] = 75
+        dataChart["9"] = 65
+        dataChart["10"] = 70
+        dataChart["11"] = 20
+        ChartUtil.initBarChart(binding.layoutHomeChart.hiChartView, dataChart, ChartUtil.getArrayColor(dataChart.size))
     }
 
     private fun createContentList(): List<ContentMostData> {
