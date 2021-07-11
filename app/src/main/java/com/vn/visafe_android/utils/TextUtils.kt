@@ -21,7 +21,7 @@ fun updateOTPCode(
     tvOtp6: TextView,
     context: Context
 ) {
-    tvOtp1.background = ContextCompat.getDrawable(context, R.drawable.bg_otp)
+    tvOtp1.background = ContextCompat.getDrawable(context, R.drawable.ic_edittext_focus)
     tvOtp2.background = ContextCompat.getDrawable(context, R.drawable.bg_otp)
     tvOtp3.background = ContextCompat.getDrawable(context, R.drawable.bg_otp)
     tvOtp4.background = ContextCompat.getDrawable(context, R.drawable.bg_otp)
@@ -30,7 +30,7 @@ fun updateOTPCode(
     when (etPin.length()) {
         1 -> {
             tvOtp1.background = ContextCompat.getDrawable(context, R.drawable.ic_otp_dot)
-            tvOtp2.background = ContextCompat.getDrawable(context, R.drawable.bg_otp)
+            tvOtp2.background = ContextCompat.getDrawable(context, R.drawable.ic_edittext_focus)
             tvOtp3.background = ContextCompat.getDrawable(context, R.drawable.bg_otp)
             tvOtp4.background = ContextCompat.getDrawable(context, R.drawable.bg_otp)
             tvOtp5.background = ContextCompat.getDrawable(context, R.drawable.bg_otp)
@@ -39,7 +39,7 @@ fun updateOTPCode(
         2 -> {
             tvOtp1.background = ContextCompat.getDrawable(context, R.drawable.ic_otp_dot)
             tvOtp2.background = ContextCompat.getDrawable(context, R.drawable.ic_otp_dot)
-            tvOtp3.background = ContextCompat.getDrawable(context, R.drawable.bg_otp)
+            tvOtp3.background = ContextCompat.getDrawable(context, R.drawable.ic_edittext_focus)
             tvOtp4.background = ContextCompat.getDrawable(context, R.drawable.bg_otp)
             tvOtp5.background = ContextCompat.getDrawable(context, R.drawable.bg_otp)
             tvOtp6.background = ContextCompat.getDrawable(context, R.drawable.bg_otp)
@@ -48,7 +48,7 @@ fun updateOTPCode(
             tvOtp1.background = ContextCompat.getDrawable(context, R.drawable.ic_otp_dot)
             tvOtp2.background = ContextCompat.getDrawable(context, R.drawable.ic_otp_dot)
             tvOtp3.background = ContextCompat.getDrawable(context, R.drawable.ic_otp_dot)
-            tvOtp4.background = ContextCompat.getDrawable(context, R.drawable.bg_otp)
+            tvOtp4.background = ContextCompat.getDrawable(context, R.drawable.ic_edittext_focus)
             tvOtp5.background = ContextCompat.getDrawable(context, R.drawable.bg_otp)
             tvOtp6.background = ContextCompat.getDrawable(context, R.drawable.bg_otp)
         }
@@ -57,7 +57,7 @@ fun updateOTPCode(
             tvOtp2.background = ContextCompat.getDrawable(context, R.drawable.ic_otp_dot)
             tvOtp3.background = ContextCompat.getDrawable(context, R.drawable.ic_otp_dot)
             tvOtp4.background = ContextCompat.getDrawable(context, R.drawable.ic_otp_dot)
-            tvOtp5.background = ContextCompat.getDrawable(context, R.drawable.bg_otp)
+            tvOtp5.background = ContextCompat.getDrawable(context, R.drawable.ic_edittext_focus)
             tvOtp6.background = ContextCompat.getDrawable(context, R.drawable.bg_otp)
         }
         5 -> {
@@ -66,7 +66,7 @@ fun updateOTPCode(
             tvOtp3.background = ContextCompat.getDrawable(context, R.drawable.ic_otp_dot)
             tvOtp4.background = ContextCompat.getDrawable(context, R.drawable.ic_otp_dot)
             tvOtp5.background = ContextCompat.getDrawable(context, R.drawable.ic_otp_dot)
-            tvOtp6.background = ContextCompat.getDrawable(context, R.drawable.bg_otp)
+            tvOtp6.background = ContextCompat.getDrawable(context, R.drawable.ic_edittext_focus)
         }
         6 -> {
             tvOtp1.background = ContextCompat.getDrawable(context, R.drawable.ic_otp_dot)

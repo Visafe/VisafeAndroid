@@ -56,6 +56,7 @@
                 android:layout_height="@dimen/_50sdp"
                 android:layout_marginEnd="@dimen/_4dp"
                 android:layout_weight="1"
+                android:background="@drawable/ic_edittext_focus"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tv_otp_2"
                 app:layout_constraintStart_toStartOf="parent"
