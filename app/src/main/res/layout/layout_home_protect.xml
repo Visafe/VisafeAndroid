@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_16sdp"
+    android:layout_marginEnd="@dimen/_16sdp"
+    android:layout_marginBottom="@dimen/_8sdp"
+    android:layout_marginTop="@dimen/_16sdp"
+    app:cardCornerRadius="@dimen/_16dp"
+    app:cardElevation="@dimen/_8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_EEEEEE"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_marginEnd="0.5dp"
+            android:background="@color/white"
+            android:id="@+id/llHomeProtectDevice"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@id/llHomeProtectWifi"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:src="@drawable/ic_info_circle"
+                android:id="@+id/ivHomeProtectDevice"
+                android:layout_width="@dimen/_36sdp"
+                android:layout_height="@dimen/_36sdp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_24dp"
+                android:background="@drawable/bg_circle"
+                android:backgroundTint="@color/color_EEEEEE" />
+
+            <TextView
+                android:layout_marginTop="@dimen/_4sdp"
+                style="@style/Content_Bold"
+                android:textAllCaps="true"
+                android:text="@string/protect_device"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvHomeProtectAmout"
+                style="@style/Content_Small"
+                android:textColor="@color/color_70_222222"
+                android:text="Đã chặn 24 nguy hại"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/switchHomeProtectDevice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:thumb="@drawable/thumb_selector"
+                app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ivItem"
+                app:track="@drawable/track_selector" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@color/white"
+            android:id="@+id/llHomeProtectWifi"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@id/llHomeProtectDevice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:padding="@dimen/_6sdp"
+                android:src="@drawable/ic_wifi"
+                android:id="@+id/tvHomeProtectWifi"
+                android:layout_width="@dimen/_36sdp"
+                android:layout_height="@dimen/_36sdp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_24dp"
+                android:background="@drawable/bg_circle"
+                android:backgroundTint="@color/color_EEEEEE" />
+
+            <TextView
+                android:layout_marginTop="@dimen/_4sdp"
+                style="@style/Content_Bold"
+                android:textAllCaps="true"
+                android:text="@string/protect_wifi"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvHomeProtectAmoutWifi"
+                style="@style/Content_Small"
+                android:textColor="@color/color_70_222222"
+                android:text="Đã chặn 24 nguy hại"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/switchHomeProtectWifi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:thumb="@drawable/thumb_selector"
+                app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ivItem"
+                app:track="@drawable/track_selector" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="0.5dp"
+            android:layout_marginEnd="0.5dp"
+            android:background="@color/white"
+            android:id="@+id/llHomeBlockAds"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@id/llHomeBlockTracking"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llHomeProtectDevice">
+
+            <ImageView
+                android:padding="@dimen/_6sdp"
+                android:src="@drawable/ic_ads_block"
+                android:id="@+id/tvHomeBlockAds"
+                android:layout_width="@dimen/_36sdp"
+                android:layout_height="@dimen/_36sdp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_24dp"
+                android:background="@drawable/bg_circle"
+                android:backgroundTint="@color/color_EEEEEE" />
+
+            <TextView
+                android:layout_marginTop="@dimen/_4sdp"
+                style="@style/Content_Bold"
+                android:textAllCaps="true"
+                android:text="@string/chan_quang_cao"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvHomeBlockAdsAmout"
+                style="@style/Content_Small"
+                android:textColor="@color/color_70_222222"
+                android:text="Đã chặn 24 nguy hại"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/switchHomeBlockAds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:thumb="@drawable/thumb_selector"
+                app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ivItem"
+                app:track="@drawable/track_selector" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@color/white"
+            android:id="@+id/llHomeBlockTracking"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@id/llHomeBlockAds"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/llHomeBlockAds">
+
+            <ImageView
+                android:padding="@dimen/_6sdp"
+                android:src="@drawable/ic_home_eye_off"
+                android:id="@+id/tvHomeBlockTracking"
+                android:layout_width="@dimen/_36sdp"
+                android:layout_height="@dimen/_36sdp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_24dp"
+                android:background="@drawable/bg_circle"
+                android:backgroundTint="@color/color_EEEEEE" />
+
+            <TextView
+                android:layout_marginTop="@dimen/_4sdp"
+                style="@style/Content_Bold"
+                android:textAllCaps="true"
+                android:text="@string/chan_theo_doi"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvHomeBlockTrackingAmout"
+                style="@style/Content_Small"
+                android:textColor="@color/color_70_222222"
+                android:text="Đã chặn 24 nguy hại"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/switchHomeBlockTracking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:thumb="@drawable/thumb_selector"
+                app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ivItem"
+                app:track="@drawable/track_selector" />
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

@@ -90,6 +90,17 @@
         <item name="android:fontFamily">@font/sf_pro_text_regular</item>
     </style>
 
+    <style name="Content_Bold">
+        <item name="android:textSize">@dimen/text_size_14sp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular_bold</item>
+        <item name="android:textColor">@color/color_222222</item>
+    </style>
+
+    <style name="Content_Small">
+        <item name="android:textSize">@dimen/text_size_12sp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular</item>
+    </style>
+
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:height">0.5dp</item>
