@@ -79,7 +79,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.vn.visafe_android.ui.custom.SwitchSimpleView
+                <vn.ncsc.visafe.ui.custom.SwitchSimpleView
                     android:id="@+id/itemBlockAdsWeb"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                     app:sub_title="Chặn các quảng cáo hiển thị trên các website"
                     app:title="Chặn quảng cáo Website" />
 
-                <com.vn.visafe_android.ui.custom.SwitchSimpleView
+                <vn.ncsc.visafe.ui.custom.SwitchSimpleView
                     android:id="@+id/itemBlockAdsGame"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                     app:sub_title="Chặn các quảng cáo hiển thị trên các game, ứng dụng trên di động"
                     app:title="Chặn quảng cáo Game" />
 
-                <com.vn.visafe_android.ui.custom.SwitchSimpleView
+                <vn.ncsc.visafe.ui.custom.SwitchSimpleView
                     android:id="@+id/itemBlockAdsApp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
