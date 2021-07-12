@@ -316,6 +316,8 @@
     <string name="xac_thuc_tai_khoan">Xác thực tài khoản</string>
     <string name="visafe_gui_ma_xac_thuc">ViSafe đã gửi mã xác thực OTP đến email %s</string>
 
+    <string name="warning_input_number_phone_email">Vui lòng nhập số điện thoại/email</string>
+
     <string name="protect_family">Bảo vệ gia đình &amp; nhóm</string>
     <string name="protect_family_v2">Bảo vệ gia đình &amp; tổ chức</string>
     <string name="protect_content">Tất cả thành viên tham gia nhóm đều được ViSafe bảo vệ trên môi trường mạng</string>
@@ -386,7 +388,7 @@
     <string name="chan_quang_cao_theo_doi">Chặn quảng cáo, theo dõi</string>
     <string name="noti_group_title">Thông báo nhóm</string>
     <string name="current_pass">Mật khẩu hiện tại</string>
-    <string name="input_pass_for_account">Hãy nhập mật khẩu cho tài khoản</string>
+    <string name="input_pass_for_account">Hãy nhập mật khẩu cho tài khoản %s</string>
     <string name="input_current_pass">Nhập mật khẩu hiện tại</string>
     <string name="create_new_pass">Tạo mật khẩu mới</string>
     <string name="create_new_pass_content">Hãy nhập mật khẩu mới cho tài khoản</string>

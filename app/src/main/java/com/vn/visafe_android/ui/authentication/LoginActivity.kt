@@ -14,16 +14,13 @@ import androidx.core.content.ContextCompat
 import com.rengwuxian.materialedittext.MaterialEditText
 import com.vn.visafe_android.R
 import com.vn.visafe_android.base.BaseActivity
-import com.vn.visafe_android.data.BaseCallback
 import com.vn.visafe_android.data.NetworkClient
 import com.vn.visafe_android.databinding.ActivityLoginBinding
 import com.vn.visafe_android.model.request.LoginRequest
 import com.vn.visafe_android.model.response.LoginResponse
 import com.vn.visafe_android.ui.MainActivity
 import com.vn.visafe_android.ui.authentication.forgotpassword.ForgotPasswordActivity
-import com.vn.visafe_android.utils.PreferenceKey
-import com.vn.visafe_android.utils.SharePreferenceKeyHelper
-import com.vn.visafe_android.utils.isValidEmail
+import com.vn.visafe_android.utils.*
 import kotlinx.android.synthetic.main.item_config.*
 import retrofit2.Call
 import retrofit2.Response
@@ -49,7 +46,8 @@ class LoginActivity : BaseActivity() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 viewBinding.tvInputEmailError.visibility = View.GONE
-                viewBinding.edtInputEmail.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_custom_edittext)
+                viewBinding.edtInputEmail.background =
+                    ContextCompat.getDrawable(applicationContext, R.drawable.bg_custom_edittext)
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -58,7 +56,8 @@ class LoginActivity : BaseActivity() {
 
         })
         viewBinding.edtInputEmail.setOnFocusChangeListener { v, hasFocus ->
-            viewBinding.btnClearTextInputEmail.visibility = if (hasFocus && !viewBinding.edtInputEmail.text.isNullOrEmpty()) View.VISIBLE else View.GONE
+            viewBinding.btnClearTextInputEmail.visibility =
+                if (hasFocus && !viewBinding.edtInputEmail.text.isNullOrEmpty()) View.VISIBLE else View.GONE
         }
 
         viewBinding.edtInputPassword.addTextChangedListener(object : TextWatcher {
@@ -67,7 +66,8 @@ class LoginActivity : BaseActivity() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 viewBinding.tvInputPasswordError.visibility = View.GONE
-                viewBinding.edtInputPassword.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_custom_edittext)
+                viewBinding.edtInputPassword.background =
+                    ContextCompat.getDrawable(applicationContext, R.drawable.bg_custom_edittext)
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -122,11 +122,13 @@ class LoginActivity : BaseActivity() {
         }
         showProgressDialog()
         val loginRequest = LoginRequest()
-        loginRequest.username = viewBinding.edtInputEmail.text.toString()
+        loginRequest.username =
+            if (isNumber(viewBinding.edtInputEmail.text.toString())) formatMobileHead84(viewBinding.edtInputEmail.text.toString())
+            else viewBinding.edtInputEmail.text.toString()
         loginRequest.password = viewBinding.edtInputPassword.text.toString()
         val client = NetworkClient()
         val call = client.clientWithoutToken(context = applicationContext).doLogin(loginRequest)
-        call.enqueue(BaseCallback(this@LoginActivity, object : retrofit2.Callback<LoginResponse> {
+        call.enqueue(object : retrofit2.Callback<LoginResponse> {
             override fun onResponse(
                 call: Call<LoginResponse>,
                 response: Response<LoginResponse>
@@ -143,6 +145,8 @@ class LoginActivity : BaseActivity() {
                     }
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()
+                } else if (response.code() == NetworkClient.CODE_NOT_EXISTS_ACCOUNT) {
+                    response.body()?.msg?.let { showToast(it) }
                 }
             }
 
@@ -150,7 +154,7 @@ class LoginActivity : BaseActivity() {
                 t.message?.let { Log.e("onFailure: ", it) }
                 dismissProgress()
             }
-        }))
+        })
     }
 
     private fun validateField(): Boolean {
@@ -159,17 +163,24 @@ class LoginActivity : BaseActivity() {
         if (viewBinding.edtInputEmail.text.isNullOrEmpty()) {
             viewBinding.edtInputEmail.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
             viewBinding.tvInputEmailError.visibility = View.VISIBLE
-            viewBinding.tvInputEmailError.text = "Vui lòng nhập email!"
+            viewBinding.tvInputEmailError.text = getString(R.string.warning_input_number_phone_email)
             listError.add(viewBinding.edtInputEmail)
             isValidField = false
         } else {
-//            if (!isValidEmail(viewBinding.edtInputEmail.text.toString())) {
-//                viewBinding.edtInputEmail.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
-//                viewBinding.tvInputEmailError.visibility = View.VISIBLE
-//                viewBinding.tvInputEmailError.text = "Email không hợp lệ, vui lòng nhập lại!"
-//                listError.add(viewBinding.edtInputEmail)
-//                isValidField = false
-//            }
+            if (!isNumber(viewBinding.edtInputEmail.text.toString()) && !isValidEmail(viewBinding.edtInputEmail.text.toString())) {
+                viewBinding.edtInputEmail.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
+                viewBinding.tvInputEmailError.visibility = View.VISIBLE
+                viewBinding.tvInputEmailError.text = "Email không hợp lệ, vui lòng nhập lại!"
+                listError.add(viewBinding.edtInputEmail)
+                isValidField = false
+            } else if (isNumber(viewBinding.edtInputEmail.text.toString()) && !validatePhone(viewBinding.edtInputEmail.text.toString())) {
+                viewBinding.edtInputEmail.background =
+                    ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
+                viewBinding.tvInputEmailError.visibility = View.VISIBLE
+                viewBinding.tvInputEmailError.text = "Số điện thoại không hợp lệ, vui lòng nhập lại!"
+                listError.add(viewBinding.edtInputEmail)
+                isValidField = false
+            }
         }
         if (viewBinding.edtInputPassword.text.isNullOrEmpty()) {
             viewBinding.edtInputPassword.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)

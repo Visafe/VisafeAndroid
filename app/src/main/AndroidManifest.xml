@@ -92,6 +92,9 @@
         <activity
             android:name=".ui.group.join.ScanQRJoinGroupActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.group.detail.member.MemberManagementActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".dns.sys.IntraVpnService"

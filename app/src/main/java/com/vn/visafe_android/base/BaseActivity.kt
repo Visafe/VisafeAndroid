@@ -87,6 +87,10 @@ open class BaseActivity : AppCompatActivity(), BaseController {
 
     }
 
+    fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+    }
+
     fun handlerFragment(fragment: Fragment, rootId: Int, tag: String) {
         val manager: FragmentManager = supportFragmentManager
         val fragmentPopped: Boolean = manager.popBackStackImmediate(tag, 0)
@@ -100,6 +104,10 @@ open class BaseActivity : AppCompatActivity(), BaseController {
             ft.addToBackStack(tag)
             ft.commit()
         }
+    }
+
+    fun isLogin(): Boolean {
+        return SharePreferenceKeyHelper.getInstance(application).isLogin()
     }
 
     fun needLogin(): Boolean {

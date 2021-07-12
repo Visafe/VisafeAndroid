@@ -53,36 +53,22 @@
             android:textColor="@color/color_50_222222"
             android:textSize="@dimen/text_size_14sp" />
 
-        <TextView
-            android:id="@+id/tvEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvInputContent"
-            android:layout_marginStart="@dimen/_24dp"
-            android:layout_marginEnd="@dimen/_24dp"
-            android:fontFamily="@font/sf_pro_text_regular"
-            android:gravity="center_horizontal"
-            android:text="PitStudio.co@gmail.vn"
-            android:textColor="@color/color_222222"
-            android:textSize="@dimen/text_size_14sp" />
-
-
         <EditText
             android:id="@+id/edtPass"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_48sdp"
-            android:layout_below="@id/tvEmail"
+            android:layout_below="@id/tvInputContent"
             android:layout_margin="@dimen/_24dp"
             android:background="@drawable/bg_edittext"
             android:ellipsize="end"
-            android:textSize="@dimen/text_size_16sp"
             android:fontFamily="@font/sf_pro_text_regular"
             android:hint="@string/input_current_pass"
             android:inputType="textPassword"
             android:maxLength="32"
             android:paddingHorizontal="@dimen/_16dp"
             android:singleLine="true"
-            android:textColor="@color/color_111111" />
+            android:textColor="@color/color_111111"
+            android:textSize="@dimen/text_size_16sp" />
 
         <TextView
             android:id="@+id/btnNext"

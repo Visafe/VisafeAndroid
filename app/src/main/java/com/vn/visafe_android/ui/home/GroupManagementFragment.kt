@@ -96,7 +96,9 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
         }
 
         binding.btnJoinGroup.setOnSingClickListener {
-            startActivity(Intent(requireContext(), ScanQRJoinGroupActivity::class.java))
+            val intent = Intent(requireContext(), ScanQRJoinGroupActivity::class.java)
+            intent.putExtra(ScanQRJoinGroupActivity.DATA_TITLE, "Quét mã QR tham gia nhóm")
+            startActivity(intent)
         }
     }
 

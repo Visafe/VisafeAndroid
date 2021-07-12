@@ -16,14 +16,30 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView.ResultHandler
 class ScanQRJoinGroupActivity : BaseActivity(), ResultHandler {
     lateinit var binding: ActivityScanQrJoinGroupBinding
 
+    private var mTitle: String? = ""
+
     companion object {
         const val REQUEST_CAMERA_PERMISSION = 1001
+        const val DATA_TITLE = "DATA_TITLE"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityScanQrJoinGroupBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        intent?.let {
+            mTitle = it.getStringExtra(DATA_TITLE)
+        }
+        initView()
+        initControl()
+
+    }
+
+    private fun initView() {
+        binding.tvTitle.text = mTitle
+    }
+
+    private fun initControl() {
         binding.ivBack.setOnClickListener { finish() }
     }
 

@@ -3,13 +3,12 @@ package com.vn.visafe_android.ui.dialog
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vn.visafe_android.R
-import com.vn.visafe_android.ViSafeApp
 import com.vn.visafe_android.base.BaseDialogBottomSheet
 import com.vn.visafe_android.databinding.LayoutAccountTypeDialogBottomSheetBinding
 import com.vn.visafe_android.model.WorkspaceGroupData
 import com.vn.visafe_android.ui.adapter.AccountTypeAdapter
+import com.vn.visafe_android.ui.adapter.OnClickMenu
 import com.vn.visafe_android.ui.create.group.access_manager.Action
-import com.vn.visafe_android.ui.home.OnClickMenu
 
 class AccountTypeDialogBottomSheet :
     BaseDialogBottomSheet<LayoutAccountTypeDialogBottomSheetBinding>() {
@@ -38,7 +37,7 @@ class AccountTypeDialogBottomSheet :
     override fun initView() {
         val listMenu =
             arguments?.getParcelableArrayList<WorkspaceGroupData>(DATA_WORKSPACE) as ArrayList<WorkspaceGroupData>
-        val postionSelected = arguments?.getInt(POSITON_SELECTED, 0)
+        val positionSelected = arguments?.getInt(POSITON_SELECTED, 0)
         binding.rvGroup.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter = AccountTypeAdapter(listMenu, object : OnClickMenu {
@@ -77,12 +76,20 @@ class AccountTypeDialogBottomSheet :
                 }
             }
         })
-        adapter?.setSelected(postionSelected!!)
+        positionSelected?.let { adapter?.setSelected(it) }
         binding.rvGroup.adapter = adapter
         binding.btnAdd.setOnClickListener {
             dismiss()
             onClickItemAccountType?.add()
         }
+    }
+
+    fun deleteWorkSpace(data: WorkspaceGroupData, position: Int) {
+        adapter?.deleteItem(data, position)
+    }
+
+    fun updateNameWorkSpace(newName: String, position: Int) {
+        adapter?.updateName(newName, position)
     }
 
     private fun showDialogDeleteWorkSpace(data: WorkspaceGroupData, position: Int) {

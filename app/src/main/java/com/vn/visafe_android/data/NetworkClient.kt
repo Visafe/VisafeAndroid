@@ -19,6 +19,8 @@ class NetworkClient {
         const val CODE_CREATED: Int = 201
         const val CODE_SUCCESS: Int = 200
         const val CODE_EXISTS_ACCOUNT: Int = 400
+        const val CODE_NOT_EXISTS_ACCOUNT: Int = 404
+        const val CODE_ACCOUNT_ALREADY_ACTIVE = 409
         const val CODE_DELETE_SUCCESS: Int = 204
         const val CODE_LIMIT_PAYMENT = 402
         const val CODE_SEVER_ERROR = 502
