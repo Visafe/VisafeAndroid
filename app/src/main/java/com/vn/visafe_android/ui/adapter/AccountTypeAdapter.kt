@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.vn.visafe_android.databinding.ItemAccountTypeBinding
 import com.vn.visafe_android.model.WorkspaceGroupData
-import com.vn.visafe_android.ui.home.OnClickMenu
 
 class AccountTypeAdapter(
     private val groupList: MutableList<WorkspaceGroupData>,
@@ -65,4 +64,10 @@ class AccountTypeAdapter(
         groupList[position].name = newName
         notifyDataSetChanged()
     }
+}
+
+interface OnClickMenu {
+    fun onClickMenu(data: WorkspaceGroupData, position: Int)
+
+    fun onMoreGroup(data: WorkspaceGroupData, position: Int)
 }

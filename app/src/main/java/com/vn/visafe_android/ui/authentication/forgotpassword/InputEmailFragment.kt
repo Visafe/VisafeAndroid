@@ -12,8 +12,10 @@ import com.vn.visafe_android.base.BaseFragment
 import com.vn.visafe_android.data.BaseCallback
 import com.vn.visafe_android.data.NetworkClient
 import com.vn.visafe_android.databinding.FragmentInputEmailBinding
+import com.vn.visafe_android.utils.isNumber
 import com.vn.visafe_android.utils.isValidEmail
 import com.vn.visafe_android.utils.setSafeClickListener
+import com.vn.visafe_android.utils.validatePhone
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,7 +45,8 @@ class InputEmailFragment : BaseFragment<FragmentInputEmailBinding>(), InputOTPFr
 
         })
         binding.edtInputEmail.setOnFocusChangeListener { v, hasFocus ->
-            binding.btnClearTextInputEmail.visibility = if (hasFocus && !binding.edtInputEmail.text.isNullOrEmpty()) View.VISIBLE else View.GONE
+            binding.btnClearTextInputEmail.visibility =
+                if (hasFocus && !binding.edtInputEmail.text.isNullOrEmpty()) View.VISIBLE else View.GONE
         }
         binding.btnClearTextInputEmail.setOnClickListener { binding.edtInputEmail.setText("") }
         setupTextPolicyHandleClick()
@@ -79,14 +82,25 @@ class InputEmailFragment : BaseFragment<FragmentInputEmailBinding>(), InputOTPFr
 
     private fun doSendRequest() {
         if (binding.edtInputEmail.text.isNullOrEmpty()) {
-            binding.edtInputEmail.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_error)
+            binding.edtInputEmail.background = context?.let { ContextCompat.getDrawable(it, R.drawable.bg_edittext_error) }
             binding.tvInputEmailError.visibility = View.VISIBLE
-            binding.tvInputEmailError.text = "Vui lòng nhập email!"
+            binding.tvInputEmailError.text = getString(R.string.warning_input_number_phone_email)
+            binding.edtInputEmail.requestFocus()
+            return
         } else {
-            if (!isValidEmail(binding.edtInputEmail.text.toString())) {
-                binding.edtInputEmail.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_error)
+            if (!isNumber(binding.edtInputEmail.text.toString()) && !isValidEmail(binding.edtInputEmail.text.toString())) {
+                binding.edtInputEmail.background = context?.let { ContextCompat.getDrawable(it, R.drawable.bg_edittext_error) }
                 binding.tvInputEmailError.visibility = View.VISIBLE
                 binding.tvInputEmailError.text = "Email không hợp lệ, vui lòng nhập lại!"
+                binding.edtInputEmail.requestFocus()
+                return
+            } else if (isNumber(binding.edtInputEmail.text.toString()) && !validatePhone(binding.edtInputEmail.text.toString())) {
+                binding.edtInputEmail.background =
+                    context?.let { ContextCompat.getDrawable(it, R.drawable.bg_edittext_error) }
+                binding.tvInputEmailError.visibility = View.VISIBLE
+                binding.tvInputEmailError.text = "Số điện thoại không hợp lệ, vui lòng nhập lại!"
+                binding.edtInputEmail.requestFocus()
+                return
             }
         }
         showProgressDialog()
@@ -103,7 +117,9 @@ class InputEmailFragment : BaseFragment<FragmentInputEmailBinding>(), InputOTPFr
                         dismissProgress()
                         if (response.code() == NetworkClient.CODE_SUCCESS) {
                             inputOTPFragment = InputOTPFragment(
-                                onInputOtpDialog = this@InputEmailFragment, InputOTPFragment.TypeOTP.FORGOT_PASSWORD, "Xác thực tài khoản",
+                                onInputOtpDialog = this@InputEmailFragment,
+                                InputOTPFragment.TypeOTP.FORGOT_PASSWORD,
+                                "Xác thực tài khoản",
                                 username
                             )
                             inputOTPFragment?.show(childFragmentManager, "inputOTPFragment")

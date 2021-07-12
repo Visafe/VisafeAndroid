@@ -1,5 +1,6 @@
 package com.vn.visafe_android.ui.authentication.changepass
 
+import android.content.Context
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import com.vn.visafe_android.R
@@ -11,7 +12,16 @@ import com.vn.visafe_android.utils.setOnSingClickListener
 
 class CurrentPassFragment : BaseFragment<FragmentCurrentPassBinding>() {
 
+    private var changePasswordActivity: ChangePasswordActivity? = null
+
     override fun layoutRes(): Int = R.layout.fragment_current_pass
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is ChangePasswordActivity) {
+            changePasswordActivity = context
+        }
+    }
 
     override fun initView() {
         enableButton()
@@ -20,6 +30,7 @@ class CurrentPassFragment : BaseFragment<FragmentCurrentPassBinding>() {
             enableButton()
         }
         binding.btnNext.setOnSingClickListener {
+            changePasswordActivity?.changePasswordRequest?.currentPassword = binding.edtPass.text.toString()
             (activity as ChangePasswordActivity).handlerFragment(
                 CreateNewPassFragment(),
                 ChangePasswordActivity.rootId,
@@ -34,7 +45,10 @@ class CurrentPassFragment : BaseFragment<FragmentCurrentPassBinding>() {
 
         val userInfo = ViSafeApp().getPreference().getUserInfo()
         userInfo.let {
-            binding.tvEmail.text = it.email
+            binding.tvInputContent.text = String.format(
+                getString(R.string.input_pass_for_account), if (it.email.isNullOrEmpty())
+                    it.phoneNumber else it.email
+            )
         }
     }
 
@@ -44,14 +58,14 @@ class CurrentPassFragment : BaseFragment<FragmentCurrentPassBinding>() {
             with(binding.btnNext) {
                 backgroundTintList =
                     resources.getColorStateList(
-                        com.vn.visafe_android.R.color.color_FFB31F,
+                        R.color.color_FFB31F,
                         requireContext().theme
                     )
 
                 setTextColor(
                     androidx.core.content.ContextCompat.getColor(
                         requireContext(),
-                        com.vn.visafe_android.R.color.white
+                        R.color.white
                     )
                 )
                 isEnabled = true
@@ -60,13 +74,13 @@ class CurrentPassFragment : BaseFragment<FragmentCurrentPassBinding>() {
             with(binding.btnNext) {
                 backgroundTintList =
                     resources.getColorStateList(
-                        com.vn.visafe_android.R.color.color_F8F8F8,
+                        R.color.color_F8F8F8,
                         requireContext().theme
                     )
                 setTextColor(
                     androidx.core.content.ContextCompat.getColor(
                         requireContext(),
-                        com.vn.visafe_android.R.color.color_AAAAAA
+                        R.color.color_AAAAAA
                     )
                 )
                 isEnabled = false

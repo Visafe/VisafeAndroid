@@ -147,13 +147,11 @@ class SetupCreateGroupFragment : BaseFragment<FragmentSetupCreateGroupBinding>()
                                     createGroupActivity?.createGroupRequest?.youtuberestrict_enabled = false
                                 }
                                 createGroupActivity?.createGroupRequest?.gambling_enabled = group.isSelected
-                                createGroupActivity?.createGroupRequest?.bypass_enabled = group.isSelected
+
                             }
                         }
                         SetupCreateGroup.CHAN_VPN_PROXY -> {
-                            if (group.isSelected) {
-
-                            }
+                            createGroupActivity?.createGroupRequest?.bypass_enabled = group.isSelected
                         }
 
                     }

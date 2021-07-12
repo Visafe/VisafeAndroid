@@ -10,7 +10,7 @@
         tools:context=".ui.home.ProfileFragment">
 
         <TextView
-            style="@style/Title"
+            style="@style/TitleToolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:layout_marginTop="@dimen/_26sdp"
@@ -41,41 +41,57 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="ContentDescription" />
 
-                <TextView
-                    android:id="@+id/tvName"
-                    style="@style/Title"
-                    android:layout_width="@dimen/_0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_12dp"
-                    android:layout_marginEnd="@dimen/_4dp"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:text="@string/login"
-                    app:layout_constraintEnd_toStartOf="@id/ivArrow"
-                    app:layout_constraintStart_toEndOf="@id/ivUser"
-                    app:layout_constraintTop_toTopOf="@id/ivUser" />
-
-                <TextView
-                    android:id="@+id/tvPhone"
-                    style="@style/Content"
-                    android:layout_width="@dimen/_0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/login_content"
-                    android:textColor="@color/color_666666"
-                    app:layout_constraintEnd_toEndOf="@id/tvName"
-                    app:layout_constraintStart_toStartOf="@id/tvName"
-                    app:layout_constraintTop_toBottomOf="@id/tvName" />
-
-                <ImageView
-                    android:id="@+id/ivArrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ctrlInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_marginEnd="@dimen/_24dp"
-                    android:src="@drawable/ic_stroke"
-                    app:layout_constraintBottom_toBottomOf="@id/ivUser"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivUser"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/ivUser"
-                    tools:ignore="ContentDescription" />
+                    app:layout_constraintStart_toEndOf="@id/ivUser"
+                    app:layout_constraintTop_toTopOf="@id/ivUser">
+
+                    <TextView
+                        android:id="@+id/tvName"
+                        style="@style/Title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12dp"
+                        android:layout_marginEnd="@dimen/_4dp"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:text="@string/login"
+                        app:layout_constraintBottom_toTopOf="@+id/tvPhone"
+                        app:layout_constraintEnd_toStartOf="@id/ivArrow"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvPhone"
+                        style="@style/Content"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:text="@string/login_content"
+                        android:textColor="@color/color_666666"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/ivArrow"
+                        app:layout_constraintStart_toStartOf="@+id/tvName"
+                        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+                    <ImageView
+                        android:id="@+id/ivArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_stroke"
+                        app:layout_constraintBottom_toBottomOf="@id/tvPhone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tvName"
+                        tools:ignore="ContentDescription" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
                     android:id="@+id/view"

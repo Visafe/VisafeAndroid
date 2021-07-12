@@ -82,6 +82,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="TitleToolbar">
+        <item name="android:textSize">@dimen/_14sdp</item>
+        <item name="android:fontFamily">@font/sf_pro_text_regular_bold</item>
+        <item name="android:textColor">@color/color_222222</item>
+    </style>
+
     <style name="Title">
         <item name="android:textSize">@dimen/_12sdp</item>
         <item name="android:fontFamily">@font/sf_pro_text_regular_bold</item>

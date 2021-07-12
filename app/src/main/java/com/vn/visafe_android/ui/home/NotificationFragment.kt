@@ -12,6 +12,7 @@ import com.vn.visafe_android.databinding.FragmentNotificationBinding
 import com.vn.visafe_android.model.NotificationModel
 import com.vn.visafe_android.model.request.NotificationRequest
 import com.vn.visafe_android.model.response.NotificationResponse
+import com.vn.visafe_android.ui.MainActivity
 import com.vn.visafe_android.ui.adapter.NotificationAdapter
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -28,15 +29,10 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Notifi
     private var mPage = 1
     private var notificationAdapter: NotificationAdapter? = null
     private var notificationList: MutableList<NotificationModel> = mutableListOf()
-//    private var swipeContainer: SwipeRefreshLayout? = null
 
     override fun layoutRes(): Int = R.layout.fragment_notification
 
     override fun initView() {
-//        swipeContainer = binding.reloadData
-//        swipeContainer?.setOnRefreshListener {
-//            doGetNotification()
-//        }
         notificationAdapter = NotificationAdapter(this)
         binding.rcvNotification.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.rcvNotification.adapter = notificationAdapter
@@ -47,6 +43,8 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Notifi
     }
 
     private fun doGetNotification(type: TypeLoad) {
+        if (!(activity as MainActivity).isLogin())
+            return
         if (type == TypeLoad.FIRST_LOAD) showProgressDialog()
         val client = NetworkClient()
         val call = context?.let { client.client(context = it).doGetNotification(mPage) }

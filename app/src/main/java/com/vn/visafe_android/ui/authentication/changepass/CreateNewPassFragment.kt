@@ -1,5 +1,6 @@
 package com.vn.visafe_android.ui.authentication.changepass
 
+import android.content.Context
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.View
@@ -14,14 +15,25 @@ import com.vn.visafe_android.utils.setOnSingClickListener
 
 class CreateNewPassFragment : BaseFragment<FragmentCreateNewPassBinding>() {
 
-    override fun layoutRes(): Int = R.layout.fragment_create_new_pass
     private var isShowPassNew = false
+    private var changePasswordActivity: ChangePasswordActivity? = null
+
+    override fun layoutRes(): Int = R.layout.fragment_create_new_pass
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is ChangePasswordActivity) {
+            changePasswordActivity = context
+        }
+    }
 
     override fun initView() {
         enableButton()
         handleShowPasswordNew()
         binding.btnSave.setOnSingClickListener {
-            activity?.finish()
+            changePasswordActivity?.changePasswordRequest?.newPassword = binding.edtPassNew.text.toString()
+            changePasswordActivity?.changePasswordRequest?.repeatPassword = binding.edtPassNewAgain.text.toString()
+            changePasswordActivity?.doChangePassword()
         }
         setHideKeyboardFocus(binding.root)
         binding.edtPassNew.addTextChangedListener {

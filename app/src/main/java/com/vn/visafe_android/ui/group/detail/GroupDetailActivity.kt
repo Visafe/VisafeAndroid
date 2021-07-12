@@ -1,6 +1,7 @@
 package com.vn.visafe_android.ui.group.detail
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import com.vn.visafe_android.model.request.DeleteGroupRequest
 import com.vn.visafe_android.ui.create.group.SuccessDialogFragment
 import com.vn.visafe_android.ui.create.group.access_manager.Action
 import com.vn.visafe_android.ui.dialog.VisafeDialogBottomSheet
+import com.vn.visafe_android.ui.group.detail.member.MemberManagementActivity
 import com.vn.visafe_android.utils.getTextGroup
 import com.vn.visafe_android.utils.setOnSingClickListener
 import okhttp3.ResponseBody
@@ -34,6 +36,7 @@ class GroupDetailActivity : BaseActivity() {
     private var groupNumber: String? = null
     private var mIdGroup: String? = null
     private var fkUserId: Int? = null
+    private var groupData: GroupData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,17 +76,15 @@ class GroupDetailActivity : BaseActivity() {
             }
         }
         binding.ivBack.setOnClickListener { finish() }
+        binding.btnAddNewMember.setOnSingClickListener {
+//            val intent = Intent(this@GroupDetailActivity, MemberManagementActivity::class.java)
+//            intent.putExtra(MemberManagementActivity.KEY_DATA, groupData)
+//            startActivity(intent)
+        }
     }
 
     private fun initView() {
         groupId?.let { doGetAGroupWithId(it) }
-    }
-
-    fun addFragment(fragment: Fragment, tag: String = "") {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.frameContainer, fragment)
-            .addToBackStack(tag)
-            .commitAllowingStateLoss()
     }
 
     override fun onBackPressed() {
@@ -170,6 +171,7 @@ class GroupDetailActivity : BaseActivity() {
                         binding.tvNumberMember.text = "${it.listUsersGroupInfo?.size} thành viên"
                         mIdGroup = it.groupid
                         fkUserId = it.fkUserId
+                        groupData = it
                     }
                 }
 

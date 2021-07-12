@@ -25,10 +25,7 @@ import com.vn.visafe_android.model.request.RegisterRequest
 import com.vn.visafe_android.model.response.LoginResponse
 import com.vn.visafe_android.ui.MainActivity
 import com.vn.visafe_android.ui.authentication.forgotpassword.InputOTPFragment
-import com.vn.visafe_android.utils.PreferenceKey
-import com.vn.visafe_android.utils.SharePreferenceKeyHelper
-import com.vn.visafe_android.utils.isValidEmail
-import com.vn.visafe_android.utils.setSafeClickListener
+import com.vn.visafe_android.utils.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -214,14 +211,21 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
         if (viewBinding.edtInputEmail.text.isNullOrEmpty()) {
             viewBinding.edtInputEmail.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
             viewBinding.tvInputEmailError.visibility = View.VISIBLE
-            viewBinding.tvInputEmailError.text = "Vui lòng nhập email!"
+            viewBinding.tvInputEmailError.text = getString(R.string.warning_input_number_phone_email)
             listError.add(viewBinding.edtInputEmail)
             isValidField = false
         } else {
-            if (!isValidEmail(viewBinding.edtInputEmail.text.toString())) {
+            if (!isNumber(viewBinding.edtInputEmail.text.toString()) && !isValidEmail(viewBinding.edtInputEmail.text.toString())) {
                 viewBinding.edtInputEmail.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
                 viewBinding.tvInputEmailError.visibility = View.VISIBLE
                 viewBinding.tvInputEmailError.text = "Email không hợp lệ, vui lòng nhập lại!"
+                listError.add(viewBinding.edtInputEmail)
+                isValidField = false
+            } else if (isNumber(viewBinding.edtInputEmail.text.toString()) && !validatePhone(viewBinding.edtInputEmail.text.toString())) {
+                viewBinding.edtInputEmail.background =
+                    ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
+                viewBinding.tvInputEmailError.visibility = View.VISIBLE
+                viewBinding.tvInputEmailError.text = "Số điện thoại không hợp lệ, vui lòng nhập lại!"
                 listError.add(viewBinding.edtInputEmail)
                 isValidField = false
             }

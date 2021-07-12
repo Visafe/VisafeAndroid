@@ -1,12 +1,12 @@
 package com.vn.visafe_android.ui
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -21,7 +21,6 @@ import com.vn.visafe_android.model.UserInfo
 import com.vn.visafe_android.model.WorkspaceGroupData
 import com.vn.visafe_android.model.request.DeleteWorkSpaceRequest
 import com.vn.visafe_android.model.request.UpdateNameWorkspaceRequest
-import com.vn.visafe_android.ui.authentication.splash.PlaceholderFragment
 import com.vn.visafe_android.ui.create.group.access_manager.Action
 import com.vn.visafe_android.ui.dialog.VisafeDialogBottomSheet
 import com.vn.visafe_android.ui.home.*
@@ -55,13 +54,10 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private var profileFragment = ProfileFragment()
 
     var user: MutableLiveData<UserInfo> = MutableLiveData()
+    var listWorkSpace: MutableLiveData<List<WorkspaceGroupData>> = MutableLiveData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initView()
@@ -93,47 +89,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         binding.bottomView.setOnNavigationItemSelectedListener(this)
     }
 
-    private fun showDialogDeleteWorkSpace(data: WorkspaceGroupData, position: Int) {
-        val bottomSheet = VisafeDialogBottomSheet.newInstance(
-            "",
-            getString(R.string.delete_workspace_content, data.name),
-            VisafeDialogBottomSheet.TYPE_CONFIRM
-        )
-        bottomSheet.show(supportFragmentManager, null)
-        bottomSheet.setOnClickListener { inputText, action ->
-            when (action) {
-                Action.CONFIRM -> {
-                    doDeleteWorkSpace(data, position)
-                }
-                else -> {
-                    return@setOnClickListener
-                }
-            }
-        }
-    }
-
-    private fun showDialogUpdateNameWorkSpace(data: WorkspaceGroupData, position: Int) {
-        val bottomSheet = data.name?.let {
-            VisafeDialogBottomSheet.newInstanceEdit(
-                "",
-                getString(R.string.update_name_workspace),
-                VisafeDialogBottomSheet.TYPE_SAVE,
-                "", it
-            )
-        }
-        bottomSheet?.show(supportFragmentManager, null)
-        bottomSheet?.setOnClickListener { inputText, action ->
-            when (action) {
-                Action.SAVE -> {
-                    doUpdateNameWorkSpace(data, inputText, position)
-                }
-                else -> {
-                    return@setOnClickListener
-                }
-            }
-        }
-    }
-
     private fun doGetWorkSpaces() {
         if (!SharePreferenceKeyHelper.getInstance(application).isLogin())
             return
@@ -146,103 +101,27 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 response: Response<List<WorkspaceGroupData>>
             ) {
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    listMenu.clear()
-                    response.body()?.toMutableList()?.let { listMenu.addAll(it) }
-                    if (listMenu.size > 0) {
-                        for (i in listMenu.indices) {
-                            listMenu[i].isSelected = i == 0
-                        }
-                        listMenu[0].let { workspaceGroupData ->
-                            if (groupManagementFragment != null) {
-                                groupManagementFragment.updateWorkspace(workspaceGroupData)
+                    response.body()?.toMutableList()?.let {
+                        listMenu.clear()
+                        listMenu.addAll(it)
+                        listWorkSpace.value = listMenu
+                        if (listMenu.size > 0) {
+                            for (i in listMenu.indices) {
+                                listMenu[i].isSelected = i == 0
                             }
-                        }
+                            listMenu[0].let { workspaceGroupData ->
+                                if (groupManagementFragment != null) {
+                                    groupManagementFragment.updateWorkspace(workspaceGroupData)
+                                }
+                            }
 
+                        }
                     }
                 }
                 dismissProgress()
             }
 
             override fun onFailure(call: Call<List<WorkspaceGroupData>>, t: Throwable) {
-                t.message?.let { Log.e("onFailure: ", it) }
-                dismissProgress()
-            }
-        }))
-    }
-
-    private fun doDeleteWorkSpace(data: WorkspaceGroupData, position: Int) {
-        showProgressDialog()
-        val client = NetworkClient()
-        val call = client.client(context = applicationContext)
-            .doDeleteWorkspace(DeleteWorkSpaceRequest(data.id))
-        call.enqueue(BaseCallback(this@MainActivity, object : Callback<ResponseBody> {
-            override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
-            ) {
-                dismissProgress()
-                if (response.code() == NetworkClient.CODE_SUCCESS) {
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                t.message?.let { Log.e("onFailure: ", it) }
-                dismissProgress()
-            }
-        }))
-    }
-
-    private fun doUpdateWorkSpace(data: WorkspaceGroupData, position: Int) {
-        showProgressDialog()
-        val updateWorkspaceRequest = WorkspaceGroupData(
-            id = data.id,
-            name = data.name,
-            type = data.type,
-            isActive = data.isActive,
-            userOwner = data.userOwner,
-            isOwner = data.isOwner,
-            phishingEnabled = data.phishingEnabled,
-            malwareEnabled = data.malwareEnabled,
-            logEnabled = data.logEnabled,
-            groupIds = data.groupIds,
-            members = data.members,
-            createdAt = data.createdAt
-        )
-        val client = NetworkClient()
-        val call =
-            client.client(context = applicationContext).doUpdateWorkspace(updateWorkspaceRequest)
-        call.enqueue(BaseCallback(this@MainActivity, object : Callback<ResponseBody> {
-            override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
-            ) {
-                dismissProgress()
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                t.message?.let { Log.e("onFailure: ", it) }
-                dismissProgress()
-            }
-        }))
-    }
-
-    private fun doUpdateNameWorkSpace(data: WorkspaceGroupData, newName: String, position: Int) {
-        showProgressDialog()
-        val updateNameWorkspaceRequest = UpdateNameWorkspaceRequest(data.id, newName)
-        val client = NetworkClient()
-        val call = client.client(context = applicationContext)
-            .doUpdateNameWorkSpace(updateNameWorkspaceRequest)
-        call.enqueue(BaseCallback(this@MainActivity, object : Callback<ResponseBody> {
-            override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
-            ) {
-                dismissProgress()
-                if (response.code() == NetworkClient.CODE_SUCCESS) {
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 t.message?.let { Log.e("onFailure: ", it) }
                 dismissProgress()
             }
@@ -289,15 +168,15 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        if (needLogin()) {
-            return false
-        }
         when (item.itemId) {
             R.id.navigation_protect -> {
                 openTab(POSITION_PROTECT)
                 return true
             }
             R.id.navigation_group -> {
+                if (needLogin()) {
+                    return false
+                }
                 openTab(POSITION_GROUP)
                 return true
             }
@@ -306,6 +185,9 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 return true
             }
             R.id.navigation_notification -> {
+                if (needLogin()) {
+                    return false
+                }
                 openTab(POSITION_NOTIFICATION)
                 return true
             }
