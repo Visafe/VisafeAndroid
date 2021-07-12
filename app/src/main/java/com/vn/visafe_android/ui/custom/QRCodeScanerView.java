@@ -17,6 +17,6 @@ public class QRCodeScanerView extends ZXingScannerView {
 
     @Override
     protected IViewFinder createViewFinderView(Context context) {
-        return new CustomViewScanQR(context);
+        return new ViewFinderCustom(context);
     }
 }
