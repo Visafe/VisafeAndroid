@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
-import com.vn.visafe_android.ui.home.*
 import kotlinx.android.synthetic.main.fragment_splash.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,10 +21,7 @@ import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivityMainBinding
 import vn.ncsc.visafe.model.UserInfo
 import vn.ncsc.visafe.model.WorkspaceGroupData
-import vn.ncsc.visafe.ui.home.GroupManagementFragment
-import vn.ncsc.visafe.ui.home.HomeFragment
-import vn.ncsc.visafe.ui.home.OverViewProtectFragment
-import vn.ncsc.visafe.ui.home.ProfileFragment
+import vn.ncsc.visafe.ui.home.*
 import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 import vn.ncsc.visafe.utils.setBackgroundTint
@@ -168,6 +164,14 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         when (item.itemId) {
             R.id.navigation_protect -> {
                 openTab(POSITION_PROTECT)
+                if (overViewProtectFragment != null && listMenu.size > 0
+                    && SharePreferenceKeyHelper.getInstance(application).isLogin()
+                ) {
+                    listMenu.let {
+                        overViewProtectFragment.doGetStaticWorkspace(it[0])
+                    }
+
+                }
                 return true
             }
             R.id.navigation_group -> {

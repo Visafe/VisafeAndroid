@@ -39,9 +39,9 @@
             android:text="@{data.name}"
             android:textColor="@color/color_222222"
             android:textSize="@dimen/text_size_16sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/llLevel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Fina Group" />
 
         <TextView
@@ -52,7 +52,6 @@
             android:fontFamily="@font/sf_pro_text_regular"
             android:textColor="@color/color_808080"
             android:textSize="@dimen/text_size_14sp"
-            app:layout_constraintEnd_toEndOf="@id/tvNameGroup"
             app:layout_constraintStart_toStartOf="@id/tvNameGroup"
             app:layout_constraintTop_toBottomOf="@id/tvNameGroup"
             tools:text="5 nhóm" />
@@ -70,13 +69,13 @@
             tools:ignore="ContentDescription" />
 
         <LinearLayout
+            android:id="@+id/llLevel"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/tvNameGroup"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tvNameGroup"
-            app:layout_constraintTop_toTopOf="@id/tvNameGroup"
-            android:id="@+id/llLevel"
-            android:layout_width="@dimen/_0dp"
-            android:layout_height="wrap_content">
+            app:layout_constraintTop_toTopOf="@id/tvNameGroup">
 
             <TextView
                 android:id="@+id/tvLevel"
@@ -98,11 +97,11 @@
 
 
         <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
             android:layout_marginTop="@dimen/_16sdp"
             android:background="@color/color_EEEEEE"
-            app:layout_constraintTop_toBottomOf="@id/tvAmountGroup"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"/>
+            app:layout_constraintTop_toBottomOf="@id/tvAmountGroup" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

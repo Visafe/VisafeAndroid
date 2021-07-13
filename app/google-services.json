@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "364533202921",
+    "project_id": "visafe-ncsc-21d89",
+    "storage_bucket": "visafe-ncsc-21d89.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364533202921:android:3dd7584be18e63481c1578",
+        "android_client_info": {
+          "package_name": "vn.ncsc.visafe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "364533202921-lp10kcgtj05sl874td29u2rufi6fmluv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0eenXWwBaLXGJvH7UrmoDTD3Ob4t_j7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "364533202921-lp10kcgtj05sl874td29u2rufi6fmluv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "364533202921-h0510keg49fuo2okdgopo48mato4905d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "vn.visafe",
+                "app_store_id": "1564635388"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

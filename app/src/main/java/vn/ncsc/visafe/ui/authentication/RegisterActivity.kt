@@ -12,12 +12,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
+import com.facebook.login.LoginManager
 import com.rengwuxian.materialedittext.MaterialEditText
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import vn.ncsc.visafe.R
-import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.BaseResponse
 import vn.ncsc.visafe.data.NetworkClient
@@ -30,11 +30,11 @@ import vn.ncsc.visafe.ui.MainActivity
 import vn.ncsc.visafe.ui.authentication.forgotpassword.InputOTPFragment
 import vn.ncsc.visafe.utils.*
 
-class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
+class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputOtpDialog {
+
     lateinit var viewBinding: ActivityRegisterBinding
 
     private var isShowPassword: Boolean = false
-    private var isShowPasswordAgain: Boolean = false
     private var listError: MutableList<View> = mutableListOf()
     private var inputOTPFragment: InputOTPFragment? = null
 
@@ -117,6 +117,15 @@ class RegisterActivity : BaseActivity(), InputOTPFragment.OnInputOtpDialog {
         }
         setSafeClickListener(viewBinding.btnShowHidePassword) { onShowHidePassword() }
         viewBinding.btnClearTextInputEmail.setOnClickListener { viewBinding.edtInputEmail.setText("") }
+        viewBinding.btnLoginSocialGoogle.setOnSingClickListener {
+            doSignInGoogle()
+        }
+        viewBinding.btnLoginSocialFacebook.setOnSingClickListener {
+            LoginManager.getInstance().logInWithReadPermissions(
+                this,
+                listOf("public_profile", "email")
+            )
+        }
     }
 
     private fun doRegister() {

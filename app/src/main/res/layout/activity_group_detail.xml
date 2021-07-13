@@ -105,63 +105,73 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
 
-        <ImageView
-            android:id="@+id/ivIcon"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_marginStart="@dimen/_16sdp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ctrlMemberManager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16sdp"
-            android:src="@drawable/ic_group_manager"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnAddNewMember"
-            tools:ignore="ContentDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/btnAddNewMember">
+
+            <ImageView
+                android:id="@+id/ivIcon"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:src="@drawable/ic_group_manager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
 
-        <TextView
-            android:id="@+id/tvTitleManager"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:fontFamily="@font/sf_pro_text_regular_bold"
-            android:gravity="center"
-            android:text="@string/member_management_title"
-            android:textColor="@color/color_222222"
-            android:textSize="@dimen/_12sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/ivIcon"
-            app:layout_constraintStart_toEndOf="@+id/ivIcon"
-            app:layout_constraintTop_toTopOf="@+id/ivIcon" />
+            <TextView
+                android:id="@+id/tvTitleManager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:gravity="center"
+                android:text="@string/member_management_title"
+                android:textColor="@color/color_222222"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/ivIcon"
+                app:layout_constraintStart_toEndOf="@+id/ivIcon"
+                app:layout_constraintTop_toTopOf="@+id/ivIcon" />
 
-        <TextView
-            android:id="@+id/tvNumberMember"
-            style="@style/Content"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:gravity="end"
-            app:layout_constraintBottom_toBottomOf="@+id/tvTitleManager"
-            app:layout_constraintEnd_toStartOf="@+id/ivArrow"
-            app:layout_constraintTop_toTopOf="@+id/tvTitleManager"
-            tools:text="24 thành viên" />
+            <TextView
+                android:id="@+id/tvNumberMember"
+                style="@style/Content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:gravity="end"
+                app:layout_constraintBottom_toBottomOf="@+id/tvTitleManager"
+                app:layout_constraintEnd_toStartOf="@+id/ivArrow"
+                app:layout_constraintTop_toTopOf="@+id/tvTitleManager"
+                tools:text="24 thành viên" />
 
-        <ImageView
-            android:id="@+id/ivArrow"
-            android:layout_width="@dimen/_6sdp"
-            android:layout_height="@dimen/_12sdp"
-            android:layout_marginEnd="@dimen/_13sdp"
-            android:src="@drawable/ic_stroke"
-            app:layout_constraintBottom_toBottomOf="@+id/ivIcon"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/ivIcon"
-            app:tint="@color/color_666666"
-            tools:ignore="ContentDescription" />
+            <ImageView
+                android:id="@+id/ivArrow"
+                android:layout_width="@dimen/_6sdp"
+                android:layout_height="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_13sdp"
+                android:src="@drawable/ic_stroke"
+                app:layout_constraintBottom_toBottomOf="@+id/ivIcon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ivIcon"
+                app:tint="@color/color_666666"
+                tools:ignore="ContentDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="@dimen/_16dp"
+            android:layout_height="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:background="@color/color_EEEEEE"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivIcon" />
+            app:layout_constraintTop_toBottomOf="@id/ctrlMemberManager" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

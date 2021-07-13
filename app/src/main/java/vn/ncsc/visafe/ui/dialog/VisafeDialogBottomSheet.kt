@@ -33,11 +33,11 @@ class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSh
         }
 
         fun newInstance(
-            title: String,
-            name: String,
-            type: String,
-            titleEdit: String,
-            titleDelete: String
+            title: String?,
+            name: String?,
+            type: String?,
+            titleEdit: String?,
+            titleDelete: String?
         ): VisafeDialogBottomSheet {
             val fragment = VisafeDialogBottomSheet()
             fragment.arguments = bundleOf(

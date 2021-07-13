@@ -12,12 +12,12 @@ class VpnController private constructor() : Cloneable {
         throw CloneNotSupportedException()
     }
 
-    var intraVpnService: IntraVpnService? = null
-    private var connectionState: IntraVpnService.State? = null
+    var viSafeVpnService: ViSafeVpnService? = null
+    private var connectionState: ViSafeVpnService.State? = null
 
     @Synchronized
-    fun onConnectionStateChanged(context: Context, state: IntraVpnService.State?) {
-        if (intraVpnService == null) {
+    fun onConnectionStateChanged(context: Context, state: ViSafeVpnService.State?) {
+        if (viSafeVpnService == null) {
             // User clicked disable while the connection state was changing.
             return
         }
@@ -32,12 +32,12 @@ class VpnController private constructor() : Cloneable {
 
     @Synchronized
     fun start(context: Context) {
-        if (intraVpnService != null) {
+        if (viSafeVpnService != null) {
             return
         }
         PersistentState.instance.setVpnEnabled(context, true)
         stateChanged(context)
-        val startServiceIntent = Intent(context, IntraVpnService::class.java)
+        val startServiceIntent = Intent(context, ViSafeVpnService::class.java)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(startServiceIntent)
         } else {
@@ -60,17 +60,17 @@ class VpnController private constructor() : Cloneable {
     fun stop(context: Context) {
         PersistentState.instance.setVpnEnabled(context, false)
         connectionState = null
-        if (intraVpnService != null) {
-            intraVpnService!!.signalStopService(true)
+        if (viSafeVpnService != null) {
+            viSafeVpnService!!.signalStopService(true)
         }
-        intraVpnService = null
+        viSafeVpnService = null
         stateChanged(context)
     }
 
     @Synchronized
     fun getState(context: Context?): VpnState {
         val requested = context?.let { PersistentState.instance.getVpnEnabled(it) }
-        val on = intraVpnService != null && intraVpnService!!.isOn
+        val on = viSafeVpnService != null && viSafeVpnService!!.isOn
         return VpnState(requested, on, connectionState)
     }
 

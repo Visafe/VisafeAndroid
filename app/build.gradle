@@ -3,9 +3,19 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('Keystore/key_store_visafe.jks')
+            storePassword 'ncsc@2021'
+            keyAlias 'ncsc'
+            keyPassword 'ncsc@2021'
+        }
+    }
+
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -92,4 +102,8 @@ dependencies {
 
     //Chart
     compile(name: 'highcharts-release', ext: 'aar')
+
+    //login facebook,google
+    implementation 'com.facebook.android:facebook-android-sdk:7.0.0'
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
 }

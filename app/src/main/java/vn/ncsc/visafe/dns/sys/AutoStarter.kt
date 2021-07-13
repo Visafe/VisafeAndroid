@@ -17,8 +17,8 @@ class AutoStarter : BroadcastReceiver() {
             if (VpnService.prepare(context) != null) {
                 // prepare() returns a non-null intent if VPN permission has not been granted.
                 val startIntent = Intent(context, MainActivity::class.java)
-                startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                context!!.startActivity(startIntent)
+                startIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                context?.startActivity(startIntent)
                 return
             }
         }

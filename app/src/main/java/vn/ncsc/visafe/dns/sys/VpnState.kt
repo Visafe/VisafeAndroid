@@ -5,5 +5,5 @@ class VpnState internal constructor(// Whether the user has requested that the V
     val activationRequested: Boolean?, // Whether the VPN is running.  When this is true a key icon is showing in the status bar.
     val on: Boolean, // Whether we have a connection to a DOH server, and if so, whether the connection is ready or
     // has recently been failing.
-    var connectionState: IntraVpnService.State?
+    var connectionState: ViSafeVpnService.State?
 )

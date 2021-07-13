@@ -2,6 +2,7 @@ package vn.ncsc.visafe.ui.home
 
 import android.content.Intent
 import android.util.Log
+import androidx.core.content.ContextCompat
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -47,6 +48,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                     }
                 }
             })
+            binding.ivUser.setImageDrawable(context?.let { ContextCompat.getDrawable(it, R.drawable.ic_anonymous) })
+        } else {
+            binding.ivUser.setImageDrawable(context?.let { ContextCompat.getDrawable(it, R.drawable.ic_user_default) })
         }
         binding.clType.setOnClickListener {
             if ((activity as BaseActivity).needLogin())
