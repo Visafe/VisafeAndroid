@@ -51,7 +51,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layoutToolbar" />
 
-        <com.vn.visafe_android.ui.custom.ProgressView
+        <vn.ncsc.visafe.ui.custom.ProgressView
             android:id="@+id/progress"
             android:layout_width="0dp"
             android:visibility="invisible"

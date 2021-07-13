@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.protect.BlockAdsActivity">
+    android:layout_height="match_parent">
 
-    <com.vn.visafe_android.ui.custom.VisafeToolbar
+    <vn.ncsc.visafe.ui.custom.VisafeToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"

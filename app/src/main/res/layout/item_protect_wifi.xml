@@ -4,7 +4,7 @@
 
     <data>
 
-        <import type="com.vn.visafe_android.model.ProtectWifiData" />
+        <import type="vn.ncsc.visafe.model.ProtectWifiData" />
 
         <variable
             name="data"

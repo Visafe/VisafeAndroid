@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.vn.visafe_android.ui.custom.QRCodeScanerView
+        <vn.ncsc.visafe.ui.custom.QRCodeScanerView
             android:id="@+id/qrCodeScanner"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -30,7 +30,7 @@
             android:layout_width="@dimen/_40dp"
             android:layout_height="?actionBarSize"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginStart="@dimen/_8sdp"
             android:padding="@dimen/_8dp"
             android:src="@drawable/ic_baseline_clear_24"
             app:layout_constraintStart_toStartOf="parent"

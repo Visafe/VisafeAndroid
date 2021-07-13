@@ -5,10 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    tools:context=".ui.protect.ProtectDeviceActivity">
+    android:orientation="vertical">
 
-    <com.vn.visafe_android.ui.custom.VisafeToolbar
+    <vn.ncsc.visafe.ui.custom.VisafeToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"

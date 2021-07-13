@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="com.vn.visafe_android.model.ApplicationMostData" />
+        <import type="vn.ncsc.visafe.model.ApplicationMostData" />
 
         <variable
             name="data"
-            type="ApplicationMostData" />
+            type="vn.ncsc.visafe.model.ApplicationMostData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

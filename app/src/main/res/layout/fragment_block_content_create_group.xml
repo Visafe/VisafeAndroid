@@ -79,7 +79,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.vn.visafe_android.ui.custom.SwitchSimpleView
+                <vn.ncsc.visafe.ui.custom.SwitchSimpleView
                     android:id="@+id/itemLimit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
                     app:sub_title="@string/limit_search_content_sub"
                     app:title="@string/limit_search_content" />
 
-                <com.vn.visafe_android.ui.custom.SwitchSimpleView
+                <vn.ncsc.visafe.ui.custom.SwitchSimpleView
                     android:id="@+id/itemSensitive"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
                     app:layout_constraintStart_toStartOf="@id/itemSensitive"
                     app:layout_constraintTop_toBottomOf="@id/itemSensitive" />
 
-                <com.vn.visafe_android.ui.custom.SwitchSimpleView
+                <vn.ncsc.visafe.ui.custom.SwitchSimpleView
                     android:id="@+id/itemByPass"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

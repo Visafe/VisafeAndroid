@@ -4,11 +4,11 @@
 
     <data>
 
-        <import type="com.vn.visafe_android.model.DeviceData" />
+        <import type="vn.ncsc.visafe.model.DeviceData" />
 
         <variable
             name="data"
-            type="DeviceData" />
+            type="vn.ncsc.visafe.model.DeviceData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
