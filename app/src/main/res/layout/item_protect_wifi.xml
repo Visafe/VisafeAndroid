@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.vn.visafe_android.model.ProtectWifiData" />
+
+        <variable
+            name="data"
+            type="ProtectWifiData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivWifi"
+            android:layout_width="@dimen/_24dp"
+            android:layout_height="@dimen/_24dp"
+            android:scaleType="fitXY"
+            android:layout_marginStart="@dimen/_16dp"
+            android:src="@drawable/ic_checkmark_circle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvLink"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:maxLines="2"
+            android:text="@{data.link}"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/text_size_14sp"
+            app:layout_constraintEnd_toStartOf="@id/ivMore"
+            app:layout_constraintStart_toEndOf="@id/ivWifi"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="https://www.facebook.com/" />
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/tvLink"
+            app:layout_constraintStart_toStartOf="@id/tvLink"
+            app:layout_constraintTop_toBottomOf="@id/tvLink"
+            tools:text="Đã chặn 12 ngày trước" />
+
+        <ImageView
+            android:id="@+id/ivMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_16dp"
+            android:rotation="90"
+            android:src="@drawable/ic_more_horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <View
+            style="@style/Divider"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="@dimen/_0_5dp"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:layout_constraintEnd_toEndOf="@id/ivMore"
+            app:layout_constraintStart_toStartOf="@id/tvContent"
+            app:layout_constraintTop_toBottomOf="@id/tvContent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
