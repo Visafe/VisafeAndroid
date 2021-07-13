@@ -264,7 +264,7 @@
     <string name="create_group_complete_sub">Nhóm của bạn đã được áp dụng các thiết lập mà bạn khởi tạo.</string>
     <string name="understood">Đã hiểu</string>
     <string name="text_total_group">Số nhóm: %s</string>
-    <string name="add_devices_to_group">Quét mã QR tham gia nhóm</string>
+    <string name="add_devices_to_group">Thêm thiết bị vào nhóm</string>
     <string name="input_name_user">Nhập tên của bạn</string>
     <string name="join_group_success">Tham gia nhóm thành công</string>
     <string name="content_join_group_success">Bây giờ, thiết bị của bạn sẽ được bảo vệ bởi nhóm %s</string>
@@ -416,4 +416,19 @@
     <string name="turn_on_noti_content">ViSafe sẽ gửi các thông báo, cảnh báo khi có nguy hại tấn công thiết bị của bạn</string>
     <string name="bat_thong_bao">Bật thông báo</string>
     <string name="nguy_hai_da_chan">Số nguy hại đã chặn</string>
+  <string name="content_protect_device">Nếu phát hiện trang web nguy hại hay giả mạo, chúng tôi sẽ chặn những website đó</string>
+  <string name="cac_nguy_hai_da_chan">Các nguy hại đã chặn</string>
+  <string name="moi_luc">Mọi lúc</string>
+  <string name="today">Hôm nay</string>
+  <string name="khong_kiem_tra_duoc_nguy_hai">Không kiểm tra được nguy hại</string>
+  <string name="da_chan">Đã chặn %s ngày trước</string>
+  <string name="hay_bat_bao_ve">Hãy bật bảo vệ thiết bị để xem các nguy hại đã chặn</string>
+  <string name="protected_device"><![CDATA[Thiết bị này đã <font color=\'#0CD775\'>được bảo vệ</font>]]></string>
+  <string name="no_protected_device"><![CDATA[Thiết bị này <font color=\'#FF4451\'>không được bảo vệ</font>]]></string>
+  <string name="protected_wifi"><![CDATA[Wifi đang sử dụng <font color=\'#0CD775\'>an toàn</font>]]></string>
+  <string name="no_protected_wifi"><![CDATA[Wifi đang sử dụng <br></br><font color=\'#FF4451\'>không được bảo vệ</font>]]></string>
+  <string name="protect_wifi_content">Nếu phát hiện mã độc nào trong Wi-Fi bạn sử dụng, chúng tôi sẽ cảnh báo</string>
+  <string name="ma_doc_phat_hien">Các mã độc đã phát hiện</string>
+  <string name="khong_kiem_tra_duoc_ma_doc">Không kiểm tra được mã độc</string>
+  <string name="bat_wifi">Hãy bật bảo vệ Wi-Fi để kiểm tra an toàn mạng</string>
 </resources>

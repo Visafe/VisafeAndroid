@@ -27,6 +27,7 @@
     <color name="color_50_222222">#80222222</color>
     <color name="color_808080">#808080</color>
     <color name="color_FFB31F">#FFB31F</color>
+    <color name="color_FFCE21">#FFCE21</color>
     <color name="color_F9F1E2">#F9F1E2</color>
     <color name="color_111111">#111111</color>
     <color name="color_50_111111">#80111111</color>
@@ -55,6 +56,7 @@
     <color name="color_3E6FEF">#3E6FEF</color>
     <color name="color_696565">#696565</color>
     <color name="color_0CD775">#0CD775</color>
+    <color name="green">#0CD775</color>
     <color name="color_AAAAAA">#AAAAAA</color>
     <color name="color_15A1FA">#15A1FA</color>
     <color name="color_EEEEEE">#EEEEEE</color>

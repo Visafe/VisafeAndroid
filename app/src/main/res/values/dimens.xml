@@ -14,6 +14,7 @@
     <dimen name="_4dp">@dimen/_4sdp</dimen>
     <dimen name="_2dp">@dimen/_2sdp</dimen>
     <dimen name="_0dp">0dp</dimen>
+    <dimen name="_0_5dp">0.5dp</dimen>
     <dimen name="_20dp">@dimen/_20sdp</dimen>
     <dimen name="text_size_8sp">8sp</dimen>
     <dimen name="text_size_10sp">10sp</dimen>

@@ -27,6 +27,18 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
         <activity
+            android:name=".ui.protect.BlockTrackingDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.protect.BlockAdsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.protect.ProtectWifiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.protect.ProtectDeviceActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.authentication.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeSplash">
