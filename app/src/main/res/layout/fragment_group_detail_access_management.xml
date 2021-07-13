@@ -38,7 +38,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.vn.visafe_android.ui.custom.SwitchSimpleView
+                <vn.ncsc.visafe.ui.custom.SwitchSimpleView
                     android:id="@+id/itemApp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                     app:sub_title="@string/block_application"
                     app:title="@string/application" />
 
-                <com.vn.visafe_android.ui.custom.SwitchWebsiteView
+                <vn.ncsc.visafe.ui.custom.SwitchWebsiteView
                     android:id="@+id/itemWeb"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/itemWeb" />
 
-                <com.vn.visafe_android.ui.custom.SwitchSimpleView
+                <vn.ncsc.visafe.ui.custom.SwitchSimpleView
                     android:id="@+id/itemLimit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/itemLimit" />
 
-                <com.vn.visafe_android.ui.custom.SwitchSimpleView
+                <vn.ncsc.visafe.ui.custom.SwitchSimpleView
                     android:id="@+id/itemSensitive"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
                     app:sub_title="@string/sub_block_sensitive"
                     app:title="@string/block_sensitive" />
 
-                <com.vn.visafe_android.ui.custom.SwitchSimpleView
+                <vn.ncsc.visafe.ui.custom.SwitchSimpleView
                     android:id="@+id/itemByPass"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

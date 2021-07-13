@@ -68,7 +68,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
 
-        <com.vn.visafe_android.ui.custom.otp.OtpEditText
+        <vn.ncsc.visafe.ui.custom.otp.OtpEditText
             android:id="@+id/otpEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

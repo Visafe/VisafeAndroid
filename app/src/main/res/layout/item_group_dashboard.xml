@@ -4,11 +4,11 @@
 
     <data>
 
-        <import type="com.vn.visafe_android.model.GroupPeopleData" />
+        <import type="vn.ncsc.visafe.model.GroupPeopleData" />
 
         <variable
             name="data"
-            type="GroupPeopleData" />
+            type="vn.ncsc.visafe.model.GroupPeopleData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

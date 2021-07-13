@@ -9,7 +9,7 @@
         android:orientation="vertical"
         tools:context=".ui.pin.CurrentPinFragment">
 
-        <com.vn.visafe_android.ui.custom.VisafeToolbar
+        <vn.ncsc.visafe.ui.custom.VisafeToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"

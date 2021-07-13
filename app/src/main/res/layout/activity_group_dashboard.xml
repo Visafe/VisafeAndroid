@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".ui.group.dashboard.GroupDashboardActivity">
 
-    <com.vn.visafe_android.ui.custom.VisafeToolbar
+    <vn.ncsc.visafe.ui.custom.VisafeToolbar
         android:layout_width="match_parent"
         android:id="@+id/toolbar"
         app:toolbar_left_icon_src="@drawable/ic_back"
@@ -44,7 +44,7 @@
         </androidx.cardview.widget.CardView>
     </FrameLayout>
 
-    <com.vn.visafe_android.ui.custom.CustomViewPager
+    <vn.ncsc.visafe.ui.custom.CustomViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

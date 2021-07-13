@@ -10,7 +10,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.vn.visafe_android"
+        applicationId "vn.ncsc.visafe"
         minSdkVersion 23
         targetSdkVersion 30
         //sửa trong manifest

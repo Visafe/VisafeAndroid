@@ -4,11 +4,11 @@
 
     <data>
 
-        <import type="com.vn.visafe_android.model.GroupPeopleNotiData" />
+        <import type="vn.ncsc.visafe.model.GroupPeopleNotiData" />
 
         <variable
             name="data"
-            type="GroupPeopleNotiData" />
+            type="vn.ncsc.visafe.model.GroupPeopleNotiData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

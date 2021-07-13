@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.vn.visafe_android"
+    package="vn.ncsc.visafe"
     android:versionCode="1"
     android:versionName="1.0">
 
@@ -16,7 +16,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
-        android:name=".ViSafeApp"
+        android:name="vn.ncsc.visafe.ViSafeApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
