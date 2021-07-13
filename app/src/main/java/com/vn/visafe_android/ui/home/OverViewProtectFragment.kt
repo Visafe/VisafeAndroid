@@ -10,6 +10,10 @@ import com.vn.visafe_android.model.ContentMostData
 import com.vn.visafe_android.model.DeviceMostData
 import com.vn.visafe_android.ui.create.group.CreateGroupActivity
 import com.vn.visafe_android.ui.dialog.ImageDialog
+import com.vn.visafe_android.ui.protect.BlockAdsActivity
+import com.vn.visafe_android.ui.protect.BlockTrackingDetailActivity
+import com.vn.visafe_android.ui.protect.ProtectDeviceActivity
+import com.vn.visafe_android.ui.protect.ProtectWifiActivity
 import com.vn.visafe_android.utils.ChartUtil
 import com.vn.visafe_android.utils.setOnSingClickListener
 
@@ -78,6 +82,42 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
         dataChart["10"] = 70
         dataChart["11"] = 20
         ChartUtil.initBarChart(binding.layoutHomeChart.hiChartView, dataChart, ChartUtil.getArrayColor(dataChart.size))
+
+        binding.layoutHomeProtect.llHomeProtectDevice.setOnSingClickListener {
+            val intent = Intent(requireContext(), ProtectDeviceActivity::class.java)
+            intent.putExtra(
+                ProtectDeviceActivity.PROTECT_DEVICE_KEY,
+                binding.layoutHomeProtect.switchHomeProtectDevice.isChecked
+            )
+            startActivity(intent)
+        }
+
+        binding.layoutHomeProtect.llHomeProtectWifi.setOnSingClickListener {
+            val intent = Intent(requireContext(), ProtectWifiActivity::class.java)
+            intent.putExtra(
+                ProtectWifiActivity.PROTECT_WIFI_KEY,
+                binding.layoutHomeProtect.switchHomeProtectWifi.isChecked
+            )
+            startActivity(intent)
+        }
+
+        binding.layoutHomeProtect.llHomeBlockAds.setOnSingClickListener {
+            val intent = Intent(requireContext(), BlockAdsActivity::class.java)
+            intent.putExtra(
+                BlockAdsActivity.BLOCK_ADS_KEY,
+                binding.layoutHomeProtect.switchHomeBlockAds.isChecked
+            )
+            startActivity(intent)
+        }
+
+        binding.layoutHomeProtect.llHomeBlockTracking.setOnSingClickListener {
+            val intent = Intent(requireContext(), BlockTrackingDetailActivity::class.java)
+            intent.putExtra(
+                BlockTrackingDetailActivity.BLOCK_TRACKING_KEY,
+                binding.layoutHomeProtect.switchHomeBlockTracking.isChecked
+            )
+            startActivity(intent)
+        }
     }
 
     private fun createContentList(): List<ContentMostData> {

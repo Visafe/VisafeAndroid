@@ -39,11 +39,11 @@ class GroupDetailDeviceManagementFragment :
 
     private fun createDeviceList(): ArrayList<DeviceData> {
         val list: ArrayList<DeviceData> = ArrayList()
-        list.add(DeviceData("Iphone XS - Nguyễn Văn A", "Trần Thành Long"))
-        list.add(DeviceData("Ipad", "Trần Thành Long"))
-        list.add(DeviceData("Iphone XS", "Trần Thành Long"))
-        list.add(DeviceData("Samsung", "Trần Thành Long"))
-        list.add(DeviceData("Iphone XS - Nguyễn Văn A", "Trần Thành Long"))
+        list.add(DeviceData("Iphone XS - Nguyễn Văn A", "Trần Thành Long", false, 0))
+        list.add(DeviceData("Ipad", "Trần Thành Long", false, 0))
+        list.add(DeviceData("Iphone XS", "Trần Thành Long", false, 0))
+        list.add(DeviceData("Samsung", "Trần Thành Long", false, 0))
+        list.add(DeviceData("Iphone XS - Nguyễn Văn A", "Trần Thành Long", false, 0))
         return list
     }
 

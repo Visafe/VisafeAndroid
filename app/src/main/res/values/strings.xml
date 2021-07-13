@@ -416,4 +416,13 @@
     <string name="turn_on_noti_content">ViSafe sẽ gửi các thông báo, cảnh báo khi có nguy hại tấn công thiết bị của bạn</string>
     <string name="bat_thong_bao">Bật thông báo</string>
     <string name="nguy_hai_da_chan">Số nguy hại đã chặn</string>
+  <string name="content_protect_device">Nếu phát hiện trang web nguy hại hay giả mạo, chúng tôi sẽ chặn những website đó</string>
+  <string name="cac_nguy_hai_da_chan">Các nguy hại đã chặn</string>
+  <string name="moi_luc">Mọi lúc</string>
+  <string name="today">Hôm nay</string>
+  <string name="khong_kiem_tra_duoc_nguy_hai">Không kiểm tra được nguy hại</string>
+  <string name="da_chan">Đã chặn %s ngày trước</string>
+  <string name="hay_bat_bao_ve">Hãy bật bảo vệ thiết bị để xem các nguy hại đã chặn</string>
+  <string name="protected_device"><![CDATA[Thiết bị này đã <font color=\'#0CD775\'>được bảo vệ</font>]]></string>
+  <string name="no_protected_device"><![CDATA[Thiết bị này <font color=\'#FF4451\'>không được bảo vệ</font>]]></string>
 </resources>
