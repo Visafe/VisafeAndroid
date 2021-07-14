@@ -1,6 +1,7 @@
 package vn.ncsc.visafe.ui.group.detail
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import okhttp3.ResponseBody
@@ -17,6 +18,8 @@ import vn.ncsc.visafe.model.request.DeleteGroupRequest
 import vn.ncsc.visafe.ui.create.group.SuccessDialogFragment
 import vn.ncsc.visafe.ui.create.group.access_manager.Action
 import vn.ncsc.visafe.ui.dialog.VisafeDialogBottomSheet
+import vn.ncsc.visafe.ui.group.detail.member.AddMemberActivity
+import vn.ncsc.visafe.ui.group.detail.member.MemberManagementActivity
 import vn.ncsc.visafe.utils.getTextGroup
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
@@ -74,9 +77,17 @@ class GroupDetailActivity : BaseActivity() {
         }
         binding.ivBack.setOnClickListener { finish() }
         binding.btnAddNewMember.setOnSingClickListener {
-//            val intent = Intent(this@GroupDetailActivity, MemberManagementActivity::class.java)
+            val intent = Intent(this@GroupDetailActivity, AddMemberActivity::class.java)
 //            intent.putExtra(MemberManagementActivity.KEY_DATA, groupData)
-//            startActivity(intent)
+//            intent.putExtra(MemberManagementActivity.KEY_GROUP_NUMBER, groupNumber)
+            startActivity(intent)
+
+        }
+        binding.ctrlMemberManager.setOnSingClickListener {
+            val intent = Intent(this@GroupDetailActivity, MemberManagementActivity::class.java)
+            intent.putExtra(MemberManagementActivity.KEY_DATA, groupData)
+            intent.putExtra(MemberManagementActivity.KEY_GROUP_NUMBER, groupNumber)
+            startActivity(intent)
         }
     }
 

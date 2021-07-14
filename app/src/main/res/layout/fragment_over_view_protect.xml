@@ -65,10 +65,10 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/_16sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:paddingBottom="@dimen/_16sdp"
-            android:clipToPadding="false"
             app:layout_constraintTop_toBottomOf="@+id/bgTop">
 
             <LinearLayout
@@ -83,31 +83,31 @@
 
                 <include
                     android:id="@+id/layoutHomeChart"
-                    layout="@layout/layout_home_chart"/>
+                    layout="@layout/layout_home_chart" />
 
                 <include
                     android:id="@+id/layoutAddVpn"
-                    layout="@layout/layout_home_add_vpn"/>
+                    layout="@layout/layout_home_add_vpn" />
 
                 <include
                     android:id="@+id/layoutHomeWebsite"
-                    layout="@layout/layout_home_website"/>
+                    layout="@layout/layout_home_website" />
 
                 <include
                     android:id="@+id/layoutHomeProtectFamily"
-                    layout="@layout/layout_home_protect_family"/>
+                    layout="@layout/layout_home_protect_family" />
 
                 <include
                     android:id="@+id/layoutHomePass"
-                    layout="@layout/layout_home_pass"/>
+                    layout="@layout/layout_home_pass" />
 
                 <include
                     android:id="@+id/layoutUpgrade"
-                    layout="@layout/layout_upgrade"/>
+                    layout="@layout/layout_upgrade" />
 
                 <include
                     android:id="@+id/layoutUtilities"
-                    layout="@layout/layout_home_utilities"/>
+                    layout="@layout/layout_home_utilities" />
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

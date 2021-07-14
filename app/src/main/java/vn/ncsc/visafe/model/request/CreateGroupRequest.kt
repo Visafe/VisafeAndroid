@@ -78,7 +78,7 @@ data class CreateGroupRequest(
     @SerializedName("devicesGroupInfo")//Mảng chứa các thông tin device trong group
     var listDevicesGroupInfo: List<String>? = null,
     @SerializedName("identifiersGroupInfo")//Mảng chứa các thông tin người định danh trong group
-    var identifiersGroupInfo: List<String>? = null,
+    var identifiersGroupInfo: List<IdentifiersGroupInfo>? = null,
     @SerializedName("createdAt")//thời gian tạo
     var createdAt: String? = null,
     @SerializedName("notifications")//3 notification cảnh báo mới nhất của group (Cảnh báo truy cập domain phishing, malware ...),
@@ -95,7 +95,7 @@ data class TimesGroup(
     @SerializedName("end")
     var end: TimeItem? = null,
     @SerializedName("isActive")
-    var isActive: Boolean? = false,
+    var isActive: Boolean? = false
 )
 
 data class TimeItem(
@@ -103,4 +103,15 @@ data class TimeItem(
     var hour: Int? = 0,
     @SerializedName("end")
     var minutes: Int? = 0
+)
+
+data class IdentifiersGroupInfo(
+    @SerializedName("id")
+    var id: String? = null,
+    @SerializedName("Name")
+    var Name: String? = null,
+    @SerializedName("groupId")
+    var groupId: String? = null,
+    @SerializedName("createdAt")
+    var createdAt: String? = null
 )

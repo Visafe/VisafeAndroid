@@ -22,14 +22,14 @@ import android.util.Log
 import androidx.annotation.GuardedBy
 import androidx.annotation.WorkerThread
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import vn.ncsc.visafe.ui.MainActivity
 import protect.Protector
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.dns.net.doh.Transaction
 import vn.ncsc.visafe.dns.net.go.GoVpnAdapter
+import vn.ncsc.visafe.ui.MainActivity
 import java.util.*
 
-class IntraVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedPreferenceChangeListener, Protector {
+class ViSafeVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedPreferenceChangeListener, Protector {
     /**
      * null: There is no connection
      * NEW: The connection has not yet completed bootstrap.
@@ -105,7 +105,7 @@ class IntraVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedPr
             // If we're online, |networkManager| immediately calls this.onNetworkConnected(), which in turn
             // calls startVpn() to actually start.  If we're offline, the startup actions will be delayed
             // until we come online.
-            networkManager = NetworkManager(this@IntraVpnService, this@IntraVpnService)
+            networkManager = NetworkManager(this@ViSafeVpnService, this@ViSafeVpnService)
 
             // Mark this as a foreground service.  This is normally done to ensure that the service
             // survives under memory pressure.  Since this is a VPN service, it is presumably protected
@@ -151,7 +151,7 @@ class IntraVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedPr
     private fun updateServerConnection() {
         synchronized(vpnController) {
             if (vpnAdapter != null) {
-                vpnAdapter!!.updateDohUrl()
+                vpnAdapter?.updateDohUrl()
             }
         }
     }
@@ -182,7 +182,7 @@ class IntraVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedPr
             // Attempt seamless handoff as described in the docs for VpnService.Builder.establish().
             val oldAdapter = vpnAdapter
             vpnAdapter = makeVpnAdapter()
-            oldAdapter!!.close()
+            oldAdapter?.close()
             if (vpnAdapter != null) {
                 vpnAdapter!!.start()
             } else {
@@ -193,7 +193,7 @@ class IntraVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedPr
 
     override fun onCreate() {
         Log.d("onCreate: ", "Creating DNS VPN service")
-        vpnController.intraVpnService = this
+        vpnController.viSafeVpnService = this
     }
 
     fun signalStopService(userInitiated: Boolean) {
@@ -247,7 +247,7 @@ class IntraVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedPr
                 Log.d("startVpnAdapter: ", "Starting VPN adapter")
                 vpnAdapter = makeVpnAdapter()
                 if (vpnAdapter != null) {
-                    vpnAdapter!!.start()
+                    vpnAdapter?.start()
                 } else {
                     Log.d("startVpnAdapter: ", "Failed to start VPN adapter!")
                 }
@@ -258,7 +258,7 @@ class IntraVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedPr
     private fun stopVpnAdapter() {
         synchronized(vpnController) {
             if (vpnAdapter != null) {
-                vpnAdapter!!.close()
+                vpnAdapter?.close()
                 vpnAdapter = null
                 vpnController.onConnectionStateChanged(this, null)
             }
@@ -269,7 +269,7 @@ class IntraVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedPr
         if (VERSION.SDK_INT >= VERSION_CODES.N) {
             TileService.requestListeningState(
                 this,
-                ComponentName(this, IntraTileService::class.java)
+                ComponentName(this, ViSafeTileService::class.java)
             )
         }
     }
@@ -281,7 +281,7 @@ class IntraVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedPr
             if (networkManager != null) {
                 networkManager!!.destroy()
             }
-            vpnController.intraVpnService = null
+            vpnController.viSafeVpnService = null
             stopForeground(true)
             if (vpnAdapter != null) {
                 signalStopService(false)
@@ -323,7 +323,7 @@ class IntraVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedPr
         transaction.responseCalendar = Calendar.getInstance()
         val intent = Intent(InternalNames.RESULT.name)
         intent.putExtra(InternalNames.TRANSACTION.name, transaction)
-        LocalBroadcastManager.getInstance(this@IntraVpnService).sendBroadcast(intent)
+        LocalBroadcastManager.getInstance(this@ViSafeVpnService).sendBroadcast(intent)
         if (!networkConnected) {
             // No need to update the user-visible connection state while there is no network.
             return

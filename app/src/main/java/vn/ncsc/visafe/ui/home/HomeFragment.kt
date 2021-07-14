@@ -6,8 +6,13 @@ import android.content.*
 import android.net.VpnService
 import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.preference.PreferenceManager
 import android.util.Log
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -23,7 +28,9 @@ import vn.ncsc.visafe.utils.setOnSingClickListener
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private var isChecked: Boolean = false
+    private var isStatusEnable: Boolean = false
+    private var vibrator: Vibrator? = null
+    private var aniRotateClk: Animation? = null
 
     companion object {
         const val REQUEST_CODE_PREPARE_VPN = 100
@@ -48,6 +55,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
         val intentFilter = IntentFilter(InternalNames.RESULT.name)
         intentFilter.addAction(InternalNames.DNS_STATUS.name)
         context?.let { LocalBroadcastManager.getInstance(it).registerReceiver(messageReceiver, intentFilter) }
+
+        vibrator = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator?
+        aniRotateClk = AnimationUtils.loadAnimation(context, R.anim.round_animation)
     }
 
     override fun layoutRes(): Int = R.layout.fragment_home
@@ -55,8 +65,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
     override fun initView() {
         syncDnsStatus()
 
-        binding.ivBtnProtect.setOnSingClickListener {
-            if (!isChecked) {
+        binding.buttonActive.setOnSingClickListener {
+            if (Build.VERSION.SDK_INT >= 26) {
+                vibrator?.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                vibrator?.vibrate(200)
+            }
+            if (!isStatusEnable) {
+                binding.roundImage.visibility = View.GONE
                 prepareAndStartDnsVpn()
             } else {
                 stopDnsVpnService()
@@ -144,28 +160,35 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
             val status = VpnController.instance.getState(context)
             status.let {
                 // Change switch-button state
-                isChecked = status.activationRequested == true
-                Log.e("syncDnsStatus: ", "" + isChecked)
+                isStatusEnable = status.activationRequested == true
+                Log.e("syncDnsStatus: ", "" + isStatusEnable)
                 // Change indicator text
-                binding.tvProtect.text =
-                    if (status.activationRequested == true) getString(R.string.you_protect) else getString(R.string.bam_de_bat)
+                binding.tv1.visibility =
+                    if (status.activationRequested == true) View.GONE else View.VISIBLE
+                binding.status.text =
+                    if (status.activationRequested == true) getString(R.string.your_device_protected) else getString(R.string.bam_de_bat)
                 context?.let {
-                    binding.ivEarth.setImageDrawable(
+                    binding.imageStatus.setImageDrawable(
                         if (status.activationRequested == true) ContextCompat.getDrawable(it, R.drawable.ic_earth) else
                             ContextCompat.getDrawable(it, R.drawable.ic_earth_off)
                     )
-                    binding.ivBtnProtect.setImageDrawable(
-                        if (status.activationRequested == true) ContextCompat.getDrawable(it, R.drawable.ic_button_protect) else
-                            ContextCompat.getDrawable(it, R.drawable.ic_button_protect_off)
+                    binding.buttonStatus.setImageDrawable(
+                        if (status.activationRequested == true) ContextCompat.getDrawable(it, R.drawable.on_button) else
+                            ContextCompat.getDrawable(it, R.drawable.off_button)
+                    )
+                    binding.ivStatus.setImageDrawable(
+                        if (status.activationRequested == true) ContextCompat.getDrawable(
+                            it,
+                            R.drawable.ic_shield_done_white
+                        ) else
+                            ContextCompat.getDrawable(it, R.drawable.ic_power_white)
                     )
                 }
             }
         } catch (e: Exception) {
             e.message?.let { Log.e("Ex syncDnsStatus: ", it) }
         }
-
     }
-
 
     override fun onActivityResult(request: Int, result: Int, data: Intent?) {
         super.onActivityResult(request, result, data)

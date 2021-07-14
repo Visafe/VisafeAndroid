@@ -10,11 +10,11 @@ import intra.TCPSocketSummary
 import intra.UDPSocketSummary
 import vn.ncsc.visafe.dns.net.dns.DnsPacket
 import vn.ncsc.visafe.dns.net.doh.Transaction
-import vn.ncsc.visafe.dns.sys.IntraVpnService
+import vn.ncsc.visafe.dns.sys.ViSafeVpnService
 import java.net.ProtocolException
 import java.util.*
 
-class GoIntraListener internal constructor(private var vpnService: IntraVpnService) : Listener {
+class GoIntraListener internal constructor(private var vpnService: ViSafeVpnService) : Listener {
     override fun onTCPSocketClosed(summary: TCPSocketSummary) {
         val retry = summary.retry
         if (retry != null) {

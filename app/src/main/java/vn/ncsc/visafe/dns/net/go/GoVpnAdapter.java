@@ -27,7 +27,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import vn.ncsc.visafe.dns.sys.IntraVpnService;
+import vn.ncsc.visafe.dns.sys.ViSafeVpnService;
 import vn.ncsc.visafe.dns.sys.PersistentState;
 import vn.ncsc.visafe.dns.sys.VpnController;
 
@@ -79,7 +79,7 @@ public class GoVpnAdapter {
     public static final String FAKE_DNS_IP = LanIp.DNS.make(IPV4_TEMPLATE);
 
     // Service context in which the VPN is running.
-    private final IntraVpnService vpnService;
+    private final ViSafeVpnService vpnService;
 
     // TUN device representing the VPN.
     private ParcelFileDescriptor tunFd;
@@ -88,7 +88,7 @@ public class GoVpnAdapter {
     private intra.Tunnel tunnel;
     private GoIntraListener listener;
 
-    public static GoVpnAdapter establish(@NonNull IntraVpnService vpnService) {
+    public static GoVpnAdapter establish(@NonNull ViSafeVpnService vpnService) {
         ParcelFileDescriptor tunFd = establishVpn(vpnService);
         if (tunFd == null) {
             return null;
@@ -96,7 +96,7 @@ public class GoVpnAdapter {
         return new GoVpnAdapter(vpnService, tunFd);
     }
 
-    private GoVpnAdapter(IntraVpnService vpnService, ParcelFileDescriptor tunFd) {
+    private GoVpnAdapter(ViSafeVpnService vpnService, ParcelFileDescriptor tunFd) {
         this.vpnService = vpnService;
         this.tunFd = tunFd;
     }
@@ -125,13 +125,13 @@ public class GoVpnAdapter {
                     transport, getProtector(), listener);
         } catch (Exception e) {
             Log.d("connectTunnel: ", e.getMessage());
-            VpnController.Companion.getInstance().onConnectionStateChanged(vpnService, IntraVpnService.State.FAILING);
+            VpnController.Companion.getInstance().onConnectionStateChanged(vpnService, ViSafeVpnService.State.FAILING);
             return;
         }
 
     }
 
-    private static ParcelFileDescriptor establishVpn(IntraVpnService vpnService) {
+    private static ParcelFileDescriptor establishVpn(ViSafeVpnService vpnService) {
         try {
             VpnService.Builder builder = vpnService.newBuilder()
                     .setSession("Intra go-tun2socks VPN")
@@ -220,7 +220,7 @@ public class GoVpnAdapter {
             Log.e("updateDohUrl: ", e.getMessage());
             tunnel.disconnect();
             tunnel = null;
-            VpnController.Companion.getInstance().onConnectionStateChanged(vpnService, IntraVpnService.State.FAILING);
+            VpnController.Companion.getInstance().onConnectionStateChanged(vpnService, ViSafeVpnService.State.FAILING);
         }
     }
 

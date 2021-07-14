@@ -10,6 +10,7 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 import vn.ncsc.visafe.model.request.*
+import vn.ncsc.visafe.model.response.StatsWorkspaceResponse
 
 
 interface ApiService {
@@ -20,6 +21,12 @@ interface ApiService {
 
     @POST("login")
     fun doLogin(@Body loginRequest: LoginRequest): Call<LoginResponse>
+
+    @POST("login/google")
+    fun doLoginWithGoogle(@Body loginSocialRequest: LoginSocialRequest): Call<LoginResponse>
+
+    @POST("login/facebook")
+    fun doLoginWithFacebook(@Body loginSocialRequest: LoginSocialRequest): Call<LoginResponse>
 
     @GET("forgot-password")
     fun doRequestEmailForgotPassword(@Query("username") username: String?): Call<ResponseBody>
@@ -89,4 +96,24 @@ interface ApiService {
 
     @POST("user/read-all-notification")
     fun doReadAllNotification(): Call<ResponseBody>
+
+    /*=========Stats==================================*/
+    @GET("stats/workspace")
+    fun doGetStatisticalOneWorkspace(
+        @Query("workspace_id") workspace_id: String?,
+        @Query("time_limit") time_limit: String?
+    ): Call<StatsWorkspaceResponse>
+
+    @GET("stats/group")
+    fun doGetStatisticalOneGroup(
+        @Query("group_id") workspace_id: String?,
+        @Query("time_limit") time_limit: String?
+    ): Call<StatsWorkspaceResponse>
+
+    @GET("stats/client")
+    fun doGetStatisticalOneDeviceInGroup(
+        @Query("workspace_id") workspace_id: String?,
+        @Query("client_id") client_id: String?,
+        @Query("time_limit") time_limit: String?
+    ): Call<StatsWorkspaceResponse>
 }

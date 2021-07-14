@@ -133,6 +133,8 @@
   </string>
     <!--==========Demo=============-->
     <string name="app_name">Visafe</string>
+    <string name="facebook_app_id">545622383516478</string>
+    <string name="fb_login_protocol_scheme">fb545622383516478</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main2">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -188,8 +190,8 @@
     <string name="group_is_owner">Nhóm bạn quản lý</string>
     <string name="group_is_member">Nhóm bạn đã tham gia</string>
     <string name="phat_trien_boi">Phát triển bởi</string>
-    <string name="you_protect">Bạn đã được bảo vệ</string>
-    <string name="bam_de_bat">Bấm để bật tính năng bảo vệ</string>
+    <string name="your_device_protected">Thiết bị của bạn đã được bảo vệ</string>
+    <string name="bam_de_bat">để bật tính năng bảo vệ</string>
     <string name="access_manager">Quản lý truy cập</string>
     <string name="block_application">Ngăn chặn sử dụng các ứng dụng</string>
     <string name="application">Ứng dụng</string>
@@ -416,27 +418,28 @@
     <string name="turn_on_noti_content">ViSafe sẽ gửi các thông báo, cảnh báo khi có nguy hại tấn công thiết bị của bạn</string>
     <string name="bat_thong_bao">Bật thông báo</string>
     <string name="nguy_hai_da_chan">Số nguy hại đã chặn</string>
-  <string name="content_protect_device">Nếu phát hiện trang web nguy hại hay giả mạo, chúng tôi sẽ chặn những website đó</string>
-  <string name="cac_nguy_hai_da_chan">Các nguy hại đã chặn</string>
-  <string name="moi_luc">Mọi lúc</string>
-  <string name="today">Hôm nay</string>
-  <string name="khong_kiem_tra_duoc_nguy_hai">Không kiểm tra được nguy hại</string>
-  <string name="da_chan">Đã chặn %s ngày trước</string>
-  <string name="hay_bat_bao_ve">Hãy bật bảo vệ thiết bị để xem các nguy hại đã chặn</string>
-  <string name="protected_device"><![CDATA[Thiết bị này đã <font color=\'#0CD775\'>được bảo vệ</font>]]></string>
-  <string name="no_protected_device"><![CDATA[Thiết bị này <font color=\'#FF4451\'>không được bảo vệ</font>]]></string>
-  <string name="protected_wifi"><![CDATA[Wifi đang sử dụng <font color=\'#0CD775\'>an toàn</font>]]></string>
-  <string name="no_protected_wifi"><![CDATA[Wifi đang sử dụng <br></br><font color=\'#FF4451\'>không được bảo vệ</font>]]></string>
-  <string name="protect_wifi_content">Nếu phát hiện mã độc nào trong Wi-Fi bạn sử dụng, chúng tôi sẽ cảnh báo</string>
-  <string name="ma_doc_phat_hien">Các mã độc đã phát hiện</string>
-  <string name="khong_kiem_tra_duoc_ma_doc">Không kiểm tra được mã độc</string>
-  <string name="bat_wifi">Hãy bật bảo vệ Wi-Fi để kiểm tra an toàn mạng</string>
-  <string name="website_ung_dung_game">Website, Ứng dụng &amp; Game</string>
-  <string name="chan_quang_cao_content_detail">Nếu phát hiện quảng cáo nào như trong thiết lập, chúng tôi sẽ chặn chúng</string>
-  <string name="thiet_lap_chan">Thiết lập chặn</string>
-  <string name="khong_kiem_tra_duoc_quang_cao">Không kiểm tra được quảng cáo</string>
-  <string name="bat_chan_quang_cao">Hãy bật chặn quảng cáo để xem các quảng cáo đã chặn</string>
-  <string name="protected_ads"><![CDATA[<font color=\'#0CD775\'>Đang bật</font> chặn quảng cáo]]></string>
-  <string name="no_protected_ads"><![CDATA[<font color=\'#FF4451\'>Đã tắt</font> chặn quảng cáo]]></string>
+    <string name="content_protect_device">Nếu phát hiện trang web nguy hại hay giả mạo, chúng tôi sẽ chặn những website đó</string>
+    <string name="cac_nguy_hai_da_chan">Các nguy hại đã chặn</string>
+    <string name="moi_luc">Mọi lúc</string>
+    <string name="today">Hôm nay</string>
+    <string name="khong_kiem_tra_duoc_nguy_hai">Không kiểm tra được nguy hại</string>
+    <string name="da_chan">Đã chặn %s ngày trước</string>
+    <string name="hay_bat_bao_ve">Hãy bật bảo vệ thiết bị để xem các nguy hại đã chặn</string>
+    <string name="protected_device"><![CDATA[Thiết bị này đã <font color=\'#0CD775\'>được bảo vệ</font>]]></string>
+    <string name="no_protected_device"><![CDATA[Thiết bị này <font color=\'#FF4451\'>không được bảo vệ</font>]]></string>
+    <string name="protected_wifi"><![CDATA[Wifi đang sử dụng <font color=\'#0CD775\'>an toàn</font>]]></string>
+    <string name="no_protected_wifi"><![CDATA[Wifi đang sử dụng <br></br><font color=\'#FF4451\'>không được bảo vệ</font>]]></string>
+    <string name="protect_wifi_content">Nếu phát hiện mã độc nào trong Wi-Fi bạn sử dụng, chúng tôi sẽ cảnh báo</string>
+    <string name="ma_doc_phat_hien">Các mã độc đã phát hiện</string>
+    <string name="khong_kiem_tra_duoc_ma_doc">Không kiểm tra được mã độc</string>
+    <string name="bat_wifi">Hãy bật bảo vệ Wi-Fi để kiểm tra an toàn mạng</string>
+    <string name="add_new_member_to_group">Thêm thành viên vào nhóm</string>
+    <string name="website_ung_dung_game">Website, Ứng dụng &amp; Game</string>
+    <string name="chan_quang_cao_content_detail">Nếu phát hiện quảng cáo nào như trong thiết lập, chúng tôi sẽ chặn chúng</string>
+    <string name="thiet_lap_chan">Thiết lập chặn</string>
+    <string name="khong_kiem_tra_duoc_quang_cao">Không kiểm tra được quảng cáo</string>
+    <string name="bat_chan_quang_cao">Hãy bật chặn quảng cáo để xem các quảng cáo đã chặn</string>
+    <string name="protected_ads"><![CDATA[<font color=\'#0CD775\'>Đang bật</font> chặn quảng cáo]]></string>
+    <string name="no_protected_ads"><![CDATA[<font color=\'#FF4451\'>Đã tắt</font> chặn quảng cáo]]></string>
 
 </resources>

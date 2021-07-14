@@ -12,7 +12,7 @@ import vn.ncsc.visafe.ui.MainActivity
 import vn.ncsc.visafe.dns.sys.VpnController.Companion.instance
 
 @RequiresApi(Build.VERSION_CODES.N)
-class IntraTileService : TileService() {
+class ViSafeTileService : TileService() {
     override fun onStartListening() {
         val vpnState = instance.getState(this)
         val tile = qsTile ?: return
@@ -45,7 +45,7 @@ class IntraTileService : TileService() {
         // Update tile state on boot.
         requestListeningState(
             this,
-            ComponentName(this, IntraTileService::class.java)
+            ComponentName(this, ViSafeTileService::class.java)
         )
         return super.onBind(intent)
     }

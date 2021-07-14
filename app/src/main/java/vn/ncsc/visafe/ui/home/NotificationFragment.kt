@@ -1,4 +1,4 @@
-package com.vn.visafe_android.ui.home
+package vn.ncsc.visafe.ui.home
 
 import android.util.Log
 import android.view.View

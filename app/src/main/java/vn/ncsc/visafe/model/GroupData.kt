@@ -81,7 +81,7 @@ data class GroupData(
     @SerializedName("devicesGroupInfo")
     var listDevicesGroupInfo: List<DeviceGroup>? = null,
     @SerializedName("identifiersGroupInfo")
-    var identifiersGroupInfo: List<String>? = null,
+    var identifiersGroupInfo: List<IdentifiersGroupInfo>? = null,
     @SerializedName("createdAt")
     var createdAt: String? = null,
     @SerializedName("notifications")
@@ -122,4 +122,16 @@ data class UsersGroupInfo(
     var phoneNumber: String? = null,
     @SerializedName("IsVerify")
     var isVerify: Boolean? = null,
+) : Parcelable
+
+@Parcelize
+data class IdentifiersGroupInfo(
+    @SerializedName("id")
+    var id: String? = null,
+    @SerializedName("Name")
+    var Name: String? = null,
+    @SerializedName("groupId")
+    var groupId: String? = null,
+    @SerializedName("createdAt")
+    var createdAt: String? = null
 ) : Parcelable

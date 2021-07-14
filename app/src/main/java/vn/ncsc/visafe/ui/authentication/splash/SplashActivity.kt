@@ -17,7 +17,6 @@ import vn.ncsc.visafe.ui.MainActivity
 import vn.ncsc.visafe.ui.adapter.SectionsPagerAdapter
 import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
-import vn.ncsc.visafe.utils.setOnSingClickListener
 
 class SplashActivity : BaseActivity() {
 
@@ -52,9 +51,9 @@ class SplashActivity : BaseActivity() {
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
         viewBinding.viewPager.adapter = sectionsPagerAdapter
 
-        viewBinding.fab.setOnSingClickListener {
+        viewBinding.fab.setOnClickListener {
             if (viewBinding.fab.text.equals(getString(R.string.start))) {
-                SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.IS_FIRST_SHOW_ON_BOARDING, true)
+                SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.IS_FIRST_SHOW_ON_BOARDING, false)
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {

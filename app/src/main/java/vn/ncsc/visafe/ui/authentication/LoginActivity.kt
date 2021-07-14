@@ -11,12 +11,12 @@ import android.util.Log
 import android.view.View
 import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
+import com.facebook.login.LoginManager
 import com.rengwuxian.materialedittext.MaterialEditText
 import kotlinx.android.synthetic.main.item_config.*
 import retrofit2.Call
 import retrofit2.Response
 import vn.ncsc.visafe.R
-import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivityLoginBinding
 import vn.ncsc.visafe.model.request.LoginRequest
@@ -25,7 +25,7 @@ import vn.ncsc.visafe.ui.MainActivity
 import vn.ncsc.visafe.ui.authentication.forgotpassword.ForgotPasswordActivity
 import vn.ncsc.visafe.utils.*
 
-class LoginActivity : BaseActivity() {
+class LoginActivity : BaseAuthenticationActivity() {
 
     lateinit var viewBinding: ActivityLoginBinding
     private var isShowPassword: Boolean = false
@@ -86,6 +86,15 @@ class LoginActivity : BaseActivity() {
         viewBinding.btnForgotPassword.setOnClickListener { startActivity(Intent(this, ForgotPasswordActivity::class.java)) }
         viewBinding.btnShowHidePassword.setOnClickListener { onShowHidePassword() }
         viewBinding.btnClearTextInputEmail.setOnClickListener { viewBinding.edtInputEmail.setText("") }
+        viewBinding.btnLoginSocialGoogle.setOnSingClickListener {
+            doSignInGoogle()
+        }
+        viewBinding.btnLoginSocialFacebook.setOnSingClickListener {
+            LoginManager.getInstance().logInWithReadPermissions(
+                this,
+                listOf("public_profile", "email")
+            )
+        }
     }
 
     private fun setupTextPolicyHandleClick() {
