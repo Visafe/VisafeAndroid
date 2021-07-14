@@ -441,5 +441,10 @@
     <string name="bat_chan_quang_cao">Hãy bật chặn quảng cáo để xem các quảng cáo đã chặn</string>
     <string name="protected_ads"><![CDATA[<font color=\'#0CD775\'>Đang bật</font> chặn quảng cáo]]></string>
     <string name="no_protected_ads"><![CDATA[<font color=\'#FF4451\'>Đã tắt</font> chặn quảng cáo]]></string>
+  <string name="chan_apple_samsung">Apple, Samsung &amp; 3 nhà phát triển khác</string>
+  <string name="theo_doi_da_chan">Theo dõi đã chặn</string>
+  <string name="protected_tracking"><![CDATA[<font color=\'#0CD775\'>Đang bật</font> chặn theo dõi]]></string>
+  <string name="no_protected_tracking"><![CDATA[<font color=\'#FF4451\'>Đã tắt</font> chặn theo dõi]]></string>
+
 
 </resources>
