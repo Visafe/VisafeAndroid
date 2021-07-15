@@ -44,6 +44,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private var currentPosition = 0
     private var overViewProtectFragment = OverViewProtectFragment()
     private var groupManagementFragment = GroupManagementFragment()
+    private var notificationFragment = NotificationFragment()
     private var profileFragment = ProfileFragment()
 
     var user: MutableLiveData<UserInfo> = MutableLiveData()
@@ -66,7 +67,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         listFragment.add(POSITION_PROTECT, overViewProtectFragment)
         listFragment.add(POSITION_GROUP, groupManagementFragment)
         listFragment.add(POSITION_SCAN, HomeFragment())
-        listFragment.add(POSITION_NOTIFICATION, NotificationFragment())
+        listFragment.add(POSITION_NOTIFICATION, notificationFragment)
         listFragment.add(POSITION_PROFILE, profileFragment)
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         listFragment.forEachIndexed { index, fragment ->
@@ -190,6 +191,10 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                     return false
                 }
                 openTab(POSITION_NOTIFICATION)
+                if (notificationFragment != null && SharePreferenceKeyHelper.getInstance(application).isLogin()
+                ) {
+                    notificationFragment.loadListNotification()
+                }
                 return true
             }
             R.id.navigation_profile -> {

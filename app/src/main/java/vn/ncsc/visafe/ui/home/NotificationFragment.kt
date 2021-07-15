@@ -38,8 +38,6 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Notifi
         binding.rcvNotification.adapter = notificationAdapter
         binding.rcvNotification.setLoadingListener(this)
         binding.rcvNotification.setPullRefreshEnabled(true)
-        mPage = 1
-        doGetNotification(TypeLoad.FIRST_LOAD)
     }
 
     private fun doGetNotification(type: TypeLoad) {
@@ -120,6 +118,11 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Notifi
                 dismissProgress()
             }
         }))
+    }
+
+    fun loadListNotification() {
+        mPage = 1
+        doGetNotification(TypeLoad.FIRST_LOAD)
     }
 
     override fun onRefresh() {

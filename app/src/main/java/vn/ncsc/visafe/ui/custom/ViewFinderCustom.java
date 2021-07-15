@@ -19,6 +19,8 @@ import me.dm7.barcodescanner.core.DisplayUtils;
 import me.dm7.barcodescanner.core.IViewFinder;
 import vn.ncsc.visafe.R;
 
+import static vn.ncsc.visafe.utils.ViewExtensionKt.screenWidth;
+
 public class ViewFinderCustom extends View implements IViewFinder {
     private static final String TAG = "ViewFinderView";
 
@@ -86,12 +88,12 @@ public class ViewFinderCustom extends View implements IViewFinder {
 
         mTextPaint = new TextPaint();
         mTextPaint.setAntiAlias(true);
-        mTextPaint.setTextSize(16 * getResources().getDisplayMetrics().density);
+        mTextPaint.setTextSize(14 * getResources().getDisplayMetrics().density);
         mTextPaint.setColor(Color.WHITE);
 
         // default to a single line of text
         int width = (int) mTextPaint.measureText("Di chuyển camera đến vùng \nchứa mã QR để quét");
-        mStaticLayout = new StaticLayout("Di chuyển camera đến vùng \nchứa mã QR để quét", mTextPaint, (int) width, Layout.Alignment.ALIGN_CENTER, 1.0f, 0, false);
+        mStaticLayout = new StaticLayout("Di chuyển camera đến vùng \nchứa mã QR để quét", mTextPaint, screenWidth(), Layout.Alignment.ALIGN_CENTER, 1.0f, 0, false);
 
     }
 
@@ -290,7 +292,9 @@ public class ViewFinderCustom extends View implements IViewFinder {
             tradeMarkTop = 10;
         }
         canvas.save();
-        canvas.translate(0, tradeMarkTop);
+        if (framingRect != null) {
+            canvas.translate(getPaddingLeft(), tradeMarkTop);
+        }
         mStaticLayout.draw(canvas);
         canvas.restore();
     }

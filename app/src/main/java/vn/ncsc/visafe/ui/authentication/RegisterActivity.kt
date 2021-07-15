@@ -18,6 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import vn.ncsc.visafe.R
+import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.BaseResponse
 import vn.ncsc.visafe.data.NetworkClient
@@ -139,7 +140,8 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
         showProgressDialog()
         val registerRequest = RegisterRequest()
         registerRequest.username = viewBinding.edtInputEmail.text.toString()
-        registerRequest.email = viewBinding.edtInputEmail.text.toString()
+        registerRequest.email = if (isNumber(viewBinding.edtInputEmail.text.toString()))
+            formatMobileHead84(viewBinding.edtInputEmail.text.toString()) else viewBinding.edtInputEmail.text.toString()
         registerRequest.password = viewBinding.edtInputPassword.text.toString()
         registerRequest.repeatPassword = viewBinding.edtInputPassword.text.toString()
         val client = NetworkClient()
@@ -188,19 +190,22 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
                 response: Response<BaseResponse>
             ) {
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    response.body()?.msg?.let {
-                        Toast.makeText(
-                            applicationContext,
-                            "Vui lòng nhập mã OTP được gửi về mail của bạn để active tài khoản",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
                     if (inputOTPFragment == null || inputOTPFragment?.isVisible == false) {
+                        response.body()?.msg?.let {
+                            showToast("Mã xác nhận đã được gửi lại vào email/số điện thoại của bạn")
+                            Toast.makeText(
+                                applicationContext,
+                                "Vui lòng nhập mã OTP được gửi về mail của bạn để active tài khoản",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                         inputOTPFragment = InputOTPFragment(
                             onInputOtpDialog = this@RegisterActivity, InputOTPFragment.TypeOTP.REGISTER, "Xác thực tài khoản",
                             viewBinding.edtInputEmail.text.toString()
                         )
                         inputOTPFragment?.show(supportFragmentManager, "inputOTPFragment")
+                    } else {
+                        showToast("Mã xác nhận đã được gửi lại vào email/số điện thoại của bạn")
                     }
                 }
                 dismissProgress()

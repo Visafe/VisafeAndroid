@@ -78,7 +78,7 @@
             android:name=".ui.authentication.changepass.ChangePasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.noti.NotificationConfigActivity"
+            android:name=".ui.noticonfig.NotificationConfigActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.pin.UpdatePinActivity"

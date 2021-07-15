@@ -3,14 +3,12 @@ package vn.ncsc.visafe.ui.setting
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import vn.ncsc.visafe.ui.noti.NotificationConfigActivity
+import vn.ncsc.visafe.ui.noticonfig.NotificationConfigActivity
 import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.databinding.ActivitySettingBinding
-import vn.ncsc.visafe.ui.MainActivity
 import vn.ncsc.visafe.ui.authentication.changepass.ChangePasswordActivity
 import vn.ncsc.visafe.ui.pin.UpdatePinActivity
 import vn.ncsc.visafe.utils.OnSingleClickListener
-import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
 class SettingActivity : BaseActivity() {
@@ -41,12 +39,7 @@ class SettingActivity : BaseActivity() {
             startActivity(Intent(this, ChangePasswordActivity::class.java))
         }
         binding.clLogout.setOnSingClickListener {
-            SharePreferenceKeyHelper.getInstance(application).clearAllData()
-            startActivity(
-                Intent(this, MainActivity::class.java)
-                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            )
-            finish()
+            logOut()
         }
     }
 }

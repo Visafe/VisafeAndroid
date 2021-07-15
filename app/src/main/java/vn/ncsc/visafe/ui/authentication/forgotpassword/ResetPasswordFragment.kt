@@ -33,7 +33,7 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>() {
     companion object {
         const val KEY_OTP = "KEY_OTP"
         const val KEY_EMAIL = "KEY_EMAIL"
-        fun newInstance(email: String, otp: String): ResetPasswordFragment {
+        fun newInstance(email: String?, otp: String): ResetPasswordFragment {
             val args = Bundle()
             args.putString(KEY_OTP, otp)
             args.putString(KEY_EMAIL, email)

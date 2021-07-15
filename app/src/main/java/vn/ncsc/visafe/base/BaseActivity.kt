@@ -13,10 +13,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import vn.ncsc.visafe.data.BaseController
 import vn.ncsc.visafe.data.BaseResponse
-import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.ui.authentication.LoginActivity
 import vn.ncsc.visafe.widget.ProgressDialogFragment
 import vn.ncsc.visafe.R
+import vn.ncsc.visafe.ui.MainActivity
 import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 
 open class BaseActivity : AppCompatActivity(), BaseController {
@@ -59,16 +59,22 @@ open class BaseActivity : AppCompatActivity(), BaseController {
 
     override fun onTimeOutSession() {
         dismissProgress()
-        Log.e("onTimeOutSession: ", "timeout")
+        val builder = AlertDialog.Builder(this)
+        with(builder)
+        {
+            setTitle("Thông báo")
+            setMessage(getString(R.string.session_timed_out_content))
+            setPositiveButton(
+                "OK"
+            ) { _, _ -> logOut() }
+            show()
+        }
+
     }
 
     override fun onError(baseResponse: BaseResponse) {
         dismissProgress()
-        if (baseResponse.status_code == NetworkClient.CODE_SEVER_ERROR) {
-            baseResponse.msg?.let { showAlert(it) }
-        } else {
-            Toast.makeText(applicationContext, baseResponse.msg, Toast.LENGTH_LONG).show()
-        }
+        baseResponse.msg?.let { showAlert(it) }
     }
 
     fun showAlert(msg: String) {
@@ -82,8 +88,15 @@ open class BaseActivity : AppCompatActivity(), BaseController {
             ) { _, _ -> finish() }
             show()
         }
+    }
 
-
+    fun logOut() {
+        SharePreferenceKeyHelper.getInstance(application).clearAllData()
+        startActivity(
+            Intent(this, MainActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        )
+        finish()
     }
 
     fun showToast(msg: String) {

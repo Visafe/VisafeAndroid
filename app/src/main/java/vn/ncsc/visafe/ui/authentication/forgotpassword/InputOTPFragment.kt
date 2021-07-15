@@ -5,16 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import vn.ncsc.visafe.ui.custom.otp.OnChangeListener
-import vn.ncsc.visafe.ui.custom.otp.OnCompleteListener
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.base.BaseDialogFragment
 import vn.ncsc.visafe.databinding.FragmentInputOtpBinding
+import vn.ncsc.visafe.ui.custom.otp.OnChangeListener
+import vn.ncsc.visafe.ui.custom.otp.OnCompleteListener
 import vn.ncsc.visafe.utils.setSafeClickListener
 
-
-class InputOTPFragment(var onInputOtpDialog: OnInputOtpDialog, var type: TypeOTP, var title: String, var account: String) : BaseDialogFragment() {
+class InputOTPFragment(
+    var onInputOtpDialog: OnInputOtpDialog, var type: TypeOTP, var title: String?, var account: String?
+) : BaseDialogFragment() {
 
     lateinit var viewBinding: FragmentInputOtpBinding
     private var otpValue: String = ""
@@ -74,6 +75,10 @@ class InputOTPFragment(var onInputOtpDialog: OnInputOtpDialog, var type: TypeOTP
                     viewBinding.tvOtpError.text = "Mã OTP không hợp lệ"
                 }
             }
+        }
+
+        viewBinding.tvSendToOtp.setOnClickListener {
+            onInputOtpDialog.onSendToOtp()
         }
     }
 

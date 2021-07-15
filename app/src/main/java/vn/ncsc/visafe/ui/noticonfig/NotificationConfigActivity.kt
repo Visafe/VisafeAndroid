@@ -1,4 +1,4 @@
-package vn.ncsc.visafe.ui.noti
+package vn.ncsc.visafe.ui.noticonfig
 
 import android.os.Bundle
 import android.view.View

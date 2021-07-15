@@ -28,8 +28,8 @@ interface ApiService {
     @POST("login/facebook")
     fun doLoginWithFacebook(@Body loginSocialRequest: LoginSocialRequest): Call<LoginResponse>
 
-    @GET("forgot-password")
-    fun doRequestEmailForgotPassword(@Query("username") username: String?): Call<ResponseBody>
+    @POST("forgot-password")
+    fun doRequestEmailForgotPassword(@Body forgotPassword: LoginRequest): Call<ResponseBody>
 
     @POST("reset-password")
     fun doResetPassword(@Body resetPasswordRequest: ResetPasswordRequest): Call<BaseResponse>
