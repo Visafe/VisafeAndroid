@@ -1,9 +1,12 @@
 package vn.ncsc.visafe.ui.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.util.Log
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.Toast
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,7 +28,6 @@ import vn.ncsc.visafe.ui.protect.BlockTrackingDetailActivity
 import vn.ncsc.visafe.ui.protect.ProtectDeviceActivity
 import vn.ncsc.visafe.ui.protect.ProtectWifiActivity
 import vn.ncsc.visafe.utils.ChartUtil
-import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
 class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
@@ -129,6 +131,8 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
             )
             startActivity(intent)
         }
+
+        setupWebviewUtilities()
     }
 
     private fun createContentList(): List<ContentMostData> {
@@ -175,7 +179,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
     }
 
     fun doGetStaticWorkspace(workspaceGroupData: WorkspaceGroupData) {
-        workspaceGroupData?.id.let {
+        workspaceGroupData.id.let {
             if (!(activity as BaseActivity).isLogin())
                 return
             showProgressDialog()
@@ -198,5 +202,26 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
             }))
         }
 
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun setupWebviewUtilities() {
+        val setting = binding.wvHomeUtilities.settings
+        setting.useWideViewPort = true
+        setting.loadWithOverviewMode = true
+        setting.javaScriptEnabled = true
+        setting.allowContentAccess = true
+        setting.setSupportZoom(false)
+        setting.builtInZoomControls = true
+        setting.displayZoomControls = false
+        binding.wvHomeUtilities.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): Boolean {
+                return super.shouldOverrideUrlLoading(view, request)
+            }
+        }
+        binding.wvHomeUtilities.loadUrl("https://tienich.khonggianmang.vn/")
     }
 }

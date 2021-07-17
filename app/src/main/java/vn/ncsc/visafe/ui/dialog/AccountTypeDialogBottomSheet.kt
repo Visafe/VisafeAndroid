@@ -54,7 +54,7 @@ class AccountTypeDialogBottomSheet :
                 val bottomSheet = VisafeDialogBottomSheet.newInstance(
                     getString(R.string.workspaces),
                     data.name!!,
-                    VisafeDialogBottomSheet.TYPE_EDIT,
+                    VisafeDialogBottomSheet.TYPE_EDIT_DELETE,
                     getString(R.string.edit_workspace),
                     getString(R.string.delete_workspace)
                 )
@@ -96,7 +96,7 @@ class AccountTypeDialogBottomSheet :
         val bottomSheet = VisafeDialogBottomSheet.newInstance(
             "",
             getString(R.string.delete_workspace_content, data.name),
-            VisafeDialogBottomSheet.TYPE_CONFIRM
+            VisafeDialogBottomSheet.TYPE_CONFIRM_CANCLE
         )
         bottomSheet.show(parentFragmentManager, null)
         bottomSheet.setOnClickListener { inputText, action ->
@@ -118,7 +118,7 @@ class AccountTypeDialogBottomSheet :
             VisafeDialogBottomSheet.newInstanceEdit(
                 "",
                 getString(R.string.update_name_workspace),
-                VisafeDialogBottomSheet.TYPE_SAVE,
+                VisafeDialogBottomSheet.TYPE_INPUT_SAVE,
                 "", it
             )
         }

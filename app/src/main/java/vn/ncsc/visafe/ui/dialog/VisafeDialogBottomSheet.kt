@@ -1,11 +1,16 @@
 package vn.ncsc.visafe.ui.dialog
 
+import android.annotation.SuppressLint
+import android.app.Dialog
+import android.graphics.Color
 import android.view.View
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.os.bundleOf
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseDialogBottomSheet
 import vn.ncsc.visafe.databinding.LayoutVisafeDialogBottomSheetBinding
 import vn.ncsc.visafe.ui.create.group.access_manager.Action
+
 
 class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSheetBinding>() {
     companion object {
@@ -17,10 +22,10 @@ class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSh
         const val EDIT_HINT = "EDIT_HINT"
         const val EDIT_NAME = "EDIT_NAME"
 
-        const val TYPE_EDIT = "TYPE_EDIT"
-        const val TYPE_CONFIRM = "TYPE_CONFIRM"
-        const val TYPE_ADD = "TYPE_ADD"
-        const val TYPE_SAVE = "TYPE_SAVE"
+        const val TYPE_EDIT_DELETE = "TYPE_EDIT_DELETE"
+        const val TYPE_CONFIRM_CANCLE = "TYPE_CONFIRM_CANCLE"
+        const val TYPE_INPUT_CONFIRM = "TYPE_INPUT_CONFIRM"
+        const val TYPE_INPUT_SAVE = "TYPE_INPUT_SAVE"
 
         fun newInstance(title: String, name: String, type: String): VisafeDialogBottomSheet {
             val fragment = VisafeDialogBottomSheet()
@@ -67,6 +72,18 @@ class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSh
 
     override fun layoutRes(): Int = R.layout.layout_visafe_dialog_bottom_sheet
 
+    @SuppressLint("RestrictedApi")
+    override fun setupDialog(dialog: Dialog, style: Int) {
+        super.setupDialog(dialog, style)
+        val contentView = View.inflate(context, R.layout.layout_visafe_dialog_bottom_sheet, null)
+        dialog.setContentView(contentView)
+
+        val params = (contentView.parent as View)
+            .layoutParams as CoordinatorLayout.LayoutParams
+        val behavior = params.behavior
+        (contentView.parent as View).setBackgroundColor(Color.TRANSPARENT)
+    }
+
     override fun initView() {
         binding.tvCancel.setOnClickListener {
             hiddenKeyboard()
@@ -110,16 +127,16 @@ class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSh
 
         val type = arguments?.getString(TYPE_DIALOG_KEY, "")
         when (type) {
-            TYPE_ADD -> {
+            TYPE_INPUT_CONFIRM -> {
                 showLayoutAdd()
             }
-            TYPE_CONFIRM -> {
+            TYPE_CONFIRM_CANCLE -> {
                 showLayoutConfirm()
             }
-            TYPE_EDIT -> {
+            TYPE_EDIT_DELETE -> {
                 showLayoutEdit()
             }
-            TYPE_SAVE -> {
+            TYPE_INPUT_SAVE -> {
                 showLayoutSave()
             }
         }

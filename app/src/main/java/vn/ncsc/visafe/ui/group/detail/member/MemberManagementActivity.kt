@@ -63,7 +63,7 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
         val bottomSheet = VisafeDialogBottomSheet.newInstance(
             "Thành viên",
             fullName,
-            VisafeDialogBottomSheet.TYPE_EDIT,
+            VisafeDialogBottomSheet.TYPE_EDIT_DELETE,
             "Cấp quyền làm Quản trị viên",
             "Xóa thành viên khỏi nhóm"
         )
@@ -86,7 +86,7 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
         val bottomSheet = VisafeDialogBottomSheet.newInstance(
             "",
             getString(R.string.delete_group_content, "thành viên ${fullName} khỏi nhóm?"),
-            VisafeDialogBottomSheet.TYPE_CONFIRM
+            VisafeDialogBottomSheet.TYPE_CONFIRM_CANCLE
         )
         bottomSheet.show(supportFragmentManager, null)
         bottomSheet.setOnClickListener { _, action ->

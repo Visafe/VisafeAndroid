@@ -1,50 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/tvTitle"
-            style="@style/TitleToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:gravity="center"
-            android:text="@string/chosse_account_type" />
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:orientation="vertical">
 
         <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_below="@id/tvTitle"
-            android:background="@color/color_EEEEEE" />
+            android:layout_width="40dp"
+            android:layout_height="6dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/_8sdp"
+            android:background="@drawable/bg_radius_10dp"
+            android:backgroundTint="@color/color_50_FFFFFF" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvGroup"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/view"
-            tools:itemCount="3"
-            tools:listitem="@layout/item_account_type" />
+            android:background="@drawable/bg_bottom_sheet_dialog">
 
-        <TextView
-            android:id="@+id/btnAdd"
-            style="@style/Content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rvGroup"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/_16sdp"
-            android:drawablePadding="@dimen/_8sdp"
-            android:fontFamily="@font/sf_pro_text_regular_medium"
-            android:gravity="center_vertical"
-            android:padding="@dimen/_12sdp"
-            android:text="@string/add_account_type"
-            android:textColor="@color/color_15A1FA"
-            app:drawableStartCompat="@drawable/ic_plus"
-            app:drawableTint="@color/color_15A1FA" />
+            <TextView
+                android:id="@+id/tvTitle"
+                style="@style/TitleToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:gravity="center"
+                android:text="@string/chosse_account_type" />
 
-    </RelativeLayout>
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@id/tvTitle"
+                android:background="@color/color_EEEEEE" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view"
+                android:background="@color/white"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_account_type" />
+
+            <TextView
+                android:id="@+id/btnAdd"
+                style="@style/Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rvGroup"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:drawablePadding="@dimen/_8sdp"
+                android:fontFamily="@font/sf_pro_text_regular_medium"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_12sdp"
+                android:text="@string/add_account_type"
+                android:textColor="@color/color_15A1FA"
+                app:drawableStartCompat="@drawable/ic_plus"
+                app:drawableTint="@color/color_15A1FA" />
+
+        </RelativeLayout>
+    </LinearLayout>
 </layout>

@@ -1,5 +1,8 @@
 package vn.ncsc.visafe.base
 
+import android.app.Dialog
+import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +11,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import vn.ncsc.visafe.R
 
@@ -28,9 +32,18 @@ abstract class BaseDialogBottomSheet<T : ViewDataBinding> : BottomSheetDialogFra
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.BottomSheetDialogStyle)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
+        dialog.setOnShowListener { setupBottomSheet(it) }
+        return dialog
+    }
+
+    private fun setupBottomSheet(dialogInterface: DialogInterface) {
+        val bottomSheetDialog = dialogInterface as BottomSheetDialog
+        val bottomSheet = bottomSheetDialog.findViewById<View>(
+            com.google.android.material.R.id.design_bottom_sheet)
+            ?: return
+        bottomSheet.setBackgroundColor(Color.TRANSPARENT)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
