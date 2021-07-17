@@ -5,9 +5,11 @@ import android.text.TextWatcher
 import android.view.View
 import androidx.core.content.ContextCompat
 import vn.ncsc.visafe.R
+import vn.ncsc.visafe.ViSafeApp
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.databinding.FragmentCreateNewPinBinding
 import vn.ncsc.visafe.utils.OnSingleClickListener
+import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.setOnSingClickListener
 import vn.ncsc.visafe.utils.updateOTPCode
 
@@ -46,10 +48,14 @@ class CreateNewPinFragment : BaseFragment<FragmentCreateNewPinBinding>() {
         })
         binding.tvNext.setOnSingClickListener {
             (activity as UpdatePinActivity).handlerFragment(
-                ConfirmNewPinFragment(),
+                ConfirmNewPinFragment.newInstance(binding.etPinCode.text.toString().trim()),
                 UpdatePinActivity.rootId,
                 "ConfirmNewPinFragment"
             )
+        }
+        binding.btnDeletePin.setOnSingClickListener {
+            ViSafeApp().getPreference().putString(PreferenceKey.PIN_CODE, "")
+            activity?.finish()
         }
         enableButton()
     }
