@@ -13,6 +13,7 @@ import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.databinding.FragmentAccessManagerBinding
 import vn.ncsc.visafe.model.Subject
 import vn.ncsc.visafe.ui.adapter.WebsiteCreatGroupAdapter
+import vn.ncsc.visafe.utils.OnSingleClickListener
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
 class AccessManagerFragment : BaseFragment<FragmentAccessManagerBinding>() {
@@ -56,9 +57,11 @@ class AccessManagerFragment : BaseFragment<FragmentAccessManagerBinding>() {
     override fun layoutRes(): Int = R.layout.fragment_access_manager
 
     override fun initView() {
-        binding.ivBack.setOnClickListener {
-            createGroupActivity?.onBackPressed()
-        }
+        binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
+            override fun onSingleClick(view: View) {
+                createGroupActivity?.onBackPressed()
+            }
+        })
         val dataItemApp = arrayListOf(
             Subject(
                 "Facebook",

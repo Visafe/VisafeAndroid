@@ -2,12 +2,14 @@ package vn.ncsc.visafe.ui.create.group
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.databinding.FragmentSetupCreateGroupBinding
 import vn.ncsc.visafe.ui.adapter.SetupCreateGroupAdapter
 import vn.ncsc.visafe.ui.create.group.access_manager.AccessManagerFragment
 import vn.ncsc.visafe.ui.create.group.block_tracking.BlockTracingAndAdsFragment
+import vn.ncsc.visafe.utils.OnSingleClickListener
 
 class SetupCreateGroupFragment : BaseFragment<FragmentSetupCreateGroupBinding>(),
     BlockTracingAndAdsFragment.OnSaveBlockTrackingAndAds, BlockFollowCreateGroupFragment.OnSaveBlockFollowCreateGroup,
@@ -39,9 +41,11 @@ class SetupCreateGroupFragment : BaseFragment<FragmentSetupCreateGroupBinding>()
     }
 
     override fun initView() {
-        binding.ivBack.setOnClickListener {
-            createGroupActivity?.onBackPressed()
-        }
+        binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
+            override fun onSingleClick(view: View) {
+                createGroupActivity?.onBackPressed()
+            }
+        })
         adapter = SetupCreateGroupAdapter(requireContext())
         binding.rvSetup.adapter = adapter
         adapter?.onClickSetupGroup = object : SetupCreateGroupAdapter.OnClickSetupGroup {

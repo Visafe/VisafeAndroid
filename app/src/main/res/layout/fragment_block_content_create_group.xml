@@ -9,39 +9,16 @@
         android:clickable="true"
         android:focusable="true">
 
-
-        <RelativeLayout
-            android:id="@+id/layoutToolbar"
+        <vn.ncsc.visafe.ui.custom.VisafeToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:padding="@dimen/_4sdp"
-                android:id="@+id/ivBack"
-                android:layout_width="@dimen/_28dp"
-                android:layout_height="@dimen/_28dp"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_arrow_left_black"
-                app:tint="@color/color_111111" />
-
-            <TextView
-                android:textColor="@color/color_222222"
-                android:fontFamily="@font/sf_pro_text_regular_bold"
-                android:textSize="@dimen/text_size_16sp"
-                android:gravity="center"
-                android:text="@string/thiet_lap_chan_noi_dung"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-        </RelativeLayout>
+            android:layout_height="?actionBarSize"
+            app:toolbar_left_icon_src="@drawable/ic_arrow_left_black"
+            app:toolbar_title="@string/thiet_lap_chan_noi_dung"
+            app:toolbar_visible_title="true" />
 
         <View
-            android:layout_below="@id/layoutToolbar"
+            android:layout_below="@id/toolbar"
             android:id="@+id/vDivider"
             android:background="@color/color_EEEEEE"
             android:layout_width="match_parent"
@@ -169,6 +146,5 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_16sp" />
     </RelativeLayout>
-
 
 </layout>

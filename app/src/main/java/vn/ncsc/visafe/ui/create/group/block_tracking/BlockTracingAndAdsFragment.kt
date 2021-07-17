@@ -3,12 +3,14 @@ package vn.ncsc.visafe.ui.create.group.block_tracking
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.google.gson.Gson
 import vn.ncsc.visafe.ui.create.group.CreateGroupActivity
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.databinding.FragmentBlockTracingAndAdsBinding
 import vn.ncsc.visafe.model.Subject
+import vn.ncsc.visafe.utils.OnSingleClickListener
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
 class BlockTracingAndAdsFragment : BaseFragment<FragmentBlockTracingAndAdsBinding>() {
@@ -82,9 +84,11 @@ class BlockTracingAndAdsFragment : BaseFragment<FragmentBlockTracingAndAdsBindin
     }
 
     private fun initControl() {
-        binding.ivBack.setOnClickListener {
-            createGroupActivity?.onBackPressed()
-        }
+        binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
+            override fun onSingleClick(view: View) {
+                createGroupActivity?.onBackPressed()
+            }
+        })
         binding.btnReset.setOnSingClickListener {
             setCheckedForAll(false)
         }
