@@ -1,6 +1,7 @@
 package vn.ncsc.visafe.base
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import vn.ncsc.visafe.data.BaseController
 import vn.ncsc.visafe.data.BaseResponse
+import vn.ncsc.visafe.ui.create.group.access_manager.Action
 
 abstract class BaseFragment<T : ViewDataBinding> : Fragment(), BaseController {
     protected lateinit var binding: T
@@ -102,6 +104,21 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(), BaseController {
                 val innerView = view.getChildAt(i)
                 setHideKeyboardFocus(innerView)
             }
+        }
+    }
+
+    fun showAlert(title: String, msg: String, onClick: ((Action) -> Unit)) {
+        val builder = AlertDialog.Builder(requireContext())
+        with(builder)
+        {
+            if (title.isNotEmpty()) {
+                setTitle(title)
+            }
+            setMessage(msg)
+            setPositiveButton(
+                "OK"
+            ) { _, _ -> onClick.invoke(Action.CONFIRM) }
+            show()
         }
     }
 }

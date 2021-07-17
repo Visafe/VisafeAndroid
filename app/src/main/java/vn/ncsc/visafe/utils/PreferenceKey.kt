@@ -19,6 +19,8 @@ class PreferenceKey {
         const val IS_CREATED_ALERT = "IS_CREATED_ALERT"
         const val TOKEN_FCM = "TOKEN_FCM"
         const val PK_TOKEN = "PK_TOKEN"
+
+        const val PIN_CODE = "PIN_CODE"
     }
 
 }

@@ -223,7 +223,7 @@ class AccessManagerFragment : BaseFragment<FragmentAccessManagerBinding>() {
         val bottomSheet = VisafeDialogBottomSheet.newInstance(
             requireContext().getString(R.string.websites),
             data.title,
-            VisafeDialogBottomSheet.TYPE_EDIT,
+            VisafeDialogBottomSheet.TYPE_EDIT_DELETE,
             requireContext().getString(R.string.edit_websites),
             requireContext().getString(R.string.delete_websites)
         )
@@ -244,7 +244,7 @@ class AccessManagerFragment : BaseFragment<FragmentAccessManagerBinding>() {
         val bottomSheet = VisafeDialogBottomSheet.newInstanceEdit(
             requireContext().getString(R.string.block_websites_group),
             requireContext().getString(R.string.websites),
-            VisafeDialogBottomSheet.TYPE_ADD,
+            VisafeDialogBottomSheet.TYPE_INPUT_CONFIRM,
             requireContext().getString(R.string.input_website),
             data?.title ?: ""
         )
@@ -274,7 +274,7 @@ class AccessManagerFragment : BaseFragment<FragmentAccessManagerBinding>() {
         val bottomSheet = VisafeDialogBottomSheet.newInstance(
             requireContext().getString(R.string.websites),
             data.title,
-            VisafeDialogBottomSheet.TYPE_EDIT,
+            VisafeDialogBottomSheet.TYPE_EDIT_DELETE,
             requireContext().getString(R.string.edit_websites),
             requireContext().getString(R.string.delete_websites)
         )
@@ -295,7 +295,7 @@ class AccessManagerFragment : BaseFragment<FragmentAccessManagerBinding>() {
         val bottomSheet = VisafeDialogBottomSheet.newInstanceEdit(
             requireContext().getString(R.string.pri_websites_group),
             requireContext().getString(R.string.websites),
-            VisafeDialogBottomSheet.TYPE_ADD,
+            VisafeDialogBottomSheet.TYPE_INPUT_CONFIRM,
             requireContext().getString(R.string.input_website),
             data?.title ?: ""
         )

@@ -26,6 +26,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
+        <activity android:name=".ui.website.WebsiteReportActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.protect.BlockTrackingDetailActivity"
             android:screenOrientation="portrait" />

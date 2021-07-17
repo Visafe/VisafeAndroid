@@ -56,7 +56,7 @@ class GroupDetailActivity : BaseActivity() {
             val bottomSheet = VisafeDialogBottomSheet.newInstance(
                 "",
                 title,
-                VisafeDialogBottomSheet.TYPE_EDIT,
+                VisafeDialogBottomSheet.TYPE_EDIT_DELETE,
                 getString(R.string.edit_group),
                 getString(R.string.delete_group)
             )
@@ -103,7 +103,7 @@ class GroupDetailActivity : BaseActivity() {
         val bottomSheet = VisafeDialogBottomSheet.newInstance(
             "",
             getString(R.string.delete_group_content, groupNumber),
-            VisafeDialogBottomSheet.TYPE_CONFIRM
+            VisafeDialogBottomSheet.TYPE_CONFIRM_CANCLE
         )
         bottomSheet.show(supportFragmentManager, null)
         bottomSheet.setOnClickListener { _, action ->

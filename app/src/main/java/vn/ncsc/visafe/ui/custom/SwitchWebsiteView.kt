@@ -90,7 +90,7 @@ class SwitchWebsiteView @JvmOverloads constructor(
         val bottomSheet = VisafeDialogBottomSheet.newInstance(
             context.getString(R.string.websites),
             data.title,
-            VisafeDialogBottomSheet.TYPE_EDIT,
+            VisafeDialogBottomSheet.TYPE_EDIT_DELETE,
             context.getString(R.string.edit_websites),
             context.getString(R.string.delete_websites)
         )
@@ -114,7 +114,7 @@ class SwitchWebsiteView @JvmOverloads constructor(
         val bottomSheet = VisafeDialogBottomSheet.newInstanceEdit(
             context.getString(R.string.block_websites_group),
             context.getString(R.string.websites),
-            VisafeDialogBottomSheet.TYPE_ADD,
+            VisafeDialogBottomSheet.TYPE_INPUT_CONFIRM,
             context.getString(R.string.input_website),
             data?.title ?: ""
         )

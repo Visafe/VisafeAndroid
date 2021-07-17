@@ -50,7 +50,7 @@
                 android:layout_below="@id/tvTitle1"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="@string/protect_device"
+                android:text="@string/canh_bao_ket_noi_nguy_hai"
                 android:textColor="@color/color_222222" />
 
             <View
@@ -81,7 +81,7 @@
                 android:layout_below="@id/view1"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_16sdp"
-                android:text="@string/protect_wifi"
+                android:text="@string/wifi_not_safe"
                 android:textColor="@color/color_222222" />
 
             <View
@@ -112,8 +112,16 @@
                 android:layout_below="@id/view2"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_16sdp"
-                android:text="@string/chan_quang_cao_theo_doi"
+                android:text="@string/canh_bao_ra_soat"
                 android:textColor="@color/color_222222" />
+
+            <View
+                android:id="@+id/viewBlock"
+                style="@style/Divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@id/tvBlockAds"
+                android:layout_marginTop="@dimen/_16sdp" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchBlockAds"
@@ -127,7 +135,32 @@
                 android:thumb="@drawable/thumb_selector"
                 app:track="@drawable/track_selector" />
 
+            <TextView
+                android:id="@+id/tvSafeWarning"
+                style="@style/Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/viewBlock"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:text="@string/canh_bao_ncsc"
+                android:textColor="@color/color_222222" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchSafeWarning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/tvSafeWarning"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="-4dp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:background="@null"
+                android:thumb="@drawable/thumb_selector"
+                app:track="@drawable/track_selector" />
+
             <View
+                android:visibility="gone"
                 android:id="@+id/view3"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_6sdp"
@@ -136,6 +169,7 @@
                 android:background="@color/color_F7F8FA" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv2"
                 style="@style/Title"
                 android:layout_width="match_parent"
@@ -146,6 +180,7 @@
                 android:text="@string/noti_group_title" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tvProtectGroup"
                 style="@style/Content"
                 android:layout_width="wrap_content"
@@ -157,6 +192,7 @@
                 android:textColor="@color/color_222222" />
 
             <View
+                android:visibility="gone"
                 android:id="@+id/view4"
                 style="@style/Divider"
                 android:layout_width="match_parent"
@@ -165,6 +201,7 @@
                 android:layout_marginTop="@dimen/_16sdp" />
 
             <androidx.appcompat.widget.SwitchCompat
+                android:visibility="gone"
                 android:id="@+id/switchProtectDeviceGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -177,6 +214,7 @@
                 app:track="@drawable/track_selector" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tvBlockAdsGroup"
                 style="@style/Content"
                 android:layout_width="wrap_content"
@@ -188,6 +226,7 @@
                 android:textColor="@color/color_222222" />
 
             <View
+                android:visibility="gone"
                 android:id="@+id/view5"
                 style="@style/Divider"
                 android:layout_width="match_parent"
@@ -196,6 +235,7 @@
                 android:layout_marginTop="@dimen/_16sdp" />
 
             <androidx.appcompat.widget.SwitchCompat
+                android:visibility="gone"
                 android:id="@+id/switchBlockAdsGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -208,6 +248,7 @@
                 app:track="@drawable/track_selector" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tvBlockAccessGroup"
                 style="@style/Content"
                 android:layout_width="wrap_content"
@@ -219,6 +260,7 @@
                 android:textColor="@color/color_222222" />
 
             <View
+                android:visibility="gone"
                 android:id="@+id/view6"
                 style="@style/Divider"
                 android:layout_width="match_parent"
@@ -227,6 +269,7 @@
                 android:layout_marginTop="@dimen/_16sdp" />
 
             <androidx.appcompat.widget.SwitchCompat
+                android:visibility="gone"
                 android:id="@+id/switchBlockAccessGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -239,6 +282,7 @@
                 app:track="@drawable/track_selector" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tvBlockContentGroup"
                 style="@style/Content"
                 android:layout_width="wrap_content"
@@ -251,6 +295,7 @@
                 android:textColor="@color/color_222222" />
 
             <androidx.appcompat.widget.SwitchCompat
+                android:visibility="gone"
                 android:id="@+id/switchBlockContentGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

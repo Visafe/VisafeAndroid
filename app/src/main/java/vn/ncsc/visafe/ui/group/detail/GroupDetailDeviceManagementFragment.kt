@@ -51,7 +51,7 @@ class GroupDetailDeviceManagementFragment :
         val bottomSheet = VisafeDialogBottomSheet.newInstance(
             data.nameDevice!!,
             data.nameUser!!,
-            VisafeDialogBottomSheet.TYPE_EDIT,
+            VisafeDialogBottomSheet.TYPE_EDIT_DELETE,
             getString(R.string.edit_device),
             getString(R.string.delete_device)
         )
@@ -76,7 +76,7 @@ class GroupDetailDeviceManagementFragment :
         val bottomSheet = VisafeDialogBottomSheet.newInstance(
             "",
             getString(R.string.delete_device_content, data.nameDevice, data.nameUser),
-            VisafeDialogBottomSheet.TYPE_CONFIRM
+            VisafeDialogBottomSheet.TYPE_CONFIRM_CANCLE
         )
         bottomSheet.show(parentFragmentManager, null)
         bottomSheet.setOnClickListener { inputText, action ->
@@ -95,7 +95,7 @@ class GroupDetailDeviceManagementFragment :
         val bottomSheet = VisafeDialogBottomSheet.newInstanceEdit(
             data.nameDevice!!,
             data.nameUser!!,
-            VisafeDialogBottomSheet.TYPE_SAVE,
+            VisafeDialogBottomSheet.TYPE_INPUT_SAVE,
             getString(R.string.input_name_device),
             ""
         )
