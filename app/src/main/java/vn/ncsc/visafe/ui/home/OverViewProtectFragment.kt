@@ -27,6 +27,7 @@ import vn.ncsc.visafe.ui.protect.BlockAdsActivity
 import vn.ncsc.visafe.ui.protect.BlockTrackingDetailActivity
 import vn.ncsc.visafe.ui.protect.ProtectDeviceActivity
 import vn.ncsc.visafe.ui.protect.ProtectWifiActivity
+import vn.ncsc.visafe.ui.website.WebsiteReportActivity
 import vn.ncsc.visafe.utils.ChartUtil
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
@@ -69,6 +70,9 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
 //        binding.rvGroup.adapter = groupAdapter
         binding.layoutAddVpn.btnHomeVpnAdd.setOnSingClickListener {
             showAddVpn()
+        }
+        binding.layoutHomeWebsite.btnHomeWebsiteReport.setOnSingClickListener {
+            startActivity(Intent(requireContext(), WebsiteReportActivity::class.java))
         }
         binding.layoutHomeProtectFamily.btnHomeFamilyAddGroup.setOnSingClickListener {
             startActivity(Intent(requireContext(), CreateGroupActivity::class.java))

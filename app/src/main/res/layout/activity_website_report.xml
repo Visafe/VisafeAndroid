@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".ui.website.WebsiteReportActivity">
+
+    <vn.ncsc.visafe.ui.custom.VisafeToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/white"
+        app:toolbar_left_icon_src="@drawable/ic_baseline_clear_24" />
+
+    <View
+        android:id="@+id/vDivider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_EEEEEE" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_24dp"
+        android:layout_marginTop="@dimen/_32dp"
+        android:layout_marginEnd="@dimen/_24dp"
+        android:fontFamily="@font/sf_pro_text_regular_bold"
+        android:gravity="center"
+        android:text="@string/ban_muon_bao_cao_website_lua_dao"
+        android:textColor="@color/color_111111"
+        android:textSize="@dimen/text_size_20sp" />
+
+    <EditText
+        android:id="@+id/editWebsite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_24dp"
+        android:layout_marginTop="@dimen/_32dp"
+        android:layout_marginEnd="@dimen/_24dp"
+        android:background="@drawable/bg_edittext"
+        android:ellipsize="end"
+        android:fontFamily="@font/sf_pro_text_regular"
+        android:hint="@string/nhap_link_website"
+        android:inputType="text"
+        android:paddingHorizontal="@dimen/_16dp"
+        android:paddingVertical="@dimen/_12dp"
+        android:singleLine="true"
+        android:textColor="@color/color_111111"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        tools:ignore="Autofill" />
+
+    <TextView
+        android:id="@+id/tvSend"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_44sdp"
+        android:layout_marginStart="@dimen/_24dp"
+        android:layout_marginTop="@dimen/_24dp"
+        android:layout_marginEnd="@dimen/_24dp"
+        android:background="@drawable/bg_radius_34dp"
+        android:backgroundTint="@color/color_FFB31F"
+        android:fontFamily="@font/sf_pro_text_regular_bold"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="@string/send_report"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editNameGroup" />
+
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="@dimen/_24dp"
+        android:fontFamily="@font/sf_pro_text_regular"
+        android:gravity="center"
+        android:text="@string/send_report_website_content"
+        android:textSize="@dimen/text_size_12sp"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNext" />
+</LinearLayout>

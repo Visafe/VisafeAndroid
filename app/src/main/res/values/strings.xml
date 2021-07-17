@@ -446,5 +446,13 @@
     <string name="protected_tracking"><![CDATA[<font color=\'#0CD775\'>Đang bật</font> chặn theo dõi]]></string>
     <string name="no_protected_tracking"><![CDATA[<font color=\'#FF4451\'>Đã tắt</font> chặn theo dõi]]></string>
     <string name="session_timed_out_content">Hết thời gian của phiên đăng nhập, vui lòng đăng nhập lại.</string>
+    <string name="send_report_website_content">Website báo cáo sẽ được ViSafe xác thực thông tin và liệt vào danh sách đen</string>
+  <string name="ban_muon_bao_cao_website_lua_dao">Bạn muốn báo cáo website lừa đảo?</string>
+  <string name="nhap_link_website">Nhập link website</string>
+  <string name="send_report">Gửi báo cáo</string>
+    <string name="canh_bao_ket_noi_nguy_hai">Cảnh báo kết nối nguy hại</string>
+  <string name="wifi_not_safe">Cảnh báo Wi-Fi không an toàn</string>
+  <string name="canh_bao_ra_soat">Cảnh báo kết quả rà soát định kỳ</string>
+  <string name="canh_bao_ncsc">Cảnh báo An toàn thông tin từ NCSC</string>
 
 </resources>
