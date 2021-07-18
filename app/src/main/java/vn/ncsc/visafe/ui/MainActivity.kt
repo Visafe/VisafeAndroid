@@ -19,8 +19,11 @@ import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivityMainBinding
+import vn.ncsc.visafe.model.StatsWorkSpace
 import vn.ncsc.visafe.model.UserInfo
 import vn.ncsc.visafe.model.WorkspaceGroupData
+import vn.ncsc.visafe.model.response.StatsWorkspaceResponse
+import vn.ncsc.visafe.ui.adapter.TimeStatistical
 import vn.ncsc.visafe.ui.home.*
 import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
@@ -40,7 +43,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     lateinit var binding: ActivityMainBinding
 
     private var listFragment = mutableListOf<Fragment>()
-    private var listMenu: MutableList<WorkspaceGroupData> = mutableListOf()
+    private var listWorkSpace: MutableList<WorkspaceGroupData> = mutableListOf()
     private var currentPosition = 0
     private var overViewProtectFragment = OverViewProtectFragment()
     private var groupManagementFragment = GroupManagementFragment()
@@ -48,7 +51,8 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private var profileFragment = ProfileFragment()
 
     var user: MutableLiveData<UserInfo> = MutableLiveData()
-    var listWorkSpace: MutableLiveData<List<WorkspaceGroupData>> = MutableLiveData()
+    var listWorkSpaceLiveData: MutableLiveData<List<WorkspaceGroupData>> = MutableLiveData()
+    var statisticalWorkSpaceLiveData: MutableLiveData<StatsWorkSpace> = MutableLiveData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,19 +100,16 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             ) {
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
                     response.body()?.toMutableList()?.let {
-                        listMenu.clear()
-                        listMenu.addAll(it)
-                        listWorkSpace.value = listMenu
-                        if (listMenu.size > 0) {
-                            for (i in listMenu.indices) {
-                                listMenu[i].isSelected = i == 0
+                        listWorkSpace.clear()
+                        listWorkSpace.addAll(it)
+                        listWorkSpaceLiveData.value = listWorkSpace
+                        if (listWorkSpace.size > 0) {
+                            for (i in listWorkSpace.indices) {
+                                listWorkSpace[i].isSelected = i == 0
                             }
-                            listMenu[0].let { workspaceGroupData ->
-                                if (groupManagementFragment != null) {
-                                    groupManagementFragment.updateWorkspace(workspaceGroupData)
-                                }
+                            listWorkSpace[0].let { workspaceGroupData ->
+                                doGetStaticWorkspace(workspaceGroupData, TimeStatistical.HANG_NGAY.value)
                             }
-
                         }
                     }
                 }
@@ -165,14 +166,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         when (item.itemId) {
             R.id.navigation_protect -> {
                 openTab(POSITION_PROTECT)
-                if (overViewProtectFragment != null && listMenu.size > 0
-                    && SharePreferenceKeyHelper.getInstance(application).isLogin()
-                ) {
-                    listMenu.let {
-                        overViewProtectFragment.doGetStaticWorkspace(it[0])
-                    }
-
-                }
                 return true
             }
             R.id.navigation_group -> {
@@ -252,6 +245,36 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 binding.fab.setBackgroundTint(R.color.color_061448)
             }
         }
+    }
+
+    fun doGetStaticWorkspace(workspaceGroupData: WorkspaceGroupData, timeLimit: String) {
+        workspaceGroupData.id.let {
+            if (!isLogin())
+                return
+            showProgressDialog()
+            val client = NetworkClient()
+            val call = client.client(context = applicationContext).doGetStatisticalOneWorkspace(workspaceGroupData.id, timeLimit)
+            call.enqueue(BaseCallback(this, object : Callback<StatsWorkspaceResponse> {
+                override fun onResponse(
+                    call: Call<StatsWorkspaceResponse>,
+                    response: Response<StatsWorkspaceResponse>
+                ) {
+                    if (response.code() == NetworkClient.CODE_SUCCESS) {
+                        response.body()?.let {
+                            statisticalWorkSpaceLiveData.value = StatsWorkSpace(it)
+                        }
+
+                    }
+                    dismissProgress()
+                }
+
+                override fun onFailure(call: Call<StatsWorkspaceResponse>, t: Throwable) {
+                    t.message?.let { Log.e("onFailure: ", it) }
+                    dismissProgress()
+                }
+            }))
+        }
+
     }
 
 }

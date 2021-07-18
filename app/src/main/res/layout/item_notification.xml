@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
             android:gravity="start"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imgIcon"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/thong_bao" />
@@ -38,6 +39,7 @@
             android:layout_height="@dimen/_6sdp"
             android:layout_marginStart="@dimen/_6sdp"
             android:src="@drawable/bg_active"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
             app:layout_constraintStart_toEndOf="@+id/tvTitle"
             app:layout_constraintTop_toTopOf="@+id/tvTitle" />

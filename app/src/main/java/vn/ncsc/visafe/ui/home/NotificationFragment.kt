@@ -33,11 +33,13 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Notifi
     override fun layoutRes(): Int = R.layout.fragment_notification
 
     override fun initView() {
+        val linearLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         notificationAdapter = NotificationAdapter(this)
-        binding.rcvNotification.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.rcvNotification.adapter = notificationAdapter
+        binding.rcvNotification.layoutManager = linearLayoutManager
         binding.rcvNotification.setLoadingListener(this)
         binding.rcvNotification.setPullRefreshEnabled(true)
+        binding.rcvNotification.setLoadingMoreEnabled(true)
+        binding.rcvNotification.adapter = notificationAdapter
     }
 
     private fun doGetNotification(type: TypeLoad) {

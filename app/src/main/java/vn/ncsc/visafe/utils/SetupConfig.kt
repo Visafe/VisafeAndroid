@@ -2,7 +2,6 @@ package vn.ncsc.visafe.utils
 
 import vn.ncsc.visafe.R
 
-
 enum class SetupConfig(
     val image: Int,
     val title: String,

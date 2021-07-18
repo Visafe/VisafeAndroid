@@ -46,12 +46,47 @@ enum class OWNER(val title: Int, val textColor: Int, val backgroundColor: Int) {
     }
 }
 
-enum class TYPE_WORKSPACES(val type: String, val resDrawableIcon: Int) {
-    PERSONAL("PERSONAL", R.drawable.ic_personal),
-    FAMILY("FAMILY", R.drawable.ic_family),
-    ENTERPRISE("ENTERPRISE", R.drawable.ic_business),
-    SCHOOL("SCHOOL", R.drawable.ic_education),
-    GOVERNMENT_ORGANIZATION("GOVERNMENT_ORGANIZATION", R.drawable.ic_chinh_phu);
+enum class TYPE_WORKSPACES(
+    val type: String,
+    val nameWorkSpace: String,
+    val content: String,
+    val resDrawableIcon: Int,
+    val resDrawableBgTop: Int
+) {
+    PERSONAL(
+        "PERSONAL",
+        "Con người",
+        "Bảo vệ con người",
+        R.drawable.ic_personal,
+        R.drawable.bg_top_protect_family_group
+    ),
+    FAMILY(
+        "FAMILY",
+        "Gia đình & nhóm",
+        "Bảo vệ gia đình & người thân trên môi trường mạng",
+        R.drawable.ic_family,
+        R.drawable.bg_top_protect_family_group
+    ),
+    ENTERPRISE(
+        "ENTERPRISE",
+        "Bảo vệ tổ chức",
+        "Tất cả thành viên tham gia nhóm đều được ViSafe bảo vệ trên môi trường mạng",
+        R.drawable.ic_business,
+        R.drawable.bg_top_protect_enterprise_group
+    ),
+    SCHOOL(
+        "SCHOOL",
+        "Gia đình & nhóm",
+        "Bảo vệ gia đình & người thân trên môi trường mạng", R.drawable.ic_education,
+        R.drawable.bg_top_protect_family_group
+    ),
+    GOVERNMENT_ORGANIZATION(
+        "GOVERNMENT_ORGANIZATION",
+        "Gia đình & nhóm",
+        "Bảo vệ gia đình & người thân trên môi trường mạng",
+        R.drawable.ic_chinh_phu,
+        R.drawable.bg_top_protect_family_group
+    );
 
     companion object {
         private val mapType = values().associateBy(TYPE_WORKSPACES::type)

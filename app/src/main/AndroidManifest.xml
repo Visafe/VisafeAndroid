@@ -26,7 +26,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity android:name=".ui.website.WebsiteReportActivity"
+        <activity
+            android:name=".ui.website.WebsiteReportActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.protect.BlockTrackingDetailActivity"
@@ -78,13 +79,16 @@
             android:theme="@style/AppThemeSplash" />
         <activity
             android:name=".ui.authentication.changepass.ChangePasswordActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash" />
         <activity
             android:name=".ui.noticonfig.NotificationConfigActivity"
+            android:theme="@style/AppThemeSplash"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.pin.UpdatePinActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash" />
         <activity
             android:name=".ui.support.SupportCenterActivity"
             android:screenOrientation="portrait"
@@ -123,17 +127,17 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-<!--        <activity-->
-<!--            android:name="com.facebook.CustomTabActivity"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter><action android:name="android.intent.action.VIEW" />-->
+        <!--        <activity-->
+        <!--            android:name="com.facebook.CustomTabActivity"-->
+        <!--            android:exported="true">-->
+        <!--            <intent-filter><action android:name="android.intent.action.VIEW" />-->
 
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+        <!--                <category android:name="android.intent.category.DEFAULT" />-->
+        <!--                <category android:name="android.intent.category.BROWSABLE" />-->
 
-<!--                <data android:scheme="@string/fb_login_protocol_scheme" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+        <!--                <data android:scheme="@string/fb_login_protocol_scheme" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity>-->
 
         <service
             android:name=".dns.sys.ViSafeVpnService"

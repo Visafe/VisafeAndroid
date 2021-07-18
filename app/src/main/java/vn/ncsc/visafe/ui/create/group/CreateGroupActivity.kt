@@ -40,7 +40,9 @@ class CreateGroupActivity : BaseActivity() {
     }
 
     private fun initView() {
-        addFragment(WelcomeCreateGroupFragment())
+        workspaceGroupData?.let {
+            addFragment(WelcomeCreateGroupFragment.newInstance(it))
+        }
     }
 
     fun addFragment(fragment: Fragment, tag: String = "") {

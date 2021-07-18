@@ -72,6 +72,7 @@
                         style="@style/Content"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_4sdp"
                         android:ellipsize="end"
                         android:gravity="start"
                         android:maxLines="1"
@@ -102,73 +103,12 @@
                     app:layout_constraintTop_toBottomOf="@id/ivUser" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/view">
-
-                    <ImageView
-                        android:id="@+id/ivShield"
-                        android:layout_width="@dimen/_20dp"
-                        android:layout_height="@dimen/_20dp"
-                        android:layout_margin="@dimen/_16dp"
-                        android:src="@drawable/ic_shield_blue"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="ContentDescription" />
-
-                    <TextView
-                        style="@style/Content"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_8dp"
-                        android:text="@string/loai_tai_khoan"
-                        android:textColor="@color/color_222222"
-                        app:layout_constraintBottom_toBottomOf="@id/ivShield"
-                        app:layout_constraintStart_toEndOf="@id/ivShield"
-                        app:layout_constraintTop_toTopOf="@id/ivShield" />
-
-                    <ImageView
-                        android:id="@+id/ivArrow1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_24dp"
-                        android:src="@drawable/ic_stroke"
-                        app:layout_constraintBottom_toBottomOf="@id/ivShield"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/ivShield"
-                        tools:ignore="ContentDescription" />
-
-                    <TextView
-                        android:id="@+id/tvTypeAccount"
-                        style="@style/Content"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_12dp"
-                        android:textColor="@color/color_666666"
-                        app:layout_constraintBottom_toBottomOf="@id/ivShield"
-                        app:layout_constraintEnd_toStartOf="@id/ivArrow1"
-                        app:layout_constraintTop_toTopOf="@id/ivShield"
-                        tools:text="Gia đình và nhóm" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginTop="@dimen/_16dp"
-                        android:background="@color/color_EEEEEE"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ivShield" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clUpgrade"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/clType">
+                    app:layout_constraintTop_toBottomOf="@id/view">
 
                     <ImageView
                         android:id="@+id/ivUpgrade"
@@ -448,6 +388,45 @@
                         app:layout_constraintTop_toBottomOf="@id/ivRate" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clLogout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/clRate">
+
+                    <ImageView
+                        android:id="@+id/ivLogout"
+                        android:layout_width="@dimen/_20dp"
+                        android:layout_height="@dimen/_20dp"
+                        android:layout_margin="@dimen/_16dp"
+                        android:src="@drawable/ic_logout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        style="@style/Content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8dp"
+                        android:text="@string/logout"
+                        android:textColor="@color/color_222222"
+                        app:layout_constraintBottom_toBottomOf="@id/ivLogout"
+                        app:layout_constraintStart_toEndOf="@id/ivLogout"
+                        app:layout_constraintTop_toTopOf="@id/ivLogout" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:background="@color/color_EEEEEE"
+                        android:visibility="invisible"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ivLogout" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <include
                     layout="@layout/layout_upgrade"
                     android:layout_width="match_parent"
@@ -457,7 +436,7 @@
                     android:layout_marginEnd="@dimen/_16dp"
                     android:layout_marginBottom="@dimen/_32dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/clRate" />
+                    app:layout_constraintTop_toBottomOf="@id/clLogout" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

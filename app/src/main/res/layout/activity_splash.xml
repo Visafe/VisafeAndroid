@@ -13,6 +13,13 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.4" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+
     <ImageView
         android:id="@+id/imgLogo"
         android:layout_width="wrap_content"
@@ -28,19 +35,24 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_40sdp"
         android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline1"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/tabs"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_100sdp"
         android:gravity="center"
         android:orientation="horizontal"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/fab">
+        app:layout_constraintBottom_toBottomOf="@+id/guideline1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/tab1"

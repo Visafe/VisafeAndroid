@@ -1,5 +1,6 @@
 package vn.ncsc.visafe.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
@@ -44,21 +45,27 @@ class NotificationAdapter(private val onSelectItemListener: OnSelectItemListener
             R.layout.item_notification, parent, false
         )
     ) {
-        fun bindView(item: NotificationModel) {
-            when (item.content?.type) {
+        @SuppressLint("SetTextI18n")
+        fun bindView(item: NotificationModel?) {
+            var title = ""
+            when (item?.content?.type) {
                 "ALERT_DOMAIN" -> {
-
+                    title =
+                        "Thiết bị ${item.content?.affected?.name} đã cố gắng truy cập trang web: ${item.content?.target?.domain}"
                 }
                 "INVITE_SUCCESS" -> {
-
+                    title = "${item.content?.affected?.name} đã là thành viên của nhóm ${item.group?.name}"
+                }
+                "JOIN_SUCCESS" -> {
+                    title = "Bạn đã là thành viên của nhóm ${item.group?.name}"
                 }
                 "DEVICE_JOIN_SUCCESS" -> {
-
+                    title = "Thiết bị ${item.content?.affected?.name} vừa được thêm vào nhóm ${item.group?.name}"
                 }
             }
-            itemView.tvTitle.text = item.content?.affected?.name
-            itemView.tvTime.text = item.createdAt?.let { getTimeAgo(it.toLong()) }
-            if (item.isRead == true)
+            itemView.tvTitle.text = title + "\uD83D\uDD25"
+            itemView.tvTime.text = item?.createdAt?.let { getTimeAgo(it.toLong()) }
+            if (item?.isRead == true)
                 itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.white))
             else
                 itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.color_FFF9ED))
@@ -106,5 +113,37 @@ class NotificationAdapter(private val onSelectItemListener: OnSelectItemListener
         override fun areContentsTheSame(oldItem: NotificationModel, newItem: NotificationModel): Boolean {
             return oldItem == newItem
         }
+    }
+}
+
+enum class TypeNotification(
+    val type: String,
+    val titleNoti: String,
+    val resDrawableIcon: Int,
+) {
+    ALERT_DOMAIN(
+        "ALERT_DOMAIN",
+        "Con người",
+        R.drawable.ic_notify_protect_device
+    ),
+    INVITE_SUCCESS(
+        "INVITE_SUCCESS",
+        "Gia đình & nhóm",
+        R.drawable.bg_top_protect_family_group
+    ),
+    JOIN_SUCCESS(
+        "JOIN_SUCCESS",
+        "Bảo vệ tổ chức",
+        R.drawable.bg_top_protect_enterprise_group
+    ),
+    DEVICE_JOIN_SUCCESS(
+        "DEVICE_JOIN_SUCCESS",
+        "Gia đình & nhóm",
+        R.drawable.bg_top_protect_family_group
+    );
+
+    companion object {
+        private val mapType = values().associateBy(TypeNotification::type)
+        fun fromIsTypeWorkSpaces(type: String?) = mapType[type]
     }
 }

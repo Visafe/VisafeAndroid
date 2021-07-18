@@ -38,8 +38,5 @@ class SettingActivity : BaseActivity() {
         binding.clChangePass.setOnSingClickListener {
             startActivity(Intent(this, ChangePasswordActivity::class.java))
         }
-        binding.clLogout.setOnSingClickListener {
-            logOut()
-        }
     }
 }
