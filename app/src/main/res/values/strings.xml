@@ -147,7 +147,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
-    <string name="workspaces">Workspaces</string>
+    <string name="workspaces">Workspace</string>
     <string name="support_title">Hỗ trợ</string>
     <string name="introduction_title">Hướng dẫn sử dụng</string>
     <string name="add_workspace">Thêm Workspace</string>
@@ -321,6 +321,8 @@
     <string name="warning_input_number_phone_email">Vui lòng nhập số điện thoại/email</string>
 
     <string name="protect_family">Bảo vệ gia đình &amp; nhóm</string>
+    <string name="protected_enterprise">Bảo vệ tổ chức</string>
+    <string name="protected_enterprise_content">Tất cả thành viên tham gia nhóm đều được ViSafe bảo vệ trên môi trường mạng</string>
     <string name="protect_family_v2">Bảo vệ gia đình &amp; tổ chức</string>
     <string name="protect_content">Tất cả thành viên tham gia nhóm đều được ViSafe bảo vệ trên môi trường mạng</string>
     <string name="protect_content_1">Chống lừa đảo mạng</string>
@@ -358,6 +360,7 @@
     <string name="premium">PREMIUM</string>
     <string name="premium_content">Nâng cấp lên phiên bản Premium cho phép bạn truy cập không giới hạn tính năng của ứng dụng</string>
     <string name="chosse_account_type">Chọn loại tài khoản</string>
+    <string name="display_statistical_for">Hiển thị thống kê theo</string>
     <string name="add_account_type">Thêm loại tài khoản mới</string>
     <string name="nhap_ten_loai_tai_khoan">Nhập tên loại tài khoản</string>
     <string name="create_account_type">Bạn muốn tên hiển thị của loại tài khoản là gì?</string>
@@ -447,12 +450,12 @@
     <string name="no_protected_tracking"><![CDATA[<font color=\'#FF4451\'>Đã tắt</font> chặn theo dõi]]></string>
     <string name="session_timed_out_content">Hết thời gian của phiên đăng nhập, vui lòng đăng nhập lại.</string>
     <string name="send_report_website_content">Website báo cáo sẽ được ViSafe xác thực thông tin và liệt vào danh sách đen</string>
-  <string name="ban_muon_bao_cao_website_lua_dao">Bạn muốn báo cáo website lừa đảo?</string>
-  <string name="nhap_link_website">Nhập link website</string>
-  <string name="send_report">Gửi báo cáo</string>
+    <string name="ban_muon_bao_cao_website_lua_dao">Bạn muốn báo cáo website lừa đảo?</string>
+    <string name="nhap_link_website">Nhập link website</string>
+    <string name="send_report">Gửi báo cáo</string>
     <string name="canh_bao_ket_noi_nguy_hai">Cảnh báo kết nối nguy hại</string>
-  <string name="wifi_not_safe">Cảnh báo Wi-Fi không an toàn</string>
-  <string name="canh_bao_ra_soat">Cảnh báo kết quả rà soát định kỳ</string>
-  <string name="canh_bao_ncsc">Cảnh báo An toàn thông tin từ NCSC</string>
+    <string name="wifi_not_safe">Cảnh báo Wi-Fi không an toàn</string>
+    <string name="canh_bao_ra_soat">Cảnh báo kết quả rà soát định kỳ</string>
+    <string name="canh_bao_ncsc">Cảnh báo An toàn thông tin từ NCSC</string>
 
 </resources>

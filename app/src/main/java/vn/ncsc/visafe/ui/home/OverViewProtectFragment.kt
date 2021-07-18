@@ -182,32 +182,6 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
         dialog.show(parentFragmentManager, null)
     }
 
-    fun doGetStaticWorkspace(workspaceGroupData: WorkspaceGroupData) {
-        workspaceGroupData.id.let {
-            if (!(activity as BaseActivity).isLogin())
-                return
-            showProgressDialog()
-            val client = NetworkClient()
-            val call = context?.let { it1 -> client.client(context = it1).doGetStatisticalOneWorkspace(workspaceGroupData.id, "24") }
-            call?.enqueue(BaseCallback(this, object : Callback<StatsWorkspaceResponse> {
-                override fun onResponse(
-                    call: Call<StatsWorkspaceResponse>,
-                    response: Response<StatsWorkspaceResponse>
-                ) {
-                    if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    }
-                    dismissProgress()
-                }
-
-                override fun onFailure(call: Call<StatsWorkspaceResponse>, t: Throwable) {
-                    t.message?.let { Log.e("onFailure: ", it) }
-                    dismissProgress()
-                }
-            }))
-        }
-
-    }
-
     @SuppressLint("SetJavaScriptEnabled")
     private fun setupWebviewUtilities() {
         val setting = binding.wvHomeUtilities.settings

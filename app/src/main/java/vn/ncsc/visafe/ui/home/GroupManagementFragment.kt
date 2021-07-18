@@ -1,29 +1,54 @@
 package vn.ncsc.visafe.ui.home
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import vn.ncsc.visafe.ui.create.group.CreateGroupActivity
-import vn.ncsc.visafe.ui.group.detail.GroupDetailActivity
-import vn.ncsc.visafe.ui.group.join.ScanQRJoinGroupActivity
+import com.google.gson.Gson
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import vn.ncsc.visafe.R
+import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.FragmentGroupManagementBinding
 import vn.ncsc.visafe.model.GroupData
+import vn.ncsc.visafe.model.TYPE_WORKSPACES
 import vn.ncsc.visafe.model.WorkspaceGroupData
+import vn.ncsc.visafe.model.request.DeleteWorkSpaceRequest
+import vn.ncsc.visafe.model.request.UpdateNameWorkspaceRequest
 import vn.ncsc.visafe.model.response.GroupsDataResponse
+import vn.ncsc.visafe.ui.MainActivity
 import vn.ncsc.visafe.ui.adapter.GroupListAdapter
+import vn.ncsc.visafe.ui.adapter.TimeStatistical
+import vn.ncsc.visafe.ui.create.group.CreateGroupActivity
+import vn.ncsc.visafe.ui.create.workspace.CreateWorkspaceActivity
+import vn.ncsc.visafe.ui.dialog.AccountTypeDialogBottomSheet
+import vn.ncsc.visafe.ui.dialog.DisplayStatisticalForTimeBottomSheet
+import vn.ncsc.visafe.ui.dialog.OnClickItemAccountType
+import vn.ncsc.visafe.ui.dialog.OnClickItemTime
+import vn.ncsc.visafe.ui.group.detail.GroupDetailActivity
+import vn.ncsc.visafe.ui.group.join.ScanQRJoinGroupActivity
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
 class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
+
+    private var groupIsOwnerAdapter: GroupListAdapter? = null
+    private var groupIsMemberAdapter: GroupListAdapter? = null
+    private var mWorkspaceGroupData: WorkspaceGroupData? = null
+    private var listGroupIsOwner: MutableList<GroupData?> = mutableListOf()
+    private var listGroupIsMember: MutableList<GroupData?> = mutableListOf()
+    private var positionTypeChoose = 0
+    private var bottomSheet: AccountTypeDialogBottomSheet? = null
+    private var listWorkspaceGroupData: MutableList<WorkspaceGroupData> = mutableListOf()
+    private var timeStatistical: String = TimeStatistical.HANG_NGAY.value
 
     companion object {
         const val DATA_WORKSPACE = "DATA_WORKSPACE"
@@ -37,7 +62,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
-                workspaceGroupData?.let { doGetGroupWithId(it) }
+                mWorkspaceGroupData?.let { doGetGroupWithId(it) }
             }
         }
 
@@ -45,20 +70,46 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
-                workspaceGroupData?.let { doGetGroupWithId(it) }
+                mWorkspaceGroupData?.let { doGetGroupWithId(it) }
             }
         }
 
-    private var groupIsOwnerAdapter: GroupListAdapter? = null
-    private var groupIsMemberAdapter: GroupListAdapter? = null
-    private var workspaceGroupData: WorkspaceGroupData? = null
-    private var listGroupIsOwner: MutableList<GroupData?> = mutableListOf()
-    private var listGroupIsMember: MutableList<GroupData?> = mutableListOf()
+    private var resultLauncherCreateWorkspaceActivity =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.let {
+                    val newWorkspace = it.getParcelableExtra<WorkspaceGroupData>("NewWorkSpace")
+                    newWorkspace?.let { it1 -> listWorkspaceGroupData.add(it1) }
+                }
+            }
+        }
 
     override fun layoutRes(): Int = R.layout.fragment_group_management
 
+    @SuppressLint("LongLogTag")
     override fun initView() {
-        updateView()
+        (activity as MainActivity).listWorkSpaceLiveData.observe(this, {
+            if (it != null) {
+                listWorkspaceGroupData.clear()
+                listWorkspaceGroupData.addAll(it)
+                if (listWorkspaceGroupData.size > 0) {
+                    listWorkspaceGroupData[0].let { workspaceGroupData ->
+                        mWorkspaceGroupData = workspaceGroupData
+                        doGetGroupWithId(workspaceGroupData)
+                        updateViewWorkSpace(workspaceGroupData)
+                        (activity as MainActivity).doGetStaticWorkspace(workspaceGroupData, timeStatistical)
+                    }
+                }
+            }
+        })
+        (activity as MainActivity).statisticalWorkSpaceLiveData.observe(this, {
+            val gson = Gson()
+            Log.e("GroupManagementFrg UpdateStatistical: ", gson.toJson(it))
+            binding.viewStatistical.tvValueDangerous.text = it.num_dangerous_domain.toString()
+            binding.viewStatistical.tvValueAds.text = it.num_ads_blocked.toString()
+            binding.viewStatistical.tvValueViolate.text = it.num_violation.toString()
+        })
+        updateViewListGroup()
         groupIsOwnerAdapter = GroupListAdapter(listGroupIsOwner)
         groupIsOwnerAdapter?.setEnableImageGroup(true)
         groupIsOwnerAdapter?.onClickGroup = object : GroupListAdapter.OnClickGroup {
@@ -88,10 +139,19 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
         initControl()
     }
 
+    private fun updateViewWorkSpace(workspaceGroupData: WorkspaceGroupData) {
+        val typeWorkspaces = TYPE_WORKSPACES.fromIsTypeWorkSpaces(workspaceGroupData.type)
+        typeWorkspaces?.let { type ->
+            binding.tvGroupName.text = type.nameWorkSpace
+            binding.tvGroupDescription.text = type.content
+            binding.bgTop.background = context?.let { ContextCompat.getDrawable(it, type.resDrawableBgTop) }
+        }
+    }
+
     private fun initControl() {
         binding.btnCreateNewGroup.setOnSingClickListener {
             val intent = Intent(requireContext(), CreateGroupActivity::class.java)
-            intent.putExtra(DATA_WORKSPACE, workspaceGroupData)
+            intent.putExtra(DATA_WORKSPACE, mWorkspaceGroupData)
             resultLauncherCreateGroupActivity.launch(intent)
         }
 
@@ -99,6 +159,68 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
             val intent = Intent(requireContext(), ScanQRJoinGroupActivity::class.java)
             intent.putExtra(ScanQRJoinGroupActivity.DATA_TITLE, "Quét mã QR tham gia nhóm")
             startActivity(intent)
+        }
+
+        binding.btnChangeWorkSpace.setOnClickListener {
+            if ((activity as BaseActivity).needLogin())
+                return@setOnClickListener
+            bottomSheet = AccountTypeDialogBottomSheet.newInstance(listWorkspaceGroupData, positionTypeChoose)
+            bottomSheet?.show(parentFragmentManager, null)
+            bottomSheet?.onClickItemAccountType = object : OnClickItemAccountType {
+                override fun onChoosse(data: WorkspaceGroupData, position: Int) {
+                    positionTypeChoose = position
+                    if (listWorkspaceGroupData.size > 0) {
+                        listWorkspaceGroupData[position].let { workspaceGroupData ->
+                            mWorkspaceGroupData = workspaceGroupData
+                            doGetGroupWithId(workspaceGroupData)
+                            updateViewWorkSpace(workspaceGroupData)
+                            (activity as MainActivity).doGetStaticWorkspace(workspaceGroupData, timeStatistical)
+                        }
+                    }
+                }
+
+                override fun doDeleteWorkSpace(data: WorkspaceGroupData, position: Int) {
+                    deleteWorkSpace(data, position)
+                }
+
+                override fun doUpdateNameWorkSpace(
+                    data: WorkspaceGroupData,
+                    name: String,
+                    position: Int
+                ) {
+                    updateNameWorkSpace(data, name, position)
+                }
+
+                override fun add() {
+                    if (listWorkspaceGroupData.size == 3) {
+                        (activity as BaseActivity).showToast("Bạn đã tạo tối đa workspace")
+                        return
+                    }
+                    val intentCreate = Intent(context, CreateWorkspaceActivity::class.java)
+                    resultLauncherCreateWorkspaceActivity.launch(intentCreate)
+                }
+
+            }
+        }
+
+        binding.viewStatistical.tvTime.setOnSingClickListener {
+            DisplayStatisticalForTimeBottomSheet(object : OnClickItemTime {
+                override fun onClickItemTime(item: TimeStatistical) {
+                    getDataStatistical(item)
+                    binding.viewStatistical.tvTime.text = item.time
+                }
+
+            }).show(parentFragmentManager, null)
+        }
+    }
+
+    private fun getDataStatistical(item: TimeStatistical) {
+        mWorkspaceGroupData?.let { workSpaceData ->
+            timeStatistical = item.value
+            (activity as MainActivity).doGetStaticWorkspace(
+                workSpaceData,
+                timeStatistical
+            )
         }
     }
 
@@ -133,7 +255,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
                         groupIsOwnerAdapter?.notifyDataSetChanged()
                         groupIsMemberAdapter?.notifyDataSetChanged()
                     }
-                    updateView()
+                    updateViewListGroup()
                     Log.e("doGetGroupWithId", "onResponse: " + listGroupIsOwner.size + " | " + listGroupIsMember.size)
                 }
 
@@ -146,7 +268,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
         }))
     }
 
-    private fun updateView() {
+    private fun updateViewListGroup() {
         binding.tvGroupIsOwner.visibility = if (listGroupIsOwner.isEmpty()) View.GONE else View.VISIBLE
         binding.rcvGroupIsOwner.visibility = if (listGroupIsOwner.isEmpty()) View.GONE else View.VISIBLE
         binding.tvGroupIsMember.visibility = if (listGroupIsMember.isEmpty()) View.GONE else View.VISIBLE
@@ -154,8 +276,96 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
         binding.viewLine.visibility = if (listGroupIsMember.isEmpty()) View.GONE else View.VISIBLE
     }
 
-    fun updateWorkspace(data: WorkspaceGroupData) {
-        this.workspaceGroupData = data
-        workspaceGroupData?.let { doGetGroupWithId(it) }
+    fun deleteWorkSpace(data: WorkspaceGroupData, position: Int) {
+        showProgressDialog()
+        val client = NetworkClient()
+        val call = context?.let {
+            client.client(context = it)
+                .doDeleteWorkspace(DeleteWorkSpaceRequest(data.id))
+        }
+        call?.enqueue(BaseCallback(this, object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                dismissProgress()
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    bottomSheet?.deleteWorkSpace(data, position)
+                    //default chọn giá trị đầu tiên của list workspace sau khi xóa thành công
+                    positionTypeChoose = 0
+                    if (listWorkspaceGroupData.size > 0) {
+                        listWorkspaceGroupData[positionTypeChoose].let { workspaceGroupData ->
+                            mWorkspaceGroupData = workspaceGroupData
+                            doGetGroupWithId(workspaceGroupData)
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        }))
+    }
+
+    private fun updateWorkSpace(data: WorkspaceGroupData, position: Int) {
+        showProgressDialog()
+        val updateWorkspaceRequest = WorkspaceGroupData(
+            id = data.id,
+            name = data.name,
+            type = data.type,
+            isActive = data.isActive,
+            userOwner = data.userOwner,
+            isOwner = data.isOwner,
+            phishingEnabled = data.phishingEnabled,
+            malwareEnabled = data.malwareEnabled,
+            logEnabled = data.logEnabled,
+            groupIds = data.groupIds,
+            members = data.members,
+            createdAt = data.createdAt
+        )
+        val client = NetworkClient()
+        val call =
+            context?.let { client.client(context = it).doUpdateWorkspace(updateWorkspaceRequest) }
+        call?.enqueue(BaseCallback(this, object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                dismissProgress()
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        }))
+    }
+
+    fun updateNameWorkSpace(data: WorkspaceGroupData, newName: String, position: Int) {
+        showProgressDialog()
+        val updateNameWorkspaceRequest = UpdateNameWorkspaceRequest(data.id, newName)
+        val client = NetworkClient()
+        val call = context?.let {
+            client.client(context = it)
+                .doUpdateNameWorkSpace(updateNameWorkspaceRequest)
+        }
+        call?.enqueue(BaseCallback(this, object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                dismissProgress()
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    bottomSheet?.updateNameWorkSpace(newName, position)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        }))
     }
 }

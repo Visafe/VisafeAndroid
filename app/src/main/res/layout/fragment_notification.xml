@@ -2,11 +2,12 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context=".ui.home.NotificationFragment">
+        android:clickable="true"
+        android:focusable="true">
 
         <TextView
             android:id="@+id/tvTitle"
@@ -15,14 +16,13 @@
             android:layout_height="?actionBarSize"
             android:layout_marginTop="@dimen/_26sdp"
             android:gravity="center"
-            android:text="@string/thong_bao"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="@string/thong_bao" />
 
         <View
             android:id="@+id/viewLine"
             android:layout_width="0dp"
-            android:layout_height="0.5dp"
+            android:layout_height="1dp"
+            android:layout_below="@+id/tvTitle"
             android:background="@color/color_EEEEEE"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,23 +31,20 @@
         <com.jcodecraeer.xrecyclerview.XRecyclerView
             android:id="@+id/rcvNotification"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewLine" />
+            android:layout_height="match_parent"
+            android:layout_below="@+id/viewLine"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <TextView
             android:id="@+id/tvNoData"
             style="@style/Content"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
+            android:layout_centerInParent="true"
             android:gravity="center"
             android:text="Không có thông báo nào"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+            tools:visibility="visible" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 </layout>

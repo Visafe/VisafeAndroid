@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
@@ -15,13 +16,13 @@
             android:background="@color/white">
 
             <ImageView
-                android:padding="@dimen/_4sdp"
                 android:id="@+id/ivBack"
                 android:layout_width="@dimen/_28dp"
                 android:layout_height="@dimen/_28dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:adjustViewBounds="true"
+                android:padding="@dimen/_4sdp"
                 android:src="@drawable/ic_baseline_clear_24"
                 app:tint="@color/color_111111" />
 
@@ -29,10 +30,12 @@
 
         <ImageView
             android:id="@+id/ivGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_220sdp"
+            android:layout_height="@dimen/_220sdp"
             android:layout_below="@id/layoutToolbar"
-            android:src="@drawable/ic_welcome_group" />
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_welcome_protected_family" />
 
         <TextView
             android:id="@+id/tvTitle"
@@ -50,10 +53,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvTitle"
+            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginEnd="@dimen/_24dp"
             android:fontFamily="@font/sf_pro_text_regular"
             android:gravity="center_horizontal"
-            android:paddingStart="@dimen/_24dp"
-            android:paddingEnd="@dimen/_24dp"
             android:text="@string/protect_content"
             android:textColor="@color/color_70_222222"
             android:textSize="@dimen/text_size_13sp" />

@@ -72,7 +72,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                 vibrator?.vibrate(200)
             }
             if (!isStatusEnable) {
-                binding.roundImage.visibility = View.GONE
+                binding.roundImage.visibility = View.INVISIBLE
                 prepareAndStartDnsVpn()
             } else {
                 stopDnsVpnService()

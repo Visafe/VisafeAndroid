@@ -2,6 +2,7 @@ package vn.ncsc.visafe.ui.support
 
 import android.os.Bundle
 import android.view.View
+import vn.ncsc.visafe.GlobalConst
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.databinding.ActivitySupportCenterBinding
@@ -35,10 +36,19 @@ class SupportCenterActivity : BaseActivity() {
             sendEmail(this, getString(R.string.email_support), "")
         }
         binding.clMessenger.setOnSingClickListener {
-            openWebsite("https://www.facebook.com/govSOC", this)
+            openWebsite(GlobalConst.URL_CONTACT_FACEBOOK, this)
         }
         binding.clFacebook.setOnSingClickListener {
-            openWebsite("https://www.facebook.com/govSOC", this)
+            openWebsite(GlobalConst.URL_CONTACT_FACEBOOK, this)
+        }
+        binding.clFAQ.setOnSingClickListener {
+            openWebsite(GlobalConst.URL_FAQ, this)
+        }
+        binding.clRules.setOnSingClickListener {
+            openWebsite(GlobalConst.URL_TERM_AND_CONDITION, this)
+        }
+        binding.clProtect.setOnSingClickListener {
+            openWebsite(GlobalConst.URL_PRIVACY_POLICY, this)
         }
     }
 }

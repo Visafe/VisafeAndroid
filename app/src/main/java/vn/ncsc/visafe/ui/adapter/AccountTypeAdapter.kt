@@ -43,11 +43,11 @@ class AccountTypeAdapter(
     override fun getItemCount(): Int = groupList.size
 
     fun setSelected(position: Int) {
-        groupList[position].isSelected = true
         for (i in groupList.indices) {
             if (i != position)
                 groupList[i].isSelected = false
         }
+        groupList[position].isSelected = true
         notifyDataSetChanged()
     }
 

@@ -219,43 +219,4 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ivLanguage" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clLogout"
-        android:layout_marginTop="@dimen/_6sdp"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/ivLogout"
-            android:layout_width="@dimen/_20dp"
-            android:layout_height="@dimen/_20dp"
-            android:layout_margin="@dimen/_16dp"
-            android:src="@drawable/ic_logout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" />
-
-        <TextView
-            style="@style/Content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8dp"
-            android:text="@string/logout"
-            android:textColor="@color/color_222222"
-            app:layout_constraintBottom_toBottomOf="@id/ivLogout"
-            app:layout_constraintStart_toEndOf="@id/ivLogout"
-            app:layout_constraintTop_toTopOf="@id/ivLogout" />
-
-        <View
-            android:visibility="invisible"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="@dimen/_16dp"
-            android:background="@color/color_EEEEEE"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivLogout" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

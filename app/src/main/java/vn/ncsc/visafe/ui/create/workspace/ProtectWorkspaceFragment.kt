@@ -52,7 +52,7 @@ class ProtectWorkspaceFragment : BaseFragment<FragmentProtectWorkspaceBinding>()
             createWorkspaceActivity?.createWorkSpaceRequest?.name = binding.editNameWorkspace.text.toString()
             createWorkspaceActivity?.createWorkSpaceRequest?.type = type
 //            createWorkspaceActivity?.addFragment(SetupProtectWorkspaceFragment.newInstance())
-            createWorkspaceActivity?.finish()
+            createWorkspaceActivity?.doCreateGroup()
             hiddenKeyboard()
         }
 
