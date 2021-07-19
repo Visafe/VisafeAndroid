@@ -33,9 +33,8 @@ class GroupListAdapter(val groupList: List<GroupData?>) :
             } else {
                 View.GONE
             }
-            val groupNumber = "Phòng ${position + 1}"
-            binding.tvName.text = "${groupNumber}: ${item.name}"
-            binding.ivGroup.text = getTextGroup(groupNumber)
+            binding.tvName.text = item.name
+            binding.ivGroup.text = getTextGroup(item.name)
             binding.tvContent.text = "${item.listUsersGroupInfo?.size} thành viên • ${item.listDevicesGroupInfo?.size} thiết bị"
         }
 

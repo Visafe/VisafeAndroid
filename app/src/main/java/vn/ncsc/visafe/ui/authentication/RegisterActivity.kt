@@ -13,12 +13,11 @@ import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
 import com.facebook.login.LoginManager
-import com.rengwuxian.materialedittext.MaterialEditText
+import com.google.android.material.textfield.TextInputEditText
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import vn.ncsc.visafe.R
-import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.BaseResponse
 import vn.ncsc.visafe.data.NetworkClient
@@ -36,6 +35,7 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
     lateinit var viewBinding: ActivityRegisterBinding
 
     private var isShowPassword: Boolean = false
+    private var isShowPasswordAgain: Boolean = false
     private var listError: MutableList<View> = mutableListOf()
     private var inputOTPFragment: InputOTPFragment? = null
 
@@ -127,21 +127,26 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
                 listOf("public_profile", "email")
             )
         }
+        viewBinding.btnShowHidePasswordAgain.setOnSingClickListener { onShowHidePasswordAgain() }
     }
 
     private fun doRegister() {
         if (!validateField() && listError.size > 0) {
-            if (listError[0] is MaterialEditText) {
+            if (listError[0] is TextInputEditText) {
                 listError[0].requestFocus()
                 showKeyboard()
             }
             return
         }
+        hideKeyboard(this)
         showProgressDialog()
         val registerRequest = RegisterRequest()
         registerRequest.username = viewBinding.edtInputEmail.text.toString()
-        registerRequest.email = if (isNumber(viewBinding.edtInputEmail.text.toString()))
-            formatMobileHead84(viewBinding.edtInputEmail.text.toString()) else viewBinding.edtInputEmail.text.toString()
+        if (isNumber(viewBinding.edtInputEmail.text.toString())) {
+            registerRequest.phoneNumber = formatMobileHead84(viewBinding.edtInputEmail.text.toString())
+        } else {
+            registerRequest.email = viewBinding.edtInputEmail.text.toString()
+        }
         registerRequest.password = viewBinding.edtInputPassword.text.toString()
         registerRequest.repeatPassword = viewBinding.edtInputPassword.text.toString()
         val client = NetworkClient()
@@ -180,8 +185,12 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
 
     private fun doReSendOTP() {
         showProgressDialog()
-        val email = viewBinding.edtInputEmail.text.toString()
-        val reSendOTP = LoginRequest(username = email)
+        val reSendOTP = LoginRequest()
+        if (isNumber(viewBinding.edtInputEmail.text.toString())) {
+            reSendOTP.username = formatMobileHead84(viewBinding.edtInputEmail.text.toString())
+        } else {
+            reSendOTP.username = viewBinding.edtInputEmail.text.toString()
+        }
         val client = NetworkClient()
         val call = client.clientWithoutToken(context = applicationContext).doReActiveAccount(reSendOTP)
         call.enqueue(BaseCallback(this, object : Callback<BaseResponse> {
@@ -250,6 +259,40 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
             viewBinding.tvInputPasswordError.text = "Vui lòng nhập mật khẩu!"
             listError.add(viewBinding.edtInputPassword)
             isValidField = false
+        } else {
+            if (viewBinding.edtInputPassword.text.toString().length < 6 || viewBinding.edtInputPassword.text.toString().length > 32) {
+                viewBinding.edtInputPassword.background =
+                    ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
+                viewBinding.tvInputPasswordError.visibility = View.VISIBLE
+                viewBinding.tvInputPasswordError.text = "Mật khẩu phải có độ dài từ 6-32 ký tự"
+                listError.add(viewBinding.edtInputPassword)
+                isValidField = false
+            }
+
+        }
+        if (viewBinding.edtInputPasswordAgain.text.isNullOrEmpty()) {
+            viewBinding.edtInputPasswordAgain.background =
+                ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
+            viewBinding.tvInputPasswordAgainError.visibility = View.VISIBLE
+            viewBinding.tvInputPasswordAgainError.text = "Vui lòng nhập mật khẩu!"
+            listError.add(viewBinding.edtInputPasswordAgain)
+            isValidField = false
+        } else {
+            if (viewBinding.edtInputPasswordAgain.text.toString().length < 6 || viewBinding.edtInputPassword.text.toString().length > 32) {
+                viewBinding.edtInputPasswordAgain.background =
+                    ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
+                viewBinding.tvInputPasswordAgainError.visibility = View.VISIBLE
+                viewBinding.tvInputPasswordAgainError.text = "Mật khẩu phải có độ dài từ 6-32 ký tự"
+                listError.add(viewBinding.edtInputPasswordAgain)
+                isValidField = false
+            } else if (viewBinding.edtInputPasswordAgain.text.toString() != viewBinding.edtInputPassword.text.toString()) {
+                viewBinding.edtInputPasswordAgain.background =
+                    ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
+                viewBinding.tvInputPasswordAgainError.visibility = View.VISIBLE
+                viewBinding.tvInputPasswordAgainError.text = "Mật khẩu không trùng khớp"
+                listError.add(viewBinding.edtInputPasswordAgain)
+                isValidField = false
+            }
         }
         return isValidField
     }
@@ -278,10 +321,40 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
         }
     }
 
+    private fun onShowHidePasswordAgain() {
+        if (!isShowPasswordAgain) {
+            isShowPasswordAgain = true
+            viewBinding.edtInputPasswordAgain.transformationMethod =
+                HideReturnsTransformationMethod.getInstance()
+            viewBinding.btnShowHidePasswordAgain.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.ic_eye_on
+                )
+            )
+        } else {
+            isShowPasswordAgain = false
+            viewBinding.edtInputPasswordAgain.transformationMethod =
+                PasswordTransformationMethod.getInstance()
+            viewBinding.btnShowHidePasswordAgain.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.ic_eye_off
+                )
+            )
+        }
+    }
+
     override fun onInputOTP(otp: String) {
+        hideKeyboard(this)
         showProgressDialog()
-        val username = viewBinding.edtInputEmail.text.toString()
-        val activeAccountRequest = ActiveAccountRequest(username = username, otp = otp)
+        val activeAccountRequest = ActiveAccountRequest()
+        if (isNumber(viewBinding.edtInputEmail.text.toString())) {
+            activeAccountRequest.username = formatMobileHead84(viewBinding.edtInputEmail.text.toString())
+        } else {
+            activeAccountRequest.username = viewBinding.edtInputEmail.text.toString()
+        }
+        activeAccountRequest.otp = otp
         val client = NetworkClient()
         val call = client.clientWithoutToken(context = applicationContext).doActiveAccount(activeAccountRequest)
         call.enqueue(BaseCallback(this, object : Callback<BaseResponse> {
@@ -316,7 +389,11 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
     private fun autoLogin() {
         showProgressDialog()
         val loginRequest = LoginRequest()
-        loginRequest.username = viewBinding.edtInputEmail.text.toString()
+        if (isNumber(viewBinding.edtInputEmail.text.toString())) {
+            loginRequest.username = formatMobileHead84(viewBinding.edtInputEmail.text.toString())
+        } else {
+            loginRequest.username = viewBinding.edtInputEmail.text.toString()
+        }
         loginRequest.password = viewBinding.edtInputPassword.text.toString()
         val client = NetworkClient()
         val call = client.clientWithoutToken(context = applicationContext).doLogin(loginRequest)

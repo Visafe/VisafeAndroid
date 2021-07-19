@@ -40,6 +40,7 @@ class SubjectAdapter : RecyclerView.Adapter<SubjectAdapter.ViewHolder>() {
     override fun getItemCount(): Int = mData.size
 
     fun setData(data: ArrayList<Subject>) {
+        mData.clear()
         mData.addAll(data)
         notifyDataSetChanged()
     }

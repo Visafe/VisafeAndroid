@@ -46,7 +46,7 @@ class ChangePasswordActivity : BaseActivity() {
     fun doChangePassword() {
         showProgressDialog()
         val client = NetworkClient()
-        val call = client.clientWithoutToken(context = applicationContext).doChangePassword(changePasswordRequest)
+        val call = client.client(context = applicationContext).doChangePassword(changePasswordRequest)
         call.enqueue(object : retrofit2.Callback<ResponseBody> {
             override fun onResponse(
                 call: Call<ResponseBody>,

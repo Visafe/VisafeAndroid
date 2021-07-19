@@ -3,14 +3,17 @@ package vn.ncsc.visafe.ui.home
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.util.Log
+import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import vn.ncsc.visafe.R
+import vn.ncsc.visafe.ViSafeApp
 import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.data.BaseCallback
@@ -27,15 +30,23 @@ import vn.ncsc.visafe.ui.create.group.CreateGroupActivity
 import vn.ncsc.visafe.ui.dialog.DisplayStatisticalForTimeBottomSheet
 import vn.ncsc.visafe.ui.dialog.ImageDialog
 import vn.ncsc.visafe.ui.dialog.OnClickItemTime
+import vn.ncsc.visafe.ui.pin.CreateNewPinFragment
+import vn.ncsc.visafe.ui.pin.CurrentPinFragment
+import vn.ncsc.visafe.ui.pin.UpdatePinActivity
 import vn.ncsc.visafe.ui.protect.BlockAdsActivity
 import vn.ncsc.visafe.ui.protect.BlockTrackingDetailActivity
 import vn.ncsc.visafe.ui.protect.ProtectDeviceActivity
 import vn.ncsc.visafe.ui.protect.ProtectWifiActivity
 import vn.ncsc.visafe.ui.website.WebsiteReportActivity
 import vn.ncsc.visafe.utils.ChartUtil
+import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
 class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
+
+    private var mWorkspaceGroupData: WorkspaceGroupData? = null
+    private var timeStatistical: String = TimeStatistical.HANG_NGAY.value
+    private var timeType: String = TimeStatistical.HANG_NGAY.time
 
     companion object {
         @JvmStatic
@@ -44,34 +55,37 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
 
     override fun layoutRes(): Int = R.layout.fragment_over_view_protect
 
+    @SuppressLint("LongLogTag")
     override fun initView() {
-//        val contentAdapter = ContentMostAdapter(createContentList())
-//        binding.rvContentMost.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-//        binding.rvContentMost.adapter = contentAdapter
-//
-//        val deviceAdapter = DeviceMostAdapter(createDeviceList())
-//        binding.rvDeviceMost.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-//        binding.rvDeviceMost.adapter = deviceAdapter
-//
-//        val appAdapter = ApplicationMostAdapter(createAppList())
-//        binding.rvAppMost.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-//        binding.rvAppMost.adapter = appAdapter
-//
-//        val groupAdapter = GroupListAdapter(createGroupList())
-//        groupAdapter.onClickGroup = object : GroupListAdapter.OnClickGroup {
-//            override fun openGroup(data: GroupData) {
-//                val intent = Intent(requireContext(), GroupDashboardActivity::class.java)
-//                intent.putExtra(GroupDashboardActivity.GROUP_DATA_KEY, data)
-//                startActivity(intent)
-//            }
-//
-//            override fun onClickMore() {
-//
-//            }
-//
-//        }
-//        binding.rvGroup.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-//        binding.rvGroup.adapter = groupAdapter
+        val pin = ViSafeApp().getPreference().getString(PreferenceKey.PIN_CODE) ?: ""
+        binding.layoutHomePass.view.visibility = if (pin.isNotEmpty()) View.VISIBLE else View.GONE
+        (activity as MainActivity).timeTypes.observe(this, {
+            if (it.isNotEmpty()) {
+                timeType = it
+                binding.viewStatistical.tvTime.text = it
+            }
+        })
+        (activity as MainActivity).listWorkSpaceLiveData.observe(this, {
+            if (it != null) {
+                if (it.isNotEmpty()) {
+                    it[0].let { workspaceGroupData ->
+                        mWorkspaceGroupData = workspaceGroupData
+                        (activity as MainActivity).doGetStaticWorkspace(workspaceGroupData, timeStatistical)
+                    }
+                }
+            }
+        })
+        (activity as MainActivity).statisticalWorkSpaceLiveData.observe(this, {
+            val gson = Gson()
+            Log.e("OverViewProtectFrg StaticWorkspace: ", gson.toJson(it))
+            binding.viewStatistical.tvValueDangerous.text = it.num_dangerous_domain.toString()
+            binding.viewStatistical.tvValueAds.text = it.num_ads_blocked.toString()
+            binding.viewStatistical.tvValueViolate.text = it.num_violation.toString()
+        })
+        initControl()
+    }
+
+    private fun initControl() {
         binding.layoutAddVpn.btnHomeVpnAdd.setOnSingClickListener {
             showAddVpn()
         }
@@ -90,20 +104,8 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
                 }
             )
         }
-//        val dataChart = LinkedHashMap<String, Int>()
-//        dataChart["1"] = 10
-//        dataChart["2"] = 20
-//        dataChart["3"] = 30
-//        dataChart["4"] = 40
-//        dataChart["5"] = 50
-//        dataChart["6"] = 60
-//        dataChart["7"] = 70
-//        dataChart["8"] = 75
-//        dataChart["9"] = 65
-//        dataChart["10"] = 70
-//        dataChart["11"] = 20
-//        ChartUtil.initBarChart(binding.layoutHomeChart.hiChartView, dataChart, ChartUtil.getArrayColor(dataChart.size))
 
+        //bảo vệ thiết bị
         binding.layoutHomeProtect.llHomeProtectDevice.setOnSingClickListener {
             val intent = Intent(requireContext(), ProtectDeviceActivity::class.java)
             intent.putExtra(
@@ -113,6 +115,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
             startActivity(intent)
         }
 
+        //bảo vệ wifi
         binding.layoutHomeProtect.llHomeProtectWifi.setOnSingClickListener {
             val intent = Intent(requireContext(), ProtectWifiActivity::class.java)
             intent.putExtra(
@@ -122,6 +125,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
             startActivity(intent)
         }
 
+        //chặn quảng cáo
         binding.layoutHomeProtect.llHomeBlockAds.setOnSingClickListener {
             val intent = Intent(requireContext(), BlockAdsActivity::class.java)
             intent.putExtra(
@@ -131,6 +135,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
             startActivity(intent)
         }
 
+        //chặn theo dõi
         binding.layoutHomeProtect.llHomeBlockTracking.setOnSingClickListener {
             val intent = Intent(requireContext(), BlockTrackingDetailActivity::class.java)
             intent.putExtra(
@@ -140,40 +145,28 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
             startActivity(intent)
         }
 
-        binding.layoutStatistical.tvTime.setOnSingClickListener {
+        binding.viewStatistical.tvTime.setOnSingClickListener {
             DisplayStatisticalForTimeBottomSheet(object : OnClickItemTime {
                 override fun onClickItemTime(item: TimeStatistical) {
-                    binding.layoutStatistical.tvTime.text = item.time
+                    if (timeType == item.time)//không reload khi click lại ngày đang chọn
+                        return
+                    getDataStatistical(item)
+                    binding.viewStatistical.tvTime.text = item.time
                 }
 
             }).show(parentFragmentManager, null)
         }
     }
 
-    private fun createContentList(): List<ContentMostData> {
-        val list: ArrayList<ContentMostData> = ArrayList()
-        list.add(ContentMostData("Mạng xã hội", 80, "1h"))
-        list.add(ContentMostData("Chơi game", 60, "32p"))
-        list.add(ContentMostData("Trình duyệt web", 20, "32s"))
-        return list
-    }
-
-    private fun createAppList(): List<ApplicationMostData> {
-        val list: ArrayList<ApplicationMostData> = ArrayList()
-        list.add(ApplicationMostData("Instagram", 80, "1h"))
-        list.add(ApplicationMostData("Google Map", 60, "32p"))
-        list.add(ApplicationMostData("Book", 20, "32s"))
-        list.add(ApplicationMostData("AppStore", 20, "32s"))
-        return list
-    }
-
-    private fun createDeviceList(): List<DeviceMostData> {
-        val list: ArrayList<DeviceMostData> = ArrayList()
-        list.add(DeviceMostData("Iphone XS - Nguyễn Văn A", 80, "1h"))
-        list.add(DeviceMostData("Ipad - Nguyễn Văn B", 60, "32p"))
-        list.add(DeviceMostData("Iphone", 20, "32s"))
-        list.add(DeviceMostData("Samsung", 20, "32s"))
-        return list
+    private fun getDataStatistical(item: TimeStatistical) {
+        mWorkspaceGroupData?.let { workSpaceData ->
+            timeStatistical = item.value
+            (activity as MainActivity).timeTypes.value = item.time
+            (activity as MainActivity).doGetStaticWorkspace(
+                workSpaceData,
+                timeStatistical
+            )
+        }
     }
 
     private fun showAddVpn() {

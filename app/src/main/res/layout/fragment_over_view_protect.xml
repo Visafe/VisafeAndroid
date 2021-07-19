@@ -82,7 +82,7 @@
                 layout="@layout/layout_home_protect" />
 
             <include
-                android:id="@+id/layoutStatistical"
+                android:id="@+id/viewStatistical"
                 layout="@layout/layout_statistical" />
 
             <include

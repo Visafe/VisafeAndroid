@@ -82,7 +82,8 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 binding.tvInputPasswordErrorAgain.visibility = View.GONE
-                binding.edtInputPasswordAgain.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_custom_edittext)
+                binding.edtInputPasswordAgain.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.bg_custom_edittext)
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -99,6 +100,7 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>() {
             }
             return
         }
+        (activity as BaseActivity).hideKeyboard(activity)
         showProgressDialog()
         val password = binding.edtInputPassword.text.toString()
         val rePassword = binding.edtInputPasswordAgain.text.toString()
@@ -154,7 +156,8 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>() {
             isValidField = false
         } else {
             if (binding.edtInputPasswordAgain.text!!.length in 33 downTo 5) {
-                binding.edtInputPasswordAgain.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_error)
+                binding.edtInputPasswordAgain.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_error)
                 binding.tvInputPasswordErrorAgain.visibility = View.VISIBLE
                 binding.tvInputPasswordErrorAgain.text = "Mật khẩu phải có độ dài từ 6-32 ký tự"
                 listError.add(binding.edtInputPasswordAgain)

@@ -134,21 +134,21 @@ class AccessManagerFragment : BaseFragment<FragmentAccessManagerBinding>() {
         )
 
         mDataPrioritize = arrayListOf(
-            Subject(
-                "https://www.youtube.com/",
-                "https://www.youtube.com/",
-                R.drawable.ic_instagram
-            ),
-            Subject(
-                "https://www.facebook.com/",
-                "https://www.facebook.com/",
-                R.drawable.ic_facebook
-            ),
-            Subject(
-                "https://gmail.com/",
-                "https://gmail.com/",
-                R.drawable.ic_book
-            )
+//            Subject(
+//                "https://www.youtube.com/",
+//                "https://www.youtube.com/",
+//                R.drawable.ic_instagram
+//            ),
+//            Subject(
+//                "https://www.facebook.com/",
+//                "https://www.facebook.com/",
+//                R.drawable.ic_facebook
+//            ),
+//            Subject(
+//                "https://gmail.com/",
+//                "https://gmail.com/",
+//                R.drawable.ic_book
+//            )
         )
         binding.itemApp.setData(dataItemApp)
         binding.itemApp.setExpanded(false)
@@ -178,7 +178,10 @@ class AccessManagerFragment : BaseFragment<FragmentAccessManagerBinding>() {
                 "" + gson.toJson(createGroupActivity?.createGroupRequest)
             )
             createGroupActivity?.onBackPressed()
-            onSaveAccessManager.onSaveAccessManager(true)
+            onSaveAccessManager.onSaveAccessManager(
+                binding.itemApp.isChecked() || binding.itemGame.isChecked()
+                        || mDataPrioritize.isNotEmpty() || mDataBlock.isNotEmpty()
+            )
         }
 
         binding.btnBlockWebsite.setOnClickListener {

@@ -3,20 +3,17 @@ package vn.ncsc.visafe.ui.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import vn.ncsc.visafe.utils.getTimeAgo
 import kotlinx.android.synthetic.main.item_notification.view.*
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.model.NotificationModel
+import vn.ncsc.visafe.utils.getTimeAgo
 
 class NotificationAdapter(private val onSelectItemListener: OnSelectItemListener) :
-    ListAdapter<NotificationModel, NotificationAdapter.MyViewHolder>(Comparator()),
-    Filterable {
+    ListAdapter<NotificationModel, NotificationAdapter.MyViewHolder>(Comparator()) {
     private var notificationList: MutableList<NotificationModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -72,42 +69,15 @@ class NotificationAdapter(private val onSelectItemListener: OnSelectItemListener
         }
     }
 
-    override fun getFilter(): Filter {
-        return customFilter
-    }
-
-    private val customFilter = object : Filter() {
-        override fun performFiltering(constraint: CharSequence?): FilterResults {
-            val filteredList = mutableListOf<NotificationModel>()
-            if (constraint == null || constraint.isEmpty()) {
-                filteredList.addAll(notificationList)
-            } else {
-//                for (item in notificationList) {
-//                    if ((item.?.lowercase(Locale.ROOT)?.contains(constraint.toString().lowercase(Locale.ROOT))) == true
-//                    ) {
-//                        filteredList.add(item)
-//                    }
-//                }
-            }
-            val results = FilterResults()
-            results.values = filteredList
-            return results
-        }
-
-        @Suppress("UNCHECKED_CAST")
-        override fun publishResults(constraint: CharSequence?, filterResults: FilterResults?) {
-            submitList(filterResults?.values as MutableList<NotificationModel>?)
-        }
-
-    }
-
     interface OnSelectItemListener {
         fun onSelectItem(item: NotificationModel)
     }
 
     class Comparator : DiffUtil.ItemCallback<NotificationModel>() {
         override fun areItemsTheSame(oldItem: NotificationModel, newItem: NotificationModel): Boolean {
-            return oldItem === newItem
+            return !(oldItem.isRead != newItem.isRead
+                    || oldItem.isSee != newItem.isSee
+                    || oldItem.id != newItem.id)
         }
 
         override fun areContentsTheSame(oldItem: NotificationModel, newItem: NotificationModel): Boolean {

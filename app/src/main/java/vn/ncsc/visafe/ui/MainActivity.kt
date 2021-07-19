@@ -53,6 +53,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     var user: MutableLiveData<UserInfo> = MutableLiveData()
     var listWorkSpaceLiveData: MutableLiveData<List<WorkspaceGroupData>> = MutableLiveData()
     var statisticalWorkSpaceLiveData: MutableLiveData<StatsWorkSpace> = MutableLiveData()
+    var timeTypes: MutableLiveData<String> = MutableLiveData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +65,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     private fun initView() {
+        timeTypes.value = TimeStatistical.values()[0].time
         initTab()
     }
 
@@ -85,39 +87,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         fragmentTransaction.commitAllowingStateLoss()
         openTab(POSITION_SCAN)
         binding.bottomView.setOnNavigationItemSelectedListener(this)
-    }
-
-    private fun doGetWorkSpaces() {
-        if (!SharePreferenceKeyHelper.getInstance(application).isLogin())
-            return
-        showProgressDialog()
-        val client = NetworkClient()
-        val call = client.client(context = applicationContext).doGetWorkSpacesOfCurrentUser()
-        call.enqueue(BaseCallback(this@MainActivity, object : Callback<List<WorkspaceGroupData>> {
-            override fun onResponse(
-                call: Call<List<WorkspaceGroupData>>,
-                response: Response<List<WorkspaceGroupData>>
-            ) {
-                if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    response.body()?.toMutableList()?.let {
-                        listWorkSpace.clear()
-                        listWorkSpace.addAll(it)
-                        listWorkSpaceLiveData.value = listWorkSpace
-                        if (listWorkSpace.size > 0) {
-                            for (i in listWorkSpace.indices) {
-                                listWorkSpace[i].isSelected = i == 0
-                            }
-                        }
-                    }
-                }
-                dismissProgress()
-            }
-
-            override fun onFailure(call: Call<List<WorkspaceGroupData>>, t: Throwable) {
-                t.message?.let { Log.e("onFailure: ", it) }
-                dismissProgress()
-            }
-        }))
     }
 
     private fun doGetUserInfo() {
@@ -242,6 +211,39 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 binding.fab.setBackgroundTint(R.color.color_061448)
             }
         }
+    }
+
+    private fun doGetWorkSpaces() {
+        if (!SharePreferenceKeyHelper.getInstance(application).isLogin())
+            return
+        showProgressDialog()
+        val client = NetworkClient()
+        val call = client.client(context = applicationContext).doGetWorkSpacesOfCurrentUser()
+        call.enqueue(BaseCallback(this@MainActivity, object : Callback<List<WorkspaceGroupData>> {
+            override fun onResponse(
+                call: Call<List<WorkspaceGroupData>>,
+                response: Response<List<WorkspaceGroupData>>
+            ) {
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    response.body()?.toMutableList()?.let {
+                        listWorkSpace.clear()
+                        listWorkSpace.addAll(it)
+                        listWorkSpaceLiveData.value = listWorkSpace
+                        if (listWorkSpace.size > 0) {
+                            for (i in listWorkSpace.indices) {
+                                listWorkSpace[i].isSelected = i == 0
+                            }
+                        }
+                    }
+                }
+                dismissProgress()
+            }
+
+            override fun onFailure(call: Call<List<WorkspaceGroupData>>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        }))
     }
 
     fun doGetStaticWorkspace(workspaceGroupData: WorkspaceGroupData, timeLimit: String) {

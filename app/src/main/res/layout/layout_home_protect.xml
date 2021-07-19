@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/_16sdp"
+    android:layout_marginTop="@dimen/_16sdp"
     android:layout_marginEnd="@dimen/_16sdp"
     android:layout_marginBottom="@dimen/_8sdp"
-    android:layout_marginTop="@dimen/_16sdp"
     app:cardCornerRadius="@dimen/_16dp"
     app:cardElevation="@dimen/_8dp">
 
@@ -18,66 +18,67 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_marginEnd="0.5dp"
-            android:background="@color/white"
             android:id="@+id/llHomeProtectDevice"
             android:layout_width="@dimen/_0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="0.5dp"
+            android:background="@color/white"
             android:orientation="vertical"
             app:layout_constraintEnd_toStartOf="@id/llHomeProtectWifi"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <RelativeLayout
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_24dp"
                 android:layout_width="@dimen/_36sdp"
-                android:layout_height="@dimen/_36sdp">
+                android:layout_height="@dimen/_36sdp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_24dp">
 
                 <ImageView
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_info_circle"
                     android:id="@+id/ivHomeProtectDevice"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
+                    android:layout_centerInParent="true"
                     android:background="@drawable/bg_circle"
                     android:backgroundTint="@color/color_EEEEEE"
+                    android:src="@drawable/ic_info_circle"
                     tools:ignore="ContentDescription" />
 
                 <ImageView
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:src="@drawable/ic_info_gray"
-                    android:layout_width="@dimen/_12sdp"
-                    android:layout_height="@dimen/_12sdp"
                     tools:ignore="ContentDescription" />
             </RelativeLayout>
 
             <TextView
-                android:layout_marginTop="@dimen/_4sdp"
                 style="@style/Content_Bold"
-                android:textAllCaps="true"
-                android:text="@string/protect_device"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:text="@string/protect_device"
+                android:textAllCaps="true" />
 
             <TextView
                 android:id="@+id/tvHomeProtectAmout"
                 style="@style/Content_Small"
-                android:textColor="@color/color_70_222222"
-                android:text="Đã chặn 24 nguy hại"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Đã chặn 24 nguy hại"
+                android:textColor="@color/color_70_222222"
+                android:visibility="gone" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:layout_marginBottom="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_10dp"
-                android:layout_gravity="center_horizontal"
                 android:id="@+id/switchHomeProtectDevice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginBottom="@dimen/_16sdp"
                 android:background="@null"
                 android:thumb="@drawable/thumb_selector"
                 app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
@@ -87,66 +88,67 @@
         </LinearLayout>
 
         <LinearLayout
-            android:background="@color/white"
             android:id="@+id/llHomeProtectWifi"
             android:layout_width="@dimen/_0dp"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@id/llHomeProtectDevice"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/llHomeProtectDevice"
             app:layout_constraintTop_toTopOf="parent">
 
             <RelativeLayout
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_24dp"
                 android:layout_width="@dimen/_36sdp"
-                android:layout_height="@dimen/_36sdp">
+                android:layout_height="@dimen/_36sdp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_24dp">
 
                 <ImageView
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_wifi"
                     android:id="@+id/tvHomeProtectWifi"
-                    android:padding="@dimen/_6sdp"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
+                    android:layout_centerInParent="true"
                     android:background="@drawable/bg_circle"
                     android:backgroundTint="@color/color_EEEEEE"
+                    android:padding="@dimen/_6sdp"
+                    android:src="@drawable/ic_wifi"
                     tools:ignore="ContentDescription" />
 
                 <ImageView
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:src="@drawable/ic_info_gray"
-                    android:layout_width="@dimen/_12sdp"
-                    android:layout_height="@dimen/_12sdp"
                     tools:ignore="ContentDescription" />
             </RelativeLayout>
 
             <TextView
-                android:layout_marginTop="@dimen/_4sdp"
                 style="@style/Content_Bold"
-                android:textAllCaps="true"
-                android:text="@string/protect_wifi"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:text="@string/protect_wifi"
+                android:textAllCaps="true" />
 
             <TextView
                 android:id="@+id/tvHomeProtectAmoutWifi"
                 style="@style/Content_Small"
-                android:textColor="@color/color_70_222222"
-                android:text="Đã chặn 24 nguy hại"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Đã chặn 24 nguy hại"
+                android:textColor="@color/color_70_222222"
+                android:visibility="gone" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:layout_marginBottom="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_10dp"
-                android:layout_gravity="center_horizontal"
                 android:id="@+id/switchHomeProtectWifi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginBottom="@dimen/_16sdp"
                 android:background="@null"
                 android:thumb="@drawable/thumb_selector"
                 app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
@@ -156,68 +158,69 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="0.5dp"
-            android:layout_marginEnd="0.5dp"
-            android:background="@color/white"
             android:id="@+id/llHomeBlockAds"
             android:layout_width="@dimen/_0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="0.5dp"
+            android:layout_marginEnd="0.5dp"
+            android:background="@color/white"
             android:orientation="vertical"
             app:layout_constraintEnd_toStartOf="@id/llHomeBlockTracking"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/llHomeProtectDevice">
 
             <RelativeLayout
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_24dp"
                 android:layout_width="@dimen/_36sdp"
-                android:layout_height="@dimen/_36sdp">
+                android:layout_height="@dimen/_36sdp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_24dp">
 
                 <ImageView
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_ads_block"
                     android:id="@+id/tvHomeBlockAds"
-                    android:padding="@dimen/_6sdp"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
+                    android:layout_centerInParent="true"
                     android:background="@drawable/bg_circle"
                     android:backgroundTint="@color/color_EEEEEE"
+                    android:padding="@dimen/_6sdp"
+                    android:src="@drawable/ic_ads_block"
                     tools:ignore="ContentDescription" />
 
                 <ImageView
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:src="@drawable/ic_info_gray"
-                    android:layout_width="@dimen/_12sdp"
-                    android:layout_height="@dimen/_12sdp"
                     tools:ignore="ContentDescription" />
             </RelativeLayout>
 
             <TextView
-                android:layout_marginTop="@dimen/_4sdp"
                 style="@style/Content_Bold"
-                android:textAllCaps="true"
-                android:text="@string/chan_quang_cao"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:text="@string/chan_quang_cao"
+                android:textAllCaps="true" />
 
             <TextView
                 android:id="@+id/tvHomeBlockAdsAmout"
                 style="@style/Content_Small"
-                android:textColor="@color/color_70_222222"
-                android:text="Đã chặn 24 nguy hại"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Đã chặn 24 nguy hại"
+                android:textColor="@color/color_70_222222"
+                android:visibility="gone" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:layout_marginBottom="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_10dp"
-                android:layout_gravity="center_horizontal"
                 android:id="@+id/switchHomeBlockAds"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginBottom="@dimen/_16sdp"
                 android:background="@null"
                 android:thumb="@drawable/thumb_selector"
                 app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
@@ -227,66 +230,67 @@
         </LinearLayout>
 
         <LinearLayout
-            android:background="@color/white"
             android:id="@+id/llHomeBlockTracking"
             android:layout_width="@dimen/_0dp"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@id/llHomeBlockAds"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/llHomeBlockAds"
             app:layout_constraintTop_toTopOf="@id/llHomeBlockAds">
 
             <RelativeLayout
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_24dp"
                 android:layout_width="@dimen/_36sdp"
-                android:layout_height="@dimen/_36sdp">
+                android:layout_height="@dimen/_36sdp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_24dp">
 
                 <ImageView
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_home_eye_off"
                     android:id="@+id/tvHomeBlockTracking"
                     android:layout_width="@dimen/_30sdp"
-                    android:padding="@dimen/_6sdp"
                     android:layout_height="@dimen/_30sdp"
+                    android:layout_centerInParent="true"
                     android:background="@drawable/bg_circle"
                     android:backgroundTint="@color/color_EEEEEE"
+                    android:padding="@dimen/_6sdp"
+                    android:src="@drawable/ic_home_eye_off"
                     tools:ignore="ContentDescription" />
 
                 <ImageView
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:src="@drawable/ic_info_gray"
-                    android:layout_width="@dimen/_12sdp"
-                    android:layout_height="@dimen/_12sdp"
                     tools:ignore="ContentDescription" />
             </RelativeLayout>
 
             <TextView
-                android:layout_marginTop="@dimen/_4sdp"
                 style="@style/Content_Bold"
-                android:textAllCaps="true"
-                android:text="@string/chan_theo_doi"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:text="@string/chan_theo_doi"
+                android:textAllCaps="true" />
 
             <TextView
                 android:id="@+id/tvHomeBlockTrackingAmout"
                 style="@style/Content_Small"
-                android:textColor="@color/color_70_222222"
-                android:text="Đã chặn 24 nguy hại"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Đã chặn 24 nguy hại"
+                android:textColor="@color/color_70_222222"
+                android:visibility="gone" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:layout_marginBottom="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_10dp"
-                android:layout_gravity="center_horizontal"
                 android:id="@+id/switchHomeBlockTracking"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginBottom="@dimen/_16sdp"
                 android:background="@null"
                 android:thumb="@drawable/thumb_selector"
                 app:layout_constraintBottom_toBottomOf="@+id/tvTitle"

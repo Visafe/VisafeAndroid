@@ -94,6 +94,10 @@ class BlockContentCreateGroupFragment : BaseFragment<FragmentBlockContentCreateG
                 "" + gson.toJson(createGroupActivity?.createGroupRequest)
             )
             createGroupActivity?.onBackPressed()
+            onSaveBlockContent.onSaveBlockContent(
+                binding.itemSensitive.isChecked() || binding.itemByPass.isChecked()
+                        || binding.itemLimit.isChecked()
+            )
         }
         setCheckedForAll(isSelected)
         binding.btnReset.setOnSingClickListener {

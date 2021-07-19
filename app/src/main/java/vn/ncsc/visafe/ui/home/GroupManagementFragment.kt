@@ -49,6 +49,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
     private var bottomSheet: AccountTypeDialogBottomSheet? = null
     private var listWorkspaceGroupData: MutableList<WorkspaceGroupData> = mutableListOf()
     private var timeStatistical: String = TimeStatistical.HANG_NGAY.value
+    private var timeType: String = TimeStatistical.HANG_NGAY.time
 
     companion object {
         const val DATA_WORKSPACE = "DATA_WORKSPACE"
@@ -88,6 +89,12 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
 
     @SuppressLint("LongLogTag")
     override fun initView() {
+        (activity as MainActivity).timeTypes.observe(this, {
+            if (it.isNotEmpty()) {
+                timeType = it
+                binding.viewStatistical.tvTime.text = it
+            }
+        })
         (activity as MainActivity).listWorkSpaceLiveData.observe(this, {
             if (it != null) {
                 listWorkspaceGroupData.clear()
@@ -104,7 +111,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
         })
         (activity as MainActivity).statisticalWorkSpaceLiveData.observe(this, {
             val gson = Gson()
-            Log.e("GroupManagementFrg UpdateStatistical: ", gson.toJson(it))
+            Log.e("GroupManagementFrg StaticWorkspace: ", gson.toJson(it))
             binding.viewStatistical.tvValueDangerous.text = it.num_dangerous_domain.toString()
             binding.viewStatistical.tvValueAds.text = it.num_ads_blocked.toString()
             binding.viewStatistical.tvValueViolate.text = it.num_violation.toString()
@@ -206,7 +213,10 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
         binding.viewStatistical.tvTime.setOnSingClickListener {
             DisplayStatisticalForTimeBottomSheet(object : OnClickItemTime {
                 override fun onClickItemTime(item: TimeStatistical) {
+                    if (timeType == item.time)//không reload khi click lại ngày đang chọn
+                        return
                     getDataStatistical(item)
+                    (activity as MainActivity).timeTypes.value = item.time
                     binding.viewStatistical.tvTime.text = item.time
                 }
 

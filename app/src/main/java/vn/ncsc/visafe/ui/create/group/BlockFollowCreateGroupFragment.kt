@@ -55,7 +55,50 @@ class BlockFollowCreateGroupFragment : BaseFragment<FragmentBlockFollowCreateGro
             }
         })
         binding.btnReset.setOnClickListener {
-            binding.itemBlockTrackingDevice.setChecked(false)
+            binding.itemBlockTrackingDevice.setData(
+                arrayListOf(
+                    Subject(
+                        "Alexa",
+                        "alexa",
+                        R.drawable.ic_alexa, false
+                    ),
+                    Subject(
+                        "Apple",
+                        "apple",
+                        R.drawable.ic_apple, false
+                    ),
+                    Subject(
+                        "Huawei",
+                        "huawei",
+                        R.drawable.ic_huawei, true
+                    ),
+                    Subject(
+                        "Roku",
+                        "roku",
+                        R.drawable.ic_roku, false
+                    ),
+                    Subject(
+                        "Samsung",
+                        "samsung",
+                        R.drawable.ic_samsung, false
+                    ),
+                    Subject(
+                        "Sonos",
+                        "sonos",
+                        R.drawable.ic_sonos, false
+                    ),
+                    Subject(
+                        "Windows",
+                        "windows",
+                        R.drawable.ic_windows, false
+                    ),
+                    Subject(
+                        "Xiaomi",
+                        "xiaomi",
+                        R.drawable.ic_xiaomi, true
+                    )
+                )
+            )
         }
         binding.btnSave.setOnSingClickListener {
             createGroupActivity?.createGroupRequest?.native_tracking =
@@ -66,7 +109,7 @@ class BlockFollowCreateGroupFragment : BaseFragment<FragmentBlockFollowCreateGro
                 "" + gson.toJson(createGroupActivity?.createGroupRequest)
             )
             createGroupActivity?.onBackPressed()
-            onSaveBlockFollowCreateGroup.onSaveBlockFollowCreateGroup(true)
+            onSaveBlockFollowCreateGroup.onSaveBlockFollowCreateGroup(binding.itemBlockTrackingDevice.isChecked())
         }
 
         binding.itemBlockTrackingDevice.setData(

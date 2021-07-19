@@ -103,7 +103,7 @@ class BlockTracingAndAdsFragment : BaseFragment<FragmentBlockTracingAndAdsBindin
             )
             onCallBack.onSaveBlockTrackingAndAds(
                 binding.itemBlockAdsWeb.isChecked()
-                        || binding.itemBlockAdsWeb.isChecked() || binding.itemBlockAdsApp.getDataListSubject() != null
+                        || binding.itemBlockAdsWeb.isChecked() || binding.itemBlockAdsApp.isChecked()
             )
             createGroupActivity?.onBackPressed()
         }

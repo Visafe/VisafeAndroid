@@ -33,7 +33,7 @@ class GroupDetailActivity : BaseActivity() {
 
     private var groupId: String? = null
     private var positionGroup: Int? = null
-    private var groupNumber: String? = null
+    private var groupName: String? = null
     private var mIdGroup: String? = null
     private var fkUserId: Int? = null
     private var groupData: GroupData? = null
@@ -52,7 +52,7 @@ class GroupDetailActivity : BaseActivity() {
 
     private fun initControl() {
         binding.ivMore.setOnSingClickListener {
-            val title: String = groupNumber.toString()
+            val title: String = groupName.toString()
             val bottomSheet = VisafeDialogBottomSheet.newInstance(
                 "",
                 title,
@@ -86,7 +86,7 @@ class GroupDetailActivity : BaseActivity() {
         binding.ctrlMemberManager.setOnSingClickListener {
             val intent = Intent(this@GroupDetailActivity, MemberManagementActivity::class.java)
             intent.putExtra(MemberManagementActivity.KEY_DATA, groupData)
-            intent.putExtra(MemberManagementActivity.KEY_GROUP_NUMBER, groupNumber)
+            intent.putExtra(MemberManagementActivity.KEY_GROUP_NAME, groupName)
             startActivity(intent)
         }
     }
@@ -102,7 +102,7 @@ class GroupDetailActivity : BaseActivity() {
     private fun showDialogDeleteGroup() {
         val bottomSheet = VisafeDialogBottomSheet.newInstance(
             "",
-            getString(R.string.delete_group_content, groupNumber),
+            getString(R.string.delete_group_content, groupName),
             VisafeDialogBottomSheet.TYPE_CONFIRM_CANCLE
         )
         bottomSheet.show(supportFragmentManager, null)
@@ -173,9 +173,9 @@ class GroupDetailActivity : BaseActivity() {
                 dismissProgress()
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
                     response.body()?.let {
-                        groupNumber = "Phòng ${positionGroup?.plus(1)}"
-                        binding.tvName.text = "${groupNumber}: ${it.name}"
-                        binding.ivGroup.text = getTextGroup(groupNumber)
+                        groupName = it.name
+                        binding.tvName.text = groupName
+                        binding.ivGroup.text = getTextGroup(groupName)
                         binding.tvNumberMember.text = "${it.listUsersGroupInfo?.size} thành viên"
                         mIdGroup = it.groupid
                         fkUserId = it.fkUserId

@@ -17,11 +17,11 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
     lateinit var binding: ActivityMemberManagementBinding
     private var groupData: GroupData? = null
     private var listUsersGroupInfo: MutableList<UsersGroupInfo> = mutableListOf()
-    private var groupNumber: String? = ""
+    private var groupName: String? = ""
     private var memberManagerAdapter: MemberManagerAdapter? = null
 
     companion object {
-        const val KEY_GROUP_NUMBER = "KEY_GROUP_NUMBER"
+        const val KEY_GROUP_NAME = "KEY_GROUP_NAME"
         const val KEY_DATA = "KEY_DATA"
     }
 
@@ -31,7 +31,7 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
         setContentView(binding.root)
         intent?.let {
             groupData = it.getParcelableExtra(KEY_DATA)
-            groupNumber = it.getStringExtra(KEY_GROUP_NUMBER)
+            groupName = it.getStringExtra(KEY_GROUP_NAME)
         }
         initView()
         initControl()
@@ -43,7 +43,7 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
             listUsersGroupInfo.clear()
             it.listUsersGroupInfo?.toMutableList()?.let { it1 -> listUsersGroupInfo.addAll(it1) }
             binding.tvNumberMember.text = "${it.listUsersGroupInfo?.size} thành viên"
-            binding.tvContent.text = "${groupNumber}: ${it.name}"
+            binding.tvContent.text = it.name
         }
         memberManagerAdapter = MemberManagerAdapter(this)
         memberManagerAdapter?.setData(listUsersGroupInfo)

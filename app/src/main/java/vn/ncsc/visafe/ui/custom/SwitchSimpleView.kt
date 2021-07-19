@@ -99,6 +99,7 @@ class SwitchSimpleView @JvmOverloads constructor(
     }
 
     fun setData(data: ArrayList<Subject>) {
+        mData.clear()
         mData.addAll(data)
         if (!data.isNullOrEmpty()) {
             binding?.ivArrow?.visibility = View.VISIBLE

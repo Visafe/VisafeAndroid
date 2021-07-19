@@ -129,6 +129,7 @@ class LoginActivity : BaseAuthenticationActivity() {
             }
             return
         }
+        hideKeyboard(this)
         showProgressDialog()
         val loginRequest = LoginRequest()
         loginRequest.username =

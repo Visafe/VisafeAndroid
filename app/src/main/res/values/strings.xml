@@ -300,6 +300,7 @@
     <string name="text_forgot_password">Quên mật khẩu?</string>
     <string name="quick_login_with">Hoặc đăng nhập nhanh với</string>
     <string name="hint_input_password">Nhập mật khẩu</string>
+    <string name="hint_input_password_again">Nhập lại mật khẩu</string>
     <string name="hint_input_email_or_numberphone">Nhập số điện thoại/email</string>
     <string name="text_have_acc">Bạn đã có tài khoản? Đăng nhập</string>
     <string name="login">Đăng nhập</string>

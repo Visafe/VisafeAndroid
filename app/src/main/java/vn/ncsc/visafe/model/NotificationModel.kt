@@ -18,7 +18,30 @@ data class NotificationModel(
     var isRead: Boolean? = false,
     @SerializedName("isSee")
     var isSee: Boolean? = false
-) : Parcelable
+) : Parcelable {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        other as NotificationModel
+        if (content != other.content) return false
+        if (createdAt != other.createdAt) return false
+        if (group != other.group) return false
+        if (id != other.id) return false
+        if (isRead != other.isRead) return false
+        if (isSee != other.isSee) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = content?.hashCode() ?: 0
+        result = 31 * result + (createdAt?.hashCode() ?: 0)
+        result = 31 * result + (group?.hashCode() ?: 0)
+        result = 31 * result + (id ?: 0)
+        result = 31 * result + (isRead?.hashCode() ?: 0)
+        result = 31 * result + (isSee?.hashCode() ?: 0)
+        return result
+    }
+}
 
 @Parcelize
 data class ContentNotis(
