@@ -126,7 +126,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv3" />
 
         <TextView
-            android:id="@+id/tv5"
+            android:id="@+id/tvLinkShare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_3sdp"
@@ -144,8 +144,8 @@
             android:id="@+id/viewDotted"
             android:layout_width="@dimen/_0dp"
             android:layout_height="2dp"
-            android:layout_marginStart="@dimen/_13sdp"
-            android:layout_marginEnd="@dimen/_13sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
             android:background="@drawable/bg_dotted_view_line"
             app:layout_constraintBottom_toBottomOf="@+id/guidelineHorizontal"
             app:layout_constraintEnd_toEndOf="parent"

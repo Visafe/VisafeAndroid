@@ -2,6 +2,8 @@ package vn.ncsc.visafe.base
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -88,6 +90,23 @@ open class BaseActivity : AppCompatActivity(), BaseController {
             ) { _, _ -> finish() }
             show()
         }
+    }
+
+    fun copyToClipboard(text: String) {
+        if (text.isNotEmpty()) {
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("", text)
+            clipboard.setPrimaryClip(clip)
+            showToast("Copy success")
+        }
+    }
+
+    fun shareLink(text: String) {
+        val shareLink = Intent(Intent.ACTION_SEND)
+        shareLink.type = "text/plain"
+        shareLink.putExtra(Intent.EXTRA_TEXT, text)
+        shareLink.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        startActivity(Intent.createChooser(shareLink, text))
     }
 
     fun logOut() {

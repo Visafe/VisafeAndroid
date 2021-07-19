@@ -22,5 +22,13 @@ class AddMemberActivity : BaseActivity() {
 
     private fun initControl() {
         binding.ivBack.setOnSingClickListener { finish() }
+        binding.tvLinkShare.setOnSingClickListener {
+            copyToClipboard(binding.tvLinkShare.text.toString().replace(" ".toRegex(), ""))
+        }
+        binding.btnShareLink.setOnSingClickListener {
+            shareLink(binding.tvLinkShare.text.toString().replace(" ".toRegex(), ""))
+        }
+        binding.btnSaveQr.setOnSingClickListener {
+        }
     }
 }

@@ -107,9 +107,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                             for (i in listWorkSpace.indices) {
                                 listWorkSpace[i].isSelected = i == 0
                             }
-                            listWorkSpace[0].let { workspaceGroupData ->
-                                doGetStaticWorkspace(workspaceGroupData, TimeStatistical.HANG_NGAY.value)
-                            }
                         }
                     }
                 }

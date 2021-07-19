@@ -20,7 +20,6 @@ import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.FragmentGroupManagementBinding
 import vn.ncsc.visafe.model.GroupData
-import vn.ncsc.visafe.model.TYPE_WORKSPACES
 import vn.ncsc.visafe.model.WorkspaceGroupData
 import vn.ncsc.visafe.model.request.DeleteWorkSpaceRequest
 import vn.ncsc.visafe.model.request.UpdateNameWorkspaceRequest
@@ -48,6 +47,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
     private var positionTypeChoose = 0
     private var bottomSheet: AccountTypeDialogBottomSheet? = null
     private var listWorkspaceGroupData: MutableList<WorkspaceGroupData> = mutableListOf()
+    private var timeStatistical: String = TimeStatistical.HANG_NGAY.value
 
     companion object {
         const val DATA_WORKSPACE = "DATA_WORKSPACE"
@@ -96,6 +96,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
                         mWorkspaceGroupData = workspaceGroupData
                         doGetGroupWithId(workspaceGroupData)
                         updateViewWorkSpace(workspaceGroupData)
+                        (activity as MainActivity).doGetStaticWorkspace(workspaceGroupData, timeStatistical)
                     }
                 }
             }
@@ -172,6 +173,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
                             mWorkspaceGroupData = workspaceGroupData
                             doGetGroupWithId(workspaceGroupData)
                             updateViewWorkSpace(workspaceGroupData)
+                            (activity as MainActivity).doGetStaticWorkspace(workspaceGroupData, timeStatistical)
                         }
                     }
                 }
@@ -203,16 +205,21 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
         binding.viewStatistical.tvTime.setOnSingClickListener {
             DisplayStatisticalForTimeBottomSheet(object : OnClickItemTime {
                 override fun onClickItemTime(item: TimeStatistical) {
-                    mWorkspaceGroupData?.let { workSpaceData ->
-                        (activity as MainActivity).doGetStaticWorkspace(
-                            workSpaceData,
-                            item.value
-                        )
-                    }
+                    getDataStatistical(item)
                     binding.viewStatistical.tvTime.text = item.time
                 }
 
             }).show(parentFragmentManager, null)
+        }
+    }
+
+    private fun getDataStatistical(item: TimeStatistical) {
+        mWorkspaceGroupData?.let { workSpaceData ->
+            timeStatistical = item.value
+            (activity as MainActivity).doGetStaticWorkspace(
+                workSpaceData,
+                timeStatistical
+            )
         }
     }
 
