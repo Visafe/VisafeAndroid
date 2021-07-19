@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/_16sdp"
@@ -27,15 +28,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:src="@drawable/ic_info_circle"
-                android:id="@+id/ivHomeProtectDevice"
-                android:layout_width="@dimen/_36sdp"
-                android:layout_height="@dimen/_36sdp"
+            <RelativeLayout
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/_24dp"
-                android:background="@drawable/bg_circle"
-                android:backgroundTint="@color/color_EEEEEE" />
+                android:layout_width="@dimen/_36sdp"
+                android:layout_height="@dimen/_36sdp">
+
+                <ImageView
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_info_circle"
+                    android:id="@+id/ivHomeProtectDevice"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="@color/color_EEEEEE"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/ic_info_gray"
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
 
             <TextView
                 android:layout_marginTop="@dimen/_4sdp"
@@ -80,16 +96,31 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:padding="@dimen/_6sdp"
-                android:src="@drawable/ic_wifi"
-                android:id="@+id/tvHomeProtectWifi"
-                android:layout_width="@dimen/_36sdp"
-                android:layout_height="@dimen/_36sdp"
+            <RelativeLayout
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/_24dp"
-                android:background="@drawable/bg_circle"
-                android:backgroundTint="@color/color_EEEEEE" />
+                android:layout_width="@dimen/_36sdp"
+                android:layout_height="@dimen/_36sdp">
+
+                <ImageView
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_wifi"
+                    android:id="@+id/tvHomeProtectWifi"
+                    android:padding="@dimen/_6sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="@color/color_EEEEEE"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/ic_info_gray"
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
 
             <TextView
                 android:layout_marginTop="@dimen/_4sdp"
@@ -136,16 +167,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/llHomeProtectDevice">
 
-            <ImageView
-                android:padding="@dimen/_6sdp"
-                android:src="@drawable/ic_ads_block"
-                android:id="@+id/tvHomeBlockAds"
-                android:layout_width="@dimen/_36sdp"
-                android:layout_height="@dimen/_36sdp"
+            <RelativeLayout
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/_24dp"
-                android:background="@drawable/bg_circle"
-                android:backgroundTint="@color/color_EEEEEE" />
+                android:layout_width="@dimen/_36sdp"
+                android:layout_height="@dimen/_36sdp">
+
+                <ImageView
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_ads_block"
+                    android:id="@+id/tvHomeBlockAds"
+                    android:padding="@dimen/_6sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="@color/color_EEEEEE"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/ic_info_gray"
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
 
             <TextView
                 android:layout_marginTop="@dimen/_4sdp"
@@ -190,16 +236,31 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/llHomeBlockAds">
 
-            <ImageView
-                android:padding="@dimen/_6sdp"
-                android:src="@drawable/ic_home_eye_off"
-                android:id="@+id/tvHomeBlockTracking"
-                android:layout_width="@dimen/_36sdp"
-                android:layout_height="@dimen/_36sdp"
+            <RelativeLayout
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/_24dp"
-                android:background="@drawable/bg_circle"
-                android:backgroundTint="@color/color_EEEEEE" />
+                android:layout_width="@dimen/_36sdp"
+                android:layout_height="@dimen/_36sdp">
+
+                <ImageView
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_home_eye_off"
+                    android:id="@+id/tvHomeBlockTracking"
+                    android:layout_width="@dimen/_30sdp"
+                    android:padding="@dimen/_6sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="@color/color_EEEEEE"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/ic_info_gray"
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
 
             <TextView
                 android:layout_marginTop="@dimen/_4sdp"

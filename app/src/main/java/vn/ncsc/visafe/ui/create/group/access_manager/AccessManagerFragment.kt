@@ -71,12 +71,12 @@ class AccessManagerFragment : BaseFragment<FragmentAccessManagerBinding>() {
             Subject(
                 "Zalo",
                 "zalo",
-                R.drawable.ic_logo
+                R.drawable.ic_zalo
             ),
             Subject(
                 "Tiktok",
                 "tiktok",
-                R.drawable.ic_logo
+                R.drawable.ic_tiktok
             ),
             Subject(
                 "Instagram",
@@ -86,32 +86,32 @@ class AccessManagerFragment : BaseFragment<FragmentAccessManagerBinding>() {
             Subject(
                 "Tinder",
                 "tinder",
-                R.drawable.ic_logo
+                R.drawable.ic_tinder
             ),
             Subject(
                 "Twitter",
                 "twitter",
-                R.drawable.ic_logo
+                R.drawable.ic_twitter
             ),
             Subject(
                 "Netflix",
                 "netflix",
-                R.drawable.ic_logo
+                R.drawable.ic_netflix
             ),
             Subject(
                 "Reddit",
                 "reddit",
-                R.drawable.ic_logo
+                R.drawable.ic_reddit
             ),
             Subject(
                 "9gag",
                 "9gag",
-                R.drawable.ic_logo
+                R.drawable.ic_9gag
             ),
             Subject(
                 "Discord",
                 "discord",
-                R.drawable.ic_logo
+                R.drawable.ic_discord
             )
         )
 
@@ -142,7 +142,7 @@ class AccessManagerFragment : BaseFragment<FragmentAccessManagerBinding>() {
             Subject(
                 "https://www.facebook.com/",
                 "https://www.facebook.com/",
-                R.drawable.ic_google_map
+                R.drawable.ic_facebook
             ),
             Subject(
                 "https://gmail.com/",

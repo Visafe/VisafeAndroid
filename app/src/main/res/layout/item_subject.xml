@@ -18,16 +18,14 @@
             app:layout_constraintTop_toTopOf="@+id/ivItem"
             app:track="@drawable/track_selector" />
 
-        <com.google.android.material.imageview.ShapeableImageView
+        <ImageView
             android:id="@+id/ivItem"
             android:layout_width="@dimen/_32dp"
             android:layout_height="@dimen/_32dp"
-            android:scaleType="centerCrop"
-            android:src="@color/color_FFB31F"
+            android:adjustViewBounds="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/roundedCorners" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
 
         <TextView
