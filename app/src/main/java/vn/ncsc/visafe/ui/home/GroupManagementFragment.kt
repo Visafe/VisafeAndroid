@@ -20,6 +20,7 @@ import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.FragmentGroupManagementBinding
 import vn.ncsc.visafe.model.GroupData
+import vn.ncsc.visafe.model.TYPE_WORKSPACES
 import vn.ncsc.visafe.model.WorkspaceGroupData
 import vn.ncsc.visafe.model.request.DeleteWorkSpaceRequest
 import vn.ncsc.visafe.model.request.UpdateNameWorkspaceRequest
