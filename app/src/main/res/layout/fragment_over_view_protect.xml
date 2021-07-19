@@ -79,8 +79,8 @@
                 layout="@layout/layout_home_protect" />
 
             <include
-                android:id="@+id/layoutHomeChart"
-                layout="@layout/layout_home_chart" />
+                android:id="@+id/layoutStatistical"
+                layout="@layout/layout_statistical" />
 
             <include
                 android:id="@+id/layoutAddVpn"

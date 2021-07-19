@@ -21,8 +21,12 @@ import vn.ncsc.visafe.model.ContentMostData
 import vn.ncsc.visafe.model.DeviceMostData
 import vn.ncsc.visafe.model.WorkspaceGroupData
 import vn.ncsc.visafe.model.response.StatsWorkspaceResponse
+import vn.ncsc.visafe.ui.MainActivity
+import vn.ncsc.visafe.ui.adapter.TimeStatistical
 import vn.ncsc.visafe.ui.create.group.CreateGroupActivity
+import vn.ncsc.visafe.ui.dialog.DisplayStatisticalForTimeBottomSheet
 import vn.ncsc.visafe.ui.dialog.ImageDialog
+import vn.ncsc.visafe.ui.dialog.OnClickItemTime
 import vn.ncsc.visafe.ui.protect.BlockAdsActivity
 import vn.ncsc.visafe.ui.protect.BlockTrackingDetailActivity
 import vn.ncsc.visafe.ui.protect.ProtectDeviceActivity
@@ -86,19 +90,19 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
                 }
             )
         }
-        val dataChart = LinkedHashMap<String, Int>()
-        dataChart["1"] = 10
-        dataChart["2"] = 20
-        dataChart["3"] = 30
-        dataChart["4"] = 40
-        dataChart["5"] = 50
-        dataChart["6"] = 60
-        dataChart["7"] = 70
-        dataChart["8"] = 75
-        dataChart["9"] = 65
-        dataChart["10"] = 70
-        dataChart["11"] = 20
-        ChartUtil.initBarChart(binding.layoutHomeChart.hiChartView, dataChart, ChartUtil.getArrayColor(dataChart.size))
+//        val dataChart = LinkedHashMap<String, Int>()
+//        dataChart["1"] = 10
+//        dataChart["2"] = 20
+//        dataChart["3"] = 30
+//        dataChart["4"] = 40
+//        dataChart["5"] = 50
+//        dataChart["6"] = 60
+//        dataChart["7"] = 70
+//        dataChart["8"] = 75
+//        dataChart["9"] = 65
+//        dataChart["10"] = 70
+//        dataChart["11"] = 20
+//        ChartUtil.initBarChart(binding.layoutHomeChart.hiChartView, dataChart, ChartUtil.getArrayColor(dataChart.size))
 
         binding.layoutHomeProtect.llHomeProtectDevice.setOnSingClickListener {
             val intent = Intent(requireContext(), ProtectDeviceActivity::class.java)
@@ -134,6 +138,15 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
                 binding.layoutHomeProtect.switchHomeBlockTracking.isChecked
             )
             startActivity(intent)
+        }
+
+        binding.layoutStatistical.tvTime.setOnSingClickListener {
+            DisplayStatisticalForTimeBottomSheet(object : OnClickItemTime {
+                override fun onClickItemTime(item: TimeStatistical) {
+                    binding.layoutStatistical.tvTime.text = item.time
+                }
+
+            }).show(parentFragmentManager, null)
         }
 
         setupWebviewUtilities()
