@@ -74,7 +74,7 @@ class BlockFollowCreateGroupFragment : BaseFragment<FragmentBlockFollowCreateGro
                 Subject(
                     "Alexa",
                     "alexa",
-                    R.drawable.ic_logo_text
+                    R.drawable.ic_alexa
                 ),
                 Subject(
                     "Apple",
@@ -89,7 +89,7 @@ class BlockFollowCreateGroupFragment : BaseFragment<FragmentBlockFollowCreateGro
                 Subject(
                     "Roku",
                     "roku",
-                    R.drawable.ic_logo_text
+                    R.drawable.ic_roku
                 ),
                 Subject(
                     "Samsung",
@@ -99,12 +99,12 @@ class BlockFollowCreateGroupFragment : BaseFragment<FragmentBlockFollowCreateGro
                 Subject(
                     "Sonos",
                     "sonos",
-                    R.drawable.ic_logo_text
+                    R.drawable.ic_sonos
                 ),
                 Subject(
                     "Windows",
                     "windows",
-                    R.drawable.ic_logo_text
+                    R.drawable.ic_windows
                 ),
                 Subject(
                     "Xiaomi",

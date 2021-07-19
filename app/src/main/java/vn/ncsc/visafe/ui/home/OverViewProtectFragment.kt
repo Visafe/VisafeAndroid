@@ -148,8 +148,6 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
 
             }).show(parentFragmentManager, null)
         }
-
-        setupWebviewUtilities()
     }
 
     private fun createContentList(): List<ContentMostData> {
@@ -193,26 +191,5 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
             Toast.makeText(requireContext(), "Add VPN", Toast.LENGTH_SHORT).show()
         }
         dialog.show(parentFragmentManager, null)
-    }
-
-    @SuppressLint("SetJavaScriptEnabled")
-    private fun setupWebviewUtilities() {
-        val setting = binding.wvHomeUtilities.settings
-        setting.useWideViewPort = true
-        setting.loadWithOverviewMode = true
-        setting.javaScriptEnabled = true
-        setting.allowContentAccess = true
-        setting.setSupportZoom(false)
-        setting.builtInZoomControls = true
-        setting.displayZoomControls = false
-        binding.wvHomeUtilities.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(
-                view: WebView?,
-                request: WebResourceRequest?
-            ): Boolean {
-                return super.shouldOverrideUrlLoading(view, request)
-            }
-        }
-        binding.wvHomeUtilities.loadUrl("https://tienich.khonggianmang.vn/")
     }
 }

@@ -102,72 +102,10 @@
                 android:id="@+id/layoutUpgrade"
                 layout="@layout/layout_upgrade" />
 
-<!--            <include-->
-<!--                android:id="@+id/layoutUtilities"-->
-<!--                layout="@layout/layout_home_utilities" />-->
+            <include
+                android:id="@+id/layoutUtilities"
+                layout="@layout/layout_home_utilities" />
 
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
-                android:layout_marginBottom="@dimen/_16sdp"
-                app:cardCornerRadius="@dimen/_16dp"
-                app:cardElevation="@dimen/_8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:paddingBottom="@dimen/_16sdp">
-
-                <TextView
-                    android:id="@+id/tvHomeUtilities"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:fontFamily="@font/sf_pro_text_regular"
-                    android:text="@string/an_toan_tuyet_doi"
-                    android:textAllCaps="true"
-                    android:textColor="@color/color_666666"
-                    android:textSize="@dimen/text_size_12sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvHomeUtilitiesTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:fontFamily="@font/sf_pro_text_regular_bold"
-                    android:text="@string/tien_ich_bao_mat"
-                    android:textColor="@color/color_222222"
-                    android:textSize="@dimen/text_size_20sp"
-                    app:layout_constraintStart_toStartOf="@id/tvHomeUtilities"
-                    app:layout_constraintTop_toBottomOf="@id/tvHomeUtilities" />
-
-                <vn.ncsc.visafe.ui.custom.NestedWebView
-                    android:id="@+id/wvHomeUtilities"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_500sdp"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:scrollbars="none"
-                    android:fillViewport="true"
-                    android:focusable="true"
-                    android:isScrollContainer="false"
-                    android:visibility="visible"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                    tools:ignore="WebViewLayout" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
