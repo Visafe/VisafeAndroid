@@ -2,9 +2,20 @@ package vn.ncsc.visafe.ui.home
 
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.*
+import android.graphics.Color
+import android.media.RingtoneManager
+import android.net.ConnectivityManager
+import android.net.LinkProperties
+import android.net.NetworkCapabilities
 import android.net.VpnService
 import android.os.Build
+import android.os.Build.VERSION
+import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -20,10 +31,11 @@ import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.databinding.FragmentHomeBinding
 import vn.ncsc.visafe.dns.net.doh.Transaction
-import vn.ncsc.visafe.dns.sys.InternalNames
-import vn.ncsc.visafe.dns.sys.PersistentState
-import vn.ncsc.visafe.dns.sys.VpnController
+import vn.ncsc.visafe.dns.sys.*
+import vn.ncsc.visafe.ui.MainActivity
 import vn.ncsc.visafe.utils.setOnSingClickListener
+import java.net.NetworkInterface
+import java.net.SocketException
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -31,10 +43,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
     private var isStatusEnable: Boolean = false
     private var vibrator: Vibrator? = null
     private var aniRotateClk: Animation? = null
+    private var status_button = 1
+    private var count_noti_on = 0
+    private var count_noti_off = 0
+    private var sendNotificationWhenClickButtonOnOff = false
 
     companion object {
         const val REQUEST_CODE_PREPARE_VPN = 100
         fun newInstance() = HomeFragment()
+    }
+
+    private val messageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val transaction = intent.getSerializableExtra(InternalNames.TRANSACTION.name) as Transaction?
+            if (InternalNames.RESULT.name == intent.action) {
+                transaction?.let {
+                    Log.e("onReceive: ", "" + it)
+                }
+            } else if (InternalNames.DNS_STATUS.name == intent.action) {
+                syncDnsStatus()
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,48 +92,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
     override fun layoutRes(): Int = R.layout.fragment_home
 
     override fun initView() {
-        syncDnsStatus()
-
         binding.buttonActive.setOnSingClickListener {
-            if (Build.VERSION.SDK_INT >= 26) {
+            sendNotificationWhenClickButtonOnOff = true
+            if (VERSION.SDK_INT >= 26) {
                 vibrator?.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
             } else {
                 vibrator?.vibrate(200)
             }
-            if (!isStatusEnable) {
+            if (status_button == 0) {
+                status_button = 1
+                stopDnsVpnService()
+            } else {
+                status_button = 0
                 binding.roundImage.visibility = View.INVISIBLE
                 prepareAndStartDnsVpn()
-            } else {
-                stopDnsVpnService()
             }
         }
 
-    }
-
-    private fun maybeAutostart() {
-        val controller = VpnController.instance
-        val state = controller.getState(context)
-        if (state.activationRequested == true && !state.on) {
-            prepareAndStartDnsVpn()
-        }
-    }
-
-    private val messageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val transaction = intent.getSerializableExtra(InternalNames.TRANSACTION.name) as Transaction?
-            if (InternalNames.RESULT.name == intent.action) {
-                transaction?.let {
-                    Log.e("onReceive: ", "" + it)
-                }
-            } else if (InternalNames.DNS_STATUS.name == intent.action) {
-                syncDnsStatus()
-            }
-        }
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (PersistentState.URL_KEY == key) {
-            updateServerName()
         }
     }
 
@@ -128,7 +136,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
 
     @SuppressLint("ObsoleteSdkInt")
     private fun hasVpnService(): Boolean {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH
+        return VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH
     }
 
     @Throws(ActivityNotFoundException::class)
@@ -150,39 +158,131 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
         return true
     }
 
-    private fun updateServerName() {
-//        viewBinding.server.text = PersistentState.getServerName(this)
-    }
-
     // Sets the UI DNS status on/off.
     private fun syncDnsStatus() {
         try {
             val status = VpnController.instance.getState(context)
             status.let {
-                // Change switch-button state
-                isStatusEnable = status.activationRequested == true
-                Log.e("syncDnsStatus: ", "" + isStatusEnable)
-                // Change indicator text
-                binding.tv1.visibility =
-                    if (status.activationRequested == true) View.GONE else View.VISIBLE
-                binding.status.text =
-                    if (status.activationRequested == true) getString(R.string.your_device_protected) else getString(R.string.bam_de_bat)
-                context?.let {
-                    binding.imageStatus.setImageDrawable(
-                        if (status.activationRequested == true) ContextCompat.getDrawable(it, R.drawable.ic_earth) else
-                            ContextCompat.getDrawable(it, R.drawable.ic_earth_off)
-                    )
-                    binding.buttonStatus.setImageDrawable(
-                        if (status.activationRequested == true) ContextCompat.getDrawable(it, R.drawable.on_button) else
-                            ContextCompat.getDrawable(it, R.drawable.off_button)
-                    )
+                binding.roundImage.startAnimation(aniRotateClk)
+                // Change status and explanation text
+                var privateDnsMode: PrivateDnsMode? = PrivateDnsMode.NONE
+                if (it.activationRequested == true) {
+                    status_button = 0
+                    when {
+                        status.connectionState == null -> {
+                            binding.ivStatus.visibility = View.GONE
+                            binding.tvTap.visibility = View.GONE
+                            binding.status.text = getString(R.string.status_waiting)
+                            binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
+                            binding.buttonStatus.setImageResource(R.drawable.off_button)
+                        }
+                        status.connectionState === ViSafeVpnService.State.NEW -> {
+                            binding.ivStatus.visibility = View.GONE
+                            binding.tvTap.visibility = View.GONE
+                            binding.status.text = getString(R.string.status_starting)
+                            binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
+                            binding.buttonStatus.setImageResource(R.drawable.off_button)
+                        }
+                        status.connectionState === ViSafeVpnService.State.WORKING -> {
+                            binding.ivStatus.setImageDrawable(
+                                context?.let { it1 ->
+                                    ContextCompat.getDrawable(
+                                        it1, R.drawable.ic_shield_done_white
+                                    )
+                                }
+                            )
+                            binding.ivStatus.visibility = View.VISIBLE
+                            binding.tvTap.visibility = View.GONE
+                            binding.status.text = getString(R.string.status_protected)
+                            if (count_noti_on == 0 && sendNotificationWhenClickButtonOnOff) {
+                                sendNotification("Đã kích hoạt chế độ bảo vệ!", "Chế độ chống lừa đảo, mã độc, tấn công mạng đã được kích hoạt!")
+                                count_noti_on++
+                                count_noti_off = 0
+                                sendNotificationWhenClickButtonOnOff = false
+                            }
+                            binding.imageStatus.setImageResource(R.drawable.ic_earth)
+                            binding.buttonStatus.setImageResource(R.drawable.on_button)
+                            binding.roundImage.clearAnimation()
+                        }
+                        else -> {
+                            binding.ivStatus.visibility = View.GONE
+                            binding.tvTap.visibility = View.GONE
+                            binding.status.text = getString(R.string.status_failing)
+                            binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
+                            binding.buttonStatus.setImageResource(R.drawable.off_button)
+                        }
+                    }
+                } else if (isAnotherVpnActive()) {
                     binding.ivStatus.setImageDrawable(
-                        if (status.activationRequested == true) ContextCompat.getDrawable(
-                            it,
-                            R.drawable.ic_shield_done_white
-                        ) else
-                            ContextCompat.getDrawable(it, R.drawable.ic_power_white)
+                        context?.let { it1 ->
+                            ContextCompat.getDrawable(
+                                it1, R.drawable.ic_power_white
+                            )
+                        }
                     )
+                    binding.ivStatus.visibility = View.VISIBLE
+                    binding.tvTap.visibility = View.VISIBLE
+                    binding.status.text = getString(R.string.bam_de_bat)
+                    binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
+                    binding.buttonStatus.setImageResource(R.drawable.off_button)
+                    binding.roundImage.clearAnimation()
+                    if (count_noti_off == 0 && sendNotificationWhenClickButtonOnOff) {
+                        sendNotification("Bạn đã tắt chế độ bảo vệ!", "Thiết bị của bạn có thể bị ảnh hưởng bởi tấn công mạng")
+                        count_noti_off++
+                        count_noti_on = 0
+                        sendNotificationWhenClickButtonOnOff = false
+                    }
+                } else {
+                    privateDnsMode = getPrivateDnsMode()
+                    if (privateDnsMode == PrivateDnsMode.STRICT) {
+                        binding.ivStatus.visibility = View.GONE
+                        binding.tvTap.visibility = View.GONE
+                        binding.status.text = getString(R.string.status_strict)
+                        binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
+                        binding.buttonStatus.setImageResource(R.drawable.off_button)
+                        binding.roundImage.clearAnimation()
+                    } else if (privateDnsMode == PrivateDnsMode.UPGRADED) {
+                        binding.ivStatus.setImageDrawable(
+                            context?.let { it1 ->
+                                ContextCompat.getDrawable(
+                                    it1, R.drawable.ic_power_white
+                                )
+                            }
+                        )
+                        binding.ivStatus.visibility = View.VISIBLE
+                        binding.tvTap.visibility = View.VISIBLE
+                        binding.status.text = getString(R.string.bam_de_bat)
+                        binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
+                        binding.buttonStatus.setImageResource(R.drawable.off_button)
+                        binding.roundImage.clearAnimation()
+                        if (count_noti_off == 0 && sendNotificationWhenClickButtonOnOff) {
+                            sendNotification("Bạn đã tắt chế độ bảo vệ!", "Thiết bị của bạn có thể bị ảnh hưởng bởi tấn công mạng")
+                            count_noti_off++
+                            count_noti_on = 0
+                            sendNotificationWhenClickButtonOnOff = false
+                        }
+                    } else {
+                        binding.tvTap.visibility = View.VISIBLE
+                        binding.status.text = getString(R.string.bam_de_bat)
+                        binding.ivStatus.setImageDrawable(
+                            context?.let { it1 ->
+                                ContextCompat.getDrawable(
+                                    it1, R.drawable.ic_power_white
+                                )
+                            }
+                        )
+                        binding.ivStatus.visibility = View.VISIBLE
+                        binding.status.text = getString(R.string.bam_de_bat)
+                        binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
+                        binding.buttonStatus.setImageResource(R.drawable.off_button)
+                        binding.roundImage.clearAnimation()
+                        if (count_noti_off == 0 && sendNotificationWhenClickButtonOnOff) {
+                            sendNotification("Bạn đã tắt chế độ bảo vệ!", "Thiết bị của bạn có thể bị ảnh hưởng bởi tấn công mạng")
+                            count_noti_off++
+                            count_noti_on = 0
+                            sendNotificationWhenClickButtonOnOff = false
+                        }
+                    }
                 }
             }
         } catch (e: Exception) {
@@ -199,5 +299,103 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                 stopDnsVpnService()
             }
         }
+    }
+
+    private fun isAnotherVpnActive(): Boolean {
+        if (VERSION.SDK_INT >= VERSION_CODES.M) {
+            val connectivityManager = activity?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val activeNetwork = connectivityManager.activeNetwork ?: return false
+            val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork)
+                ?: // It's not clear when this can happen, but it has occurred for at least one user.
+                return false
+            return capabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN)
+        }
+        // For pre-M versions, return true if there's any network whose name looks like a VPN.
+        try {
+            val networkInterfaces = NetworkInterface.getNetworkInterfaces()
+            while (networkInterfaces.hasMoreElements()) {
+                val networkInterface = networkInterfaces.nextElement()
+                val name = networkInterface.name
+                if (networkInterface.isUp && name != null &&
+                    (name.startsWith("tun") || name.startsWith("pptp") || name.startsWith("l2tp"))
+                ) {
+                    return true
+                }
+            }
+        } catch (e: SocketException) {
+            e.message?.let { Log.e("isAnotherVpnActive: ", it) }
+        }
+        return false
+    }
+
+    private fun sendNotification(title: String, body: String) {
+        var builder: Notification.Builder
+        val notificationManager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (VERSION.SDK_INT >= VERSION_CODES.O) {
+            val name: CharSequence = getString(R.string.warning_channel_name)
+            val description = getString(R.string.warning_channel_description)
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(getString(R.string.notification_channel_id), name, importance)
+            channel.description = description
+            channel.enableVibration(false)
+            channel.vibrationPattern = null
+            notificationManager.createNotificationChannel(channel)
+            builder = Notification.Builder(requireContext(), getString(R.string.notification_channel_id))
+        } else {
+            builder = Notification.Builder(requireContext())
+            builder.setVibrate(null)
+            // Deprecated in API 26.
+            builder = builder.setPriority(Notification.PRIORITY_MAX)
+        }
+        val mainActivityIntent = PendingIntent.getActivity(
+            context, 0, Intent(requireContext(), MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        builder.setContentTitle(title)
+            .setContentText(body)
+            .setAutoCancel(true)
+            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+            .setContentInfo("Hello")
+            .setLights(Color.RED, 1000, 100)
+            .setDefaults(Notification.DEFAULT_ALL)
+            .setSmallIcon(R.drawable.ic_logo_noti)
+            .setNumber(++MyFirebaseService.numMessages)
+            .setStyle(
+                Notification.BigTextStyle()
+                    .bigText(body)
+            )
+            .setFullScreenIntent(mainActivityIntent, true)
+        if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
+            builder.setCategory(Notification.CATEGORY_ERROR)
+        }
+        notificationManager.notify(0, builder.notification)
+    }
+
+    private enum class PrivateDnsMode {
+        NONE,  // The setting is "Off" or "Opportunistic", and the DNS connection is not using TLS.
+        UPGRADED,  // The setting is "Opportunistic", and the DNS connection has upgraded to TLS.
+        STRICT // The setting is "Strict".
+    }
+
+    private fun getLinkProperties(): LinkProperties? {
+        val connectivityManager = activity?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (VERSION.SDK_INT < VERSION_CODES.M) {
+            return null
+        }
+        val activeNetwork = connectivityManager.activeNetwork ?: return null
+        return connectivityManager.getLinkProperties(activeNetwork)
+    }
+
+    private fun getPrivateDnsMode(): PrivateDnsMode? {
+        if (VERSION.SDK_INT < VERSION_CODES.P) {
+            // Private DNS was introduced in P.
+            return PrivateDnsMode.NONE
+        }
+        val linkProperties: LinkProperties = getLinkProperties() ?: return PrivateDnsMode.NONE
+        if (linkProperties.privateDnsServerName != null) {
+            return PrivateDnsMode.STRICT
+        }
+        return if (linkProperties.isPrivateDnsActive) {
+            PrivateDnsMode.UPGRADED
+        } else PrivateDnsMode.NONE
     }
 }

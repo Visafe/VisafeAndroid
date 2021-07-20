@@ -132,7 +132,7 @@ class ViSafeVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedP
                 // Min-priority notifications don't show an icon in the notification bar, reducing clutter.
                 builder = builder.setPriority(Notification.PRIORITY_MIN)
             }
-            builder.setSmallIcon(R.mipmap.ic_launcher)
+            builder.setSmallIcon(R.drawable.ic_logo_noti)
                 .setContentTitle(resources.getText(R.string.notification_title))
                 .setContentText(resources.getText(R.string.notification_content))
                 .setContentIntent(mainActivityIntent)
@@ -142,6 +142,8 @@ class ViSafeVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedP
                 builder = builder.setVisibility(Notification.VISIBILITY_SECRET)
             }
             startForeground(SERVICE_ID, builder.notification)
+            //remove notification
+            stopForeground(true)
             updateQuickSettingsTile()
             return START_REDELIVER_INTENT
         }
@@ -184,7 +186,7 @@ class ViSafeVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedP
             vpnAdapter = makeVpnAdapter()
             oldAdapter?.close()
             if (vpnAdapter != null) {
-                vpnAdapter!!.start()
+                vpnAdapter?.start()
             } else {
                 Log.e("restartVpn: ", "Restart failed")
             }
@@ -222,7 +224,7 @@ class ViSafeVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedP
             val mainActivityIntent = PendingIntent.getActivity(
                 this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT
             )
-            builder.setSmallIcon(R.mipmap.ic_launcher)
+            builder.setSmallIcon(R.drawable.ic_logo_noti)
                 .setContentTitle(resources.getText(R.string.warning_title))
                 .setContentText(resources.getText(R.string.notification_content))
                 .setFullScreenIntent(mainActivityIntent, true) // Open the main UI if possible.
@@ -279,7 +281,7 @@ class ViSafeVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedP
             Log.d("onDestroy: ", "Destroying DNS VPN service")
             PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this)
             if (networkManager != null) {
-                networkManager!!.destroy()
+                networkManager?.destroy()
             }
             vpnController.viSafeVpnService = null
             stopForeground(true)
@@ -292,7 +294,6 @@ class ViSafeVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedP
     override fun onRevoke() {
         Log.d("onRevoke: ", "VPN service revoked.")
         stopSelf()
-
         // Disable autostart if VPN permission is revoked.
         PersistentState.instance.setVpnEnabled(this, false)
     }

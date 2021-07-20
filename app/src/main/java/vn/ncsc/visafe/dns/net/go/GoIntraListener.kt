@@ -15,24 +15,6 @@ import java.net.ProtocolException
 import java.util.*
 
 class GoIntraListener internal constructor(private var vpnService: ViSafeVpnService) : Listener {
-    override fun onTCPSocketClosed(summary: TCPSocketSummary) {
-        val retry = summary.retry
-        if (retry != null) {
-            // Connection was eligible for split-retry.
-            if (retry.split.toInt() == 0) {
-                // Split-retry was not attempted.
-                return
-            }
-            val success = summary.downloadBytes > 0
-        }
-    }
-
-    override fun onUDPSocketClosed(summary: UDPSocketSummary) {
-        val totalBytes = summary.uploadBytes + summary.downloadBytes
-        if (totalBytes < UDP_THRESHOLD_BYTES) {
-            return
-        }
-    }
 
     companion object {
         // UDP is often used for one-off messages and pings.  The relative overhead of reporting metrics
@@ -51,6 +33,25 @@ class GoIntraListener internal constructor(private var vpnService: ViSafeVpnServ
             goStatusMap.put(Doh.BadQuery, Transaction.Status.INTERNAL_ERROR) // TODO: Add a BAD_QUERY Status
             goStatusMap.put(Doh.BadResponse, Transaction.Status.BAD_RESPONSE)
             goStatusMap.put(Doh.InternalError, Transaction.Status.INTERNAL_ERROR)
+        }
+    }
+
+    override fun onTCPSocketClosed(summary: TCPSocketSummary) {
+        val retry = summary.retry
+        if (retry != null) {
+            // Connection was eligible for split-retry.
+            if (retry.split.toInt() == 0) {
+                // Split-retry was not attempted.
+                return
+            }
+            val success = summary.downloadBytes > 0
+        }
+    }
+
+    override fun onUDPSocketClosed(summary: UDPSocketSummary) {
+        val totalBytes = summary.uploadBytes + summary.downloadBytes
+        if (totalBytes < UDP_THRESHOLD_BYTES) {
+            return
         }
     }
 
@@ -75,5 +76,4 @@ class GoIntraListener internal constructor(private var vpnService: ViSafeVpnServ
         transaction.responseCalendar = Calendar.getInstance()
         vpnService.recordTransaction(transaction)
     }
-
 }

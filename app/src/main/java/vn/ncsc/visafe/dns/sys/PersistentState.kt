@@ -3,9 +3,13 @@ package vn.ncsc.visafe.dns.sys
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
+import android.os.Build
+import android.os.Build.VERSION_CODES
 import android.preference.PreferenceManager
 import android.util.Log
 import vn.ncsc.visafe.R
+import vn.ncsc.visafe.data.NetworkClient
+import vn.ncsc.visafe.dns.net.setting.RandomString
 import vn.ncsc.visafe.dns.net.setting.Untemplate.strip
 import java.net.MalformedURLException
 import java.net.URL
@@ -101,7 +105,8 @@ class PersistentState {
     }
 
     fun getServerUrl(context: Context): String? {
-        val urlTemplate = getUserPreferences(context).getString(URL_KEY, null) ?: return null
+        val urlTemplate: String = context.let { getUserPreferences(it).getString(URL_KEY, null) }
+            ?: return null
         return strip(urlTemplate)
     }
 
@@ -115,11 +120,48 @@ class PersistentState {
         }
     }
 
+    private var urlDefault: String = ""
+    private var idDefault: String = ""
+
     // Converts a null url into the actual default url.  Otherwise, returns url unmodified.
     fun expandUrl(context: Context, url: String?): String {
-        return if (url == null || url.isEmpty()) {
-            context.resources.getString(R.string.url0)
-        } else url
+        var userid = ""
+        val share = context.applicationContext.getSharedPreferences("userID", 0)
+        val shareVip = context.applicationContext.getSharedPreferences("VIP_MODE", 0)
+        userid = share.getString("userID", "").toString()
+        val reqString = (Build.MANUFACTURER
+                + " " + Build.MODEL + " " + Build.VERSION.RELEASE
+                + " " + VERSION_CODES::class.java.fields[Build.VERSION.SDK_INT].name)
+        return if (userid === "") {
+            if (url == null || url.isEmpty()) {
+                val rd = RandomString()
+                val randomId: String = rd.getAlphaNumericString(12)
+                idDefault = randomId.lowercase(Locale.getDefault())
+                urlDefault = NetworkClient.DOMAIN + randomId.lowercase(Locale.getDefault())
+                val editor = share.edit()
+                editor.putString("userID", randomId.lowercase(Locale.getDefault()))
+                editor.putString(
+                    "deviceName",
+                    reqString.replace("\\s+".toRegex(), "").replace("[\\+\\.\\^\\-:,%&@*$;!#~=_<>?()]".toRegex(), "")
+                        .lowercase(Locale.getDefault())
+                )
+                editor.apply()
+                if (shareVip.getString("domainVIP", "") != "") {
+                    urlDefault = shareVip.getString("domainVIP", "") + share.getString("userID", "")
+                }
+                Log.d("urlDefault: ", urlDefault)
+                return urlDefault
+            }
+            urlDefault
+        } else {
+            if (shareVip.getString("domainVIP", "") != "") {
+                println(shareVip.getString("domainVIP", "") + share.getString("userID", ""))
+                shareVip.getString("domainVIP", "") + share.getString("userID", "")
+            } else {
+                println(NetworkClient.DOMAIN + share.getString("userID", ""))
+                NetworkClient.DOMAIN + share.getString("userID", "")
+            }
+        }
     }
 
     // Returns a domain representing the current configured server URL, for use as a display name.

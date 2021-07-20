@@ -4,11 +4,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.VpnService
+import vn.ncsc.visafe.dns.RemoteConfig
 import vn.ncsc.visafe.ui.MainActivity
 
 class AutoStarter : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        if (Intent.ACTION_BOOT_COMPLETED != intent!!.action) {
+        if (Intent.ACTION_BOOT_COMPLETED != intent?.action) {
             return
         }
         val controller = VpnController.instance
@@ -21,6 +22,9 @@ class AutoStarter : BroadcastReceiver() {
                 context?.startActivity(startIntent)
                 return
             }
+            // Delay start until after the remote configuration has been updated, or failed to update.
+            // Delay start until after the remote configuration has been updated, or failed to update.
+            RemoteConfig.update().addOnCompleteListener { success -> controller.start(context!!) }
         }
     }
 }

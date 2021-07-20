@@ -1,88 +1,43 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!--==========Demo=============-->
-    <string name="channel_name" description="Description of the notification, as shown in the system's advanced notifications settings
-  page.">
-    DNS Protection Active Notification
-  </string>
-    <string name="channel_description">
-    This notification appears while DNS protection is active.
-  </string>
-    <string name="notification_title" description="Status indicator text shown in a persistent notification.">
-    DNS protection is active
-  </string>
-
-    <string name="notification_content" description="Indicates what will happen if the user taps the notification.">
-    Tap to change DNS protection setting
-  </string>
-    <string name="warning_channel_name" description="This is the name of the class of notifications that show warnings.  It's only
-  visible in the system's advanced notifications settings page.">
-    Warning
-  </string>
-    <string name="warning_channel_description" description="This is the explanatory text describing the 'Warning' notification class.  It's
-  only visible in the system's advanced notifications settings page.">
-    Shown when Intra has encountered a problem.
-  </string>
-    <string name="warning_title" description="Status indicator text shown in a warning notification.">
-    Warning: Intra has been deactivated
-  </string>
+    <string name="channel_name">VISAFE đang bảo vệ bạn</string>
+    <string name="channel_description">Thông báo này xuất hiện khi VISAFE đang hoạt động.</string>
+    <string name="notification_title">VISAFE đang hoạt động</string>
+    <string name="notification_content">Nhấn để trở lại VISAFE</string>
+    <string name="warning_channel_name">Cảnh báo</string>
+    <string name="warning_channel_description">Hiển thị khi VISAFE gặp sự cố.</string>
+    <string name="warning_title">Cảnh báo: VISAFE đã bị vô hiệu hóa</string>
+    <string name="notification_channel_id">default</string>
     <string name="server_choice_key" translatable="false">pref_server_url</string>
-
-    <string name="server_choice" description="Title of the setting to choose your server">
-    Select DNS over HTTPS Server
-  </string>
-
-    <string name="server_choice_summary" description="Template for text that appears under the server choice option">
-    Currently <xliff:g example="dns.google.com" id="server_name">%s</xliff:g>
-  </string>
+    <string name="server_choice">Cấu hình hệ thống</string>
+    <string name="server_choice_summary">Hiện tại là %s</string>
 
     <string name="excluded_apps" description="Title of the 'Excluded apps' setting, which allows the user to select apps that will not use Intra.">
     Excluded apps
   </string>
 
-    <string name="status_protected" description="This is a large message in a reassuring color.  It indicates that DNS queries can't be surveilled or modified in transit.">
-    Protected
-  </string>
+    <string name="status_protected">Bạn đã được bảo vệ</string>
+    <string name="explanation_protected">Kết nối của bạn đã được bảo vệ khỏi các cuộc tấn công DNS.</string>
 
-    <string name="explanation_protected" description="Expanded form of status_protected">
-    Your connection is protected from DNS attacks.
-  </string>
-
-    <string name="status_exposed" description="This is a large message in a scary color.  It indicates that DNS queries can be surveilled or modified in transit.">
-    Exposed
-  </string>
-
-    <string name="explanation_exposed" description="Expanded form of status_exposed">
-    Your connection is exposed to DNS attacks.
-  </string>
+    <string name="status_exposed">Bấm để bật tính năng bảo vệ</string>
+    <string name="explanation_exposed">Kết nối của bạn không được bảo vệ khỏi các cuộc tấn công DNS.</string>
 
     <string name="excluded_apps_summary" description="Summary of how the Excluded apps' setting works">
     DNS queries from any selected apps will not go through Intra.  If an app appears to be
     incompatible with Intra, you can add it here.
   </string>
 
-    <string name="excluded_apps_title" description="Title to appear over the 'Excluded apps' selection list.  Must be short.">
-    Mark apps to exclude from Intra
-  </string>
+    <string name="excluded_apps_title">Đánh dấu các ứng dụng không dùng VISAFE</string>
 
-    <string name="status_starting" description="This text briefly appears while starting.">
-    Starting&#8230;
-  </string>
+    <string name="status_starting">Đang khởi động…</string>
 
-    <string name="explanation_starting" description="Corresponds to status_starting">
-    Hang tight.  Intra is establishing a server connection.
-  </string>
+    <string name="explanation_starting">Vui lòng chờ. VISAFE đang thiết lập kết nối đến máy chủ.</string>
 
-    <string name="status_waiting" description="This text appears during the connection process if Intra needs user permission or the phone is offline.">
-    Waiting&#8230;
-  </string>
+    <string name="status_waiting">Chờ kết nối</string>
 
-    <string name="status_failing" description="This text appears if the connection is currently not working correctly. [CHAR_LIMIT=NONE]">
-    Failing
-  </string>
+    <string name="status_failing">Lỗi kết nối</string>
 
-    <string name="explanation_offline" description="Status indicator shown when there is no network connection.">
-    Your device is offline.  Intra is waiting for a network connection.
-  </string>
+    <string name="explanation_offline">Thiết bị hiện không có kết nối mạng. VISAFE đang chờ kết nối mạng.</string>
 
     <string name="explanation_vpn" description="Warning text shown on the main screen before the user starts Intra">
     Intra has detected another VPN on your device.  If you enable Intra, that VPN will be disabled.
@@ -114,23 +69,17 @@
     <string name="intro_accept" description="Button label to acknowledge legal terms and VPN access permission request">
     accept
   </string>
-    <string name="status_upgraded" description="This is similar to status_exposed, and indicates weak protection that an attacker could disable.">
-    Vulnerable
-  </string>
+    <string name="status_upgraded">Bấm để bật tính năng bảo vệ</string>
 
     <string name="explanation_upgraded" description="Corresponds to status_upgraded.">
     Your connection is currently protected by Android Private DNS, but an attacker could disable
     or undermine this protection.
   </string>
 
-    <string name="status_strict" description="This is similar to dns_on, but the protection is being provided by the operating system, not by Intra.  It is not color-highlighted.">
-    Protected by Android
-  </string>
+    <string name="status_strict">Được Android bảo vệ</string>
 
-    <string name="explanation_strict" description="Explanation on the main screen for users who have Private DNS strict mode enabled at the OS level.">
-    Intra has detected that the Android Private DNS setting is enabled.  This means your DNS
-    queries are already protected, so there\'s no need to enable Intra.
-  </string>
+    <string name="explanation_strict">VISAFE đã phát hiện thấy tùy chọn cài đặt DNS riêng tư của Android đang bật. Điều này có nghĩa là truy vấn
+    DNS của bạn đã được bảo vệ nên không nhất thiết phải bật VISAFE.</string>
     <!--==========Demo=============-->
     <string name="app_name">Visafe</string>
     <string name="facebook_app_id">545622383516478</string>

@@ -150,10 +150,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                     return false
                 }
                 openTab(POSITION_NOTIFICATION)
-                if (notificationFragment != null && SharePreferenceKeyHelper.getInstance(application).isLogin()
-                ) {
-                    notificationFragment.loadListNotification()
-                }
                 return true
             }
             R.id.navigation_profile -> {

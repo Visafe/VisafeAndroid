@@ -40,6 +40,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Notifi
         binding.rcvNotification.setPullRefreshEnabled(true)
         binding.rcvNotification.setLoadingMoreEnabled(true)
         binding.rcvNotification.adapter = notificationAdapter
+        loadListNotification()
     }
 
     private fun doGetNotification(type: TypeLoad) {
@@ -63,6 +64,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Notifi
                                     notificationList.clear()
                                     notificationList.addAll(it)
                                     notificationAdapter?.setData(notificationList)
+                                    notificationAdapter?.notifyDataSetChanged()
                                     binding.tvNoData.visibility = View.GONE
                                     binding.rcvNotification.visibility = View.VISIBLE
                                 }
@@ -72,6 +74,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Notifi
                             if (response.body()?.notis?.isNotEmpty() == true) {
                                 notificationList.addAll(response.body()?.notis!!)
                                 notificationAdapter?.setData(notificationList)
+                                notificationAdapter?.notifyDataSetChanged()
                             }
                             binding.tvNoData.visibility = View.GONE
                             binding.rcvNotification.visibility = View.VISIBLE
@@ -122,7 +125,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Notifi
         }))
     }
 
-    fun loadListNotification() {
+    private fun loadListNotification() {
         mPage = 1
         doGetNotification(TypeLoad.FIRST_LOAD)
     }

@@ -61,7 +61,7 @@ class VpnController private constructor() : Cloneable {
         PersistentState.instance.setVpnEnabled(context, false)
         connectionState = null
         if (viSafeVpnService != null) {
-            viSafeVpnService!!.signalStopService(true)
+            viSafeVpnService?.signalStopService(true)
         }
         viSafeVpnService = null
         stateChanged(context)

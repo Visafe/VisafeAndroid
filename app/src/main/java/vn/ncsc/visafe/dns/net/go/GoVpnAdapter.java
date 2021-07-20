@@ -27,11 +27,14 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import vn.ncsc.visafe.dns.RemoteConfig;
 import vn.ncsc.visafe.dns.sys.ViSafeVpnService;
 import vn.ncsc.visafe.dns.sys.PersistentState;
 import vn.ncsc.visafe.dns.sys.VpnController;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Locale;
 
@@ -114,8 +117,7 @@ public class GoVpnAdapter {
 
         // Strip leading "/" from ip:port string.
         listener = new GoIntraListener(vpnService);
-        String dohURL = "https://dns-staging.visafe.vn/dns-query/";
-//        String dohURL = PersistentState.getServerUrl(vpnService);
+        String dohURL = PersistentState.Companion.getInstance().getServerUrl(vpnService);
 
         try {
             Log.d("connectTunnel: ", "Starting go-tun2socks");
@@ -128,13 +130,12 @@ public class GoVpnAdapter {
             VpnController.Companion.getInstance().onConnectionStateChanged(vpnService, ViSafeVpnService.State.FAILING);
             return;
         }
-
     }
 
     private static ParcelFileDescriptor establishVpn(ViSafeVpnService vpnService) {
         try {
             VpnService.Builder builder = vpnService.newBuilder()
-                    .setSession("Intra go-tun2socks VPN")
+                    .setSession("ViSafe go-tun2socks VPN")
                     .setMtu(VPN_INTERFACE_MTU)
                     .addAddress(LanIp.GATEWAY.make(IPV4_TEMPLATE), IPV4_PREFIX_LENGTH)
                     .addRoute("0.0.0.0", 0)
@@ -237,7 +238,17 @@ public class GoVpnAdapter {
                 break;
             }
         }
-
+        try {
+            String domain = new URL(url).getHost();
+            String extraIPs = RemoteConfig.INSTANCE.getExtraIPs(domain);
+            if (ret.isEmpty()) {
+                ret = extraIPs;
+            } else if (!extraIPs.isEmpty()) {
+                ret += "," + extraIPs;
+            }
+        } catch (MalformedURLException e) {
+            Log.d("getIpString: ", e.getMessage());
+        }
         return ret;
     }
 }

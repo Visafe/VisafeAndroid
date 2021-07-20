@@ -6,20 +6,20 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import vn.ncsc.visafe.R
 import vn.ncsc.visafe.data.BaseController
 import vn.ncsc.visafe.data.BaseResponse
-import vn.ncsc.visafe.ui.authentication.LoginActivity
-import vn.ncsc.visafe.widget.ProgressDialogFragment
-import vn.ncsc.visafe.R
 import vn.ncsc.visafe.ui.MainActivity
+import vn.ncsc.visafe.ui.authentication.LoginActivity
 import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
+import vn.ncsc.visafe.widget.ProgressDialogFragment
+
 
 open class BaseActivity : AppCompatActivity(), BaseController {
 
