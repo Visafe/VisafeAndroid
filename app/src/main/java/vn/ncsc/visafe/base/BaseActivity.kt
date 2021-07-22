@@ -1,14 +1,20 @@
 package vn.ncsc.visafe.base
 
+import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.wifi.WifiManager
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -64,10 +70,11 @@ open class BaseActivity : AppCompatActivity(), BaseController {
         val builder = AlertDialog.Builder(this)
         with(builder)
         {
-            setTitle("Thông báo")
+            setCancelable(false)
+            setTitle(getString(R.string.thong_bao))
             setMessage(getString(R.string.session_timed_out_content))
             setPositiveButton(
-                "OK"
+                getString(R.string.dong_y)
             ) { _, _ -> logOut() }
             show()
         }
@@ -83,10 +90,10 @@ open class BaseActivity : AppCompatActivity(), BaseController {
         val builder = AlertDialog.Builder(this)
         with(builder)
         {
-            setTitle("Thông báo")
+            setTitle(getString(R.string.thong_bao))
             setMessage(msg)
             setPositiveButton(
-                "OK"
+                getString(R.string.dong_y)
             ) { _, _ -> finish() }
             show()
         }
@@ -111,10 +118,10 @@ open class BaseActivity : AppCompatActivity(), BaseController {
 
     fun logOut() {
         SharePreferenceKeyHelper.getInstance(application).clearAllData()
-        startActivity(
-            Intent(this, MainActivity::class.java)
-                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        )
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
         finish()
     }
 
@@ -147,4 +154,69 @@ open class BaseActivity : AppCompatActivity(), BaseController {
         startActivity(Intent(this, LoginActivity::class.java))
         return true
     }
+
+    fun isWPA2(): Boolean {
+        val wifi = applicationContext.getSystemService(WIFI_SERVICE) as WifiManager
+        val networkList = wifi.scanResults
+
+        //get current connected SSID for comparison to ScanResult
+        val wi = wifi.connectionInfo
+        val currentSSID = wi.bssid
+
+        if (networkList != null) {
+            for (network in networkList) {
+                //check if current connected SSID
+                if (currentSSID == network.BSSID) {
+                    //get capabilities of current connection
+                    val capabilities = network.capabilities
+                    Log.e("TAG", wi.ssid + " " + network.SSID.toString() + " capabilities : " + capabilities)
+                    when {
+                        capabilities.contains("WPA2") -> {
+                            return true
+                        }
+                        capabilities.contains("WPA") -> {
+                            return false
+                        }
+                        capabilities.contains("WEP") -> {
+                            return false
+                        }
+                    }
+                }
+            }
+        }
+        return false
+    }
+
+    fun checkPermissionWifi(): Boolean {
+        val permissionsList: MutableList<String> = ArrayList()
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_WIFI_STATE) != PackageManager.PERMISSION_GRANTED) {
+            permissionsList.add(Manifest.permission.ACCESS_WIFI_STATE)
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CHANGE_WIFI_STATE) != PackageManager.PERMISSION_GRANTED) {
+            permissionsList.add(Manifest.permission.CHANGE_WIFI_STATE)
+        }
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            permissionsList.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            permissionsList.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
+        if (permissionsList.size > 0) {
+            ActivityCompat.requestPermissions(
+                this, permissionsList.toTypedArray(),
+                MainActivity.MY_PERMISSIONS_ACCESS_COARSE_LOCATION
+            )
+            return false
+        }
+        return true
+    }
+
 }

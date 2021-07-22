@@ -4,41 +4,25 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.util.Log
 import android.view.View
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.Toast
 import com.google.gson.Gson
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.ViSafeApp
-import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.base.BaseFragment
-import vn.ncsc.visafe.data.BaseCallback
-import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.FragmentOverViewProtectBinding
-import vn.ncsc.visafe.model.ApplicationMostData
-import vn.ncsc.visafe.model.ContentMostData
-import vn.ncsc.visafe.model.DeviceMostData
 import vn.ncsc.visafe.model.WorkspaceGroupData
-import vn.ncsc.visafe.model.response.StatsWorkspaceResponse
 import vn.ncsc.visafe.ui.MainActivity
+import vn.ncsc.visafe.ui.WebViewActivity
 import vn.ncsc.visafe.ui.adapter.TimeStatistical
 import vn.ncsc.visafe.ui.create.group.CreateGroupActivity
 import vn.ncsc.visafe.ui.dialog.DisplayStatisticalForTimeBottomSheet
 import vn.ncsc.visafe.ui.dialog.ImageDialog
 import vn.ncsc.visafe.ui.dialog.OnClickItemTime
-import vn.ncsc.visafe.ui.pin.CreateNewPinFragment
-import vn.ncsc.visafe.ui.pin.CurrentPinFragment
-import vn.ncsc.visafe.ui.pin.UpdatePinActivity
 import vn.ncsc.visafe.ui.protect.BlockAdsActivity
 import vn.ncsc.visafe.ui.protect.BlockTrackingDetailActivity
 import vn.ncsc.visafe.ui.protect.ProtectDeviceActivity
 import vn.ncsc.visafe.ui.protect.ProtectWifiActivity
 import vn.ncsc.visafe.ui.website.WebsiteReportActivity
-import vn.ncsc.visafe.utils.ChartUtil
 import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
@@ -124,6 +108,16 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
             )
             startActivity(intent)
         }
+        binding.layoutHomeProtect.switchHomeProtectWifi.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                val intent = Intent(requireContext(), ProtectWifiActivity::class.java)
+                intent.putExtra(
+                    ProtectWifiActivity.PROTECT_WIFI_KEY,
+                    binding.layoutHomeProtect.switchHomeProtectWifi.isChecked
+                )
+                startActivity(intent)
+            }
+        }
 
         //chặn quảng cáo
         binding.layoutHomeProtect.llHomeBlockAds.setOnSingClickListener {
@@ -155,6 +149,10 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
                 }
 
             }).show(parentFragmentManager, null)
+        }
+
+        binding.layoutUtilities.viewUtilities.setOnSingClickListener {
+            startActivity(Intent(context, WebViewActivity::class.java))
         }
     }
 

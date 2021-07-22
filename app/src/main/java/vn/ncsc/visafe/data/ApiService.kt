@@ -3,14 +3,12 @@ package vn.ncsc.visafe.data
 import vn.ncsc.visafe.model.GroupData
 import vn.ncsc.visafe.model.UserInfo
 import vn.ncsc.visafe.model.WorkspaceGroupData
-import vn.ncsc.visafe.model.response.GroupsDataResponse
-import vn.ncsc.visafe.model.response.LoginResponse
-import vn.ncsc.visafe.model.response.NotificationResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
+import vn.ncsc.visafe.model.Botnet
 import vn.ncsc.visafe.model.request.*
-import vn.ncsc.visafe.model.response.StatsWorkspaceResponse
+import vn.ncsc.visafe.model.response.*
 
 
 interface ApiService {
@@ -116,4 +114,7 @@ interface ApiService {
         @Query("client_id") client_id: String?,
         @Query("time_limit") time_limit: String?
     ): Call<StatsWorkspaceResponse>
+
+    @POST("b4ad1075-a0ad-4581-841d-23877a6b1a60")
+    fun checkBotnet(): Call<ResponseBody>
 }

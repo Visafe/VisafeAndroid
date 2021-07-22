@@ -4,11 +4,18 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import vn.ncsc.visafe.model.ProtectWifiData
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.databinding.ItemProtectWifiBinding
+import vn.ncsc.visafe.model.DetailBotnet
+import vn.ncsc.visafe.utils.getTimeAgo
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
-class ProtectWifiAdapter(val wifiList: ArrayList<ProtectWifiData>, val context: Context) :
+class ProtectWifiAdapter(val wifiList: ArrayList<DetailBotnet>, val context: Context) :
     RecyclerView.Adapter<ProtectWifiAdapter.ProtectWifiViewHolder>() {
     private var mOnClickListener: OnClickWifi? = null
 
@@ -18,16 +25,19 @@ class ProtectWifiAdapter(val wifiList: ArrayList<ProtectWifiData>, val context: 
 
     class ProtectWifiViewHolder private constructor(val binding: ItemProtectWifiBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ProtectWifiData, context: Context) {
-            binding.data = item
-            binding.ivWifi.setImageResource(
-                if (item.isProtected) {
-                    R.drawable.ic_checkmark_circle
-                } else {
-                    R.drawable.ic_info_circle
-                }
-            )
-            binding.tvContent.text = context.getString(R.string.da_chan, item.day.toString())
+        fun bind(item: DetailBotnet, context: Context) {
+            binding.tvLink.text = "${item.mw_type} - ${item.cc_ip}:${item.cc_port}"
+            Glide.with(context)
+                .load("https://www.google.com/s2/favicons?sz=64&domain_url=" + item.mw_type)
+                .apply(
+                    RequestOptions()
+                        .error(R.drawable.ic_group)
+                )
+                .circleCrop()
+                .into(binding.ivWifi)
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault())
+            val date = dateFormat.parse(item?.lastseen)
+            binding.tvContent.text = context.getString(R.string.da_chan, getTimeAgo(date.time))
         }
 
         companion object {
@@ -55,14 +65,14 @@ class ProtectWifiAdapter(val wifiList: ArrayList<ProtectWifiData>, val context: 
 
     override fun getItemCount(): Int = wifiList.size
 
-    fun deleteItem(data: ProtectWifiData, position: Int) {
+    fun deleteItem(data: DetailBotnet, position: Int) {
         wifiList.remove(data)
         notifyItemRemoved(position)
     }
 }
 
 interface OnClickWifi {
-    fun onClickWifi(data: ProtectWifiData, position: Int)
+    fun onClickWifi(data: DetailBotnet, position: Int)
 
-    fun onMoreWifi(data: ProtectWifiData, position: Int)
+    fun onMoreWifi(data: DetailBotnet, position: Int)
 }

@@ -1,5 +1,6 @@
 package vn.ncsc.visafe.data
 
+import android.annotation.SuppressLint
 import android.content.Context
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -7,7 +8,11 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import vn.ncsc.visafe.BuildConfig
+import java.security.SecureRandom
+import java.security.cert.CertificateException
+import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
+import javax.net.ssl.*
 
 private const val API_READ_TIMEOUT: Long = 160
 private const val API_CONNECT_TIMEOUT: Long = 160
@@ -26,8 +31,11 @@ class NetworkClient {
         const val CODE_TIMEOUT_SESSION = 401
         val ERROR_CODE =
             listOf(403, 406, 409, 424, 502, 500)
-        const val URL_ROOT = "https://staging.visafe.vn/api/v1/"
-        const val DOMAIN = "https://dns-staging.visafe.vn/dns-query/"
+
+        //        const val URL_ROOT = "https://staging.visafe.vn/api/v1/"
+//        const val DOMAIN = "https://dns-staging.visafe.vn/dns-query/"
+        const val URL_ROOT = "https://app.visafe.vn/api/v1/"
+        const val DOMAIN = "https://dns.visafe.vn/dns-query/"
 
     }
 
@@ -35,39 +43,28 @@ class NetworkClient {
         return provideApiService(provideRetrofit(provideHttpClient(context)))
     }
 
-    fun clientWithBearer(context: Context): ApiService {
-        return provideApiService(provideRetrofit(provideHttpClientGen2FA(context)))
-    }
-
-    fun clientWithoutRootUrl(context: Context, url: String): ApiService {
-        return provideApiService(provideRetrofit(provideHttpClient(context), url))
-
-    }
-
     fun clientWithoutToken(context: Context): ApiService {
         return provideApiService(provideRetrofit(provideHttpClientWithoutToken(context)))
     }
 
-    private fun provideHttpClientGen2FA(context: Context): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(ApplicationInterceptorWithBearer())
-            .readTimeout(API_READ_TIMEOUT, TimeUnit.SECONDS)
-            .connectTimeout(API_CONNECT_TIMEOUT, TimeUnit.SECONDS)
-            .addInterceptor(ResponseInterceptor(context))
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level =
-                    if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
-            })
-
-            .build()
+    fun clientCheckBotnet(context: Context): ApiService {
+        return provideApiService(provideRetrofitCheckBotnet(provideHttpClientCheckBotnet(context)))
     }
 
     private fun provideHttpClientWithoutToken(context: Context): OkHttpClient {
+        val trustAllCerts = getTrustManager()
+        val sslContext = SSLContext.getInstance("SSL")
+        sslContext.init(null, trustAllCerts, SecureRandom())
+        // Create an ssl socket factory with our all-trusting manager
+        val sslSocketFactory: SSLSocketFactory = sslContext.socketFactory
         return OkHttpClient.Builder()
             .addInterceptor(ApplicationInterceptorWithoutToken(context))
+            .callTimeout(API_READ_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(API_READ_TIMEOUT, TimeUnit.SECONDS)
             .connectTimeout(API_CONNECT_TIMEOUT, TimeUnit.SECONDS)
             .addInterceptor(ResponseInterceptor(context))
+            .sslSocketFactory(sslSocketFactory, (trustAllCerts!![0] as X509TrustManager))
+            .hostnameVerifier(HostnameVerifier { _, _ -> true })
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level =
                     if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
@@ -77,16 +74,55 @@ class NetworkClient {
     }
 
     private fun provideHttpClient(context: Context): OkHttpClient {
+        val trustAllCerts = getTrustManager()
+        val sslContext = SSLContext.getInstance("SSL")
+        sslContext.init(null, trustAllCerts, SecureRandom())
+        // Create an ssl socket factory with our all-trusting manager
+        val sslSocketFactory: SSLSocketFactory = sslContext.socketFactory
         return OkHttpClient.Builder()
             .addInterceptor(ApplicationInterceptor(context))
+            .callTimeout(API_READ_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(API_READ_TIMEOUT, TimeUnit.SECONDS)
             .connectTimeout(API_CONNECT_TIMEOUT, TimeUnit.SECONDS)
             .addInterceptor(ResponseInterceptor(context))
+            .sslSocketFactory(sslSocketFactory, (trustAllCerts!![0] as X509TrustManager))
+            .hostnameVerifier(HostnameVerifier { _, _ -> true })
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level =
                     if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
             })
 
+            .build()
+    }
+
+    private fun provideHttpClientCheckBotnet(context: Context): OkHttpClient {
+        val trustAllCerts = getTrustManager()
+        val sslContext = SSLContext.getInstance("SSL")
+        sslContext.init(null, trustAllCerts, SecureRandom())
+        // Create an ssl socket factory with our all-trusting manager
+        val sslSocketFactory: SSLSocketFactory = sslContext.socketFactory
+        return OkHttpClient.Builder()
+            .addInterceptor(ApplicationInterceptorWithCheckBotnet())
+            .callTimeout(API_READ_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(API_READ_TIMEOUT, TimeUnit.SECONDS)
+            .connectTimeout(API_CONNECT_TIMEOUT, TimeUnit.SECONDS)
+            .addInterceptor(ResponseInterceptor(context))
+            .sslSocketFactory(sslSocketFactory, (trustAllCerts!![0] as X509TrustManager))
+            .hostnameVerifier(HostnameVerifier { _, _ -> true })
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level =
+                    if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+            })
+
+            .build()
+    }
+
+    private fun provideRetrofitCheckBotnet(client: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .client(client)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl("https://run.mocky.io/v3/")
             .build()
     }
 
@@ -99,18 +135,28 @@ class NetworkClient {
             .build()
     }
 
-
-    private fun provideRetrofit(client: OkHttpClient, url: String): Retrofit {
-        return Retrofit.Builder()
-            .client(client)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(url)
-            .build()
-    }
-
     private fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
+    }
+
+    private fun getTrustManager(): Array<TrustManager>? {
+        return arrayOf<TrustManager>(
+            object : X509TrustManager {
+                @SuppressLint("TrustAllX509TrustManager")
+                @Throws(CertificateException::class)
+                override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {
+                }
+
+                @SuppressLint("TrustAllX509TrustManager")
+                @Throws(CertificateException::class)
+                override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
+                }
+
+                override fun getAcceptedIssuers(): Array<X509Certificate> {
+                    return arrayOf()
+                }
+            }
+        )
     }
 
 }

@@ -10,7 +10,7 @@ import vn.ncsc.visafe.R
 import vn.ncsc.visafe.model.UsersGroupInfo
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
-class MemberManagerAdapter(var onSelectItemListener: OnSelectItemListener) :
+class MemberManagerAdapter(private var onSelectItemListener: OnSelectItemListener) :
     ListAdapter<UsersGroupInfo, MemberManagerAdapter.MyViewHolder>(Comparator()) {
     private var memberList: MutableList<UsersGroupInfo> = mutableListOf()
 
@@ -45,7 +45,7 @@ class MemberManagerAdapter(var onSelectItemListener: OnSelectItemListener) :
     ) {
         fun bindView(item: UsersGroupInfo) {
             itemView.tvName.text = item.fullName
-            itemView.tvContent.text = item.email
+            itemView.tvContent.text = if (item.email.isNullOrEmpty()) "Chưa có email" else item.email
         }
     }
 

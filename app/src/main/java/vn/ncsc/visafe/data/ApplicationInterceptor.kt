@@ -48,21 +48,14 @@ class ApplicationInterceptorWithoutToken(context: Context) : Interceptor {
     }
 }
 
-class ApplicationInterceptorWithBearer : Interceptor {
-    private val pref = ViSafeApp().getPreference()
-
+class ApplicationInterceptorWithCheckBotnet : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val original = chain.request()
-
         val requestBuilder = original.newBuilder().apply {
             addHeader("Accept", "application/json")
             addHeader("Content-type", "application/json")
-            val token = pref.getString(PreferenceKey.AUTH_TOKEN)
-            token.let {
-                if (it.isNotBlank()) {
-                    addHeader("Authorization", "Bearer $token")
-                }
-            }
+//            addHeader("Origin", "https://congcu.khonggianmang.vn")
+//            addHeader("Referer", "https://congcu.khonggianmang.vn/")
             val method = original.method
             val body = original.body
             method(method, body)

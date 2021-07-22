@@ -164,14 +164,70 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <View
+            android:id="@+id/view1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_4sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@color/color_EEEEEE"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ctrlMemberManager" />
+
+        <TextView
+            android:id="@+id/btnBlockedTracking"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingTop="@dimen/_10dp"
+            android:paddingBottom="@dimen/_10dp"
+            android:text="@string/thong_ke"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view1" />
+
+        <View
+            android:id="@+id/viewBlock"
+            android:layout_width="@dimen/_48dp"
+            android:layout_height="3dp"
+            android:background="@color/color_FFB31F"
+            app:layout_constraintEnd_toEndOf="@id/btnBlockedTracking"
+            app:layout_constraintStart_toStartOf="@id/btnBlockedTracking"
+            app:layout_constraintTop_toBottomOf="@id/btnBlockedTracking" />
+
+        <TextView
+            android:id="@+id/btnSetupBlock"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="0.5"
+            android:ellipsize="end"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingTop="@dimen/_10dp"
+            android:paddingBottom="@dimen/_10dp"
+            android:text="@string/thiet_lap_bao_ve"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/view1" />
+
+        <View
+            android:id="@+id/viewSetupBlock"
+            android:layout_width="@dimen/_48dp"
+            android:layout_height="3dp"
+            android:background="@color/color_FFB31F"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@id/btnSetupBlock"
+            app:layout_constraintStart_toStartOf="@id/btnSetupBlock"
+            app:layout_constraintTop_toBottomOf="@id/btnSetupBlock" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
