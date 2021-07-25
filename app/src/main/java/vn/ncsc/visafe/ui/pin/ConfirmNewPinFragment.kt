@@ -8,10 +8,7 @@ import vn.ncsc.visafe.R
 import vn.ncsc.visafe.ViSafeApp
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.databinding.FragmentConfirmNewPinBinding
-import vn.ncsc.visafe.utils.OnSingleClickListener
-import vn.ncsc.visafe.utils.PreferenceKey
-import vn.ncsc.visafe.utils.setOnSingClickListener
-import vn.ncsc.visafe.utils.updateOTPCode
+import vn.ncsc.visafe.utils.*
 
 class ConfirmNewPinFragment : BaseFragment<FragmentConfirmNewPinBinding>() {
 
@@ -58,6 +55,7 @@ class ConfirmNewPinFragment : BaseFragment<FragmentConfirmNewPinBinding>() {
                     if (pin == binding.etPinCode.text.toString().trim()) {
                         binding.etPinCode.setText("")
                         ViSafeApp().getPreference().putString(PreferenceKey.PIN_CODE, pin)
+                        EventUtils.isCreatePass.value = true
                         (activity as UpdatePinActivity).finish()
                     } else {
                         showAlert("Thông báo", "Mã pin vừa nhập không trùng khớp!") {
@@ -70,6 +68,7 @@ class ConfirmNewPinFragment : BaseFragment<FragmentConfirmNewPinBinding>() {
         })
         binding.btnDeletePin.setOnSingClickListener {
             ViSafeApp().getPreference().putString(PreferenceKey.PIN_CODE, "")
+            EventUtils.isCreatePass.value = false
             activity?.finish()
         }
         setHideKeyboardFocus(binding.root)
