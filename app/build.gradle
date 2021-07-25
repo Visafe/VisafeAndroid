@@ -108,4 +108,7 @@ dependencies {
     //login facebook,google
     implementation 'com.facebook.android:facebook-android-sdk:7.0.0'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
+
+    //Circle indicator
+    implementation 'me.relex:circleindicator:2.1.6'
 }

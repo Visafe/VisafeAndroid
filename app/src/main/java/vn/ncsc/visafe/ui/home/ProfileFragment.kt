@@ -1,28 +1,17 @@
 package vn.ncsc.visafe.ui.home
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.base.BaseFragment
-import vn.ncsc.visafe.data.BaseCallback
-import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.FragmentProfileBinding
-import vn.ncsc.visafe.model.WorkspaceGroupData
-import vn.ncsc.visafe.model.request.DeleteWorkSpaceRequest
-import vn.ncsc.visafe.model.request.UpdateNameWorkspaceRequest
 import vn.ncsc.visafe.ui.MainActivity
-import vn.ncsc.visafe.ui.create.workspace.CreateWorkspaceActivity
-import vn.ncsc.visafe.ui.dialog.AccountTypeDialogBottomSheet
-import vn.ncsc.visafe.ui.dialog.OnClickItemAccountType
+import vn.ncsc.visafe.ui.authentication.RegisterActivity
 import vn.ncsc.visafe.ui.setting.SettingActivity
 import vn.ncsc.visafe.ui.support.SupportCenterActivity
+import vn.ncsc.visafe.ui.upgrade.UpgradeActivity
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
@@ -57,6 +46,19 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         }
         binding.clLogout.setOnSingClickListener {
             (activity as BaseActivity).logOut()
+        }
+        binding.clUpgrade.setOnSingClickListener {
+            val intent = Intent(requireContext(), UpgradeActivity::class.java)
+            intent.putExtra(UpgradeActivity.CURRENT_VERSION_KEY, UpgradeActivity.TYPE_USED)
+            startActivity(intent)
+        }
+        binding.layoutUpgrade.btnUpgradeNow.setOnSingClickListener {
+            val intent = Intent(requireContext(), UpgradeActivity::class.java)
+            intent.putExtra(UpgradeActivity.CURRENT_VERSION_KEY, UpgradeActivity.TYPE_REGISTER)
+            startActivity(intent)
+        }
+        binding.layoutUpgrade.btnRegister.setOnSingClickListener {
+            startActivity(Intent(requireContext(), RegisterActivity::class.java))
         }
     }
 }

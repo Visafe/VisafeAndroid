@@ -430,6 +430,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <include
+                    android:id="@+id/layoutUpgrade"
                     layout="@layout/layout_upgrade"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

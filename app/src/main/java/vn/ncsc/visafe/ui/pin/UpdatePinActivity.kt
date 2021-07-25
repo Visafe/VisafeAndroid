@@ -13,6 +13,7 @@ class UpdatePinActivity : BaseActivity() {
     lateinit var binding: ActivityUpdatePinBinding
 
     companion object {
+        const val UPDATE_PIN_KEY = "UPDATE_PIN_KEY"
         var rootId: Int = R.id.fragment_pin
     }
 

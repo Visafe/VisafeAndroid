@@ -309,6 +309,11 @@
     <string name="upgrade_now_v2">Nâng cấp ngay</string>
     <string name="premium">PREMIUM</string>
     <string name="premium_content">Nâng cấp lên phiên bản Premium cho phép bạn truy cập không giới hạn tính năng của ứng dụng</string>
+    <string name="used_premium_content">Phiên bản Premium cho phép bạn truy cập không giới hạn tính năng của ứng dụng</string>
+    <string name="family_content">Nâng cấp lên phiên bản Family cho phép bạn bảo vệ mọi thiết bị của thành viên trong gia đình</string>
+    <string name="used_family_content">Phiên bản Family cho phép bạn truy cập không giới hạn tính năng của ứng dụng</string>
+    <string name="bussiness_content">Nâng cấp lên phiên bản Business cho phép bạn quản lý và bảo vệ mọi thiết bị của thành viên trong công ty</string>
+    <string name="used_bussiness_content">Phiên bản Business cho phép bạn truy cập không giới hạn tính năng của ứng dụng</string>
     <string name="chosse_account_type">Chọn loại tài khoản</string>
     <string name="display_statistical_for">Hiển thị thống kê theo</string>
     <string name="add_account_type">Thêm loại tài khoản mới</string>
@@ -411,5 +416,29 @@
     <string name="thiet_lap_bao_ve">Thiết lập bảo vệ</string>
     <string name="thong_ke">Thống kê</string>
     <string name="dong_y">Đồng ý</string>
+    <string name="dang_ky_goi">Đăng ký gói</string>
+    <string name="goi_thang">Gói 1 tháng</string>
+    <string name="goi_nam">Gói 12 tháng</string>
+    <string name="try_seven_day">+7 ngày dùng thử</string>
+    <string name="try_month_day">+90 ngày dùng thử</string>
+    <string name="price_month">10.000₫ / Tháng</string>
+    <string name="price_month_family">50.000₫ / Tháng</string>
+    <string name="price_year">49.000₫ / Năm</string>
+    <string name="price_year_family">249.000₫ / Năm</string>
+    <string name="price_bussiness">Liên hệ</string>
+    <string name="save_64">Tiết kiệm 64%</string>
+    <string name="tiet_kiem_hon">Tiết kiệm hơn</string>
+    <string name="phan_tich_bao_cao">Phân tích &amp; Báo cáo</string>
+    <string name="max_3_device">Tối đa 3 thiết bị</string>
+    <string name="max_9_device">Tối đa 9 thiết bị</string>
+    <string name="max_device">Không giới hạn thiết bị</string>
+    <string name="management_1_group">Quản lý tối đa 1 nhóm</string>
+    <string name="management_group">Không giới hạn nhóm</string>
+    <string name="support_call_chat">Hỗ trợ qua Chat/Call</string>
+    <string name="support_call_chat_24">Hỗ trợ qua Hotline 24/7</string>
+    <string name="chan_khong_gioi_han">Chặn theo dõi, quảng cáo không giới hạn</string>
+    <string name="ban_dang_su_dung_tai_khoan">Bạn đang sử dụng tài khoản</string>
+    <string name="mua_them_goi_cuoc">Mua thêm gói cước</string>
+    <string name="quan_tri_workspace">Quản trị workspace</string>
 
 </resources>

@@ -30,6 +30,9 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
+        <activity android:name=".ui.upgrade.UpgradeActivity"
+            android:theme="@style/AppThemeMain"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.website.WebsiteReportActivity"
             android:screenOrientation="portrait" />
