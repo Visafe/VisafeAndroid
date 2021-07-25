@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/cvHomePass"
     android:layout_marginStart="@dimen/_16sdp"
     android:layout_marginTop="@dimen/_8sdp"
     android:layout_marginEnd="@dimen/_16sdp"
@@ -61,9 +62,10 @@
 
         <TextView
             android:id="@+id/btnHomePassCreate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/view"
+            android:gravity="center_horizontal"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_12sdp"
             android:fontFamily="@font/sf_pro_text_regular_bold"

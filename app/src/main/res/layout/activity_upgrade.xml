@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_0C023D"
+    tools:context=".ui.upgrade.UpgradeActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/bg_upgrade"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="@dimen/_40dp"
+        android:layout_height="@dimen/_40dp"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_26sdp"
+        android:padding="@dimen/_6sdp"
+        android:src="@drawable/ic_baseline_clear_24"
+        app:tint="@color/white"
+        tools:ignore="ContentDescription" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vpVersion"
+        android:background="@color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/indicator"
+        android:layout_below="@id/ivBack" />
+
+    <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/indicator"
+        android:background="@color/transparent"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_32sdp"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

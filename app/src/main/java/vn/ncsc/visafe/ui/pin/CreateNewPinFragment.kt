@@ -8,10 +8,7 @@ import vn.ncsc.visafe.R
 import vn.ncsc.visafe.ViSafeApp
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.databinding.FragmentCreateNewPinBinding
-import vn.ncsc.visafe.utils.OnSingleClickListener
-import vn.ncsc.visafe.utils.PreferenceKey
-import vn.ncsc.visafe.utils.setOnSingClickListener
-import vn.ncsc.visafe.utils.updateOTPCode
+import vn.ncsc.visafe.utils.*
 
 class CreateNewPinFragment : BaseFragment<FragmentCreateNewPinBinding>() {
 
@@ -55,6 +52,7 @@ class CreateNewPinFragment : BaseFragment<FragmentCreateNewPinBinding>() {
         }
         binding.btnDeletePin.setOnSingClickListener {
             ViSafeApp().getPreference().putString(PreferenceKey.PIN_CODE, "")
+            EventUtils.isCreatePass.value = false
             activity?.finish()
         }
         enableButton()

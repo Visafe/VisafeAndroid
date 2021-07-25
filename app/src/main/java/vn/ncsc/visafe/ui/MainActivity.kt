@@ -25,6 +25,7 @@ import vn.ncsc.visafe.model.WorkspaceGroupData
 import vn.ncsc.visafe.model.response.StatsWorkspaceResponse
 import vn.ncsc.visafe.ui.adapter.TimeStatistical
 import vn.ncsc.visafe.ui.home.*
+import vn.ncsc.visafe.utils.EventUtils
 import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 import vn.ncsc.visafe.utils.setBackgroundTint
@@ -66,6 +67,8 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
     private fun initView() {
         timeTypes.value = TimeStatistical.values()[0].time
+        val pin = ViSafeApp().getPreference().getString(PreferenceKey.PIN_CODE) ?: ""
+        EventUtils.isCreatePass.value = pin.isNotEmpty()
         initTab()
     }
 
