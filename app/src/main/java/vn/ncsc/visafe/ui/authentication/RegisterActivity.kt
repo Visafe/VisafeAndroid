@@ -14,6 +14,7 @@ import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
 import com.facebook.login.LoginManager
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.android.synthetic.main.item_config.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,9 +34,7 @@ import vn.ncsc.visafe.utils.*
 class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputOtpDialog {
 
     lateinit var viewBinding: ActivityRegisterBinding
-
     private var isShowPassword: Boolean = false
-    private var isShowPasswordAgain: Boolean = false
     private var listError: MutableList<View> = mutableListOf()
     private var inputOTPFragment: InputOTPFragment? = null
 
@@ -82,6 +81,25 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
             }
 
         })
+        viewBinding.edtInputFullName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                viewBinding.tvInputFullNameError.visibility = View.GONE
+                viewBinding.edtInputFullName.background =
+                    ContextCompat.getDrawable(applicationContext, R.drawable.bg_custom_edittext)
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                viewBinding.btnClearTextInputFullName.visibility = if (p0.isNullOrEmpty()) View.GONE else View.VISIBLE
+            }
+
+        })
+        viewBinding.edtInputFullName.setOnFocusChangeListener { v, hasFocus ->
+            viewBinding.btnClearTextInputFullName.visibility =
+                if (hasFocus && !viewBinding.edtInputFullName.text.isNullOrEmpty()) View.VISIBLE else View.GONE
+        }
         setupTextPolicyHandleClick()
         viewBinding.tvTerm.text = getString(R.string.note_term)
             .let { androidx.core.text.HtmlCompat.fromHtml(it, 0) }
@@ -118,6 +136,7 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
         }
         setSafeClickListener(viewBinding.btnShowHidePassword) { onShowHidePassword() }
         viewBinding.btnClearTextInputEmail.setOnClickListener { viewBinding.edtInputEmail.setText("") }
+        viewBinding.btnClearTextInputFullName.setOnClickListener { viewBinding.edtInputFullName.setText("") }
         viewBinding.btnLoginSocialGoogle.setOnSingClickListener {
             doSignInGoogle()
         }
@@ -127,7 +146,6 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
                 listOf("public_profile", "email")
             )
         }
-        viewBinding.btnShowHidePasswordAgain.setOnSingClickListener { onShowHidePasswordAgain() }
     }
 
     private fun doRegister() {
@@ -141,7 +159,7 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
         hideKeyboard(this)
         showProgressDialog()
         val registerRequest = RegisterRequest()
-        registerRequest.username = viewBinding.edtInputEmail.text.toString()
+        registerRequest.fullName = viewBinding.edtInputFullName.text.toString()
         if (isNumber(viewBinding.edtInputEmail.text.toString())) {
             registerRequest.phoneNumber = formatMobileHead84(viewBinding.edtInputEmail.text.toString())
         } else {
@@ -231,6 +249,13 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
     private fun validateField(): Boolean {
         var isValidField = true
         listError.clear()
+        if (viewBinding.edtInputFullName.text.isNullOrEmpty()) {
+            viewBinding.edtInputFullName.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
+            viewBinding.tvInputFullNameError.visibility = View.VISIBLE
+            viewBinding.tvInputFullNameError.text = getString(R.string.warning_input_full_name)
+            listError.add(viewBinding.edtInputFullName)
+            isValidField = false
+        }
         if (viewBinding.edtInputEmail.text.isNullOrEmpty()) {
             viewBinding.edtInputEmail.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
             viewBinding.tvInputEmailError.visibility = View.VISIBLE
@@ -260,39 +285,22 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
             listError.add(viewBinding.edtInputPassword)
             isValidField = false
         } else {
-            if (viewBinding.edtInputPassword.text.toString().length < 6 || viewBinding.edtInputPassword.text.toString().length > 32) {
+            if (viewBinding.edtInputPassword.text.toString().length < 8) {
                 viewBinding.edtInputPassword.background =
                     ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
                 viewBinding.tvInputPasswordError.visibility = View.VISIBLE
-                viewBinding.tvInputPasswordError.text = "Mật khẩu phải có độ dài từ 6-32 ký tự"
+                viewBinding.tvInputPasswordError.text = "Mật khẩu phải có tối thiểu 8 ký tự!"
+                listError.add(viewBinding.edtInputPassword)
+                isValidField = false
+            } else if (viewBinding.edtInputPassword.text.toString().length > 50) {
+                viewBinding.edtInputPassword.background =
+                    ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
+                viewBinding.tvInputPasswordError.visibility = View.VISIBLE
+                viewBinding.tvInputPasswordError.text = "Mật khẩu phải có tối đa 50 ký tự!"
                 listError.add(viewBinding.edtInputPassword)
                 isValidField = false
             }
 
-        }
-        if (viewBinding.edtInputPasswordAgain.text.isNullOrEmpty()) {
-            viewBinding.edtInputPasswordAgain.background =
-                ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
-            viewBinding.tvInputPasswordAgainError.visibility = View.VISIBLE
-            viewBinding.tvInputPasswordAgainError.text = "Vui lòng nhập mật khẩu!"
-            listError.add(viewBinding.edtInputPasswordAgain)
-            isValidField = false
-        } else {
-            if (viewBinding.edtInputPasswordAgain.text.toString().length < 6 || viewBinding.edtInputPassword.text.toString().length > 32) {
-                viewBinding.edtInputPasswordAgain.background =
-                    ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
-                viewBinding.tvInputPasswordAgainError.visibility = View.VISIBLE
-                viewBinding.tvInputPasswordAgainError.text = "Mật khẩu phải có độ dài từ 6-32 ký tự"
-                listError.add(viewBinding.edtInputPasswordAgain)
-                isValidField = false
-            } else if (viewBinding.edtInputPasswordAgain.text.toString() != viewBinding.edtInputPassword.text.toString()) {
-                viewBinding.edtInputPasswordAgain.background =
-                    ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
-                viewBinding.tvInputPasswordAgainError.visibility = View.VISIBLE
-                viewBinding.tvInputPasswordAgainError.text = "Mật khẩu không trùng khớp"
-                listError.add(viewBinding.edtInputPasswordAgain)
-                isValidField = false
-            }
         }
         return isValidField
     }
@@ -313,30 +321,6 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
             viewBinding.edtInputPassword.transformationMethod =
                 PasswordTransformationMethod.getInstance()
             viewBinding.btnShowHidePassword.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.ic_eye_off
-                )
-            )
-        }
-    }
-
-    private fun onShowHidePasswordAgain() {
-        if (!isShowPasswordAgain) {
-            isShowPasswordAgain = true
-            viewBinding.edtInputPasswordAgain.transformationMethod =
-                HideReturnsTransformationMethod.getInstance()
-            viewBinding.btnShowHidePasswordAgain.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.ic_eye_on
-                )
-            )
-        } else {
-            isShowPasswordAgain = false
-            viewBinding.edtInputPasswordAgain.transformationMethod =
-                PasswordTransformationMethod.getInstance()
-            viewBinding.btnShowHidePasswordAgain.setImageDrawable(
                 ContextCompat.getDrawable(
                     this,
                     R.drawable.ic_eye_off
@@ -413,9 +397,7 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
                         SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.ISLOGIN, true)
                     }
                     val intent = Intent(this@RegisterActivity, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                            Intent.FLAG_ACTIVITY_NEW_TASK
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                     finish()
                 }

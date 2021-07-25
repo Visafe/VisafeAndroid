@@ -6,39 +6,33 @@ import kotlinx.android.parcel.Parcelize
 
 data class StatsWorkspaceResponse(
     @SerializedName("time_units")
-    var time_units: String? = null,
+    var time_units: String? = "",
     @SerializedName("num_dns_queries")
-    var num_dns_queries: Int? = null,
-    @SerializedName("num_blocked_filtering")
-    var num_blocked_filtering: Int? = null,
-    @SerializedName("num_replaced_safebrowsing")
-    var num_replaced_safebrowsing: Int? = null,
-    @SerializedName("num_replaced_safesearch")
-    var num_replaced_safesearch: Int? = null,
-    @SerializedName("num_replaced_parental")
-    var num_replaced_parental: Int? = null,
+    var num_dns_queries: Int? = 0,
     @SerializedName("num_dangerous_domain")
-    var num_dangerous_domain: Int? = null,
+    var num_dangerous_domain: Int? = 0,
     @SerializedName("num_violation")
-    var num_violation: Int? = null,
+    var num_violation: Int? = 0,
     @SerializedName("num_ads_blocked")
-    var num_ads_blocked: Int? = null,
-    @SerializedName("avg_processing_time")
-    var avg_processing_time: Int? = null,
-    @SerializedName("top_queried_domains")
-    var top_queried_domains: List<String>? = listOf(),
-    @SerializedName("top_clients")
-    var top_clients: List<String>? = listOf(),
-    @SerializedName("top_blocked_domains")
-    var top_blocked_domains: List<String>? = listOf(),
-    @SerializedName("dns_queries")
-    var dns_queries: List<String>? = listOf(),
-    @SerializedName("blocked_filtering")
-    var blocked_filtering: List<String>? = listOf(),
-    @SerializedName("replaced_safebrowsing")
-    var replaced_safebrowsing: List<String>? = listOf(),
-    @SerializedName("replaced_parental")
-    var replaced_parental: List<String>? = listOf(),
+    var num_ads_blocked: Int? = 0,
+    @SerializedName("num_native_tracking")
+    var num_native_tracking: Int? = 0,
+    @SerializedName("num_access_blocked")
+    var num_access_blocked: Int? = 0,
+    @SerializedName("num_content_blocked")
+    var num_content_blocked: Int? = 0,
+    @SerializedName("num_dangerous_domain_all")
+    var num_dangerous_domain_all: Int? = 0,
+    @SerializedName("num_violation_all")
+    var num_violation_all: Int? = 0,
+    @SerializedName("num_ads_blocked_all")
+    var num_ads_blocked_all: Int? = 0,
+    @SerializedName("num_native_tracking_all")
+    var num_native_tracking_all: Int? = 0,
+    @SerializedName("num_access_blocked_all")
+    var num_access_blocked_all: Int? = 0,
+    @SerializedName("num_content_blocked_all")
+    var num_content_blocked_all: Int? = 0,
     @SerializedName("top_categories")
     var top_categories: List<TopCategories>? = listOf()
 )

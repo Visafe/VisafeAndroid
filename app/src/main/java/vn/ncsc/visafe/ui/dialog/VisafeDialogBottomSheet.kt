@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseDialogBottomSheet
@@ -18,6 +19,7 @@ class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSh
         const val TITLE = "TITLE"
         const val NAME = "NAME"
         const val TITLE_EDIT = "TITLE_EDIT"
+        const val RES_LEFT_TEXT = "RES_LEFT_TEXT"
         const val TITLE_DELETE = "TITLE_DELETE"
         const val EDIT_HINT = "EDIT_HINT"
         const val EDIT_NAME = "EDIT_NAME"
@@ -49,6 +51,26 @@ class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSh
                 Pair(TYPE_DIALOG_KEY, type),
                 Pair(TITLE, title),
                 Pair(TITLE_EDIT, titleEdit),
+                Pair(TITLE_DELETE, titleDelete),
+                Pair(NAME, name)
+            )
+            return fragment
+        }
+
+        fun newInstance(
+            title: String?,
+            name: String?,
+            type: String?,
+            titleEdit: String?,
+            resLeftText: Int?,
+            titleDelete: String?
+        ): VisafeDialogBottomSheet {
+            val fragment = VisafeDialogBottomSheet()
+            fragment.arguments = bundleOf(
+                Pair(TYPE_DIALOG_KEY, type),
+                Pair(TITLE, title),
+                Pair(TITLE_EDIT, titleEdit),
+                Pair(RES_LEFT_TEXT, resLeftText),
                 Pair(TITLE_DELETE, titleDelete),
                 Pair(NAME, name)
             )
@@ -118,6 +140,10 @@ class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSh
         binding.tvName.visibility = if (name.isNullOrEmpty()) View.GONE else View.VISIBLE
         val titleEdit = arguments?.getString(TITLE_EDIT, "")
         binding.tvEdit.text = titleEdit
+        val resLeftText = arguments?.getInt(RES_LEFT_TEXT, 0)
+        if (resLeftText != null && resLeftText != 0) {
+            binding.tvEdit.setCompoundDrawablesWithIntrinsicBounds(resLeftText, 0, 0, 0)
+        }
         val titleDelete = arguments?.getString(TITLE_DELETE, "")
         binding.tvDelete.text = titleDelete
         val hint = arguments?.getString(EDIT_HINT, "")

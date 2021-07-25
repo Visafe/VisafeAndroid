@@ -6,7 +6,6 @@ import vn.ncsc.visafe.model.WorkspaceGroupData
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
-import vn.ncsc.visafe.model.Botnet
 import vn.ncsc.visafe.model.request.*
 import vn.ncsc.visafe.model.response.*
 
@@ -45,6 +44,9 @@ interface ApiService {
     @PATCH("user/change-password")
     fun doChangePassword(@Body changePasswordRequest: ChangePasswordRequest): Call<ResponseBody>
 
+    @PATCH("user/change-profile")
+    fun doChangeProfile(@Body changeProfiledRequest: RegisterRequest): Call<ResponseBody>
+
     /*===========Workspace=============*/
     @GET("workspaces")
     fun doGetWorkSpacesOfCurrentUser(): Call<List<WorkspaceGroupData>>
@@ -75,12 +77,38 @@ interface ApiService {
     @POST("group/add")
     fun doCreateGroup(@Body createGroupRequest: CreateGroupRequest): Call<ResponseBody>
 
+    @PATCH("group/update")
+    fun doUpdateGroup(@Body groupData: GroupData): Call<ResponseBody>
+
     @HTTP(
         method = "DELETE",
         path = "group/delete",
         hasBody = true
     )
     fun doDeleteGroup(@Body deleteGroupRequest: DeleteGroupRequest): Call<ResponseBody>
+
+    /*=========User in Group=================*/
+    @PATCH("group/update/user-to-manager")
+    fun doUpgradeUserToManager(@Body userInGroupRequest: UserInGroupRequest): Call<ResponseBody>
+
+    @PATCH("group/update/whitelist")
+    fun doUpdateWhiteList(@Body updateWhiteListRequest: UpdateWhiteListRequest): Call<ResponseBody>
+
+    @HTTP(
+        method = "DELETE",
+        path = "group/delete/member",
+        hasBody = true
+    )
+    fun doRemoveUserFromGroup(@Body removeUserRequest: UserInGroupRequest): Call<ResponseBody>
+
+    @POST("group/invite/members")
+    fun doInviteUserIntoGroup(@Body inviteUserRequest: UserInGroupRequest): Call<ResponseBody>
+
+    @POST("user/out-group")
+    fun doUserLeaveGroup(@Body leaveGroupRequest: UserInGroupRequest): Call<ResponseBody>
+
+    @PATCH("group/update/user-to-viewer")
+    fun doUpgradeUserToViewer(@Body userToViewerRequest: UserInGroupRequest): Call<ResponseBody>
 
     /*=========Notification=================*/
     @GET("user/notifications")
@@ -104,7 +132,7 @@ interface ApiService {
 
     @GET("stats/group")
     fun doGetStatisticalOneGroup(
-        @Query("group_id") workspace_id: String?,
+        @Query("group_id") group_id: String?,
         @Query("time_limit") time_limit: String?
     ): Call<StatsWorkspaceResponse>
 
@@ -117,4 +145,15 @@ interface ApiService {
 
     @POST("b4ad1075-a0ad-4581-841d-23877a6b1a60")
     fun checkBotnet(): Call<ResponseBody>
+
+    @GET("querylog_group")
+    fun doGetQueryLogGroup(
+        @Query("group_id") group_id: String?,
+        @Query("response_status") response_status: String?,
+        @Query("limit") limit: String?,
+        @Query("older_than") older_than: String?,
+    ): Call<QueryLogResponse>
+
+    @POST("stats/delete_log")
+    fun doDeleteLog(@Body deleteLogRequest: DeleteLogRequest): Call<ResponseBody>
 }

@@ -30,9 +30,10 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity android:name=".ui.upgrade.UpgradeActivity"
-            android:theme="@style/AppThemeMain"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.upgrade.UpgradeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeMain" />
         <activity
             android:name=".ui.website.WebsiteReportActivity"
             android:screenOrientation="portrait" />
@@ -125,7 +126,14 @@
             android:name=".ui.group.detail.member.AddMemberActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeMain" />
-
+        <activity
+            android:name=".ui.group.detail.device.DeviceManagementActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash" />
+        <activity
+            android:name=".ui.group.detail.setup_protect.ProtectDeviceGroupDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash" />
         <activity
             android:name=".ui.WebViewActivity"
             android:screenOrientation="portrait"

@@ -7,14 +7,10 @@ import vn.ncsc.visafe.model.UsersGroupInfo
 data class CreateGroupRequest(
     @SerializedName("ids")//mảng các deviceId trong group
     var ids: List<String>? = listOf(),
-    @SerializedName("tags")//không sử dung
-    var tags: List<String>? = listOf(),
     @SerializedName("name")//tên group
     var name: String? = null,
     @SerializedName("groupid")//id của group
     var groupid: String? = null,
-    @SerializedName("use_global_settings")// không sử dụng
-    var use_global_settings: Boolean? = false,
     @SerializedName("filtering_enabled")//bật chế độ lọc
     var filtering_enabled: Boolean? = false,
     @SerializedName("parental_enabled")//chế độ cha mẹ phụ huynh
@@ -23,8 +19,6 @@ data class CreateGroupRequest(
     var safesearch_enabled: Boolean? = false,
     @SerializedName("youtuberestrict_enabled")//chế độ hạn chặn nội dụng nhạy cảm trên youtube
     var youtuberestrict_enabled: Boolean? = false,
-    @SerializedName("safebrowsing_enabled")//không sử dụng
-    var safebrowsing_enabled: Boolean? = false,
     @SerializedName("phishing_enabled")//bật chế độ chặn các trang phishing
     var phishing_enabled: Boolean? = false,
     @SerializedName("malware_enabled")//chặn các trang, app chứa malware
@@ -55,18 +49,12 @@ data class CreateGroupRequest(
     var block_webs: List<String>? = listOf(),
     @SerializedName("workspace_id")
     var workspace_id: String? = null,
-    @SerializedName("upstreams")//không sử dụng
-    var upstreams: List<String>? = listOf(),
     @SerializedName("fkUserId")//ID người dùng tạo group
     var fkUserId: Int? = null,
     @SerializedName("isOwner")//Người dùng hiện tại get group có phải owner hay k
     var isOwner: Boolean? = false,
     /* @SerializedName("whois_info")
      var whois_info: List<String>? = listOf(),*/
-    @SerializedName("disallowed")//không sử dụng
-    var disallowed: Boolean? = null,
-    @SerializedName("disallowed_rule")//không sử dụng
-    var disallowed_rule: Boolean? = null,
     @SerializedName("usersActive")//Mảng chứa ID người dùng có role là giám sát viên trong group
     var usersActive: List<String>? = listOf(),
     @SerializedName("userManage")//Mảng chứa ID người dùng có role là quản trị viên viên trong group

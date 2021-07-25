@@ -140,10 +140,18 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>() {
             listError.add(binding.edtInputPassword)
             isValidField = false
         } else {
-            if (binding.edtInputPassword.text!!.length in 33 downTo 5) {
-                binding.edtInputPassword.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_error)
+            if (binding.edtInputPassword.text.toString().length < 8) {
+                binding.edtInputPassword.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_error)
                 binding.tvInputPasswordError.visibility = View.VISIBLE
-                binding.tvInputPasswordError.text = "Mật khẩu phải có độ dài từ 6-32 ký tự"
+                binding.tvInputPasswordError.text = "Mật khẩu phải có tối thiểu 8 ký tự!"
+                listError.add(binding.edtInputPassword)
+                isValidField = false
+            } else if (binding.edtInputPassword.text.toString().length > 32) {
+                binding.edtInputPassword.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_error)
+                binding.tvInputPasswordError.visibility = View.VISIBLE
+                binding.tvInputPasswordError.text = "Mật khẩu phải có tối đa 32 ký tự!"
                 listError.add(binding.edtInputPassword)
                 isValidField = false
             }
@@ -155,13 +163,31 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>() {
             listError.add(binding.edtInputPasswordAgain)
             isValidField = false
         } else {
-            if (binding.edtInputPasswordAgain.text!!.length in 33 downTo 5) {
-                binding.edtInputPasswordAgain.background =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_error)
-                binding.tvInputPasswordErrorAgain.visibility = View.VISIBLE
-                binding.tvInputPasswordErrorAgain.text = "Mật khẩu phải có độ dài từ 6-32 ký tự"
-                listError.add(binding.edtInputPasswordAgain)
-                isValidField = false
+            when {
+                binding.edtInputPasswordAgain.text.toString().length < 8 -> {
+                    binding.edtInputPasswordAgain.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_error)
+                    binding.tvInputPasswordErrorAgain.visibility = View.VISIBLE
+                    binding.tvInputPasswordErrorAgain.text = "Mật khẩu phải có tối thiểu 8 ký tự!"
+                    listError.add(binding.edtInputPasswordAgain)
+                    isValidField = false
+                }
+                binding.edtInputPasswordAgain.text.toString().length > 50 -> {
+                    binding.edtInputPasswordAgain.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_error)
+                    binding.tvInputPasswordErrorAgain.visibility = View.VISIBLE
+                    binding.tvInputPasswordErrorAgain.text = "Mật khẩu phải có tối đa 50 ký tự!"
+                    listError.add(binding.edtInputPasswordAgain)
+                    isValidField = false
+                }
+                binding.edtInputPasswordAgain.text.toString() != binding.edtInputPassword.text.toString() -> {
+                    binding.edtInputPasswordAgain.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_error)
+                    binding.tvInputPasswordErrorAgain.visibility = View.VISIBLE
+                    binding.tvInputPasswordErrorAgain.text = "Mật khẩu không trùng khớp"
+                    listError.add(binding.edtInputPasswordAgain)
+                    isValidField = false
+                }
             }
         }
         return isValidField

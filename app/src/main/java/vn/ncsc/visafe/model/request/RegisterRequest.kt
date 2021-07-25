@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class RegisterRequest(
     @SerializedName("full_name")
-    var username: String? = null,
+    var fullName: String? = null,
     @SerializedName("email")
     var email: String? = null,
     @SerializedName("phone_number")

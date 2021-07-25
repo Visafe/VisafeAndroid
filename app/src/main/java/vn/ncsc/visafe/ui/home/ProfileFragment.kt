@@ -48,11 +48,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             (activity as BaseActivity).logOut()
         }
         binding.clUpgrade.setOnSingClickListener {
+            if ((activity as BaseActivity).needLogin())
+                return@setOnSingClickListener
             val intent = Intent(requireContext(), UpgradeActivity::class.java)
             intent.putExtra(UpgradeActivity.CURRENT_VERSION_KEY, UpgradeActivity.TYPE_USED)
             startActivity(intent)
         }
         binding.layoutUpgrade.btnUpgradeNow.setOnSingClickListener {
+            if ((activity as BaseActivity).needLogin())
+                return@setOnSingClickListener
             val intent = Intent(requireContext(), UpgradeActivity::class.java)
             intent.putExtra(UpgradeActivity.CURRENT_VERSION_KEY, UpgradeActivity.TYPE_REGISTER)
             startActivity(intent)

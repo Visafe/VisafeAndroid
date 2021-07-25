@@ -21,6 +21,8 @@ import vn.ncsc.visafe.model.response.BotnetResponse
 import vn.ncsc.visafe.ui.adapter.OnClickWifi
 import vn.ncsc.visafe.ui.adapter.ProtectWifiAdapter
 import vn.ncsc.visafe.utils.OnSingleClickListener
+import vn.ncsc.visafe.utils.PreferenceKey
+import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 
 class ProtectWifiActivity : BaseActivity() {
     companion object {
@@ -41,9 +43,16 @@ class ProtectWifiActivity : BaseActivity() {
         initView()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        setResult(RESULT_OK)
+        finish()
+    }
+
     private fun initView() {
         binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
+                setResult(RESULT_OK)
                 finish()
             }
         })
@@ -71,6 +80,7 @@ class ProtectWifiActivity : BaseActivity() {
                 binding.switchProtectWifi.isChecked = false
                 handleProtected(false, null)
             }
+            SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.IS_ENABLE_PROTECTED_WIFI_HOME, isChecked)
         }
 
         adapter = ProtectWifiAdapter(listBotnetDetail, this)

@@ -10,11 +10,11 @@ import vn.ncsc.visafe.model.DeviceData
 
 class ProtectDeviceAdapter(val deviceList: ArrayList<DeviceData>, val context: Context) :
     RecyclerView.Adapter<ProtectDeviceAdapter.ProtectDeviceViewHolder>() {
-    private var mOnClickListener: OnClickDevice? = null
-
-    fun setOnClickListener(onConfirmListener: OnClickDevice) {
-        mOnClickListener = onConfirmListener
-    }
+//    private var mOnClickListener: OnClickDevice? = null
+//
+//    fun setOnClickListener(onConfirmListener: OnClickDevice) {
+//        mOnClickListener = onConfirmListener
+//    }
 
     class ProtectDeviceViewHolder private constructor(val binding: ItemProtectDeviceBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -46,10 +46,10 @@ class ProtectDeviceAdapter(val deviceList: ArrayList<DeviceData>, val context: C
     override fun onBindViewHolder(holder: ProtectDeviceViewHolder, position: Int) {
         holder.bind(deviceList[position], context)
         holder.binding.ivMore.setOnClickListener {
-            mOnClickListener?.onMoreDevice(deviceList[position], position)
+//            mOnClickListener?.onMoreDevice(deviceList[position], position)
         }
         holder.itemView.setOnClickListener {
-            mOnClickListener?.onClickDevice(deviceList[position], position)
+//            mOnClickListener?.onClickDevice(deviceList[position], position)
         }
     }
 

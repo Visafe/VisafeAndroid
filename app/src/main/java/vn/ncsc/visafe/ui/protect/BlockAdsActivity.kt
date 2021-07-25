@@ -29,9 +29,16 @@ class BlockAdsActivity : BaseActivity() {
         initView()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        setResult(RESULT_OK)
+        finish()
+    }
+
     private fun initView() {
         binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
+                setResult(RESULT_OK)
                 finish()
             }
         })

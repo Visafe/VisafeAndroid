@@ -7,12 +7,9 @@ import androidx.core.text.HtmlCompat
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.databinding.ActivityBlockTrackingDetailBinding
-import vn.ncsc.visafe.model.BlockAdsData
 import vn.ncsc.visafe.model.BlockTrackingData
 import vn.ncsc.visafe.model.Subject
-import vn.ncsc.visafe.ui.adapter.BlockAdsAdapter
 import vn.ncsc.visafe.ui.adapter.BlockTrackingAdapter
-import vn.ncsc.visafe.ui.adapter.OnClickBlockAds
 import vn.ncsc.visafe.ui.adapter.OnClickBlockTracking
 import vn.ncsc.visafe.utils.OnSingleClickListener
 import vn.ncsc.visafe.utils.setOnSingClickListener
@@ -32,9 +29,16 @@ class BlockTrackingDetailActivity : BaseActivity() {
         initView()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        setResult(RESULT_OK)
+        finish()
+    }
+
     private fun initView() {
         binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
+                setResult(RESULT_OK)
                 finish()
             }
         })

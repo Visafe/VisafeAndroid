@@ -9,14 +9,16 @@ import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.databinding.ActivityProtectDeviceBinding
 import vn.ncsc.visafe.model.DeviceData
-import vn.ncsc.visafe.ui.adapter.DeviceAdapter
-import vn.ncsc.visafe.ui.adapter.OnClickDevice
+//import vn.ncsc.visafe.ui.adapter.OnClickDevice
 import vn.ncsc.visafe.utils.ChartUtil
 import vn.ncsc.visafe.utils.OnSingleClickListener
+import vn.ncsc.visafe.utils.PreferenceKey
+import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 
 class ProtectDeviceActivity : BaseActivity() {
     companion object {
         const val PROTECT_DEVICE_KEY = "PROTECT_DEVICE_KEY"
+        const val STATIS_WORKSPACE_DATA = "STATIS_WORKSPACE_DATA"
     }
 
     lateinit var binding: ActivityProtectDeviceBinding
@@ -29,9 +31,16 @@ class ProtectDeviceActivity : BaseActivity() {
         initView()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        setResult(RESULT_OK)
+        finish()
+    }
+
     private fun initView() {
         binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
+                setResult(RESULT_OK)
                 finish()
             }
         })
@@ -39,23 +48,22 @@ class ProtectDeviceActivity : BaseActivity() {
         val isProtected = intent.extras?.getBoolean(PROTECT_DEVICE_KEY, false) ?: false
         binding.switchProtectDevice.isChecked = isProtected
         handleProtected(isProtected)
-        binding.switchProtectDevice.setOnCheckedChangeListener { compoundButton, isChecked ->
+        binding.switchProtectDevice.setOnCheckedChangeListener { _, isChecked ->
             binding.switchProtectDevice.isChecked = isChecked
+            SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.IS_ENABLE_PROTECTED_DEVICE_HOME, isChecked)
             handleProtected(isChecked)
         }
 
         adapter = ProtectDeviceAdapter(createDeviceList(), this)
         binding.rvData.adapter = adapter
-        adapter.setOnClickListener(object : OnClickDevice {
-            override fun onClickDevice(data: DeviceData, position: Int) {
-
-            }
-
-            override fun onMoreDevice(data: DeviceData, position: Int) {
-//                showDialogEdit(data, position)
-            }
-
-        })
+//        adapter.setOnClickListener(object : OnClickDevice {
+//            override fun onClickDevice(data: DeviceData, position: Int) {
+//            }
+//
+//            override fun onMoreDevice(data: DeviceData, position: Int) {
+//            }
+//
+//        })
     }
 
     private fun handleProtected(isProtected: Boolean) {

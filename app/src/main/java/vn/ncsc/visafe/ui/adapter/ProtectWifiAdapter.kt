@@ -37,7 +37,7 @@ class ProtectWifiAdapter(val wifiList: ArrayList<DetailBotnet>, val context: Con
                 .into(binding.ivWifi)
             val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault())
             val date = dateFormat.parse(item?.lastseen)
-            binding.tvContent.text = context.getString(R.string.da_chan, getTimeAgo(date.time))
+            binding.tvContent.text = context.getString(R.string.da_phat_hien, getTimeAgo(date.time))
         }
 
         companion object {

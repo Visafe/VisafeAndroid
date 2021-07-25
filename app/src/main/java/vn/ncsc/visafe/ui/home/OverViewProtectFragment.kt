@@ -1,15 +1,17 @@
 package vn.ncsc.visafe.ui.home
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import com.google.gson.Gson
+import androidx.activity.result.contract.ActivityResultContracts
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.ViSafeApp
+import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.databinding.FragmentOverViewProtectBinding
+import vn.ncsc.visafe.model.StatsWorkSpace
 import vn.ncsc.visafe.model.WorkspaceGroupData
 import vn.ncsc.visafe.ui.MainActivity
 import vn.ncsc.visafe.ui.WebViewActivity
@@ -28,6 +30,7 @@ import vn.ncsc.visafe.ui.upgrade.UpgradeActivity
 import vn.ncsc.visafe.ui.website.WebsiteReportActivity
 import vn.ncsc.visafe.utils.EventUtils
 import vn.ncsc.visafe.utils.PreferenceKey
+import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
 class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
@@ -35,11 +38,41 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
     private var mWorkspaceGroupData: WorkspaceGroupData? = null
     private var timeStatistical: String = TimeStatistical.HANG_NGAY.value
     private var timeType: String = TimeStatistical.HANG_NGAY.time
+    private var statsWorkSpace: StatsWorkSpace? = null
 
     companion object {
         @JvmStatic
         fun newInstance() = OverViewProtectFragment()
     }
+
+    private var resultLauncherSwitchWifi =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                binding.layoutHomeProtect.switchHomeProtectWifi.isChecked = SharePreferenceKeyHelper.getInstance(ViSafeApp()).isEnableProtectedWifiHome()
+            }
+        }
+    private var resultLauncherSwitchDevice =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                binding.layoutHomeProtect.switchHomeProtectDevice.isChecked = SharePreferenceKeyHelper.getInstance(ViSafeApp()).isEnableProtectedDeviceHome()
+            }
+        }
+    private var resultLauncherSwitchAds =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                binding.layoutHomeProtect.switchHomeBlockAds.isChecked = SharePreferenceKeyHelper.getInstance(ViSafeApp()).isEnableBlockAdsHome()
+            }
+        }
+    private var resultLauncherSwitchFollow =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                binding.layoutHomeProtect.switchHomeBlockTracking.isChecked = SharePreferenceKeyHelper.getInstance(ViSafeApp()).isEnableBlockFollowHome()
+            }
+        }
 
     override fun layoutRes(): Int = R.layout.fragment_over_view_protect
 
@@ -64,8 +97,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
             }
         })
         (activity as MainActivity).statisticalWorkSpaceLiveData.observe(this, {
-            val gson = Gson()
-            Log.e("OverViewProtectFrg StaticWorkspace: ", gson.toJson(it))
+            statsWorkSpace = it
             binding.viewStatistical.tvValueDangerous.text = it.num_dangerous_domain.toString()
             binding.viewStatistical.tvValueAds.text = it.num_ads_blocked.toString()
             binding.viewStatistical.tvValueViolate.text = it.num_violation.toString()
@@ -73,6 +105,24 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
         EventUtils.isCreatePass.observe(this, {
             binding.layoutHomePass.cvHomePass.visibility = if (it) View.GONE else View.VISIBLE
         })
+
+        binding.layoutHomeProtect.switchHomeProtectWifi.isChecked = SharePreferenceKeyHelper.getInstance(ViSafeApp()).isEnableProtectedWifiHome()
+        binding.layoutHomeProtect.switchHomeProtectDevice.isChecked = SharePreferenceKeyHelper.getInstance(ViSafeApp()).isEnableProtectedDeviceHome()
+        if ((activity as BaseActivity).isLogin()) {
+            binding.layoutHomeProtect.llHomeBlockAds.visibility = View.VISIBLE
+            binding.layoutHomeProtect.llHomeBlockTracking.visibility = View.VISIBLE
+            binding.layoutHomeProtect.switchHomeBlockAds.isChecked = SharePreferenceKeyHelper.getInstance(ViSafeApp()).isEnableBlockAdsHome()
+            binding.layoutHomeProtect.switchHomeBlockTracking.isChecked = SharePreferenceKeyHelper.getInstance(ViSafeApp()).isEnableBlockFollowHome()
+            binding.cardViewStatistical.visibility = View.VISIBLE
+            binding.layoutAddVpn.cardViewAddVpn.visibility = View.VISIBLE
+            binding.layoutHomeProtectFamily.cardViewHomeProtectFamily.visibility = View.VISIBLE
+        } else {
+            binding.layoutHomeProtect.llHomeBlockAds.visibility = View.GONE
+            binding.layoutHomeProtect.llHomeBlockTracking.visibility = View.GONE
+            binding.cardViewStatistical.visibility = View.GONE
+            binding.layoutAddVpn.cardViewAddVpn.visibility = View.GONE
+            binding.layoutHomeProtectFamily.cardViewHomeProtectFamily.visibility = View.GONE
+        }
         initControl()
     }
 
@@ -84,7 +134,9 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
             startActivity(Intent(requireContext(), WebsiteReportActivity::class.java))
         }
         binding.layoutHomeProtectFamily.btnHomeFamilyAddGroup.setOnSingClickListener {
-            startActivity(Intent(requireContext(), CreateGroupActivity::class.java))
+            val intent = Intent(requireContext(), CreateGroupActivity::class.java)
+            intent.putExtra(GroupManagementFragment.DATA_WORKSPACE, mWorkspaceGroupData)
+            startActivity(intent)
         }
         binding.layoutHomeProtect.switchHomeProtectDevice.setOnCheckedChangeListener { _, isChecked ->
             binding.layoutHomeProtect.ivHomeProtectDevice.setImageResource(
@@ -103,7 +155,12 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
                 ProtectDeviceActivity.PROTECT_DEVICE_KEY,
                 binding.layoutHomeProtect.switchHomeProtectDevice.isChecked
             )
-            startActivity(intent)
+            intent.putExtra(ProtectDeviceActivity.STATIS_WORKSPACE_DATA, statsWorkSpace)
+            resultLauncherSwitchDevice.launch(intent)
+        }
+        //switch thiết bị
+        binding.layoutHomeProtect.switchHomeProtectDevice.setOnCheckedChangeListener { _, isChecked ->
+            SharePreferenceKeyHelper.getInstance(ViSafeApp()).putBoolean(PreferenceKey.IS_ENABLE_PROTECTED_DEVICE_HOME, isChecked)
         }
 
         //bảo vệ wifi
@@ -113,37 +170,45 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
                 ProtectWifiActivity.PROTECT_WIFI_KEY,
                 binding.layoutHomeProtect.switchHomeProtectWifi.isChecked
             )
-            startActivity(intent)
+            resultLauncherSwitchWifi.launch(intent)
         }
+        //switch wifi
         binding.layoutHomeProtect.switchHomeProtectWifi.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                val intent = Intent(requireContext(), ProtectWifiActivity::class.java)
-                intent.putExtra(
-                    ProtectWifiActivity.PROTECT_WIFI_KEY,
-                    binding.layoutHomeProtect.switchHomeProtectWifi.isChecked
-                )
-                startActivity(intent)
-            }
+            SharePreferenceKeyHelper.getInstance(ViSafeApp()).putBoolean(PreferenceKey.IS_ENABLE_PROTECTED_WIFI_HOME, isChecked)
         }
 
         //chặn quảng cáo
         binding.layoutHomeProtect.llHomeBlockAds.setOnSingClickListener {
+            if ((activity as BaseActivity).needLogin()) {
+                return@setOnSingClickListener
+            }
             val intent = Intent(requireContext(), BlockAdsActivity::class.java)
             intent.putExtra(
                 BlockAdsActivity.BLOCK_ADS_KEY,
                 binding.layoutHomeProtect.switchHomeBlockAds.isChecked
             )
-            startActivity(intent)
+            resultLauncherSwitchAds.launch(intent)
+        }
+        //switch quảng cáo
+        binding.layoutHomeProtect.switchHomeBlockAds.setOnCheckedChangeListener { _, isChecked ->
+            SharePreferenceKeyHelper.getInstance(ViSafeApp()).putBoolean(PreferenceKey.IS_ENABLE_BLOCK_ADS_HOME, isChecked)
         }
 
         //chặn theo dõi
         binding.layoutHomeProtect.llHomeBlockTracking.setOnSingClickListener {
+            if ((activity as BaseActivity).needLogin()) {
+                return@setOnSingClickListener
+            }
             val intent = Intent(requireContext(), BlockTrackingDetailActivity::class.java)
             intent.putExtra(
                 BlockTrackingDetailActivity.BLOCK_TRACKING_KEY,
                 binding.layoutHomeProtect.switchHomeBlockTracking.isChecked
             )
-            startActivity(intent)
+            resultLauncherSwitchFollow.launch(intent)
+        }
+        //switch theo dõi
+        binding.layoutHomeProtect.switchHomeBlockTracking.setOnCheckedChangeListener { _, isChecked ->
+            SharePreferenceKeyHelper.getInstance(ViSafeApp()).putBoolean(PreferenceKey.IS_ENABLE_BLOCK_FOLLOW_HOME, isChecked)
         }
 
         binding.viewStatistical.tvTime.setOnSingClickListener {
@@ -166,6 +231,8 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
 
         //Nâng cấp
         binding.layoutUpgrade.btnUpgradeNow.setOnSingClickListener {
+            if ((activity as BaseActivity).needLogin())
+                return@setOnSingClickListener
             val intent = Intent(requireContext(), UpgradeActivity::class.java)
             intent.putExtra(UpgradeActivity.CURRENT_VERSION_KEY, UpgradeActivity.TYPE_REGISTER)
             startActivity(intent)

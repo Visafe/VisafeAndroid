@@ -45,6 +45,22 @@ class SharePreferenceKeyHelper private constructor(context: Application) {
         return gson.fromJson(ch, UserInfo::class.java)
     }
 
+    fun isEnableProtectedWifiHome(): Boolean {
+        return sharedPref.getBoolean(PreferenceKey.IS_ENABLE_PROTECTED_WIFI_HOME, false)
+    }
+
+    fun isEnableProtectedDeviceHome(): Boolean {
+        return sharedPref.getBoolean(PreferenceKey.IS_ENABLE_PROTECTED_DEVICE_HOME, false)
+    }
+
+    fun isEnableBlockAdsHome(): Boolean {
+        return sharedPref.getBoolean(PreferenceKey.IS_ENABLE_BLOCK_ADS_HOME, false)
+    }
+
+    fun isEnableBlockFollowHome(): Boolean {
+        return sharedPref.getBoolean(PreferenceKey.IS_ENABLE_BLOCK_FOLLOW_HOME, false)
+    }
+
     fun clearAllData() {
         val editor = sharedPref.edit()
         editor.clear()
