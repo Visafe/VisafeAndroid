@@ -57,7 +57,7 @@
 
             <TextView
                 android:id="@+id/tvTitle"
-                android:layout_width="@dimen/_0dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_16sdp"
                 android:fontFamily="@font/sf_pro_text_regular_bold"
@@ -75,11 +75,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_2sdp"
-                android:text="Pit Studio 5GHz"
                 android:textColor="@color/color_70_222222"
                 app:layout_constraintEnd_toEndOf="@id/tvTitle"
                 app:layout_constraintStart_toStartOf="@id/tvTitle"
-                app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+                app:layout_constraintTop_toBottomOf="@id/tvTitle"
+                tools:text="Pit Studio 5GHz" />
 
             <ImageView
                 android:id="@+id/ivWifiIcon"
@@ -255,9 +255,11 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@id/tvTitle"
                 app:layout_constraintStart_toStartOf="@id/tvTitle"
-                app:layout_constraintTop_toBottomOf="@id/tvTitleAmout">
+                app:layout_constraintTop_toBottomOf="@id/tvTitleAmout"
+                tools:visibility="visible">
 
                 <ImageView
+                    android:id="@+id/ivError"
                     android:layout_width="@dimen/_52sdp"
                     android:layout_height="@dimen/_52sdp"
                     android:layout_gravity="center_horizontal"
@@ -265,6 +267,7 @@
                     tools:ignore="ContentDescription" />
 
                 <TextView
+                    android:id="@+id/tvNotification"
                     style="@style/Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -275,6 +278,7 @@
                     android:text="@string/khong_kiem_tra_duoc_ma_doc" />
 
                 <TextView
+                    android:id="@+id/tvNote"
                     style="@style/Content_Small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

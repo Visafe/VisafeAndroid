@@ -12,6 +12,7 @@ import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.databinding.FragmentOverViewProtectBinding
 import vn.ncsc.visafe.model.WorkspaceGroupData
 import vn.ncsc.visafe.ui.MainActivity
+import vn.ncsc.visafe.ui.WebViewActivity
 import vn.ncsc.visafe.ui.adapter.TimeStatistical
 import vn.ncsc.visafe.ui.authentication.RegisterActivity
 import vn.ncsc.visafe.ui.create.group.CreateGroupActivity
@@ -114,6 +115,16 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
             )
             startActivity(intent)
         }
+        binding.layoutHomeProtect.switchHomeProtectWifi.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                val intent = Intent(requireContext(), ProtectWifiActivity::class.java)
+                intent.putExtra(
+                    ProtectWifiActivity.PROTECT_WIFI_KEY,
+                    binding.layoutHomeProtect.switchHomeProtectWifi.isChecked
+                )
+                startActivity(intent)
+            }
+        }
 
         //chặn quảng cáo
         binding.layoutHomeProtect.llHomeBlockAds.setOnSingClickListener {
@@ -161,6 +172,10 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
         }
         binding.layoutUpgrade.btnRegister.setOnSingClickListener {
             startActivity(Intent(requireContext(), RegisterActivity::class.java))
+        }
+
+        binding.layoutUtilities.viewUtilities.setOnSingClickListener {
+            startActivity(Intent(context, WebViewActivity::class.java))
         }
     }
 
