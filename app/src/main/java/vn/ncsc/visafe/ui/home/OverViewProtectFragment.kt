@@ -13,6 +13,7 @@ import vn.ncsc.visafe.databinding.FragmentOverViewProtectBinding
 import vn.ncsc.visafe.model.WorkspaceGroupData
 import vn.ncsc.visafe.ui.MainActivity
 import vn.ncsc.visafe.ui.adapter.TimeStatistical
+import vn.ncsc.visafe.ui.authentication.RegisterActivity
 import vn.ncsc.visafe.ui.create.group.CreateGroupActivity
 import vn.ncsc.visafe.ui.dialog.DisplayStatisticalForTimeBottomSheet
 import vn.ncsc.visafe.ui.dialog.ImageDialog
@@ -22,6 +23,7 @@ import vn.ncsc.visafe.ui.protect.BlockAdsActivity
 import vn.ncsc.visafe.ui.protect.BlockTrackingDetailActivity
 import vn.ncsc.visafe.ui.protect.ProtectDeviceActivity
 import vn.ncsc.visafe.ui.protect.ProtectWifiActivity
+import vn.ncsc.visafe.ui.upgrade.UpgradeActivity
 import vn.ncsc.visafe.ui.website.WebsiteReportActivity
 import vn.ncsc.visafe.utils.EventUtils
 import vn.ncsc.visafe.utils.PreferenceKey
@@ -149,6 +151,16 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>() {
         binding.layoutHomePass.btnHomePassCreate.setOnSingClickListener {
             val intent = Intent(requireContext(), UpdatePinActivity::class.java)
             startActivity(intent)
+        }
+
+        //Nâng cấp
+        binding.layoutUpgrade.btnUpgradeNow.setOnSingClickListener {
+            val intent = Intent(requireContext(), UpgradeActivity::class.java)
+            intent.putExtra(UpgradeActivity.CURRENT_VERSION_KEY, UpgradeActivity.TYPE_REGISTER)
+            startActivity(intent)
+        }
+        binding.layoutUpgrade.btnRegister.setOnSingClickListener {
+            startActivity(Intent(requireContext(), RegisterActivity::class.java))
         }
     }
 
