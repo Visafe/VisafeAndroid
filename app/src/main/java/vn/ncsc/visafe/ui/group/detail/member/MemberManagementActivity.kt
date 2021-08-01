@@ -1,9 +1,11 @@
 package vn.ncsc.visafe.ui.group.detail.member
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -19,6 +21,7 @@ import vn.ncsc.visafe.model.UsersGroupInfo
 import vn.ncsc.visafe.model.request.UserInGroupRequest
 import vn.ncsc.visafe.ui.create.group.access_manager.Action
 import vn.ncsc.visafe.ui.dialog.VisafeDialogBottomSheet
+import vn.ncsc.visafe.ui.group.join.JoinGroupActivity
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
 class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectItemListener {
@@ -77,7 +80,29 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
             setResult(RESULT_OK, intent)
             finish()
         }
+        binding.btnAddMember.setOnSingClickListener {
+            val intent = Intent(this@MemberManagementActivity, JoinGroupActivity::class.java)
+            intent.putExtra(KEY_DATA, groupData)
+            resultLauncherAddMember.launch(intent)
+        }
     }
+
+    private var resultLauncherAddMember =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                if (result.data != null) {
+                    val newMember = result.data?.getParcelableExtra<UsersGroupInfo>(JoinGroupActivity.NEW_MEMBER)
+                    newMember?.let {
+                        binding.tvNumberMember.text = "${listUsersGroupInfo.size} thành viên"
+                        listUsersGroupInfo.add(it)
+                        memberManagerAdapter?.notifyDataSetChanged()
+                        groupData?.listUsersGroupInfo?.add(it)
+                    }
+
+                }
+            }
+        }
 
     override fun onSelectItem(item: UsersGroupInfo, position: Int) {
     }

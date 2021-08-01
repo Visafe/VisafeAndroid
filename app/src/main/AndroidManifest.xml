@@ -123,7 +123,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeSplash" />
         <activity
-            android:name=".ui.group.detail.member.AddMemberActivity"
+            android:name=".ui.group.detail.device.AddDeviceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeMain" />
         <activity
@@ -132,6 +132,22 @@
             android:theme="@style/AppThemeSplash" />
         <activity
             android:name=".ui.group.detail.setup_protect.ProtectDeviceGroupDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash" />
+        <activity
+            android:name=".ui.group.detail.setup_protect.BlockAdsGroupDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash" />
+        <activity
+            android:name=".ui.group.detail.setup_protect.BlockTrackingGroupDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash" />
+        <activity
+            android:name=".ui.group.detail.setup_protect.BlockAccessGroupDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash" />
+        <activity
+            android:name=".ui.group.detail.setup_protect.BlockContentGroupDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeSplash" />
         <activity

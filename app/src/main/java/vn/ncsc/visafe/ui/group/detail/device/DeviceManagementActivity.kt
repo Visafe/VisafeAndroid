@@ -1,8 +1,10 @@
 package vn.ncsc.visafe.ui.group.detail.device
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseActivity
@@ -64,7 +66,26 @@ class DeviceManagementActivity : BaseActivity(), DeviceManagerAdapter.OnClickDev
             setResult(RESULT_OK, intent)
             finish()
         }
+        binding.btnAddDevice.setOnSingClickListener {
+            val intent = Intent(this@DeviceManagementActivity, AddDeviceActivity::class.java)
+            intent.putExtra(AddDeviceActivity.KEY_DATA, groupData)
+            resultLauncherAddDevice.launch(intent)
+        }
     }
+
+    private var resultLauncherAddDevice =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                if (result.data != null) {
+//                    val newMember = result.data?.getParcelableExtra<UsersGroupInfo>(JoinGroupActivity.NEW_MEMBER)
+//                    newMember?.let {
+//                        groupData?.listUsersGroupInfo?.add(it)
+//                        binding.tvNumberMember.text = "${groupData?.listUsersGroupInfo?.size} thành viên"
+//                    }
+                }
+            }
+        }
 
     override fun onClickDevice(data: DeviceGroup, position: Int) {
     }

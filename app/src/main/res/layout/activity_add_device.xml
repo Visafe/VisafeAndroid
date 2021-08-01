@@ -13,7 +13,7 @@
         android:layout_height="?actionBarSize"
         android:layout_marginTop="@dimen/_26sdp"
         android:gravity="center"
-        android:text="@string/add_new_member_to_group"
+        android:text="@string/add_new_device_to_group"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,24 +73,23 @@
 
         <ImageView
             android:id="@+id/ivQr"
-            android:layout_width="@dimen/_120sdp"
-            android:layout_height="@dimen/_120sdp"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="@dimen/_130sdp"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:padding="@dimen/_8dp"
-            android:src="@drawable/ic_logo"
+            android:src="@drawable/ic_logo_text"
             app:layout_constraintEnd_toEndOf="@+id/guidelineVertical"
             app:layout_constraintStart_toStartOf="@+id/guidelineVertical"
             app:layout_constraintTop_toBottomOf="@+id/tv1"
-            app:tint="@color/black"
             tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/tv2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_13sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:gravity="center"
             android:text="NCSC"
             android:textColor="@color/color_222222"
@@ -101,29 +100,29 @@
             app:layout_constraintTop_toBottomOf="@+id/ivQr" />
 
         <TextView
-            android:id="@+id/tv3"
+            android:id="@+id/tvNameGroup"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Phòng 1: Marketing"
             android:textColor="@color/color_222222"
             android:textSize="@dimen/_13sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv2" />
+            app:layout_constraintTop_toBottomOf="@+id/tv2"
+            tools:text="Phòng 1: Marketing" />
 
         <TextView
             android:id="@+id/tv4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:gravity="center"
             android:text="Hoặc dùng liên kết tham gia nhóm"
             android:textColor="@color/color_666666"
             android:textSize="@dimen/_13sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv3" />
+            app:layout_constraintTop_toBottomOf="@+id/tvNameGroup" />
 
         <TextView
             android:id="@+id/tvLinkShare"
@@ -136,6 +135,7 @@
             android:textColor="@color/color_15A1FA"
             android:textSize="@dimen/_12sdp"
             app:drawableEndCompat="@drawable/ic_copy"
+            app:layout_constraintBottom_toBottomOf="@+id/viewDotted"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv4" />

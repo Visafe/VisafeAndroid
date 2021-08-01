@@ -2,7 +2,6 @@ package vn.ncsc.visafe.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-
 import com.google.gson.annotations.SerializedName
 import vn.ncsc.visafe.model.response.DeviceGroup
 
@@ -56,8 +55,6 @@ data class GroupData(
     var fkUserId: Int? = null,
     @SerializedName("isOwner")
     var isOwner: Boolean = false,
-    /* @SerializedName("whois_info")
-     var whois_info: List<String>? = listOf(),*/
     @SerializedName("usersActive")//giám sát viên
     var usersActive: MutableList<String>? = mutableListOf(),
     @SerializedName("userManage")//quản trị viên
@@ -78,6 +75,8 @@ data class GroupData(
     var times: List<TimesGroup>? = null,
     @SerializedName("days")
     var days: List<String>? = null,
+    @SerializedName("whiteList")
+    var whiteList: List<String>? = null
 ) : Parcelable
 
 @Parcelize

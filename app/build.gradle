@@ -82,7 +82,7 @@ dependencies {
 
     // retrofit
     implementation "com.squareup.retrofit2:adapter-rxjava2:$RETROFIT_VERSION"
-    implementation "com.squareup.retrofit2:converter-gson:2.7.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.okhttp3:logging-interceptor:4.2.2"
 
@@ -113,4 +113,5 @@ dependencies {
     implementation 'me.relex:circleindicator:2.1.6'
     //event bus
     implementation("org.greenrobot:eventbus:3.2.0")
+    implementation("gun0912.ted:tedpermission:2.2.2")
 }

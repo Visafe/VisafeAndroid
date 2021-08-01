@@ -11,7 +11,7 @@ import vn.ncsc.visafe.utils.setOnSingClickListener
 
 class SetupProtectGroupDetailAdapter(
     val context: Context,
-    var onClickSetupGroup: OnClickSetupGroup?
+    private var onClickSetupGroup: OnClickSetupGroup?
 ) :
     RecyclerView.Adapter<SetupProtectGroupDetailAdapter.SetupViewHolder>() {
     val dataList = SetupProtectDetailGroup.values()

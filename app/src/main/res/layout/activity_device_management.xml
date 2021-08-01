@@ -59,20 +59,63 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivBack" />
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtInputSearchDevice"
+            style="@style/myEditText"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginStart="@dimen/_13sdp"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:layout_marginEnd="@dimen/_13sdp"
+            android:background="@drawable/bg_edittext"
+            android:hint="Tìm kiếm nhanh thiết bị"
+            android:padding="@dimen/_5sdp"
+            android:singleLine="true"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewLine" />
+
+        <LinearLayout
+            android:id="@+id/btnAddDevice"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_marginStart="@dimen/_13sdp"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:layout_marginEnd="@dimen/_13sdp"
+            android:background="@drawable/background_dotted"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtInputSearchDevice">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="@string/add_device"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_13sdp"
+                app:drawableStartCompat="@drawable/ic_baseline_add_24"
+                app:drawableTint="@color/colorPrimary" />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/tvNumberMember"
             style="@style/Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_13sdp"
             android:layout_marginTop="@dimen/_13sdp"
-            android:ellipsize="end"
+            android:layout_marginEnd="@dimen/_13sdp"
             android:fontFamily="@font/sf_pro_text_regular_bold"
-            android:gravity="start"
+            android:gravity="end"
             android:maxLines="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/viewLine"
+            app:layout_constraintTop_toBottomOf="@+id/btnAddDevice"
             tools:text="Quản lý thành viên" />
 
         <androidx.recyclerview.widget.RecyclerView

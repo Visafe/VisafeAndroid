@@ -13,12 +13,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import vn.ncsc.visafe.R
-import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivityGroupDetailBinding
 import vn.ncsc.visafe.model.GroupData
 import vn.ncsc.visafe.model.StatsWorkSpace
+import vn.ncsc.visafe.model.UsersGroupInfo
 import vn.ncsc.visafe.model.request.DeleteGroupRequest
 import vn.ncsc.visafe.model.response.StatsWorkspaceResponse
 import vn.ncsc.visafe.ui.adapter.TimeStatistical
@@ -26,13 +26,14 @@ import vn.ncsc.visafe.ui.create.group.SuccessDialogFragment
 import vn.ncsc.visafe.ui.create.group.access_manager.Action
 import vn.ncsc.visafe.ui.dialog.VisafeDialogBottomSheet
 import vn.ncsc.visafe.ui.group.detail.device.DeviceManagementActivity
-import vn.ncsc.visafe.ui.group.detail.member.AddMemberActivity
+import vn.ncsc.visafe.ui.group.detail.device.AddDeviceActivity
 import vn.ncsc.visafe.ui.group.detail.member.MemberManagementActivity
-import vn.ncsc.visafe.ui.group.detail.setup_protect.ProtectDeviceGroupDetailActivity
+import vn.ncsc.visafe.ui.group.detail.setup_protect.*
+import vn.ncsc.visafe.ui.group.join.JoinGroupActivity
 import vn.ncsc.visafe.utils.getTextGroup
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
-class GroupDetailActivity : BaseActivity(), SetupProtectGroupDetailAdapter.OnClickSetupGroup {
+class GroupDetailActivity : BaseSetupProtectActivity(), SetupProtectGroupDetailAdapter.OnClickSetupGroup {
     lateinit var binding: ActivityGroupDetailBinding
 
     companion object {
@@ -69,6 +70,35 @@ class GroupDetailActivity : BaseActivity(), SetupProtectGroupDetailAdapter.OnCli
                 if (result.data != null) {
                     groupData = result.data?.getParcelableExtra(MemberManagementActivity.KEY_DATA)
                     binding.tvNumberDevice.text = "${groupData?.listDevicesGroupInfo?.size} thiết bị"
+                }
+            }
+        }
+
+    private var resultLauncherAddMember =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                if (result.data != null) {
+                    val newMember = result.data?.getParcelableExtra<UsersGroupInfo>(JoinGroupActivity.NEW_MEMBER)
+                    newMember?.let {
+                        groupData?.listUsersGroupInfo?.add(it)
+                        binding.tvNumberMember.text = "${groupData?.listUsersGroupInfo?.size} thành viên"
+                    }
+
+                }
+            }
+        }
+
+    private var resultLauncherAddDevice =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                if (result.data != null) {
+//                    val newMember = result.data?.getParcelableExtra<UsersGroupInfo>(JoinGroupActivity.NEW_MEMBER)
+//                    newMember?.let {
+//                        groupData?.listUsersGroupInfo?.add(it)
+//                        binding.tvNumberMember.text = "${groupData?.listUsersGroupInfo?.size} thành viên"
+//                    }
                 }
             }
         }
@@ -115,11 +145,15 @@ class GroupDetailActivity : BaseActivity(), SetupProtectGroupDetailAdapter.OnCli
             }
         }
         binding.btnAddNewMember.setOnSingClickListener {
-            val intent = Intent(this@GroupDetailActivity, AddMemberActivity::class.java)
-//            intent.putExtra(MemberManagementActivity.KEY_DATA, groupData)
-//            intent.putExtra(MemberManagementActivity.KEY_GROUP_NUMBER, groupNumber)
-            startActivity(intent)
+            val intent = Intent(this@GroupDetailActivity, JoinGroupActivity::class.java)
+            intent.putExtra(MemberManagementActivity.KEY_DATA, groupData)
+            resultLauncherAddMember.launch(intent)
 
+        }
+        binding.btnAddNewDevice.setOnSingClickListener {
+            val intent = Intent(this@GroupDetailActivity, AddDeviceActivity::class.java)
+            intent.putExtra(AddDeviceActivity.KEY_DATA, groupData)
+            resultLauncherAddDevice.launch(intent)
         }
         binding.ctrlMemberManager.setOnSingClickListener {
             val intent = Intent(this@GroupDetailActivity, MemberManagementActivity::class.java)
@@ -274,7 +308,7 @@ class GroupDetailActivity : BaseActivity(), SetupProtectGroupDetailAdapter.OnCli
         SetupProtectDetailGroup.CHAN_TRUY_CAP.isEnable = groupData.blocked_services?.isNotEmpty() == true ||
                 groupData.block_webs?.isNotEmpty() == true
         SetupProtectDetailGroup.CHAN_NOI_DUNG.isEnable = groupData.porn_enabled || groupData.safesearch_enabled
-                || groupData.youtuberestrict_enabled || groupData.gambling_enabled
+                || groupData.youtuberestrict_enabled || groupData.gambling_enabled || groupData.phishing_enabled
         SetupProtectDetailGroup.CHAN_VPN_PROXY.isEnable = groupData.bypass_enabled
         adapter?.notifyDataSetChanged()
     }
@@ -324,6 +358,51 @@ class GroupDetailActivity : BaseActivity(), SetupProtectGroupDetailAdapter.OnCli
             }
         }
 
+    @SuppressLint("SetTextI18n")
+    private var resultLauncherBlockAds =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                if (result.data != null) {
+                    groupData = result.data?.getParcelableExtra(MemberManagementActivity.KEY_DATA)
+                }
+            }
+        }
+
+    @SuppressLint("SetTextI18n")
+    private var resultLauncherBlockTracking =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                if (result.data != null) {
+                    groupData = result.data?.getParcelableExtra(MemberManagementActivity.KEY_DATA)
+                }
+            }
+        }
+
+    @SuppressLint("SetTextI18n")
+    private var resultLauncherBlockAccess =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                if (result.data != null) {
+                    groupData = result.data?.getParcelableExtra(MemberManagementActivity.KEY_DATA)
+                }
+            }
+        }
+
+    @SuppressLint("SetTextI18n")
+    private var resultLauncherBlockContent =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                if (result.data != null) {
+                    groupData = result.data?.getParcelableExtra(BlockContentGroupDetailActivity.DATA_GROUP_KEY)
+                    groupData?.let { updateSetupProtect(it) }
+                }
+            }
+        }
+
     override fun onClickSetupGroup(data: SetupProtectDetailGroup) {
         adapter?.let {
             for (group in it.dataList) {
@@ -332,21 +411,61 @@ class GroupDetailActivity : BaseActivity(), SetupProtectGroupDetailAdapter.OnCli
                         SetupProtectDetailGroup.BAO_VE_THIET_BI -> {
                             val intent = Intent(this@GroupDetailActivity, ProtectDeviceGroupDetailActivity::class.java)
                             intent.putExtra(ProtectDeviceGroupDetailActivity.DATA_GROUP_KEY, groupData)
-                            intent.putExtra(ProtectDeviceGroupDetailActivity.NUM_DANGEROUS_DOMAIN, statsWorkSpace?.num_dangerous_domain)
-                            intent.putExtra(ProtectDeviceGroupDetailActivity.NUM_DANGEROUS_DOMAIN_ALL, statsWorkSpace?.num_dangerous_domain_all)
+                            intent.putExtra(
+                                ProtectDeviceGroupDetailActivity.NUM_DANGEROUS_DOMAIN,
+                                statsWorkSpace?.num_dangerous_domain
+                            )
+                            intent.putExtra(
+                                ProtectDeviceGroupDetailActivity.NUM_DANGEROUS_DOMAIN_ALL,
+                                statsWorkSpace?.num_dangerous_domain_all
+                            )
                             resultLauncherProtectDevice.launch(intent)
                         }
                         SetupProtectDetailGroup.CHAN_QUANG_CAO -> {
-                            showToast("CHAN_QUANG_CAO")
+                            val intent = Intent(this@GroupDetailActivity, BlockAdsGroupDetailActivity::class.java)
+                            intent.putExtra(BlockAdsGroupDetailActivity.DATA_GROUP_KEY, groupData)
+                            intent.putExtra(BlockAdsGroupDetailActivity.NUM_ADS_BLOCKED, statsWorkSpace?.num_ads_blocked)
+                            intent.putExtra(BlockAdsGroupDetailActivity.NUM_ADS_BLOCKED_ALL, statsWorkSpace?.num_ads_blocked_all)
+                            resultLauncherBlockAds.launch(intent)
                         }
                         SetupProtectDetailGroup.CHAN_THEO_DOI -> {
-                            showToast("CHAN_THEO_DOI")
+                            val intent = Intent(this@GroupDetailActivity, BlockTrackingGroupDetailActivity::class.java)
+                            intent.putExtra(BlockTrackingGroupDetailActivity.DATA_GROUP_KEY, groupData)
+                            intent.putExtra(
+                                BlockTrackingGroupDetailActivity.NUM_BLOCKED_TRACKING,
+                                statsWorkSpace?.num_native_tracking
+                            )
+                            intent.putExtra(
+                                BlockTrackingGroupDetailActivity.NUM_BLOCKED_TRACKING_ALL,
+                                statsWorkSpace?.num_native_tracking_all
+                            )
+                            resultLauncherBlockTracking.launch(intent)
                         }
                         SetupProtectDetailGroup.CHAN_TRUY_CAP -> {
-                            showToast("CHAN_TRUY_CAP")
+                            val intent = Intent(this@GroupDetailActivity, BlockAccessGroupDetailActivity::class.java)
+                            intent.putExtra(BlockAccessGroupDetailActivity.DATA_GROUP_KEY, groupData)
+                            intent.putExtra(
+                                BlockAccessGroupDetailActivity.NUM_BLOCKED_ACCESS,
+                                statsWorkSpace?.num_access_blocked
+                            )
+                            intent.putExtra(
+                                BlockAccessGroupDetailActivity.NUM_BLOCKED_ACCESS_ALL,
+                                statsWorkSpace?.num_access_blocked_all
+                            )
+                            resultLauncherBlockAccess.launch(intent)
                         }
                         SetupProtectDetailGroup.CHAN_NOI_DUNG -> {
-                            showToast("CHAN_NOI_DUNG")
+                            val intent = Intent(this@GroupDetailActivity, BlockContentGroupDetailActivity::class.java)
+                            intent.putExtra(BlockContentGroupDetailActivity.DATA_GROUP_KEY, groupData)
+                            intent.putExtra(
+                                BlockContentGroupDetailActivity.NUM_BLOCKED_CONTENT,
+                                statsWorkSpace?.num_content_blocked
+                            )
+                            intent.putExtra(
+                                BlockContentGroupDetailActivity.NUM_BLOCKED_CONTENT_ALL,
+                                statsWorkSpace?.num_content_blocked_all
+                            )
+                            resultLauncherBlockContent.launch(intent)
                         }
                     }
                 }
@@ -406,7 +525,7 @@ class GroupDetailActivity : BaseActivity(), SetupProtectGroupDetailAdapter.OnCli
                             groupData?.safesearch_enabled = isChecked
                             groupData?.youtuberestrict_enabled = isChecked
                             groupData?.gambling_enabled = isChecked
-
+                            groupData?.phishing_enabled = isChecked
                         }
                         SetupProtectDetailGroup.CHAN_VPN_PROXY -> {
                             groupData?.bypass_enabled = isChecked
@@ -416,33 +535,10 @@ class GroupDetailActivity : BaseActivity(), SetupProtectGroupDetailAdapter.OnCli
                 }
             }
         }
-        doUpdateGroup(groupData)
-    }
+        doUpdateGroup(groupData, object : OnUpdateSuccess {
+            override fun onUpdateSuccess(groupData: GroupData) {
+            }
 
-    private fun doUpdateGroup(groupData: GroupData?) {
-        groupData?.let {
-            if (!isLogin())
-                return
-            showProgressDialog()
-            val client = NetworkClient()
-            val call = client.client(context = applicationContext).doUpdateGroup(it)
-            call.enqueue(BaseCallback(this, object : Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
-                ) {
-                    if (response.code() == NetworkClient.CODE_SUCCESS) {
-
-                    }
-                    dismissProgress()
-                }
-
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    t.message?.let { Log.e("onFailure: ", it) }
-                    dismissProgress()
-                }
-            }))
-        }
-
+        })
     }
 }

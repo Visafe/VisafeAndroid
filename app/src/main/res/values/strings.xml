@@ -130,7 +130,7 @@
     <string name="truy_cap_bao_ve">Lượt truy cập \nđược bảo vệ</string>
     <string name="quang_cao_da_chan">Quảng cáo đã chặn</string>
     <string name="ma_doc_da_chan">Mã độc, lừa đảo \nđã chặn</string>
-    <string name="noi_dung_da_chan">Nội dung nhạy cảm \nđã chặn</string>
+    <string name="noi_dung_da_chan">Nội dung đã chặn</string>
     <string name="content_most_title">Nội dung dùng nhiều</string>
     <string name="app_most_title">Ứng dụng dùng nhiều</string>
     <string name="devices_most_title">Thiết bị dùng nhiều</string>
@@ -396,8 +396,9 @@
     <string name="ma_doc_phat_hien">Các mã độc đã phát hiện</string>
     <string name="khong_kiem_tra_duoc_ma_doc">Không kiểm tra được mã độc</string>
     <string name="bat_wifi">Hãy bật bảo vệ Wi-Fi để kiểm tra an toàn mạng</string>
-    <string name="add_new_member_to_group">Thêm thành viên vào nhóm</string>
+    <string name="add_new_device_to_group">Thêm thiết bị vào nhóm</string>
     <string name="website_ung_dung_game">Website, Ứng dụng &amp; Game</string>
+    <string name="adults_gambling_fake_news">Người lớn, cờ bạc &amp; tin giả</string>
     <string name="chan_quang_cao_content_detail">Nếu phát hiện quảng cáo nào như trong thiết lập, chúng tôi sẽ chặn chúng</string>
     <string name="thiet_lap_chan">Thiết lập chặn</string>
     <string name="khong_kiem_tra_duoc_quang_cao">Không kiểm tra được quảng cáo</string>
@@ -405,9 +406,15 @@
     <string name="protected_ads"><![CDATA[<font color=\'#0CD775\'>Đang bật</font> chặn quảng cáo]]></string>
     <string name="no_protected_ads"><![CDATA[<font color=\'#FF4451\'>Đã tắt</font> chặn quảng cáo]]></string>
     <string name="chan_apple_samsung">Apple, Samsung &amp; 3 nhà phát triển khác</string>
+    <string name="chan_web_game_ung_dung">Website, Game &amp; Ứng dụng</string>
     <string name="theo_doi_da_chan">Theo dõi đã chặn</string>
+    <string name="truy_cap_da_chan">Truy cập đã chặn</string>
     <string name="protected_tracking"><![CDATA[<font color=\'#0CD775\'>Đang bật</font> chặn theo dõi]]></string>
     <string name="no_protected_tracking"><![CDATA[<font color=\'#FF4451\'>Đã tắt</font> chặn theo dõi]]></string>
+    <string name="protected_access"><![CDATA[<font color=\'#0CD775\'>Đang bật</font> chặn truy cập]]></string>
+    <string name="no_protected_access"><![CDATA[<font color=\'#FF4451\'>Đã tắt</font> chặn truy cập]]></string>
+    <string name="protected_content"><![CDATA[<font color=\'#0CD775\'>Đang bật</font> chặn nội dung]]></string>
+    <string name="no_protected_content"><![CDATA[<font color=\'#FF4451\'>Đã tắt</font> chặn nội dung]]></string>
     <string name="session_timed_out_content">Hết thời gian của phiên đăng nhập, vui lòng đăng nhập lại.</string>
     <string name="send_report_website_content">Website báo cáo sẽ được ViSafe xác thực thông tin và liệt vào danh sách đen</string>
     <string name="ban_muon_bao_cao_website_lua_dao">Bạn muốn báo cáo website lừa đảo?</string>
@@ -445,6 +452,8 @@
     <string name="mua_them_goi_cuoc">Mua thêm gói cước</string>
     <string name="quan_tri_workspace">Quản trị workspace</string>
 
-    <string name="title_protect_device_group_detail"><![CDATA[Các thiết bị trong nhóm đã <font color=\'#0CD775\'>được bảo vệ</font>]]></string>
+    <string name="title_protect_device_group_detail"><![CDATA[Các thiết bị trong nhóm đã <font color=\'#0CD775\'>được bảo vệ</font>]]></string>mời
+    <string name="gui_loi_moi">Gửi lời mời</string>
+
 
 </resources>

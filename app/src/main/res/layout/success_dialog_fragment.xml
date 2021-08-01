@@ -17,12 +17,12 @@
             android:padding="@dimen/_24dp">
 
             <ImageView
-                android:backgroundTint="@color/color_2BD885"
-                android:background="@drawable/bg_circle"
                 android:id="@+id/ivSuccess"
-                android:padding="@dimen/_16dp"
                 android:layout_width="@dimen/_72dp"
                 android:layout_height="@dimen/_72dp"
+                android:background="@drawable/bg_circle"
+                android:backgroundTint="@color/color_2BD885"
+                android:padding="@dimen/_16dp"
                 android:src="@drawable/ic_check"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -30,10 +30,11 @@
 
             <TextView
                 android:id="@+id/tvTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_24dp"
                 android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:gravity="center"
                 android:text="@string/create_group_complete"
                 android:textColor="@color/black"
                 android:textSize="20sp"

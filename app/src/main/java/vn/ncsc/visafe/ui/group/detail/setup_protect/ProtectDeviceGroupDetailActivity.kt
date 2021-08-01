@@ -9,7 +9,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import vn.ncsc.visafe.R
-import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivityProtectDeviceGroupDetailBinding
@@ -20,12 +19,13 @@ import vn.ncsc.visafe.model.request.UpdateWhiteListRequest
 import vn.ncsc.visafe.model.response.QueryLogResponse
 import vn.ncsc.visafe.ui.create.group.access_manager.Action
 import vn.ncsc.visafe.ui.dialog.VisafeDialogBottomSheet
+import vn.ncsc.visafe.ui.group.detail.BaseSetupProtectActivity
 import vn.ncsc.visafe.utils.OnSingleClickListener
 import vn.ncsc.visafe.utils.getTimeAgo
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ProtectDeviceGroupDetailActivity : BaseActivity() {
+class ProtectDeviceGroupDetailActivity : BaseSetupProtectActivity() {
 
     lateinit var binding: ActivityProtectDeviceGroupDetailBinding
     private var groupData: GroupData? = null
@@ -151,14 +151,7 @@ class ProtectDeviceGroupDetailActivity : BaseActivity() {
                 response: Response<ResponseBody>
             ) {
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    if (numDangerousDomain > 0) {
-                        numDangerousDomain -= 1
-                        binding.tvAmountEvery.text = numDangerousDomainAll.toString()
-                    }
-                    if (numDangerousDomainAll > 0) {
-                        numDangerousDomainAll -= 1
-                        binding.tvAmountToday.text = numDangerousDomain.toString()
-                    }
+                    showToast("Thêm vào whitelist thành công")
                 }
                 dismissProgress()
             }
@@ -184,12 +177,12 @@ class ProtectDeviceGroupDetailActivity : BaseActivity() {
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
                     adapter?.deleteItem(data, position)
                     adapter?.notifyDataSetChanged()
-                    if (numDangerousDomain > 0) {
-                        numDangerousDomain -= 1
-                        binding.tvAmountEvery.text = numDangerousDomainAll.toString()
-                    }
                     if (numDangerousDomainAll > 0) {
                         numDangerousDomainAll -= 1
+                        binding.tvAmountEvery.text = numDangerousDomainAll.toString()
+                    }
+                    if (numDangerousDomain > 0) {
+                        numDangerousDomain -= 1
                         binding.tvAmountToday.text = numDangerousDomain.toString()
                     }
                 }

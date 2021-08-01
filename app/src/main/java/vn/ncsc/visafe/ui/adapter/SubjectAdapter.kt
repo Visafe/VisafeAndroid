@@ -10,6 +10,7 @@ import vn.ncsc.visafe.model.Subject
 class SubjectAdapter : RecyclerView.Adapter<SubjectAdapter.ViewHolder>() {
 
     private val mData = ArrayList<Subject>()
+    private var mOnSwitchItemListener: ((Boolean, Int) -> Unit)? = null
 
     inner class ViewHolder(private val binding: ItemSubjectBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -24,6 +25,7 @@ class SubjectAdapter : RecyclerView.Adapter<SubjectAdapter.ViewHolder>() {
 
             binding.switchWidget.setOnCheckedChangeListener { _, isChecked ->
                 data.isChecked = isChecked
+                mOnSwitchItemListener?.invoke(isChecked, adapterPosition)
             }
         }
     }
@@ -43,6 +45,10 @@ class SubjectAdapter : RecyclerView.Adapter<SubjectAdapter.ViewHolder>() {
         mData.clear()
         mData.addAll(data)
         notifyDataSetChanged()
+    }
+
+    fun setOnSwitchItem(onSwitchChange: (Boolean, Int) -> Unit) {
+        mOnSwitchItemListener = onSwitchChange
     }
 
     fun getData(): MutableList<String> {

@@ -102,7 +102,7 @@ interface ApiService {
     fun doRemoveUserFromGroup(@Body removeUserRequest: UserInGroupRequest): Call<ResponseBody>
 
     @POST("group/invite/members")
-    fun doInviteUserIntoGroup(@Body inviteUserRequest: UserInGroupRequest): Call<ResponseBody>
+    fun doInviteUserIntoGroup(@Body inviteUserRequest: UserInGroupRequest): Call<AddMemberInGroupResponse>
 
     @POST("user/out-group")
     fun doUserLeaveGroup(@Body leaveGroupRequest: UserInGroupRequest): Call<ResponseBody>
