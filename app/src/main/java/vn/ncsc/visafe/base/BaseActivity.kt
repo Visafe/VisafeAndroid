@@ -3,12 +3,16 @@ package vn.ncsc.visafe.base
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.KeyguardManager
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
+import android.os.Build
+import android.os.Build.VERSION_CODES
+import android.provider.Settings
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -18,13 +22,32 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermission
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import vn.ncsc.visafe.R
+import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.BaseController
 import vn.ncsc.visafe.data.BaseResponse
+import vn.ncsc.visafe.data.NetworkClient
+import vn.ncsc.visafe.dns.net.setting.RandomString
+import vn.ncsc.visafe.model.request.AddDeviceRequest
+import vn.ncsc.visafe.model.response.DeviceIdResponse
 import vn.ncsc.visafe.ui.MainActivity
 import vn.ncsc.visafe.ui.authentication.LoginActivity
+import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 import vn.ncsc.visafe.widget.ProgressDialogFragment
+import java.math.BigInteger
+import java.net.InetAddress
+import java.net.NetworkInterface
+import java.net.UnknownHostException
+import java.nio.ByteOrder
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 open class BaseActivity : AppCompatActivity(), BaseController {
@@ -157,7 +180,6 @@ open class BaseActivity : AppCompatActivity(), BaseController {
     fun isWPA2(): Boolean {
         val wifi = applicationContext.getSystemService(WIFI_SERVICE) as WifiManager
         val networkList = wifi.scanResults
-
         //get current connected SSID for comparison to ScanResult
         val wi = wifi.connectionInfo
         val currentSSID = wi.bssid
@@ -168,7 +190,7 @@ open class BaseActivity : AppCompatActivity(), BaseController {
                 if (currentSSID == network.BSSID) {
                     //get capabilities of current connection
                     val capabilities = network.capabilities
-                    Log.e("TAG", wi.ssid + " " + network.SSID.toString() + " capabilities : " + capabilities)
+                    Log.e("isWPA2", wi.ssid + " " + network.SSID.toString() + " capabilities : " + capabilities)
                     when {
                         capabilities.contains("WPA2") -> {
                             return true
@@ -218,4 +240,126 @@ open class BaseActivity : AppCompatActivity(), BaseController {
         return true
     }
 
+    fun getDeviceOwnerAndDeviceName(): String {
+        return (Build.MANUFACTURER
+                + " 1: " + Build.MODEL + " 2: " + Build.VERSION.RELEASE
+                + " 3: " + VERSION_CODES::class.java.fields[Build.VERSION.SDK_INT].name)
+    }
+
+    fun getMacAddress(): String {
+        try {
+            val all = Collections.list(NetworkInterface.getNetworkInterfaces())
+            for (nif in all) {
+                if (!nif.name.equals("wlan0", ignoreCase = true)) continue
+                val macBytes = nif.hardwareAddress ?: return ""
+                val res1 = StringBuilder()
+                for (b in macBytes) {
+                    res1.append(String.format("%02X:", b))
+                }
+                if (res1.isNotEmpty()) {
+                    res1.deleteCharAt(res1.length - 1)
+                }
+                return res1.toString()
+            }
+        } catch (ex: Exception) {
+            ex.message?.let { Log.e("getMacAddress: ", it) }
+        }
+        return "02:00:00:00:00:00"
+    }
+
+    fun getIpAddress(): String {
+        val wifiManager = applicationContext.getSystemService(WIFI_SERVICE) as WifiManager
+        var ipAddress = wifiManager.connectionInfo.ipAddress
+        // Convert little-endian to big-endianif needed
+        if (ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN) {
+            ipAddress = Integer.reverseBytes(ipAddress)
+        }
+        val ipByteArray: ByteArray = BigInteger.valueOf(ipAddress.toLong()).toByteArray()
+        return try {
+            InetAddress.getByAddress(ipByteArray).hostAddress
+        } catch (ex: UnknownHostException) {
+            Log.e("WIFIIP", "Unable to get host address.")
+            ""
+        }
+    }
+
+    fun getAndroidVersion(): String {
+        val release = Build.VERSION.RELEASE
+        val sdkVersion = Build.VERSION.SDK_INT
+        return "$sdkVersion ($release)"
+    }
+
+    //check lock
+    fun doesDeviceHaveSecuritySetup(context: Context): Boolean {
+        return isPatternSet(context) || isPassOrPinSet(context)
+    }
+
+    private fun isPatternSet(context: Context): Boolean {
+        val cr = context.contentResolver
+        return try {
+            val lockPatternEnable: Int = Settings.Secure.getInt(cr, Settings.Secure.LOCK_PATTERN_ENABLED)
+            lockPatternEnable == 1
+        } catch (e: Settings.SettingNotFoundException) {
+            e.message?.let { Log.e("isPatternSet", it) }
+            false
+        }
+    }
+
+    private fun isPassOrPinSet(context: Context): Boolean {
+        val keyguardManager = context.getSystemService(KEYGUARD_SERVICE) as KeyguardManager //api 16+
+        return keyguardManager.isKeyguardSecure
+    }
+
+    fun getDeviceId() {
+        if (SharePreferenceKeyHelper.getInstance(application).getString(PreferenceKey.DEVICE_ID).isEmpty()) {
+            val client = NetworkClient()
+            val call = client.clientWithoutToken(context = applicationContext).doGetDeviceId()
+            call.enqueue(BaseCallback(this, object : Callback<DeviceIdResponse> {
+                override fun onResponse(
+                    call: Call<DeviceIdResponse>,
+                    response: Response<DeviceIdResponse>
+                ) {
+                    if (response.code() == NetworkClient.CODE_SUCCESS) {
+                        response.body()?.deviceId?.let {
+                            SharePreferenceKeyHelper.getInstance(application).putString(PreferenceKey.DEVICE_ID, it.lowercase())
+                        }
+                    } else {
+                        val rd = RandomString()
+                        val randomId: String = rd.getAlphaNumericString(12)
+                        SharePreferenceKeyHelper.getInstance(application)
+                            .putString(PreferenceKey.DEVICE_ID, randomId.lowercase())
+                    }
+                }
+
+                override fun onFailure(call: Call<DeviceIdResponse>, t: Throwable) {
+                    t.message?.let { Log.e("onFailure: ", it) }
+                    val rd = RandomString()
+                    val randomId: String = rd.getAlphaNumericString(12)
+                    SharePreferenceKeyHelper.getInstance(application).putString(PreferenceKey.DEVICE_ID, randomId.lowercase())
+                }
+            }))
+        }
+    }
+
+
+    fun checkPermission(permissions: Array<String>, onPermissionGranted: OnPermissionGranted) {
+        TedPermission.with(this)
+            .setPermissionListener(object : PermissionListener {
+                override fun onPermissionGranted() {
+                    onPermissionGranted.onPermission()
+                }
+
+                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+                    onPermissionGranted.onPermissionDenied()
+                }
+
+            })
+            .setPermissions(*permissions)
+            .check()
+    }
+
+    interface OnPermissionGranted {
+        fun onPermission()
+        fun onPermissionDenied()
+    }
 }

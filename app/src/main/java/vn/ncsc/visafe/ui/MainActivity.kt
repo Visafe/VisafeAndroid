@@ -1,22 +1,18 @@
 package vn.ncsc.visafe.ui
 
-import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_splash.*
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,9 +25,9 @@ import vn.ncsc.visafe.databinding.ActivityMainBinding
 import vn.ncsc.visafe.model.StatsWorkSpace
 import vn.ncsc.visafe.model.UserInfo
 import vn.ncsc.visafe.model.WorkspaceGroupData
-import vn.ncsc.visafe.model.response.BotnetResponse
 import vn.ncsc.visafe.model.response.StatsWorkspaceResponse
 import vn.ncsc.visafe.ui.adapter.TimeStatistical
+import vn.ncsc.visafe.ui.group.join.JoinGroupActivity
 import vn.ncsc.visafe.ui.home.*
 import vn.ncsc.visafe.utils.EventUtils
 import vn.ncsc.visafe.utils.PreferenceKey
@@ -66,16 +62,14 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     var listWorkSpaceLiveData: MutableLiveData<List<WorkspaceGroupData>> = MutableLiveData()
     var statisticalWorkSpaceLiveData: MutableLiveData<StatsWorkSpace> = MutableLiveData()
     var timeTypes: MutableLiveData<String> = MutableLiveData()
-    var botNet: MutableLiveData<BotnetResponse> = MutableLiveData()
+//    var botNet: MutableLiveData<BotnetResponse> = MutableLiveData()
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             MY_PERMISSIONS_ACCESS_COARSE_LOCATION -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this@MainActivity, "permission granted", Toast.LENGTH_SHORT).show()
                 wifiManager?.startScan()
             } else {
-                Toast.makeText(this@MainActivity, "permission not granted", Toast.LENGTH_SHORT).show()
                 return
             }
         }
@@ -86,10 +80,24 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         checkPermissionWifi()
+        intent?.let {
+            val groupId = it.getStringExtra(JoinGroupActivity.GROUP_ID)
+            val groupName = it.getStringExtra(JoinGroupActivity.GROUP_NAME)
+            if (groupId?.isNotEmpty() == true && groupName?.isNotEmpty() == true) {
+                val intent = Intent(this@MainActivity, JoinGroupActivity::class.java)
+                intent.putExtra(JoinGroupActivity.GROUP_ID, groupId)
+                intent.putExtra(JoinGroupActivity.GROUP_NAME, groupName)
+                startActivity(intent)
+            }
+        }
         initView()
         doGetWorkSpaces()
         doGetUserInfo()
-        checkBotnet()
+        Log.e(
+            "onCreate: ",
+            getMacAddress() + " | " + getDeviceOwnerAndDeviceName() + " | " + getAndroidVersion() + " | "
+                    + getIpAddress()
+        )
     }
 
     private fun initView() {
@@ -117,31 +125,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         fragmentTransaction.commitAllowingStateLoss()
         openTab(POSITION_SCAN)
         binding.bottomView.setOnNavigationItemSelectedListener(this)
-    }
-
-    fun checkBotnet() {
-        showProgressDialog()
-        val client = NetworkClient()
-        val call = client.clientCheckBotnet(context = applicationContext).checkBotnet()
-        call.enqueue(BaseCallback(this@MainActivity, object : Callback<ResponseBody> {
-            override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
-            ) {
-                if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    val buffer = response.body()?.source()?.buffer?.readByteArray()
-                    val dataString = buffer?.decodeToString()
-                    val botNetResponse = Gson().fromJson(dataString, BotnetResponse::class.java)
-                    botNet.value = botNetResponse
-                }
-                dismissProgress()
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                t.message?.let { Log.e("onFailure: ", it) }
-                dismissProgress()
-            }
-        }))
     }
 
     private fun doGetUserInfo() {
@@ -190,9 +173,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 return true
             }
             R.id.navigation_group -> {
-                if (needLogin()) {
-                    return false
-                }
                 openTab(POSITION_GROUP)
                 return true
             }
@@ -201,9 +181,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 return true
             }
             R.id.navigation_notification -> {
-                if (needLogin()) {
-                    return false
-                }
                 openTab(POSITION_NOTIFICATION)
                 return true
             }

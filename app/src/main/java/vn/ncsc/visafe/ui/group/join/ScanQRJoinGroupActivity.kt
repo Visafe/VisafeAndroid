@@ -3,15 +3,26 @@ package vn.ncsc.visafe.ui.group.join
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.zxing.Result
 import me.dm7.barcodescanner.zxing.ZXingScannerView.ResultHandler
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import vn.ncsc.visafe.base.BaseActivity
+import vn.ncsc.visafe.data.BaseCallback
+import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivityScanQrJoinGroupBinding
+import vn.ncsc.visafe.model.request.AddDeviceRequest
+import vn.ncsc.visafe.utils.PreferenceKey
+import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 
 class ScanQRJoinGroupActivity : BaseActivity(), ResultHandler {
     lateinit var binding: ActivityScanQrJoinGroupBinding
@@ -96,11 +107,31 @@ class ScanQRJoinGroupActivity : BaseActivity(), ResultHandler {
     }
 
     override fun handleResult(rawResult: Result?) {
-        Toast.makeText(this, rawResult?.text, Toast.LENGTH_LONG).show()
-        val intent = Intent(this, JoinGroupActivity::class.java)
-        intent.putExtra(JoinGroupActivity.SCAN_CODE, rawResult?.text)
-        startActivity(intent)
-        finish()
+        if (rawResult != null && rawResult?.text.toString().contains("https://app.visafe.vn/control/invite/device?")) {
+            val dataString = rawResult.text.toString().replace("https://app.visafe.vn/control/invite/device?", "")
+            var groupId = ""
+            var groupName = ""
+            val items: Array<String> = dataString.split("&".toRegex()).toTypedArray()
+            try {
+                for (item in items) {
+                    val parted = item.split("=".toRegex(), 2).toTypedArray()
+                    if (parted.size < 2 || "" == parted[1].trim { it <= ' ' }) continue
+                    val key = parted[0]
+                    val value = parted[1]
+                    when (key) {
+                        "groupId" -> groupId = value
+                        "groupName" -> groupName = value
+                    }
+                }
+                val intent = Intent(this@ScanQRJoinGroupActivity, JoinGroupActivity::class.java)
+                intent.putExtra(JoinGroupActivity.GROUP_ID, groupId)
+                intent.putExtra(JoinGroupActivity.GROUP_NAME, groupName)
+                startActivity(intent)
+            } catch (e: Exception) {
+                e.message?.let { Log.e("convertData: ", it) }
+            }
+        }
+
     }
 
 }

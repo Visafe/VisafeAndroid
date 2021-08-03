@@ -13,7 +13,6 @@
             android:layout_height="wrap_content"
             android:background="@color/white">
 
-
             <RelativeLayout
                 android:id="@+id/bgTop"
                 android:layout_width="0dp"
@@ -26,35 +25,59 @@
             <View
                 android:id="@+id/viewRainbow"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="@dimen/_36sdp"
                 android:background="@drawable/bg_intersect"
                 app:layout_constraintBottom_toBottomOf="@+id/bgTop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewStatistical"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/llViewStatistical"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
-                app:cardCornerRadius="@dimen/_16dp"
-                app:cardElevation="@dimen/_8dp"
+                android:background="@android:color/transparent"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/viewRainbow">
 
-                <include
-                    android:id="@+id/viewStatistical"
-                    layout="@layout/layout_statistical" />
-            </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewStatistical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_13sdp"
+                    android:layout_marginEnd="@dimen/_13sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:visibility="visible"
+                    app:cardCornerRadius="@dimen/_16dp"
+                    app:cardElevation="@dimen/_8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/viewRainbow">
+
+                    <include
+                        android:id="@+id/viewStatistical"
+                        layout="@layout/layout_statistical" />
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_36sdp"
+                    android:background="@drawable/bg_intersect"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/bgTop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </LinearLayout>
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardViewStatistical">
+                app:layout_constraintTop_toBottomOf="@+id/llViewStatistical">
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline"
@@ -67,7 +90,7 @@
                     android:id="@+id/tvGroupName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/sf_pro_text_regular_bold"
                     android:textColor="@color/color_222222"
                     android:textSize="@dimen/_18sdp"

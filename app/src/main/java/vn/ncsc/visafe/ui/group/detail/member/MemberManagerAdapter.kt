@@ -52,7 +52,7 @@ class MemberManagerAdapter(
         notifyItemRemoved(positionItem)
     }
 
-    class MyViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(
+    inner class MyViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(
         inflater.inflate(
             R.layout.item_member, parent, false
         )
@@ -66,22 +66,27 @@ class MemberManagerAdapter(
                 itemView.tvLevel.setBackgroundResource(R.drawable.bg_radius_4dp)
                 itemView.tvLevel.setBackgroundTint(R.color.color_F9F1E2)
                 itemView.tvLevel.setTextColor(ContextCompat.getColor(itemView.context, R.color.color_FFB31F))
-            } else if (listUserManage?.isNotEmpty() == true && listUserManage.isNotEmpty()) {
+                item.typePosition = TypePosition.IS_OWNER
+            }
+            if (listUserManage?.isNotEmpty() == true && listUserManage.isNotEmpty()) {
                 for (i in listUserManage) {
                     if (i == item.userID) {
                         itemView.tvLevel.text = "Quản trị viên"
                         itemView.tvLevel.setBackgroundResource(R.drawable.bg_radius_4dp)
                         itemView.tvLevel.setBackgroundTint(R.color.color_F9F1E2)
                         itemView.tvLevel.setTextColor(ContextCompat.getColor(itemView.context, R.color.color_FFB31F))
+                        item.typePosition = TypePosition.ADMINISTRATORS
                     }
                 }
-            } else if (listUsersActive?.isNotEmpty() == true && listUsersActive.isNotEmpty()) {
+            }
+            if (listUsersActive?.isNotEmpty() == true && listUsersActive.isNotEmpty()) {
                 for (i in listUsersActive) {
                     if (i == item.userID) {
                         itemView.tvLevel.text = "Giám sát viên"
                         itemView.tvLevel.setBackgroundResource(R.drawable.bg_radius_4dp)
                         itemView.tvLevel.setBackgroundTint(R.color.color_ecf7ff)
                         itemView.tvLevel.setTextColor(ContextCompat.getColor(itemView.context, R.color.color_15A1FA))
+                        item.typePosition = TypePosition.SUPERVISOR
                     }
                 }
             }
@@ -104,4 +109,10 @@ class MemberManagerAdapter(
             return oldItem == newItem
         }
     }
+}
+
+enum class TypePosition {
+    IS_OWNER,
+    ADMINISTRATORS,
+    SUPERVISOR
 }

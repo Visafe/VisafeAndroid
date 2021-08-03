@@ -22,6 +22,8 @@ class PreferenceKey {
 
         const val PIN_CODE = "PIN_CODE"
 
+        const val DEVICE_ID = "DEVICE_ID"
+
         const val IS_ENABLE_PROTECTED_WIFI_HOME = "IS_ENABLE_PROTECTED_WIFI_HOME"
         const val IS_ENABLE_PROTECTED_DEVICE_HOME = "IS_ENABLE_PROTECTED_DEVICE_HOME"
         const val IS_ENABLE_BLOCK_ADS_HOME = "IS_ENABLE_BLOCK_ADS_HOME"

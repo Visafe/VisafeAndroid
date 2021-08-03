@@ -33,19 +33,22 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Notifi
     override fun layoutRes(): Int = R.layout.fragment_notification
 
     override fun initView() {
-        val linearLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        notificationAdapter = NotificationAdapter(this)
-        binding.rcvNotification.layoutManager = linearLayoutManager
-        binding.rcvNotification.setLoadingListener(this)
-        binding.rcvNotification.setPullRefreshEnabled(true)
-        binding.rcvNotification.setLoadingMoreEnabled(true)
-        binding.rcvNotification.adapter = notificationAdapter
-        loadListNotification()
+        if ((activity as MainActivity).isLogin()) {
+            val linearLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            notificationAdapter = NotificationAdapter(this)
+            binding.rcvNotification.layoutManager = linearLayoutManager
+            binding.rcvNotification.setLoadingListener(this)
+            binding.rcvNotification.setPullRefreshEnabled(true)
+            binding.rcvNotification.setLoadingMoreEnabled(true)
+            binding.rcvNotification.adapter = notificationAdapter
+            loadListNotification()
+        } else {
+            binding.tvNoData.visibility = View.VISIBLE
+            binding.rcvNotification.visibility = View.GONE
+        }
     }
 
     private fun doGetNotification(type: TypeLoad) {
-        if (!(activity as MainActivity).isLogin())
-            return
         if (type == TypeLoad.FIRST_LOAD) showProgressDialog()
         val client = NetworkClient()
         val call = context?.let { client.client(context = it).doGetNotification(mPage) }

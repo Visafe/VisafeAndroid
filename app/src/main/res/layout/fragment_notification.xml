@@ -20,7 +20,7 @@
 
         <View
             android:id="@+id/viewLine"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/tvTitle"
             android:background="@color/color_EEEEEE"
@@ -45,6 +45,7 @@
             android:text="Không có thông báo nào"
             android:visibility="gone"
             tools:visibility="visible" />
+
 
     </RelativeLayout>
 </layout>

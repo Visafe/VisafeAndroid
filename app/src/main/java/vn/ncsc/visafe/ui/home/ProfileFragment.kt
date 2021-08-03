@@ -64,5 +64,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         binding.layoutUpgrade.btnRegister.setOnSingClickListener {
             startActivity(Intent(requireContext(), RegisterActivity::class.java))
         }
+        binding.clShare.setOnSingClickListener {
+            val sendIntent = Intent(Intent.ACTION_SEND)
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=vn.ncsc.visafe")
+            sendIntent.type = "text/plain"
+            startActivity(Intent.createChooser(sendIntent, null))
+        }
     }
 }

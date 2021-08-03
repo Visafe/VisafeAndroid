@@ -110,6 +110,17 @@ interface ApiService {
     @PATCH("group/update/user-to-viewer")
     fun doUpgradeUserToViewer(@Body userToViewerRequest: UserInGroupRequest): Call<ResponseBody>
 
+    /*=========Device in Group=================*/
+    @HTTP(
+        method = "DELETE",
+        path = "group/delete/device",
+        hasBody = true
+    )
+    fun doRemoveDeviceFromGroup(@Body removeDeviceRequest: RemoveDeviceRequest): Call<ResponseBody>
+
+    @POST("group/invite/device")
+    fun doAddDeviceToGroup(@Body addDeviceRequest: AddDeviceRequest): Call<ResponseBody>
+
     /*=========Notification=================*/
     @GET("user/notifications")
     fun doGetNotification(@Query("page") page: Int?): Call<NotificationResponse>
@@ -144,7 +155,7 @@ interface ApiService {
     ): Call<StatsWorkspaceResponse>
 
     @POST("b4ad1075-a0ad-4581-841d-23877a6b1a60")
-    fun checkBotnet(): Call<ResponseBody>
+    fun doCheckBotnet(): Call<ResponseBody>
 
     @GET("querylog_group")
     fun doGetQueryLogGroup(
@@ -156,4 +167,11 @@ interface ApiService {
 
     @POST("stats/delete_log")
     fun doDeleteLog(@Body deleteLogRequest: DeleteLogRequest): Call<ResponseBody>
+
+    @POST("report_phishing")
+    fun doReportWebsitePhishing(@Body reportWebRequest: ReportWebRequest): Call<ResponseBody>
+
+    /*=========Another==================================*/
+    @GET("control/gen-device-id")
+    fun doGetDeviceId(): Call<DeviceIdResponse>
 }

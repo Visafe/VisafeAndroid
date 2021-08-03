@@ -1,10 +1,12 @@
 package vn.ncsc.visafe.ui.authentication.splash
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.Window
 import androidx.annotation.RequiresApi
@@ -15,24 +17,56 @@ import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.databinding.ActivitySplashBinding
 import vn.ncsc.visafe.ui.MainActivity
 import vn.ncsc.visafe.ui.adapter.SectionsPagerAdapter
+import vn.ncsc.visafe.ui.group.join.JoinGroupActivity
 import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 
 class SplashActivity : BaseActivity() {
 
     lateinit var viewBinding: ActivitySplashBinding
+    private var data: Uri? = null
+    private var action: String? = null
+    private var groupId = ""
+    private var groupName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         viewBinding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+        intent?.let {
+            action = it.action
+            data = it.data
+        }
+        if (data != null && data.toString().contains("https://app.visafe.vn/control/invite/device?")) {
+            val dataString = data.toString().replace("https://app.visafe.vn/control/invite/device?", "")
+            val items: Array<String> = dataString.split("&".toRegex()).toTypedArray()
+            try {
+                for (item in items) {
+                    val parted = item.split("=".toRegex(), 2).toTypedArray()
+                    if (parted.size < 2 || "" == parted[1].trim { it <= ' ' }) continue
+                    val key = parted[0]
+                    val value = parted[1]
+                    when (key) {
+                        "groupId" -> groupId = value
+                        "groupName" -> groupName = value
+                    }
+                }
+            } catch (e: Exception) {
+                e.message?.let { Log.e("convertData: ", it) }
+            }
+        }
+        getDeviceId()
+        Log.e("SplashActivity: ", action + " " + data.toString())
         if (SharePreferenceKeyHelper.getInstance(application).isLogin()
             || !SharePreferenceKeyHelper.getInstance(application).isFirstShowOnBoarding()
         ) {
             viewBinding.imgLogo.visibility = View.VISIBLE
             Handler(Looper.getMainLooper()).postDelayed({
-                startActivity(Intent(this, MainActivity::class.java))
+                val intent = Intent(this@SplashActivity, MainActivity::class.java)
+                intent.putExtra(JoinGroupActivity.GROUP_ID, groupId)
+                intent.putExtra(JoinGroupActivity.GROUP_NAME, groupName)
+                startActivity(intent)
                 finish()
             }, 2000)
         } else {
@@ -54,7 +88,10 @@ class SplashActivity : BaseActivity() {
         viewBinding.fab.setOnClickListener {
             if (viewBinding.fab.text.equals(getString(R.string.start))) {
                 SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.IS_FIRST_SHOW_ON_BOARDING, false)
-                startActivity(Intent(this, MainActivity::class.java))
+                val intent = Intent(this@SplashActivity, MainActivity::class.java)
+                intent.putExtra(JoinGroupActivity.GROUP_ID, groupId)
+                intent.putExtra(JoinGroupActivity.GROUP_NAME, groupName)
+                startActivity(intent)
                 finish()
             } else {
                 val currentItem = viewBinding.viewPager.currentItem

@@ -4,6 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import com.google.gson.annotations.SerializedName
 import vn.ncsc.visafe.model.response.DeviceGroup
+import vn.ncsc.visafe.ui.group.detail.member.TypePosition
 
 @Parcelize
 data class GroupData(
@@ -64,7 +65,7 @@ data class GroupData(
     @SerializedName("usersGroupInfo")
     var listUsersGroupInfo: MutableList<UsersGroupInfo>? = null,
     @SerializedName("devicesGroupInfo")
-    var listDevicesGroupInfo: List<DeviceGroup>? = null,
+    var listDevicesGroupInfo: MutableList<DeviceGroup>? = null,
     @SerializedName("identifiersGroupInfo")
     var identifiersGroupInfo: List<IdentifiersGroupInfo>? = null,
     @SerializedName("createdAt")
@@ -109,6 +110,7 @@ data class UsersGroupInfo(
     var phoneNumber: String? = null,
     @SerializedName("IsVerify")
     var isVerify: Boolean = false,
+    var typePosition: TypePosition?=null
 ) : Parcelable
 
 @Parcelize

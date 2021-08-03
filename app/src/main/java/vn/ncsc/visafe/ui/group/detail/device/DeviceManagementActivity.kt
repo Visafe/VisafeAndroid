@@ -4,12 +4,20 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseActivity
+import vn.ncsc.visafe.data.BaseCallback
+import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivityDeviceManagementBinding
 import vn.ncsc.visafe.model.GroupData
+import vn.ncsc.visafe.model.request.RemoveDeviceRequest
 import vn.ncsc.visafe.model.response.DeviceGroup
 import vn.ncsc.visafe.ui.create.group.access_manager.Action
 import vn.ncsc.visafe.ui.dialog.VisafeDialogBottomSheet
@@ -42,7 +50,7 @@ class DeviceManagementActivity : BaseActivity(), DeviceManagerAdapter.OnClickDev
         groupData?.let {
             listDeviceManager.clear()
             it.listDevicesGroupInfo?.toMutableList()?.let { it1 -> listDeviceManager.addAll(it1) }
-            binding.tvNumberMember.text = "${listDeviceManager.size} thiết bị"
+            binding.tvNumberDevice.text = "${listDeviceManager.size} thiết bị"
             binding.tvContent.text = it.name
         }
         deviceManagerAdapter = DeviceManagerAdapter(this)
@@ -103,7 +111,7 @@ class DeviceManagementActivity : BaseActivity(), DeviceManagerAdapter.OnClickDev
             getString(R.string.delete_device)
         )
         bottomSheet.show(supportFragmentManager, null)
-        bottomSheet.setOnClickListener { inputText, action ->
+        bottomSheet.setOnClickListener { _, action ->
             when (action) {
                 Action.DELETE -> {
                     showDialogDelete(data, position)
@@ -119,6 +127,35 @@ class DeviceManagementActivity : BaseActivity(), DeviceManagerAdapter.OnClickDev
         }
     }
 
+    private fun removeDeviceFromGroup(data: DeviceGroup, position: Int) {
+        val removeDeviceRequest =
+            RemoveDeviceRequest(deviceId = data.deviceID, groupId = data.groupID, deviceMonitorID = data.deviceMonitorID)
+        showProgressDialog()
+        val client = NetworkClient()
+        val call = client.client(context = applicationContext).doRemoveDeviceFromGroup(removeDeviceRequest)
+        call.enqueue(BaseCallback(this, object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    showToast("Xóa thiết bị ${data.deviceName} thành công")
+                    deviceManagerAdapter?.deleteItem(data)
+                    deviceManagerAdapter?.notifyDataSetChanged()
+                    binding.tvNumberDevice.text = "${listDeviceManager.size} thiết bị"
+                    groupData?.listDevicesGroupInfo?.clear()
+                    groupData?.listDevicesGroupInfo?.addAll(listDeviceManager)
+                }
+                dismissProgress()
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        }))
+    }
+
     private fun showDialogDelete(data: DeviceGroup, position: Int) {
         val bottomSheet = VisafeDialogBottomSheet.newInstance(
             "",
@@ -126,10 +163,10 @@ class DeviceManagementActivity : BaseActivity(), DeviceManagerAdapter.OnClickDev
             VisafeDialogBottomSheet.TYPE_CONFIRM_CANCLE
         )
         bottomSheet.show(supportFragmentManager, null)
-        bottomSheet.setOnClickListener { inputText, action ->
+        bottomSheet.setOnClickListener { _, action ->
             when (action) {
                 Action.CONFIRM -> {
-
+                    removeDeviceFromGroup(data, position)
                 }
                 else -> {
                     return@setOnClickListener

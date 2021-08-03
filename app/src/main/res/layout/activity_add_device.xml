@@ -126,12 +126,16 @@
 
         <TextView
             android:id="@+id/tvLinkShare"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_50sdp"
             android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_50sdp"
             android:drawablePadding="@dimen/_4sdp"
+            android:ellipsize="end"
             android:gravity="center"
-            android:text="https://visafe.vn/join/5345345"
+            android:singleLine="true"
+            android:text="https://visafe.vn/join/5345345123213213123123123"
             android:textColor="@color/color_15A1FA"
             android:textSize="@dimen/_12sdp"
             app:drawableEndCompat="@drawable/ic_copy"

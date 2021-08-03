@@ -89,60 +89,69 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
 
     @SuppressLint("LongLogTag")
     override fun initView() {
-        (activity as MainActivity).timeTypes.observe(this, {
-            if (it.isNotEmpty()) {
-                timeType = it
-                binding.viewStatistical.tvTime.text = it
-            }
-        })
-        (activity as MainActivity).listWorkSpaceLiveData.observe(this, {
-            if (it != null) {
-                listWorkspaceGroupData.clear()
-                listWorkspaceGroupData.addAll(it)
-                if (listWorkspaceGroupData.size > 0) {
-                    listWorkspaceGroupData[0].let { workspaceGroupData ->
-                        mWorkspaceGroupData = workspaceGroupData
-                        doGetGroupWithId(workspaceGroupData)
-                        updateViewWorkSpace(workspaceGroupData)
-                        (activity as MainActivity).doGetStaticWorkspace(workspaceGroupData, timeStatistical)
+        if ((activity as BaseActivity).isLogin()) {
+            (activity as MainActivity).timeTypes.observe(this, {
+                if (it.isNotEmpty()) {
+                    timeType = it
+                    binding.viewStatistical.tvTime.text = it
+                }
+            })
+            (activity as MainActivity).listWorkSpaceLiveData.observe(this, {
+                if (it != null) {
+                    listWorkspaceGroupData.clear()
+                    listWorkspaceGroupData.addAll(it)
+                    if (listWorkspaceGroupData.size > 0) {
+                        listWorkspaceGroupData[0].let { workspaceGroupData ->
+                            mWorkspaceGroupData = workspaceGroupData
+                            doGetGroupWithId(workspaceGroupData)
+                            updateViewWorkSpace(workspaceGroupData)
+                            (activity as MainActivity).doGetStaticWorkspace(workspaceGroupData, timeStatistical)
+                        }
                     }
                 }
+            })
+            (activity as MainActivity).statisticalWorkSpaceLiveData.observe(this, {
+                val gson = Gson()
+                binding.viewStatistical.tvValueDangerous.text = it.num_dangerous_domain.toString()
+                binding.viewStatistical.tvValueAds.text = it.num_ads_blocked.toString()
+                binding.viewStatistical.tvValueViolate.text = it.num_violation.toString()
+            })
+            groupIsOwnerAdapter = GroupListAdapter(listGroupIsOwner)
+            groupIsOwnerAdapter?.setEnableImageGroup(true)
+            groupIsOwnerAdapter?.onClickGroup = object : GroupListAdapter.OnClickGroup {
+                override fun openGroup(data: GroupData, position: Int) {
+                    data.groupid?.let { gotoDetailGroup(it, position) }
+                }
+
+                override fun onClickMore() {
+                }
             }
-        })
-        (activity as MainActivity).statisticalWorkSpaceLiveData.observe(this, {
-            val gson = Gson()
-            Log.e("GroupManagementFrg StaticWorkspace: ", gson.toJson(it))
-            binding.viewStatistical.tvValueDangerous.text = it.num_dangerous_domain.toString()
-            binding.viewStatistical.tvValueAds.text = it.num_ads_blocked.toString()
-            binding.viewStatistical.tvValueViolate.text = it.num_violation.toString()
-        })
+            binding.rcvGroupIsOwner.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            binding.rcvGroupIsOwner.adapter = groupIsOwnerAdapter
+            //group list member
+            groupIsMemberAdapter = GroupListAdapter(listGroupIsMember)
+            groupIsMemberAdapter?.setEnableImageGroup(true)
+            groupIsMemberAdapter?.onClickGroup = object : GroupListAdapter.OnClickGroup {
+                override fun openGroup(data: GroupData, position: Int) {
+                    data.groupid?.let { gotoDetailGroup(it, position) }
+                }
+
+                override fun onClickMore() {
+                }
+            }
+            binding.rcvGroupIsMember.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            binding.rcvGroupIsMember.adapter = groupIsMemberAdapter
+            binding.cardViewStatistical.visibility = View.VISIBLE
+            binding.view1.visibility = View.GONE
+            binding.btnChangeWorkSpace.visibility = View.VISIBLE
+        } else {
+            binding.cardViewStatistical.visibility = View.GONE
+            binding.view1.visibility = View.VISIBLE
+            binding.btnChangeWorkSpace.visibility = View.GONE
+            binding.tvGroupName.text = "Gia đình & nhóm"
+            binding.tvGroupDescription.text = "Bảo vệ gia đình & người thân trên môi trường mạng"
+        }
         updateViewListGroup()
-        groupIsOwnerAdapter = GroupListAdapter(listGroupIsOwner)
-        groupIsOwnerAdapter?.setEnableImageGroup(true)
-        groupIsOwnerAdapter?.onClickGroup = object : GroupListAdapter.OnClickGroup {
-            override fun openGroup(data: GroupData, position: Int) {
-                data.groupid?.let { gotoDetailGroup(it, position) }
-            }
-
-            override fun onClickMore() {
-            }
-        }
-        binding.rcvGroupIsOwner.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.rcvGroupIsOwner.adapter = groupIsOwnerAdapter
-        //group list member
-        groupIsMemberAdapter = GroupListAdapter(listGroupIsMember)
-        groupIsMemberAdapter?.setEnableImageGroup(true)
-        groupIsMemberAdapter?.onClickGroup = object : GroupListAdapter.OnClickGroup {
-            override fun openGroup(data: GroupData, position: Int) {
-                data.groupid?.let { gotoDetailGroup(it, position) }
-            }
-
-            override fun onClickMore() {
-            }
-        }
-        binding.rcvGroupIsMember.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.rcvGroupIsMember.adapter = groupIsMemberAdapter
-
         initControl()
     }
 
@@ -157,6 +166,8 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
 
     private fun initControl() {
         binding.btnCreateNewGroup.setOnSingClickListener {
+            if ((activity as BaseActivity).needLogin())
+                return@setOnSingClickListener
             val intent = Intent(requireContext(), CreateGroupActivity::class.java)
             intent.putExtra(DATA_WORKSPACE, mWorkspaceGroupData)
             resultLauncherCreateGroupActivity.launch(intent)

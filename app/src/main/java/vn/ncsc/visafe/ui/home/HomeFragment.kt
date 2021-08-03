@@ -210,6 +210,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                             binding.status.text = getString(R.string.status_failing)
                             binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
                             binding.buttonStatus.setImageResource(R.drawable.off_button)
+                            binding.roundImage.clearAnimation()
                         }
                     }
                 } else if (isAnotherVpnActive()) {

@@ -1,5 +1,6 @@
 package vn.ncsc.visafe.ui.protect
 
+import android.Manifest
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -16,7 +17,6 @@ import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivityProtectWifiBinding
 import vn.ncsc.visafe.model.DetailBotnet
-import vn.ncsc.visafe.model.ProtectWifiData
 import vn.ncsc.visafe.model.response.BotnetResponse
 import vn.ncsc.visafe.ui.adapter.OnClickWifi
 import vn.ncsc.visafe.ui.adapter.ProtectWifiAdapter
@@ -58,24 +58,14 @@ class ProtectWifiActivity : BaseActivity() {
         })
         val isProtected = intent.extras?.getBoolean(PROTECT_WIFI_KEY, false) ?: false
         if (isProtected) {
-            if (!checkPermissionWifi()) {
-                showToast("Cần quyền truy cập vị trí, wifi")
-                binding.switchProtectWifi.isChecked = false
-                return
-            }
-            checkBotnet()
+            checkPermissionScanWifi()
         } else {
             binding.switchProtectWifi.isChecked = false
             handleProtected(false, null)
         }
         binding.switchProtectWifi.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                if (!checkPermissionWifi()) {
-                    showToast("Cần quyền truy cập vị trí, wifi")
-                    binding.switchProtectWifi.isChecked = false
-                    return@setOnCheckedChangeListener
-                }
-                checkBotnet()
+                checkPermissionScanWifi()
             } else {
                 binding.switchProtectWifi.isChecked = false
                 handleProtected(false, null)
@@ -95,10 +85,27 @@ class ProtectWifiActivity : BaseActivity() {
         })
     }
 
-    fun checkBotnet() {
+    private fun checkPermissionScanWifi() {
+        checkPermission(arrayOf(
+            Manifest.permission.ACCESS_WIFI_STATE,
+            Manifest.permission.CHANGE_WIFI_STATE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ), object : OnPermissionGranted {
+            override fun onPermission() {
+                checkBotnet()
+            }
+
+            override fun onPermissionDenied() {
+                showToast("Bạn cần cấp quyền truy cập vị trí, wifi để sử dụng tính năng này")
+            }
+        })
+    }
+
+    private fun checkBotnet() {
         showProgressDialog()
         val client = NetworkClient()
-        val call = client.clientCheckBotnet(context = applicationContext).checkBotnet()
+        val call = client.clientCheckBotnet(context = applicationContext).doCheckBotnet()
         call.enqueue(BaseCallback(this@ProtectWifiActivity, object : Callback<ResponseBody> {
             override fun onResponse(
                 call: Call<ResponseBody>,

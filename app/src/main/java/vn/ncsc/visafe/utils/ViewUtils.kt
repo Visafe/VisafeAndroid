@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.DisplayMetrics
 import android.view.View
 import com.jakewharton.rxbinding2.view.RxView
 import vn.ncsc.visafe.R
@@ -14,6 +15,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
 import java.util.concurrent.TimeUnit
+import kotlin.math.roundToInt
 
 fun setSafeClickListener(view: View?, listener: View.OnClickListener) {
     view?.let {
@@ -82,4 +84,27 @@ private fun saveImageToStream(bitmap: Bitmap, outputStream: OutputStream?) {
             e.printStackTrace()
         }
     }
+}
+
+fun dpToPx(context: Context, dp: Int): Int {
+    val displayMetrics = context.resources.displayMetrics
+    val densityDpi = (displayMetrics.density * 160f).toInt()
+    return (dp * (densityDpi / DisplayMetrics.DENSITY_DEFAULT)).toFloat().roundToInt()
+}
+
+fun dpToPxByYdpi(context: Context, dp: Int): Int {
+    val displayMetrics: DisplayMetrics = context.resources.displayMetrics
+    val densityDpi = displayMetrics.densityDpi
+    return (dp * (densityDpi / DisplayMetrics.DENSITY_DEFAULT)).toFloat().roundToInt()
+}
+
+fun dpToPxByXdpi(context: Context, dp: Int): Int {
+    val displayMetrics: DisplayMetrics = context.resources.displayMetrics
+    return (dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
+}
+
+fun pxToDp(context: Context, px: Int): Int {
+    val displayMetrics = context.resources.displayMetrics
+    val densityDpi = (displayMetrics.density * 160f).toInt()
+    return (px / (densityDpi / DisplayMetrics.DENSITY_DEFAULT)).toFloat().roundToInt()
 }

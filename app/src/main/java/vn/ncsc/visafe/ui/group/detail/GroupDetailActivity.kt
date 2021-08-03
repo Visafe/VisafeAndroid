@@ -29,7 +29,7 @@ import vn.ncsc.visafe.ui.group.detail.device.DeviceManagementActivity
 import vn.ncsc.visafe.ui.group.detail.device.AddDeviceActivity
 import vn.ncsc.visafe.ui.group.detail.member.MemberManagementActivity
 import vn.ncsc.visafe.ui.group.detail.setup_protect.*
-import vn.ncsc.visafe.ui.group.join.JoinGroupActivity
+import vn.ncsc.visafe.ui.group.join.AddMemberInGroupActivity
 import vn.ncsc.visafe.utils.getTextGroup
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
@@ -79,7 +79,7 @@ class GroupDetailActivity : BaseSetupProtectActivity(), SetupProtectGroupDetailA
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
                 if (result.data != null) {
-                    val newMember = result.data?.getParcelableExtra<UsersGroupInfo>(JoinGroupActivity.NEW_MEMBER)
+                    val newMember = result.data?.getParcelableExtra<UsersGroupInfo>(AddMemberInGroupActivity.NEW_MEMBER)
                     newMember?.let {
                         groupData?.listUsersGroupInfo?.add(it)
                         binding.tvNumberMember.text = "${groupData?.listUsersGroupInfo?.size} thành viên"
@@ -145,7 +145,7 @@ class GroupDetailActivity : BaseSetupProtectActivity(), SetupProtectGroupDetailA
             }
         }
         binding.btnAddNewMember.setOnSingClickListener {
-            val intent = Intent(this@GroupDetailActivity, JoinGroupActivity::class.java)
+            val intent = Intent(this@GroupDetailActivity, AddMemberInGroupActivity::class.java)
             intent.putExtra(MemberManagementActivity.KEY_DATA, groupData)
             resultLauncherAddMember.launch(intent)
 

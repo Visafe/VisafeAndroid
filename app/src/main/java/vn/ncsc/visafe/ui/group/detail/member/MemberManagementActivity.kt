@@ -21,8 +21,9 @@ import vn.ncsc.visafe.model.UsersGroupInfo
 import vn.ncsc.visafe.model.request.UserInGroupRequest
 import vn.ncsc.visafe.ui.create.group.access_manager.Action
 import vn.ncsc.visafe.ui.dialog.VisafeDialogBottomSheet
-import vn.ncsc.visafe.ui.group.join.JoinGroupActivity
+import vn.ncsc.visafe.ui.group.join.AddMemberInGroupActivity
 import vn.ncsc.visafe.utils.setOnSingClickListener
+import java.lang.Exception
 
 class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectItemListener {
 
@@ -81,7 +82,7 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
             finish()
         }
         binding.btnAddMember.setOnSingClickListener {
-            val intent = Intent(this@MemberManagementActivity, JoinGroupActivity::class.java)
+            val intent = Intent(this@MemberManagementActivity, AddMemberInGroupActivity::class.java)
             intent.putExtra(KEY_DATA, groupData)
             resultLauncherAddMember.launch(intent)
         }
@@ -92,7 +93,7 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
                 if (result.data != null) {
-                    val newMember = result.data?.getParcelableExtra<UsersGroupInfo>(JoinGroupActivity.NEW_MEMBER)
+                    val newMember = result.data?.getParcelableExtra<UsersGroupInfo>(AddMemberInGroupActivity.NEW_MEMBER)
                     newMember?.let {
                         binding.tvNumberMember.text = "${listUsersGroupInfo.size} thành viên"
                         listUsersGroupInfo.add(it)
@@ -108,19 +109,25 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
     }
 
     override fun onMore(item: UsersGroupInfo, position: Int) {
+        if (item.typePosition == TypePosition.IS_OWNER)
+            return
         val fullName = item.fullName
         val bottomSheet = VisafeDialogBottomSheet.newInstance(
             "Thành viên",
             fullName,
             VisafeDialogBottomSheet.TYPE_EDIT_DELETE,
-            "Cấp quyền làm Quản trị viên",
-            "Xóa thành viên khỏi nhóm"
+            if (item.typePosition == TypePosition.ADMINISTRATORS) "Đặt làm Giám sát viên" else "Cấp quyền làm Quản trị viên",
+            "Xóa $fullName khỏi nhóm"
         )
         bottomSheet.show(supportFragmentManager, null)
         bottomSheet.setOnClickListener { _, action ->
             when (action) {
                 Action.EDIT -> {
-                    upgradeUserToManager(item, groupData?.groupid)
+                    if (item.typePosition == TypePosition.ADMINISTRATORS) {
+                        upgradeUserToViewer(item, groupData?.groupid)
+                    } else {
+                        upgradeUserToManager(item, groupData?.groupid)
+                    }
                 }
                 Action.DELETE -> {
                     showDialogDeleteGroup(fullName, item, groupData?.groupid)
@@ -189,17 +196,66 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
                 call: Call<ResponseBody>,
                 response: Response<ResponseBody>
             ) {
+                dismissProgress()
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
                     showToast("Cập nhật thành công")
-                    groupData?.userManage?.add(item.userID.toString())
-                    groupData?.usersActive?.let { lstActive ->
-                        for (i in lstActive) {
-                            if (item.userID.toString() == i) {
-                                groupData?.usersActive?.remove(i)
+                    try {
+                        groupData?.userManage?.add(item.userID.toString())
+                        val listActive: MutableList<String> = mutableListOf()
+                        groupData?.usersActive?.let { listActive.addAll(it) }
+                        groupData?.usersActive?.let { lstActive ->
+                            for (i in lstActive) {
+                                if (item.userID.toString() == i) {
+                                    listActive.remove(i)
+                                }
                             }
                         }
+                        groupData?.usersActive?.clear()
+                        groupData?.usersActive?.addAll(listActive)
+                        memberManagerAdapter?.notifyDataSetChanged()
+                    } catch (e: Exception) {
+                        e.message?.let { Log.e("upgradeUserToManager: ", it) }
                     }
-                    memberManagerAdapter?.notifyDataSetChanged()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        }))
+    }
+
+    //dat lam giam sat vien
+    private fun upgradeUserToViewer(item: UsersGroupInfo, groupId: String?) {
+        val upgradeUserToManagerRequest = UserInGroupRequest(userId = item.userID?.toInt(), groupId = groupId)
+        showProgressDialog()
+        val client = NetworkClient()
+        val call = client.client(context = applicationContext).doUpgradeUserToViewer(upgradeUserToManagerRequest)
+        call.enqueue(BaseCallback(this, object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    showToast("Cập nhật thành công")
+                    try {
+                        groupData?.usersActive?.add(item.userID.toString())
+                        val listManage: MutableList<String> = mutableListOf()
+                        groupData?.userManage?.let { listManage.addAll(it) }
+                        groupData?.userManage?.let { lstActive ->
+                            for (i in lstActive) {
+                                if (item.userID.toString() == i) {
+                                    listManage.remove(i)
+                                }
+                            }
+                        }
+                        groupData?.userManage?.clear()
+                        groupData?.userManage?.addAll(listManage)
+                        memberManagerAdapter?.notifyDataSetChanged()
+                    } catch (e: Exception) {
+                        e.message?.let { Log.e("upgradeUserToViewer: ", it) }
+                    }
                 }
                 dismissProgress()
             }

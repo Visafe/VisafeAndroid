@@ -104,7 +104,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvNumberMember"
+            android:id="@+id/tvNumberDevice"
             style="@style/Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNumberMember"
+            app:layout_constraintTop_toBottomOf="@+id/tvNumberDevice"
             tools:listitem="@layout/item_device" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,46 +1,49 @@
 package vn.ncsc.visafe.ui.group.join
 
-import android.content.Intent
+import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
-import kotlinx.android.synthetic.main.activity_join_group.*
+import com.google.gson.Gson
+import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.data.BaseCallback
+import vn.ncsc.visafe.data.BaseResponse
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivityJoinGroupBinding
-import vn.ncsc.visafe.model.GroupData
-import vn.ncsc.visafe.model.UsersGroupInfo
-import vn.ncsc.visafe.model.request.UserInGroupRequest
-import vn.ncsc.visafe.model.response.AddMemberInGroupResponse
+import vn.ncsc.visafe.model.request.AddDeviceRequest
+import vn.ncsc.visafe.model.response.BotnetResponse
 import vn.ncsc.visafe.ui.create.group.SuccessDialogFragment
 import vn.ncsc.visafe.ui.create.group.access_manager.Action
-import vn.ncsc.visafe.ui.group.detail.member.MemberManagementActivity
-import vn.ncsc.visafe.utils.formatMobileHead84
-import vn.ncsc.visafe.utils.isNumber
+import vn.ncsc.visafe.utils.PreferenceKey
+import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
 class JoinGroupActivity : BaseActivity() {
     companion object {
-        const val SCAN_CODE = "SCAN_CODE"
-        const val NEW_MEMBER = "NEW_MEMBER"
+        const val GROUP_ID = "GROUP_ID"
+        const val GROUP_NAME = "GROUP_NAME"
     }
 
     private lateinit var binding: ActivityJoinGroupBinding
-    private var groupData: GroupData? = null
+    private var groupId: String? = ""
+    private var groupName: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        intent?.let {
-            groupData = it.getParcelableExtra(MemberManagementActivity.KEY_DATA)
-        }
         binding = ActivityJoinGroupBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        intent?.let {
+            groupId = it.getStringExtra(GROUP_ID)
+            groupName = it.getStringExtra(GROUP_NAME)
+        }
         binding.ivBack.setOnClickListener {
             finish()
         }
@@ -48,47 +51,16 @@ class JoinGroupActivity : BaseActivity() {
     }
 
     private fun initView() {
-        binding.tvNameGroup.text = groupData?.name
         enableButton()
-        binding.edtInputEmail.addTextChangedListener {
+        binding.etName.addTextChangedListener {
             enableButton()
         }
         binding.tvComplete.setOnSingClickListener {
-            addMemberToGroup()
+            addDeviceToGroup(groupId, groupName, binding.etName.text.toString())
         }
     }
 
-    private fun addMemberToGroup() {
-        val userNames: Array<String> = if (isNumber(binding.edtInputEmail.text.toString())) {
-            arrayOf(formatMobileHead84(binding.edtInputEmail.text.toString()).toString())
-        } else {
-            arrayOf(binding.edtInputEmail.text.toString())
-        }
-        val userInGroupRequest = UserInGroupRequest(groupId = groupData?.groupid, usernames = userNames)
-        showProgressDialog()
-        val client = NetworkClient()
-        val call = client.client(context = applicationContext).doInviteUserIntoGroup(userInGroupRequest)
-        call.enqueue(BaseCallback(this, object : Callback<AddMemberInGroupResponse> {
-            override fun onResponse(
-                call: Call<AddMemberInGroupResponse>,
-                response: Response<AddMemberInGroupResponse>
-            ) {
-                if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    if (response.body()?.invited?.isNotEmpty() == true) {
-                        response.body()?.invited?.let { showDialogComplete(it[0]) }
-                    }
-                }
-                dismissProgress()
-            }
-
-            override fun onFailure(call: Call<AddMemberInGroupResponse>, t: Throwable) {
-                t.message?.let { Log.e("onFailure: ", it) }
-                dismissProgress()
-            }
-        }))
-    }
-
-    private fun showDialogComplete(invited: UsersGroupInfo?) {
+    private fun showDialogComplete() {
         val dialog = SuccessDialogFragment.newInstance(
             getString(R.string.join_group_success),
             getString(R.string.content_join_group_success, binding.tvNameGroup.text.toString().trim())
@@ -97,9 +69,6 @@ class JoinGroupActivity : BaseActivity() {
         dialog.setOnClickListener {
             when (it) {
                 Action.CONFIRM -> {
-                    val intent = Intent()
-                    intent.putExtra(NEW_MEMBER, invited)
-                    setResult(RESULT_OK, intent)
                     finish()
                 }
                 else -> {
@@ -109,8 +78,9 @@ class JoinGroupActivity : BaseActivity() {
         }
     }
 
+
     private fun enableButton() {
-        val name = binding.edtInputEmail.text.toString()
+        val name = binding.etName.text.toString()
         if (name.isNotBlank()) {
             with(binding.tvComplete) {
                 backgroundTintList =
@@ -135,5 +105,60 @@ class JoinGroupActivity : BaseActivity() {
                 isEnabled = false
             }
         }
+    }
+
+    private fun addDeviceToGroup(groupId: String?, groupName: String?, deviceOwner: String) {
+        val macAddress = getMacAddress()
+        val ipAddress = getIpAddress()
+        val deviceName = Build.MANUFACTURER.plus(" ").plus(Build.MODEL)
+        val deviceId = SharePreferenceKeyHelper.getInstance(application).getString(PreferenceKey.DEVICE_ID)
+        val addDeviceRequest = AddDeviceRequest(
+            deviceId = deviceId,
+            groupName = groupName,
+            groupId = groupId,
+            deviceName = deviceName,
+            macAddress = macAddress,
+            ipAddress = ipAddress,
+            deviceType = "Mobile",
+            deviceOwner = deviceOwner,
+            deviceDetail = "ABC"
+        )
+        showProgressDialog()
+        val client = NetworkClient()
+        val call = client.client(context = applicationContext).doAddDeviceToGroup(addDeviceRequest)
+        call.enqueue(BaseCallback(this, object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                dismissProgress()
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    showDialogComplete()
+                } else if (response.code() == NetworkClient.CODE_EXISTS_ACCOUNT) {
+                    response.errorBody()?.let {
+                        val buffer = response.errorBody()?.source()?.buffer?.readByteArray()
+                        val dataString = buffer?.decodeToString()
+                        val responseData = Gson().fromJson(dataString, BaseResponse::class.java)
+                        responseData.msg?.let {
+                            val builder = AlertDialog.Builder(this@JoinGroupActivity)
+                            with(builder)
+                            {
+                                setTitle(getString(R.string.thong_bao))
+                                setMessage(it)
+                                setPositiveButton(
+                                    getString(R.string.dong_y)
+                                ) { _, _ -> finish() }
+                                show()
+                            }
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        }))
     }
 }

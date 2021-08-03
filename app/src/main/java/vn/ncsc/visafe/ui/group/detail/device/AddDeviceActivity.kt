@@ -8,8 +8,6 @@ import android.util.Log
 import android.view.WindowManager
 import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.TedPermission
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.databinding.ActivityAddDeviceBinding
@@ -26,6 +24,7 @@ class AddDeviceActivity : BaseActivity() {
 
     private var groupData: GroupData? = null
     private var qrBitmapMerge: Bitmap? = null
+    private var dataQr: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +47,10 @@ class AddDeviceActivity : BaseActivity() {
                 R.drawable.ic_logo_text
             )
             val myLogo = getCroppedBitmap(logoBitmap)
-            it.groupid?.let { data -> qRCodeGen(data, myLogo) }
+            dataQr =
+                "https://app.visafe.vn/control/invite/device?groupId=${it.groupid}&groupName=${it.name}"
+            qRCodeGen(dataQr, myLogo)
+            binding.tvLinkShare.text = dataQr
         }
     }
 
@@ -61,9 +63,13 @@ class AddDeviceActivity : BaseActivity() {
             shareLink(binding.tvLinkShare.text.toString().replace(" ".toRegex(), ""))
         }
         binding.btnSaveQr.setOnSingClickListener {
-            checkPermission(object : OnPermissionGranted {
+            checkPermission(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), object : OnPermissionGranted {
                 override fun onPermission() {
                     qrBitmapMerge?.let { it1 -> saveBitmapToGallery(it1) }
+                }
+
+                override fun onPermissionDenied() {
+                    showToast("Bạn cần có quyền truy cập bộ nhớ")
                 }
             })
         }
@@ -75,7 +81,7 @@ class AddDeviceActivity : BaseActivity() {
     }
 
     // draw mã QR
-    private fun qRCodeGen(textQR: String, myLogo: Bitmap?) {
+    private fun qRCodeGen(textQR: String?, myLogo: Bitmap?) {
         try {
             val manager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
             val display = manager.defaultDisplay
@@ -92,22 +98,6 @@ class AddDeviceActivity : BaseActivity() {
         } catch (e: Exception) {
             Log.e("Lỗi mã QR", e.toString())
         }
-    }
-
-    private fun checkPermission(onPermissionGranted: OnPermissionGranted) {
-        TedPermission.with(this)
-            .setPermissionListener(object : PermissionListener {
-                override fun onPermissionGranted() {
-                    onPermissionGranted.onPermission()
-                }
-
-                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
-                    showToast("Bạn cần có quyền truy cập bộ nhớ")
-                }
-
-            })
-            .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            .check()
     }
 
     // merge mã QR và logo
@@ -172,9 +162,5 @@ class AddDeviceActivity : BaseActivity() {
         p.strokeWidth = 3f
         c.drawCircle(w / 2 + 4.toFloat(), h / 2 + 4.toFloat(), radius.toFloat(), p)
         return output
-    }
-
-    internal interface OnPermissionGranted {
-        fun onPermission()
     }
 }

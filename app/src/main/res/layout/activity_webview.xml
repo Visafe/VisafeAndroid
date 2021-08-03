@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <vn.ncsc.visafe.ui.custom.VisafeToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/white"
+        app:toolbar_left_icon_src="@drawable/ic_baseline_clear_24" />
+
+    <View
+        android:id="@+id/vDivider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_EEEEEE" />
 
     <vn.ncsc.visafe.ui.custom.NestedWebView
         android:id="@+id/wvHomeUtilities"
@@ -18,4 +32,4 @@
         app:layout_scrollFlags="scroll|exitUntilCollapsed"
         tools:ignore="WebViewLayout" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

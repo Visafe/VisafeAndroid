@@ -31,6 +31,25 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
         <activity
+            android:name=".ui.authentication.splash.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="app.visafe.vn"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ui.upgrade.UpgradeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeMain" />
@@ -49,16 +68,6 @@
         <activity
             android:name=".ui.protect.ProtectDeviceActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.authentication.splash.SplashActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeSplash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".ui.authentication.LoginActivity"
             android:screenOrientation="portrait"
@@ -114,6 +123,9 @@
             android:theme="@style/AppThemeSplash" />
         <activity
             android:name=".ui.group.join.JoinGroupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.group.join.AddMemberInGroupActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.group.join.ScanQRJoinGroupActivity"
