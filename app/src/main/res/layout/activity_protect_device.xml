@@ -75,7 +75,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_2sdp"
-                android:text="Iphone của Bao Ngoc"
                 android:textColor="@color/color_70_222222"
                 app:layout_constraintEnd_toEndOf="@id/tvTitle"
                 app:layout_constraintStart_toStartOf="@id/tvTitle"
@@ -168,7 +167,7 @@
                     android:backgroundTint="@color/color_F8F8F8">
 
                     <TextView
-                        android:id="@+id/tvAmoutEvery"
+                        android:id="@+id/tvAmountEvery"
                         android:layout_width="@dimen/_0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_16sdp"
@@ -189,12 +188,12 @@
                         android:layout_marginBottom="@dimen/_12sdp"
                         android:background="@color/color_DDDDDD"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/tvAmoutToday"
-                        app:layout_constraintStart_toEndOf="@id/tvAmoutEvery"
+                        app:layout_constraintEnd_toStartOf="@id/tvAmountToday"
+                        app:layout_constraintStart_toEndOf="@id/tvAmountEvery"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/tvAmoutToday"
+                        android:id="@+id/tvAmountToday"
                         android:layout_width="@dimen/_0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_16sdp"
@@ -217,9 +216,9 @@
                         android:text="@string/moi_luc"
                         android:textColor="@color/color_70_222222"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@id/tvAmoutEvery"
-                        app:layout_constraintStart_toStartOf="@id/tvAmoutEvery"
-                        app:layout_constraintTop_toBottomOf="@id/tvAmoutEvery" />
+                        app:layout_constraintEnd_toEndOf="@id/tvAmountEvery"
+                        app:layout_constraintStart_toStartOf="@id/tvAmountEvery"
+                        app:layout_constraintTop_toBottomOf="@id/tvAmountEvery" />
 
                     <TextView
                         style="@style/Content_Small"
@@ -231,23 +230,14 @@
                         android:text="@string/today"
                         android:textColor="@color/color_70_222222"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@id/tvAmoutToday"
-                        app:layout_constraintStart_toStartOf="@id/tvAmoutToday"
-                        app:layout_constraintTop_toBottomOf="@id/tvAmoutToday" />
+                        app:layout_constraintEnd_toEndOf="@id/tvAmountToday"
+                        app:layout_constraintStart_toStartOf="@id/tvAmountToday"
+                        app:layout_constraintTop_toBottomOf="@id/tvAmountToday" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <com.highsoft.highcharts.core.HIChartView
-                    android:id="@+id/hiChartView"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_160sdp"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_12sdp"
-                    android:visibility="gone" />
-
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvData"
+                    android:id="@+id/rcvSetupProtected"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"

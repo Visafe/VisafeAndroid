@@ -120,6 +120,7 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
             }
 
             override fun onClick(widget: View) {
+                setResult(RESULT_OK)
                 finish()
             }
         }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)

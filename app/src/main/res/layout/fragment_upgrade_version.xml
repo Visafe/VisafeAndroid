@@ -1,201 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/transparent"
-        android:orientation="vertical"
-        tools:context=".ui.upgrade.UpgradeVersionFragment">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/llUpgradeTitle"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_24sdp"
-            android:layout_marginTop="@dimen/_16dp"
-            android:layout_marginEnd="@dimen/_24sdp"
-            android:gravity="center_horizontal">
+            android:background="@color/transparent"
+            android:orientation="vertical"
+            tools:context=".ui.upgrade.UpgradeVersionFragment">
 
-            <TextView
-                android:id="@+id/tvUpgradeTitle"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/llUpgradeTitle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_8dp"
-                android:fontFamily="@font/sf_pro_text_regular_bold"
-                android:text="@string/dang_ky_goi"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_18sp" />
-
-            <TextView
-                android:id="@+id/tvUpgradeStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg_radius_16dp"
-                android:backgroundTint="@color/color_FFB31F"
-                android:drawablePadding="@dimen/_4dp"
-                android:fontFamily="@font/sf_pro_text_regular_bold"
-                android:gravity="center_vertical"
-                android:paddingStart="@dimen/_2dp"
-                android:paddingTop="@dimen/_4dp"
-                android:paddingEnd="@dimen/_8dp"
-                android:paddingBottom="@dimen/_4dp"
-                android:text="@string/premium"
-                android:textAllCaps="true"
-                android:textColor="@color/color_0641448"
-                android:textSize="@dimen/text_size_10sp"
-                app:drawableStartCompat="@drawable/ic_subtract" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvUpgradeContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/llUpgradeTitle"
-            android:layout_marginStart="@dimen/_24sdp"
-            android:layout_marginTop="@dimen/_8dp"
-            android:layout_marginEnd="@dimen/_24sdp"
-            android:fontFamily="@font/sf_pro_text_regular"
-            android:gravity="center"
-            android:text="@string/premium_content"
-            android:textColor="@color/color_80_ffffff"
-            android:textSize="@dimen/text_size_12sp" />
-
-        <RelativeLayout
-            android:id="@+id/rlOneMonth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/_24sdp"
-            android:layout_marginTop="@dimen/_8dp"
-            android:layout_marginEnd="@dimen/_24sdp"
-            android:layout_marginBottom="@dimen/_8dp"
-            android:background="@drawable/bg_radius_8dp"
-            android:backgroundTint="@color/white">
-
-            <TextView
-                android:id="@+id/tvMonthTitle"
-                style="@style/Content_Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16dp"
+                android:layout_marginStart="@dimen/_24sdp"
                 android:layout_marginTop="@dimen/_16dp"
-                android:text="@string/goi_thang"
-                android:textColor="@color/color_222222" />
+                android:layout_marginEnd="@dimen/_24sdp"
+                android:gravity="center_horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvUpgradeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_8dp"
+                    android:fontFamily="@font/sf_pro_text_regular_bold"
+                    android:text="@string/dang_ky_goi"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_18sp" />
+
+                <TextView
+                    android:id="@+id/tvUpgradeStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_radius_16dp"
+                    android:backgroundTint="@color/color_FFB31F"
+                    android:drawablePadding="@dimen/_4dp"
+                    android:fontFamily="@font/sf_pro_text_regular_bold"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_2dp"
+                    android:paddingTop="@dimen/_4dp"
+                    android:paddingEnd="@dimen/_8dp"
+                    android:paddingBottom="@dimen/_4dp"
+                    android:text="@string/premium"
+                    android:textAllCaps="true"
+                    android:textColor="@color/color_0641448"
+                    android:textSize="@dimen/text_size_10sp"
+                    app:drawableStartCompat="@drawable/ic_subtract" />
+            </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tvUpgradeContent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tvMonthTitle"
-                android:layout_marginStart="@dimen/_16dp"
-                android:layout_marginBottom="@dimen/_16dp"
-                android:background="@drawable/bg_radius_4dp"
-                android:backgroundTint="@color/color_15A1FA"
-                android:fontFamily="@font/sf_pro_text_regular_bold"
-                android:paddingStart="@dimen/_8dp"
-                android:paddingTop="@dimen/_2sdp"
-                android:paddingEnd="@dimen/_8dp"
-                android:paddingBottom="@dimen/_2sdp"
-                android:text="@string/try_seven_day"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_10sp" />
+                android:layout_below="@id/llUpgradeTitle"
+                android:layout_marginStart="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:layout_marginEnd="@dimen/_24sdp"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:gravity="center"
+                android:text="@string/premium_content"
+                android:textColor="@color/color_80_ffffff"
+                android:textSize="@dimen/text_size_12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/llUpgradeTitle" />
 
-            <TextView
-                android:id="@+id/tvPriceMonth"
-                style="@style/Content_Bold"
-                android:text="@string/price_month"
-                android:layout_marginEnd="@dimen/_16dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvData"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:ignore="RelativeOverlap" />
+                android:layout_marginTop="@dimen/_12dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvUpgradeContent" />
 
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rlYear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/rlOneMonth"
-            android:layout_marginStart="@dimen/_24sdp"
-            android:layout_marginEnd="@dimen/_24sdp"
-            android:background="@drawable/bg_radius_8dp"
-            android:backgroundTint="@color/white">
-
-            <TextView
-                android:id="@+id/tvYearTitle"
-                style="@style/Content_Bold"
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvListPrices"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16dp"
-                android:layout_marginTop="@dimen/_16dp"
-                android:text="@string/goi_nam"
-                android:textColor="@color/color_222222" />
+                android:layout_below="@id/tvUpgradeContent"
+                android:layout_marginTop="@dimen/_12dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvData" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvYearTitle"
-                android:layout_marginStart="@dimen/_16dp"
-                android:layout_marginBottom="@dimen/_16dp"
-                android:background="@drawable/bg_radius_4dp"
-                android:backgroundTint="@color/color_15A1FA"
-                android:fontFamily="@font/sf_pro_text_regular_bold"
-                android:paddingStart="@dimen/_8dp"
-                android:paddingTop="@dimen/_2sdp"
-                android:paddingEnd="@dimen/_8dp"
-                android:paddingBottom="@dimen/_2sdp"
-                android:text="@string/try_month_day"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_10sp" />
-
-            <TextView
-                android:id="@+id/tvPriceYear"
-                style="@style/Content_Bold"
-                android:text="@string/price_year"
-                android:layout_marginEnd="@dimen/_16dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="RelativeOverlap" />
-
-        </RelativeLayout>
-
-        <TextView
-            android:translationY="@dimen/_8dp"
-            android:layout_centerHorizontal="true"
-            android:layout_above="@id/rlYear"
-            android:id="@+id/tvSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_radius_16dp"
-            android:backgroundTint="@color/color_FFB31F"
-            android:drawablePadding="@dimen/_4dp"
-            android:fontFamily="@font/sf_pro_text_regular_bold"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/_8dp"
-            android:paddingTop="@dimen/_4dp"
-            android:paddingEnd="@dimen/_8dp"
-            android:paddingBottom="@dimen/_4dp"
-            android:text="@string/save_64"
-            android:textAllCaps="true"
-            android:textColor="#061448"
-            android:textSize="@dimen/text_size_10sp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvData"
-            android:layout_below="@id/tvUpgradeContent"
-            android:layout_above="@id/tvSave"
-            android:layout_marginTop="@dimen/_12dp"
-            android:layout_width="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:layout_height="wrap_content"/>
-
-    </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

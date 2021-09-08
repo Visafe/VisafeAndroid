@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 android:gravity="center"
-                android:text="@string/chosse_account_type" />
+                android:text="@string/choose_account_type" />
 
             <View
                 android:id="@+id/view"

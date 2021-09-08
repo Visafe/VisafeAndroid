@@ -69,7 +69,7 @@
             android:layout_marginEnd="@dimen/_24dp"
             android:fontFamily="@font/sf_pro_text_regular_bold"
             android:gravity="center"
-            android:text="Phòng 1: Marketing"
+            tools:text="Phòng 1: Marketing"
             android:textColor="@color/color_111111"
             android:textSize="@dimen/text_size_20sp"
             app:layout_constraintLeft_toLeftOf="parent"

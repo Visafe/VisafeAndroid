@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import vn.ncsc.visafe.base.BaseActivity
@@ -28,6 +29,7 @@ class WebViewActivity : BaseActivity() {
             url = it.getStringExtra(URL_KEY).toString()
         }
         setupWebViewUtilities()
+        loadUrlWebView()
         binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
                 finish()
@@ -35,16 +37,7 @@ class WebViewActivity : BaseActivity() {
         })
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    private fun setupWebViewUtilities() {
-        val setting = binding.wvHomeUtilities.settings
-        setting.useWideViewPort = true
-        setting.loadWithOverviewMode = true
-        setting.javaScriptEnabled = true
-        setting.allowContentAccess = true
-        setting.setSupportZoom(false)
-        setting.builtInZoomControls = true
-        setting.displayZoomControls = false
+    private fun loadUrlWebView() {
         binding.wvHomeUtilities.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
@@ -64,6 +57,31 @@ class WebViewActivity : BaseActivity() {
 
         }
         binding.wvHomeUtilities.loadUrl(url)
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun setupWebViewUtilities() {
+        val setting = binding.wvHomeUtilities.settings
+        setting.useWideViewPort = true
+        setting.loadWithOverviewMode = true
+        setting.javaScriptEnabled = true
+        setting.allowContentAccess = true
+        setting.setSupportZoom(false)
+        setting.builtInZoomControls = true
+        setting.displayZoomControls = false
+        setting.pluginState = WebSettings.PluginState.ON
+        setting.layoutAlgorithm = WebSettings.LayoutAlgorithm.NORMAL
+        binding.wvHomeUtilities.setInitialScale(1)
+        setting.domStorageEnabled = true
+        setting.allowFileAccess = false
+        setting.setAppCacheEnabled(true)
+    }
+
+    override fun onDestroy() {
+        binding.wvHomeUtilities.loadUrl("about:blank")
+        binding.wvHomeUtilities.clearCache(true)
+        binding.wvHomeUtilities.destroy()
+        super.onDestroy()
 
     }
 }

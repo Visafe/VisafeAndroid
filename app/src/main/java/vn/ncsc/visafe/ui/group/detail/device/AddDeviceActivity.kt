@@ -3,13 +3,20 @@ package vn.ncsc.visafe.ui.group.detail.device
 import android.Manifest
 import android.content.Context
 import android.graphics.*
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
 import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
+import com.google.android.gms.tasks.Task
+import com.google.firebase.dynamiclinks.DynamicLink
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
+import com.google.firebase.dynamiclinks.ShortDynamicLink
+import vn.ncsc.visafe.BuildConfig
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseActivity
+import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivityAddDeviceBinding
 import vn.ncsc.visafe.model.GroupData
 import vn.ncsc.visafe.utils.saveImageToGallery
@@ -41,6 +48,7 @@ class AddDeviceActivity : BaseActivity() {
 
     private fun initView() {
         groupData?.let {
+            getDeepLink(it)
             binding.tvNameGroup.text = it.name
             val logoBitmap = BitmapFactory.decodeResource(
                 applicationContext.resources,
@@ -48,10 +56,33 @@ class AddDeviceActivity : BaseActivity() {
             )
             val myLogo = getCroppedBitmap(logoBitmap)
             dataQr =
-                "https://app.visafe.vn/control/invite/device?groupId=${it.groupid}&groupName=${it.name}"
+                NetworkClient.URL_ROOT + "group/invite/device?groupId=${it.groupid}&groupName=${it.name}"
             qRCodeGen(dataQr, myLogo)
-            binding.tvLinkShare.text = dataQr
         }
+    }
+
+    private fun getDeepLink(groupData: GroupData) {
+        showProgressDialog()
+        val builderLink =
+            NetworkClient.URL_ROOT + "group/invite/device?groupId=${groupData.groupid}&groupName=${groupData.name}"
+        FirebaseDynamicLinks.getInstance().createDynamicLink()
+            .setLink(Uri.parse(builderLink))
+            .setDomainUriPrefix("https://visafencsc.page.link/")
+            .setIosParameters(DynamicLink.IosParameters.Builder("vn.visafe").setAppStoreId("1564635388").build())
+            .setAndroidParameters(DynamicLink.AndroidParameters.Builder(BuildConfig.APPLICATION_ID).build())
+            .buildShortDynamicLink(ShortDynamicLink.Suffix.SHORT)
+            .addOnCompleteListener { task: Task<ShortDynamicLink> ->
+                if (task.isSuccessful) {
+                    // Short link created
+                    val shortLink = task.result.shortLink
+                    if (shortLink != null) {
+                        Log.e("getDeepLink: ", shortLink.toString() + "| " + task.result.previewLink)
+                        binding.tvLinkShare.text = shortLink.toString()
+                        dismissProgress()
+                    }
+                }
+            }
+            .addOnFailureListener { e: Exception -> Log.e("addOnFailureListener: ", e.message!!) }
     }
 
     private fun initControl() {

@@ -153,9 +153,10 @@ class LoginActivity : BaseAuthenticationActivity() {
                         )
                         SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.ISLOGIN, true)
                     }
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
+//                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+//                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                    startActivity(intent)
+                    setResult(RESULT_OK)
                     finish()
                 } else if (response.code() == NetworkClient.CODE_NOT_EXISTS_ACCOUNT) {
                     response.body()?.msg?.let { showToast(it) }

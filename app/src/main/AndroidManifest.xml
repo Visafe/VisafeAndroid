@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -33,12 +34,15 @@
         <activity
             android:name=".ui.authentication.splash.SplashActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:theme="@style/AppThemeSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter android:autoVerify="true">
+            <intent-filter
+                android:autoVerify="true"
+                android:label="Visafe">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -47,6 +51,9 @@
                 <data
                     android:host="app.visafe.vn"
                     android:scheme="https" />
+<!--                <data-->
+<!--                    android:host="visafencsc.page.link"-->
+<!--                    android:scheme="https" />-->
             </intent-filter>
         </activity>
         <activity
@@ -55,12 +62,6 @@
             android:theme="@style/AppThemeMain" />
         <activity
             android:name=".ui.website.WebsiteReportActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.protect.BlockTrackingDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.protect.BlockAdsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.protect.ProtectWifiActivity"
@@ -166,6 +167,11 @@
             android:name=".ui.WebViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeSplash" />
+
+        <activity
+            android:name=".ui.protect.AdvancedScanActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeMain" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

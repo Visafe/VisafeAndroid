@@ -141,9 +141,10 @@ open class BaseAuthenticationActivity : BaseActivity() {
                         )
                         SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.ISLOGIN, true)
                     }
-                    val intent = Intent(this@BaseAuthenticationActivity, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
+//                    val intent = Intent(this@BaseAuthenticationActivity, MainActivity::class.java)
+//                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                    startActivity(intent)
+                    setResult(RESULT_OK)
                     finish()
                 }
             }
@@ -175,9 +176,10 @@ open class BaseAuthenticationActivity : BaseActivity() {
                         )
                         SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.ISLOGIN, true)
                     }
-                    val intent = Intent(this@BaseAuthenticationActivity, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
+//                    val intent = Intent(this@BaseAuthenticationActivity, MainActivity::class.java)
+//                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                    startActivity(intent)
+                    setResult(RESULT_OK)
                     finish()
                 }
             }

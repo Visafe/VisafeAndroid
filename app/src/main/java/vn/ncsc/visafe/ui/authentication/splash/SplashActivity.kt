@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseActivity
+import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivitySplashBinding
 import vn.ncsc.visafe.ui.MainActivity
 import vn.ncsc.visafe.ui.adapter.SectionsPagerAdapter
@@ -28,6 +29,11 @@ class SplashActivity : BaseActivity() {
     private var action: String? = null
     private var groupId = ""
     private var groupName = ""
+    private var isLoadUserInfo = false
+
+    companion object {
+        const val LOAD_USER_INFO = "LOAD_USER_INFO"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,9 +43,33 @@ class SplashActivity : BaseActivity() {
         intent?.let {
             action = it.action
             data = it.data
+            Log.e("SplashActivity: ", data.toString())
         }
-        if (data != null && data.toString().contains("https://app.visafe.vn/control/invite/device?")) {
-            val dataString = data.toString().replace("https://app.visafe.vn/control/invite/device?", "")
+        handleDeeplink()
+        getDeviceId()
+        if (SharePreferenceKeyHelper.getInstance(application).isLogin()
+            || !SharePreferenceKeyHelper.getInstance(application).isFirstShowOnBoarding()
+        ) {
+            viewBinding.imgLogo.visibility = View.VISIBLE
+            Handler(Looper.getMainLooper()).postDelayed({
+                val intent = Intent(this@SplashActivity, MainActivity::class.java)
+                intent.putExtra(JoinGroupActivity.GROUP_ID, groupId)
+                intent.putExtra(JoinGroupActivity.GROUP_NAME, groupName)
+                intent.putExtra(LOAD_USER_INFO, isLoadUserInfo)
+                startActivity(intent)
+                finish()
+            }, 2000)
+        } else {
+            viewBinding.imgLogo.visibility = View.VISIBLE
+            Handler(Looper.getMainLooper()).postDelayed({
+                initView()
+            }, 2000)
+        }
+    }
+
+    private fun handleDeeplink() {
+        if (data != null && data.toString().contains("group/invite/device")) {
+            val dataString = data.toString().replace(NetworkClient.URL_ROOT + "group/invite/device?", "")
             val items: Array<String> = dataString.split("&".toRegex()).toTypedArray()
             try {
                 for (item in items) {
@@ -55,25 +85,8 @@ class SplashActivity : BaseActivity() {
             } catch (e: Exception) {
                 e.message?.let { Log.e("convertData: ", it) }
             }
-        }
-        getDeviceId()
-        Log.e("SplashActivity: ", action + " " + data.toString())
-        if (SharePreferenceKeyHelper.getInstance(application).isLogin()
-            || !SharePreferenceKeyHelper.getInstance(application).isFirstShowOnBoarding()
-        ) {
-            viewBinding.imgLogo.visibility = View.VISIBLE
-            Handler(Looper.getMainLooper()).postDelayed({
-                val intent = Intent(this@SplashActivity, MainActivity::class.java)
-                intent.putExtra(JoinGroupActivity.GROUP_ID, groupId)
-                intent.putExtra(JoinGroupActivity.GROUP_NAME, groupName)
-                startActivity(intent)
-                finish()
-            }, 2000)
-        } else {
-            viewBinding.imgLogo.visibility = View.VISIBLE
-            Handler(Looper.getMainLooper()).postDelayed({
-                initView()
-            }, 2000)
+        } else if (data != null && data.toString().contains("paymentsuccess")) {
+            isLoadUserInfo = true
         }
     }
 
@@ -91,6 +104,7 @@ class SplashActivity : BaseActivity() {
                 val intent = Intent(this@SplashActivity, MainActivity::class.java)
                 intent.putExtra(JoinGroupActivity.GROUP_ID, groupId)
                 intent.putExtra(JoinGroupActivity.GROUP_NAME, groupName)
+                intent.putExtra(LOAD_USER_INFO, isLoadUserInfo)
                 startActivity(intent)
                 finish()
             } else {

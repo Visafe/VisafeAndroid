@@ -59,6 +59,15 @@ class NotificationAdapter(private val onSelectItemListener: OnSelectItemListener
                 "DEVICE_JOIN_SUCCESS" -> {
                     title = "Thiết bị ${item.content?.affected?.name} vừa được thêm vào nhóm ${item.group?.name}"
                 }
+                "ALERT_TRANSACTION" -> {
+                    if ("0" == item.content?.status_payment) {
+                        title =
+                            "Bạn đã giao dịch thành công gói ${item.content?.package_name} trong thời gian ${item.content?.duration} tháng"
+                    } else {
+                        title =
+                            "Giao dịch thất bại gói ${item.content?.package_name} trong thời gian ${item.content?.duration} tháng"
+                    }
+                }
             }
             itemView.tvTitle.text = title + "\uD83D\uDD25"
             itemView.tvTime.text = item?.createdAt?.let { getTimeAgo(it.toLong()) }

@@ -44,6 +44,7 @@ class JoinGroupActivity : BaseActivity() {
             groupId = it.getStringExtra(GROUP_ID)
             groupName = it.getStringExtra(GROUP_NAME)
         }
+        binding.tvNameGroup.text = groupName
         binding.ivBack.setOnClickListener {
             finish()
         }

@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.KeyguardManager
+import android.bluetooth.BluetoothAdapter
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -19,9 +20,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import okhttp3.ResponseBody
@@ -34,10 +38,9 @@ import vn.ncsc.visafe.data.BaseController
 import vn.ncsc.visafe.data.BaseResponse
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.dns.net.setting.RandomString
-import vn.ncsc.visafe.model.request.AddDeviceRequest
+import vn.ncsc.visafe.model.request.SendTokenRequest
 import vn.ncsc.visafe.model.response.DeviceIdResponse
 import vn.ncsc.visafe.ui.MainActivity
-import vn.ncsc.visafe.ui.authentication.LoginActivity
 import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 import vn.ncsc.visafe.widget.ProgressDialogFragment
@@ -170,13 +173,6 @@ open class BaseActivity : AppCompatActivity(), BaseController {
         return SharePreferenceKeyHelper.getInstance(application).isLogin()
     }
 
-    fun needLogin(): Boolean {
-        if (SharePreferenceKeyHelper.getInstance(application).isLogin())
-            return false
-        startActivity(Intent(this, LoginActivity::class.java))
-        return true
-    }
-
     fun isWPA2(): Boolean {
         val wifi = applicationContext.getSystemService(WIFI_SERVICE) as WifiManager
         val networkList = wifi.scanResults
@@ -240,10 +236,19 @@ open class BaseActivity : AppCompatActivity(), BaseController {
         return true
     }
 
+    open fun getPhoneName(): String? {
+        val myDevice = BluetoothAdapter.getDefaultAdapter()
+        return myDevice.name + "(" + getDeviceName() + ")"
+    }
+
+    fun getDeviceName(): String {
+        return Build.MANUFACTURER + " " + Build.MODEL
+    }
+
     fun getDeviceOwnerAndDeviceName(): String {
         return (Build.MANUFACTURER
-                + " 1: " + Build.MODEL + " 2: " + Build.VERSION.RELEASE
-                + " 3: " + VERSION_CODES::class.java.fields[Build.VERSION.SDK_INT].name)
+                + " " + Build.MODEL + " 2: " + Build.VERSION.RELEASE
+                + " " + VERSION_CODES::class.java.fields[Build.VERSION.SDK_INT].name)
     }
 
     fun getMacAddress(): String {
@@ -289,9 +294,22 @@ open class BaseActivity : AppCompatActivity(), BaseController {
         return "$sdkVersion ($release)"
     }
 
+    fun getApiVersion(): Int {
+        return Build.VERSION.SDK_INT
+    }
+
+    fun isApiVersionGraterOrEqual(): Boolean {
+        return Build.VERSION.SDK_INT >= getApiVersion()
+    }
+
     //check lock
     fun doesDeviceHaveSecuritySetup(context: Context): Boolean {
         return isPatternSet(context) || isPassOrPinSet(context)
+    }
+
+    fun isAvailableFingerprint(context: Context): Boolean {
+        val fingerprintManager = FingerprintManagerCompat.from(context)
+        return fingerprintManager.isHardwareDetected && fingerprintManager.hasEnrolledFingerprints()
     }
 
     private fun isPatternSet(context: Context): Boolean {
@@ -341,6 +359,52 @@ open class BaseActivity : AppCompatActivity(), BaseController {
         }
     }
 
+    fun getNewTokenFCM() {
+        if (SharePreferenceKeyHelper.getInstance(application).getString(PreferenceKey.TOKEN_FCM).isEmpty()) {
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.e("getNewTokenFCM", "Fetching FCM registration token failed ", task.exception)
+                    return@OnCompleteListener
+                }
+                //get new FCM registration token
+                val token = task.result
+                token?.let {
+                    SharePreferenceKeyHelper.getInstance(application).putString(PreferenceKey.TOKEN_FCM, it)
+                }
+                Log.e("getNewTokenFCM", "token new $token")
+                requestSendToken()
+            })
+        } else {
+            requestSendToken()
+        }
+    }
+
+    private fun requestSendToken() {
+        if (!SharePreferenceKeyHelper.getInstance(application).getBoolean(PreferenceKey.STATUS_SEND_TOKEN)) {
+            val tokenFCM = SharePreferenceKeyHelper.getInstance(application).getString(PreferenceKey.TOKEN_FCM)
+            val deviceId = SharePreferenceKeyHelper.getInstance(application).getString(PreferenceKey.DEVICE_ID)
+            val client = NetworkClient()
+            val call = client.clientWithoutToken(context = applicationContext)
+                .doSendToken(SendTokenRequest(token = tokenFCM, deviceId = deviceId))
+            call.enqueue(BaseCallback(this, object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    if (response.code() == NetworkClient.CODE_SUCCESS) {
+                        SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.STATUS_SEND_TOKEN, true)
+                    } else {
+                        SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.STATUS_SEND_TOKEN, false)
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    t.message?.let { Log.e("onFailure: ", it) }
+                    SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.STATUS_SEND_TOKEN, false)
+                }
+            }))
+        }
+    }
 
     fun checkPermission(permissions: Array<String>, onPermissionGranted: OnPermissionGranted) {
         TedPermission.with(this)

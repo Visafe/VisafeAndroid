@@ -95,31 +95,40 @@
 
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/llRegisterNow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_16dp"
-            android:fontFamily="@font/sf_pro_text_regular"
-            android:gravity="center_horizontal"
-            android:text="@string/register_free"
-            android:textColor="@color/color_222222"
-            android:textSize="@dimen/text_size_12sp" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/btnRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/_24dp"
-            android:background="@drawable/bg_radius_stroke_32dp"
-            android:fontFamily="@font/sf_pro_text_regular_bold"
-            android:paddingStart="@dimen/_16dp"
-            android:paddingTop="@dimen/_8dp"
-            android:paddingEnd="@dimen/_16dp"
-            android:paddingBottom="@dimen/_8dp"
-            android:text="@string/register_account"
-            android:textAllCaps="true"
-            android:textColor="@color/color_FFB31F"
-            android:textSize="@dimen/text_size_14sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_16dp"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:gravity="center_horizontal"
+                android:text="@string/register_free"
+                android:textColor="@color/color_222222"
+                android:textSize="@dimen/text_size_12sp" />
+
+            <TextView
+                android:id="@+id/btnRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/_24dp"
+                android:background="@drawable/bg_radius_stroke_32dp"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:paddingStart="@dimen/_16dp"
+                android:paddingTop="@dimen/_8dp"
+                android:paddingEnd="@dimen/_16dp"
+                android:paddingBottom="@dimen/_8dp"
+                android:text="@string/register_account"
+                android:textAllCaps="true"
+                android:textColor="@color/color_FFB31F"
+                android:textSize="@dimen/text_size_14sp" />
+        </LinearLayout>
+
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

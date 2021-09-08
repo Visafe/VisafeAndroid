@@ -111,7 +111,6 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
                 }
             })
             (activity as MainActivity).statisticalWorkSpaceLiveData.observe(this, {
-                val gson = Gson()
                 binding.viewStatistical.tvValueDangerous.text = it.num_dangerous_domain.toString()
                 binding.viewStatistical.tvValueAds.text = it.num_ads_blocked.toString()
                 binding.viewStatistical.tvValueViolate.text = it.num_violation.toString()
@@ -158,7 +157,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
     private fun updateViewWorkSpace(workspaceGroupData: WorkspaceGroupData) {
         val typeWorkspaces = TYPE_WORKSPACES.fromIsTypeWorkSpaces(workspaceGroupData.type)
         typeWorkspaces?.let { type ->
-            binding.tvGroupName.text = type.nameWorkSpace
+            binding.tvGroupName.text = workspaceGroupData.name
             binding.tvGroupDescription.text = type.content
             binding.bgTop.background = context?.let { ContextCompat.getDrawable(it, type.resDrawableBgTop) }
         }
@@ -166,7 +165,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
 
     private fun initControl() {
         binding.btnCreateNewGroup.setOnSingClickListener {
-            if ((activity as BaseActivity).needLogin())
+            if ((activity as MainActivity).needLogin(MainActivity.POSITION_GROUP))
                 return@setOnSingClickListener
             val intent = Intent(requireContext(), CreateGroupActivity::class.java)
             intent.putExtra(DATA_WORKSPACE, mWorkspaceGroupData)
@@ -180,7 +179,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
         }
 
         binding.btnChangeWorkSpace.setOnClickListener {
-            if ((activity as BaseActivity).needLogin())
+            if ((activity as MainActivity).needLogin(MainActivity.POSITION_GROUP))
                 return@setOnClickListener
             bottomSheet = AccountTypeDialogBottomSheet.newInstance(listWorkspaceGroupData, positionTypeChoose)
             bottomSheet?.show(parentFragmentManager, null)
@@ -267,7 +266,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
                     listGroupIsMember.clear()
                     response.body()?.clients?.let {
                         for (group in it) {
-                            if (group.isOwner == true) {
+                            if (group.isOwner) {
                                 listGroupIsOwner.add(group)
                             } else {
                                 listGroupIsMember.add(group)

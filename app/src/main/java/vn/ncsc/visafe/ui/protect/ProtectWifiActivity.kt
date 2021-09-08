@@ -105,7 +105,7 @@ class ProtectWifiActivity : BaseActivity() {
     private fun checkBotnet() {
         showProgressDialog()
         val client = NetworkClient()
-        val call = client.clientCheckBotnet(context = applicationContext).doCheckBotnet()
+        val call = client.clientWithoutToken(context = applicationContext).doCheckBotnet()
         call.enqueue(BaseCallback(this@ProtectWifiActivity, object : Callback<ResponseBody> {
             override fun onResponse(
                 call: Call<ResponseBody>,
@@ -129,6 +129,7 @@ class ProtectWifiActivity : BaseActivity() {
     }
 
     private fun handleProtected(isProtected: Boolean, botnet: BotnetResponse?) {
+        val ipAddress = getIpAddress()
         if (isProtected) {
             if (botnet?.status == NetworkClient.CODE_SUCCESS && isWPA2()) {
                 binding.ivCheck.setImageResource(R.drawable.ic_checkmark_circle)
@@ -138,7 +139,7 @@ class ProtectWifiActivity : BaseActivity() {
                     getString(R.string.protected_wifi),
                     HtmlCompat.FROM_HTML_MODE_LEGACY
                 )
-                binding.tvDescription.text = "Địa chỉ IP: ${botnet?.msg?.src_ip}"
+                binding.tvDescription.text = "Địa chỉ IP: $ipAddress"
             } else {
                 binding.ivCheck.setImageResource(R.drawable.ic_info_circle)
                 binding.ivWifi.background =
@@ -147,7 +148,7 @@ class ProtectWifiActivity : BaseActivity() {
                     getString(R.string.protected_wifi_not_safe),
                     HtmlCompat.FROM_HTML_MODE_LEGACY
                 )
-                binding.tvDescription.text = "Địa chỉ IP: ${botnet?.msg?.src_ip}"
+                binding.tvDescription.text = "Địa chỉ IP: $ipAddress"
             }
 
             if (botnet?.msg?.detail?.size == 0) {

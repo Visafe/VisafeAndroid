@@ -27,4 +27,24 @@
         <attr name="toolbar_left_icon_src" format="reference" />
         <attr name="toolbar_background" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="CircularSeekBar">
+        <attr name="c_progress" format="float" />
+        <attr name="max" format="integer" />
+        <attr name="move_outside_circle" format="boolean" />
+        <attr name="maintain_equal_circle" format="boolean" />
+        <attr name="use_custom_radii" format="boolean" />
+        <attr name="lock_enabled" format="boolean" />
+        <attr name="circle_x_radius" format="dimension" />
+        <attr name="circle_y_radius" format="dimension" />
+        <attr name="circle_stroke_width" format="dimension" />
+        <attr name="pointer_radius" format="dimension" />
+        <attr name="circle_color" format="color" />
+        <attr name="circle_progress_color" format="color" />
+        <attr name="pointer_color" format="color" />
+        <attr name="start_angle" format="float" />
+        <attr name="end_angle" format="float" />
+        <attr name="circle_fill" format="color" />
+        <attr name="c_clockwise" format="boolean" />
+    </declare-styleable>
 </resources>

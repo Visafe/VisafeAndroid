@@ -1,11 +1,8 @@
 package vn.ncsc.visafe.ui.home
 
 import android.annotation.SuppressLint
+import android.app.*
 import android.app.Activity.RESULT_OK
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.*
 import android.graphics.Color
 import android.media.RingtoneManager
@@ -24,15 +21,22 @@ import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import vn.ncsc.visafe.R
+import vn.ncsc.visafe.ViSafeApp
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.databinding.FragmentHomeBinding
 import vn.ncsc.visafe.dns.net.doh.Transaction
 import vn.ncsc.visafe.dns.sys.*
 import vn.ncsc.visafe.ui.MainActivity
+import vn.ncsc.visafe.ui.protect.AdvancedScanActivity
+import vn.ncsc.visafe.utils.PreferenceKey
+import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
+import vn.ncsc.visafe.utils.getTimeAgo
 import vn.ncsc.visafe.utils.setOnSingClickListener
 import java.net.NetworkInterface
 import java.net.SocketException
@@ -92,6 +96,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
     override fun layoutRes(): Int = R.layout.fragment_home
 
     override fun initView() {
+        if (SharePreferenceKeyHelper.getInstance(ViSafeApp())
+                .getBoolean(PreferenceKey.STATUS_OPEN_VPN)
+        ) {
+            sendNotificationWhenClickButtonOnOff = true
+            if (VERSION.SDK_INT >= 26) {
+                vibrator?.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                vibrator?.vibrate(200)
+            }
+            status_button = 0
+            binding.roundImage.visibility = View.INVISIBLE
+            prepareAndStartDnsVpn()
+        } else {
+            status_button = 1
+            stopDnsVpnService()
+        }
+
         binding.buttonActive.setOnSingClickListener {
             sendNotificationWhenClickButtonOnOff = true
             if (VERSION.SDK_INT >= 26) {
@@ -108,8 +129,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                 prepareAndStartDnsVpn()
             }
         }
-
+        binding.detailModeStatus.setOnSingClickListener {
+            val intent = Intent(requireContext(), AdvancedScanActivity::class.java)
+            resultLauncherAdvancedScan.launch(intent)
+        }
     }
+
+    private var resultLauncherAdvancedScan =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                if (SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.TIME_LAST_SCAN).isNotEmpty()) {
+                    (activity as MainActivity).timeScanUpdate.postValue(
+                        SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.TIME_LAST_SCAN)
+                    )
+                }
+            }
+        }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (PersistentState.URL_KEY == key) {
@@ -195,7 +230,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                             binding.tvTap.visibility = View.GONE
                             binding.status.text = getString(R.string.status_protected)
                             if (count_noti_on == 0 && sendNotificationWhenClickButtonOnOff) {
-                                sendNotification("Đã kích hoạt chế độ bảo vệ!", "Chế độ chống lừa đảo, mã độc, tấn công mạng đã được kích hoạt!")
+                                sendNotification(
+                                    "Đã kích hoạt chế độ bảo vệ!",
+                                    "Chế độ chống lừa đảo, mã độc, tấn công mạng đã được kích hoạt!"
+                                )
                                 count_noti_on++
                                 count_noti_off = 0
                                 sendNotificationWhenClickButtonOnOff = false
@@ -257,7 +295,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                         binding.buttonStatus.setImageResource(R.drawable.off_button)
                         binding.roundImage.clearAnimation()
                         if (count_noti_off == 0 && sendNotificationWhenClickButtonOnOff) {
-                            sendNotification("Bạn đã tắt chế độ bảo vệ!", "Thiết bị của bạn có thể bị ảnh hưởng bởi tấn công mạng")
+                            sendNotification(
+                                "Bạn đã tắt chế độ bảo vệ!",
+                                "Thiết bị của bạn có thể bị ảnh hưởng bởi tấn công mạng"
+                            )
                             count_noti_off++
                             count_noti_on = 0
                             sendNotificationWhenClickButtonOnOff = false
@@ -278,13 +319,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                         binding.buttonStatus.setImageResource(R.drawable.off_button)
                         binding.roundImage.clearAnimation()
                         if (count_noti_off == 0 && sendNotificationWhenClickButtonOnOff) {
-                            sendNotification("Bạn đã tắt chế độ bảo vệ!", "Thiết bị của bạn có thể bị ảnh hưởng bởi tấn công mạng")
+                            sendNotification(
+                                "Bạn đã tắt chế độ bảo vệ!",
+                                "Thiết bị của bạn có thể bị ảnh hưởng bởi tấn công mạng"
+                            )
                             count_noti_off++
                             count_noti_on = 0
                             sendNotificationWhenClickButtonOnOff = false
                         }
                     }
                 }
+                SharePreferenceKeyHelper.getInstance(ViSafeApp())
+                    .putBoolean(PreferenceKey.STATUS_OPEN_VPN, it.activationRequested == true)
             }
         } catch (e: Exception) {
             e.message?.let { Log.e("Ex syncDnsStatus: ", it) }
@@ -329,6 +375,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
         return false
     }
 
+    @SuppressLint("WrongConstant")
     private fun sendNotification(title: String, body: String) {
         var builder: Notification.Builder
         val notificationManager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -364,6 +411,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                 Notification.BigTextStyle()
                     .bigText(body)
             )
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setFullScreenIntent(mainActivityIntent, true)
         if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
             builder.setCategory(Notification.CATEGORY_ERROR)

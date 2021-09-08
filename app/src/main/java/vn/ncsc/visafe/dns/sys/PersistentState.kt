@@ -121,7 +121,6 @@ class PersistentState {
     }
 
     private var urlDefault: String = ""
-    private var idDefault: String = ""
 
     // Converts a null url into the actual default url.  Otherwise, returns url unmodified.
     fun expandUrl(context: Context, url: String?): String {
@@ -136,7 +135,6 @@ class PersistentState {
             if (url == null || url.isEmpty()) {
                 val rd = RandomString()
                 val randomId: String = rd.getAlphaNumericString(12)
-                idDefault = randomId.lowercase(Locale.getDefault())
                 urlDefault = NetworkClient.DOMAIN + randomId.lowercase(Locale.getDefault())
                 val editor = share.edit()
                 editor.putString("userID", randomId.lowercase(Locale.getDefault()))
@@ -158,7 +156,7 @@ class PersistentState {
                 println(shareVip.getString("domainVIP", "") + share.getString("userID", ""))
                 shareVip.getString("domainVIP", "") + share.getString("userID", "")
             } else {
-                println(NetworkClient.DOMAIN + share.getString("userID", ""))
+                Log.e("expandUrl: ", NetworkClient.DOMAIN + share.getString("userID", ""))
                 NetworkClient.DOMAIN + share.getString("userID", "")
             }
         }

@@ -317,9 +317,9 @@
     <string name="used_family_content">Phiên bản Family cho phép bạn truy cập không giới hạn tính năng của ứng dụng</string>
     <string name="bussiness_content">Nâng cấp lên phiên bản Business cho phép bạn quản lý và bảo vệ mọi thiết bị của thành viên trong công ty</string>
     <string name="used_bussiness_content">Phiên bản Business cho phép bạn truy cập không giới hạn tính năng của ứng dụng</string>
-    <string name="chosse_account_type">Chọn loại tài khoản</string>
+    <string name="choose_account_type">Chọn loại Workspace</string>
     <string name="display_statistical_for">Hiển thị thống kê theo</string>
-    <string name="add_account_type">Thêm loại tài khoản mới</string>
+    <string name="add_account_type">Thêm loại Workspace mới</string>
     <string name="nhap_ten_loai_tai_khoan">Nhập tên loại tài khoản</string>
     <string name="create_account_type">Bạn muốn tên hiển thị của loại tài khoản là gì?</string>
     <string name="create">Tạo</string>
@@ -428,15 +428,11 @@
     <string name="thong_ke">Thống kê</string>
     <string name="dong_y">Đồng ý</string>
     <string name="dang_ky_goi">Đăng ký gói</string>
-    <string name="goi_thang">Gói 1 tháng</string>
-    <string name="goi_nam">Gói 12 tháng</string>
-    <string name="try_seven_day">+7 ngày dùng thử</string>
-    <string name="try_month_day">+90 ngày dùng thử</string>
-    <string name="price_month">10.000₫ / Tháng</string>
-    <string name="price_month_family">50.000₫ / Tháng</string>
-    <string name="price_year">49.000₫ / Năm</string>
-    <string name="price_year_family">249.000₫ / Năm</string>
-    <string name="price_bussiness">Liên hệ</string>
+    <string name="goi_nam">Gói %d tháng</string>
+    <string name="try_month_day">+%d ngày dùng thử</string>
+    <string name="price_month">%s₫ / Tháng</string>
+    <string name="price_year">%s₫ / Năm</string>
+    <string name="price_business">Liên hệ</string>
     <string name="save_64">Tiết kiệm 64%</string>
     <string name="tiet_kiem_hon">Tiết kiệm hơn</string>
     <string name="phan_tich_bao_cao">Phân tích &amp; Báo cáo</string>
@@ -452,7 +448,7 @@
     <string name="mua_them_goi_cuoc">Mua thêm gói cước</string>
     <string name="quan_tri_workspace">Quản trị workspace</string>
 
-    <string name="title_protect_device_group_detail"><![CDATA[Các thiết bị trong nhóm đã <font color=\'#0CD775\'>được bảo vệ</font>]]></string>mời
+    <string name="title_protect_device_group_detail"><![CDATA[Các thiết bị trong nhóm đã <font color=\'#0CD775\'>được bảo vệ</font>]]></string>
     <string name="gui_loi_moi">Gửi lời mời</string>
 
 

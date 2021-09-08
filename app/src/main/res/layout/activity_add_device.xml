@@ -135,7 +135,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:singleLine="true"
-            android:text="https://visafe.vn/join/5345345123213213123123123"
+            tools:text="https://visafe.vn/join/5345345123213213123123123"
             android:textColor="@color/color_15A1FA"
             android:textSize="@dimen/_12sdp"
             app:drawableEndCompat="@drawable/ic_copy"

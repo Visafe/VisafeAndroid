@@ -27,7 +27,7 @@ fun familyList(context: Context): List<String> {
     return strings
 }
 
-fun bussinessList(context: Context): List<String> {
+fun businessList(context: Context): List<String> {
     val strings = ArrayList<String>()
     strings.add(context.getString(R.string.protect_device))
     strings.add(context.getString(R.string.protect_wifi))

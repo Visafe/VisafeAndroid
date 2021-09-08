@@ -1,12 +1,15 @@
 package vn.ncsc.visafe.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.util.Patterns
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import vn.ncsc.visafe.R
 import java.lang.System.currentTimeMillis
+import java.text.SimpleDateFormat
 import java.util.*
 
 fun isValidEmail(target: CharSequence): Boolean {
@@ -163,4 +166,22 @@ fun getTextGroup(text: String?): String? {
         textDefault = textDefault.uppercase(Locale.getDefault())
         textDefault
     }
+}
+
+fun formatPrices(token: Long): String {
+    val ch = token.toString().toCharArray().toMutableList()
+    if (ch.isNotEmpty()) {
+        val size = ch.size
+        val totalCount = size / 3
+        if (totalCount > 0) {
+            for (i in 1..totalCount) {
+                if (i * 3 < size) {
+                    val index = size - i * 3
+                    ch.add(index, '.')
+                }
+            }
+        }
+        return String(ch.toCharArray())
+    }
+    return "0"
 }

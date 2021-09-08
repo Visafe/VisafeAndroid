@@ -107,8 +107,9 @@ class ScanQRJoinGroupActivity : BaseActivity(), ResultHandler {
     }
 
     override fun handleResult(rawResult: Result?) {
-        if (rawResult != null && rawResult?.text.toString().contains("https://app.visafe.vn/control/invite/device?")) {
-            val dataString = rawResult.text.toString().replace("https://app.visafe.vn/control/invite/device?", "")
+        Log.e("handleResult: ", "dataqr: " + rawResult.toString())
+        if (rawResult != null && rawResult?.text.toString().contains("group/invite/device?")) {
+            val dataString = rawResult.text.toString().replace(NetworkClient.URL_ROOT + "group/invite/device?", "")
             var groupId = ""
             var groupName = ""
             val items: Array<String> = dataString.split("&".toRegex()).toTypedArray()
@@ -130,6 +131,9 @@ class ScanQRJoinGroupActivity : BaseActivity(), ResultHandler {
             } catch (e: Exception) {
                 e.message?.let { Log.e("convertData: ", it) }
             }
+        } else {
+            binding.qrCodeScanner.setResultHandler(this) // Register ourselves as a handler for scan results.
+            binding.qrCodeScanner.startCamera() // Start camera on resume
         }
 
     }

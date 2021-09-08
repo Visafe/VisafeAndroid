@@ -114,4 +114,7 @@ dependencies {
     //event bus
     implementation("org.greenrobot:eventbus:3.2.0")
     implementation("gun0912.ted:tedpermission:2.2.2")
+    implementation("androidx.biometric:biometric:1.1.0")
+    implementation("com.google.firebase:firebase-core:19.0.1")
+    implementation("com.google.firebase:firebase-dynamic-links:20.1.1")
 }

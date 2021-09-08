@@ -154,7 +154,7 @@ interface ApiService {
         @Query("time_limit") time_limit: String?
     ): Call<StatsWorkspaceResponse>
 
-    @POST("b4ad1075-a0ad-4581-841d-23877a6b1a60")
+    @POST("ipma")
     fun doCheckBotnet(): Call<ResponseBody>
 
     @GET("querylog_group")
@@ -174,4 +174,13 @@ interface ApiService {
     /*=========Another==================================*/
     @GET("control/gen-device-id")
     fun doGetDeviceId(): Call<DeviceIdResponse>
+
+    @POST("device/register")
+    fun doSendToken(@Body sendTokenRequest: SendTokenRequest): Call<ResponseBody>
+
+    @GET("packages")
+    fun doGetAllPackage(): Call<MutableList<AllPackageResponse>>
+
+    @POST("order")
+    fun doOderPayPackage(@Body oderPayRequest: OderPayRequest): Call<PayPackageResponse>
 }

@@ -34,7 +34,7 @@
                 android:fontFamily="@font/sf_pro_text_regular_bold"
                 android:text="@{data}"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_13sp"
+                android:textSize="@dimen/_10sdp"
                 tools:text="Chặn theo dõi, quảng cáo không giới hạn" />
         </LinearLayout>
 
