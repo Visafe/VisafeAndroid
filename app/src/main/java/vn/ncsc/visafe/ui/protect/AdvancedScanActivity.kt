@@ -90,8 +90,12 @@ class AdvancedScanActivity : BaseActivity() {
         listError.clear()
         addFragment(ScanActionFragment.newInstance(TYPE_PROTECT_DEVICE), "")
         onPageSelected(0)
+        binding.vScan.visibility = View.INVISIBLE
+        binding.progressBar.visibility = View.VISIBLE
+        binding.progressBar.setProgress(100)
         countdownTimer = object : CountDownTimer(18000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
+                binding.progressBar.setProgress((millisUntilFinished/180).toInt())
                 when (updateTime(millisUntilFinished)) {
                     16 -> {
                         if (SharePreferenceKeyHelper.getInstance(application).getBoolean(PreferenceKey.STATUS_OPEN_VPN)) {
@@ -147,6 +151,8 @@ class AdvancedScanActivity : BaseActivity() {
                 binding.circularProgress.circleProgressColor =
                     ContextCompat.getColor(applicationContext, R.color.colorPrimary)
                 scanDeviceAdapter?.notifyDataSetChanged()
+                binding.vScan.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.INVISIBLE
             }
         }
         countdownTimer?.start()

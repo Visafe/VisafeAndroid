@@ -47,4 +47,12 @@
         <attr name="circle_fill" format="color" />
         <attr name="c_clockwise" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="SquareProgressBar">
+        <attr name="spb_progressColor" format="color" />
+        <attr name="spb_backgroundColor" format="color" />
+        <attr name="spb_progressWidth" format="dimension" />
+        <attr name="spb_cornerRadius" format="dimension" />
+        <attr name="spb_showBackground" format="boolean" />
+    </declare-styleable>
 </resources>
