@@ -122,25 +122,30 @@
 
     <FrameLayout
         android:id="@+id/flScan"
+        android:background="@drawable/ic_button_scan"
         app:layout_constraintBottom_toBottomOf="@+id/guidelineHorizontal085"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal085"
-        android:layout_width="@dimen/_70sdp"
-        android:layout_height="@dimen/_70sdp">
+        android:layout_width="@dimen/_92sdp"
+        android:layout_height="@dimen/_92sdp">
 
         <View
+            android:translationY="@dimen/_minus3sdp"
             android:id="@+id/vScan"
             android:background="@drawable/bg_scan"
             android:layout_width="match_parent"
+            android:layout_margin="@dimen/_15sdp"
             android:layout_height="match_parent"/>
 
         <vn.ncsc.visafe.ui.custom.CornerProgressBar
             android:id="@+id/progress_bar"
-            app:spb_cornerRadius="@dimen/_28sdp"
-            app:spb_progressColor="@color/black"
+            app:spb_cornerRadius="@dimen/_24sdp"
+            app:spb_progressColor="@color/color_010D41"
             app:spb_progressWidth="@dimen/_3sdp"
             android:rotation="90"
+            android:layout_margin="@dimen/_14sdp"
+            android:translationY="@dimen/_minus3sdp"
             app:spb_backgroundColor="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="@+id/btnScan"
             app:layout_constraintEnd_toEndOf="@+id/btnScan"
@@ -151,6 +156,7 @@
             android:layout_height="match_parent"/>
 
         <TextView
+            android:translationY="@dimen/_minus4sdp"
             android:id="@+id/btnScan"
             android:layout_width="@dimen/_64dp"
             android:layout_height="@dimen/_64dp"
