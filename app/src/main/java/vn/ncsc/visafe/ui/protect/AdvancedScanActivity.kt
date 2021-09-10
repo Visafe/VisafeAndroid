@@ -35,6 +35,7 @@ class AdvancedScanActivity : BaseActivity() {
     private var countdownTimer: CountDownTimer? = null
     private var botnet: BotnetResponse? = null
     private var percent = 0f
+    private var countSuccess = 0
     private var listError: MutableList<String> = mutableListOf()
     private var scanDeviceAdapter: ScanDeviceAdapter? = null
 
@@ -71,6 +72,8 @@ class AdvancedScanActivity : BaseActivity() {
                 binding.tabs.visibility = View.VISIBLE
                 initScanner()
             } else {
+                binding.progressBar.visibility = View.INVISIBLE
+                binding.vScan.visibility = View.VISIBLE
                 binding.btnScan.text = "Quét"
                 binding.layoutScanIntro.ctrlIntro.visibility = View.VISIBLE
                 binding.frameContainerScan.visibility = View.GONE
@@ -78,6 +81,7 @@ class AdvancedScanActivity : BaseActivity() {
                 binding.tabs.visibility = View.GONE
                 countdownTimer?.cancel()
                 percent = 0f
+                countSuccess = 0
                 binding.circularProgress.progress = percent
                 binding.circularProgress.circleProgressColor =
                     ContextCompat.getColor(applicationContext, R.color.colorPrimary)
@@ -90,12 +94,17 @@ class AdvancedScanActivity : BaseActivity() {
         listError.clear()
         addFragment(ScanActionFragment.newInstance(TYPE_PROTECT_DEVICE), "")
         onPageSelected(0)
+        binding.vScan.visibility = View.INVISIBLE
+        binding.progressBar.visibility = View.VISIBLE
+        binding.progressBar.setProgress(100)
         countdownTimer = object : CountDownTimer(18000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 when (updateTime(millisUntilFinished)) {
                     16 -> {
                         if (SharePreferenceKeyHelper.getInstance(application).getBoolean(PreferenceKey.STATUS_OPEN_VPN)) {
                             percent += 25f
+                            countSuccess++
+                            setProgress()
                             binding.circularProgress.progress = percent
                             binding.circularProgress.circleProgressColor =
                                 ContextCompat.getColor(applicationContext, R.color.colorPrimary)
@@ -111,6 +120,8 @@ class AdvancedScanActivity : BaseActivity() {
                     8 -> {
                         if (isAvailableFingerprint(applicationContext) || doesDeviceHaveSecuritySetup(applicationContext)) {
                             percent += 25f
+                            countSuccess++
+                            setProgress()
                             binding.circularProgress.progress = percent
                             binding.circularProgress.circleProgressColor =
                                 ContextCompat.getColor(applicationContext, R.color.colorPrimary)
@@ -122,6 +133,8 @@ class AdvancedScanActivity : BaseActivity() {
                     4 -> {
                         if (isApiVersionGraterOrEqual()) {
                             percent += 25f
+                            countSuccess++
+                            setProgress()
                             binding.circularProgress.progress = percent
                             binding.circularProgress.circleProgressColor =
                                 ContextCompat.getColor(applicationContext, R.color.colorPrimary)
@@ -143,10 +156,13 @@ class AdvancedScanActivity : BaseActivity() {
                 countdownTimer?.cancel()
                 isScan = false
                 percent = 0f
+                countSuccess = 0
                 binding.circularProgress.progress = percent
                 binding.circularProgress.circleProgressColor =
                     ContextCompat.getColor(applicationContext, R.color.colorPrimary)
                 scanDeviceAdapter?.notifyDataSetChanged()
+                binding.vScan.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.INVISIBLE
             }
         }
         countdownTimer?.start()
@@ -166,6 +182,8 @@ class AdvancedScanActivity : BaseActivity() {
                     botnet = Gson().fromJson(dataString, BotnetResponse::class.java)
                     if (botnet?.status == NetworkClient.CODE_SUCCESS && isWPA2()) {
                         percent += 25f
+                        countSuccess++
+                        setProgress()
                         binding.circularProgress.progress = percent
                         binding.circularProgress.circleProgressColor =
                             ContextCompat.getColor(applicationContext, R.color.colorPrimary)
@@ -243,5 +261,16 @@ class AdvancedScanActivity : BaseActivity() {
             }
         }
 
+    }
+
+    private fun setProgress() {
+        binding.progressBar.setProgress(
+            when (countSuccess) {
+                1 -> 75
+                2 -> 53
+                3 -> 25
+                else -> 0
+            }
+        )
     }
 }
