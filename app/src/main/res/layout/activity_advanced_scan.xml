@@ -137,7 +137,7 @@
 
         <vn.ncsc.visafe.ui.custom.CornerProgressBar
             android:id="@+id/progress_bar"
-            app:spb_cornerRadius="@dimen/_24sdp"
+            app:spb_cornerRadius="@dimen/_28sdp"
             app:spb_progressColor="@color/black"
             app:spb_progressWidth="@dimen/_3sdp"
             android:rotation="90"
