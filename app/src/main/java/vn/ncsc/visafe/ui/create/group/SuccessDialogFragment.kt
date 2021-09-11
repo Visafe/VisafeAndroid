@@ -94,6 +94,7 @@ class SuccessDialogFragment : DialogFragment() {
         }
         if (arguments != null && requireArguments().getString(CONTENT_DIALOG, "").isNotEmpty()) {
             binding.tvTitle2.text = requireArguments().getString(CONTENT_DIALOG, "")
+            binding.tvTitle2.visibility = View.GONE
         }
         if (arguments != null && requireArguments().getString(TEXT_BUTTON_DIALOG, "").isNotEmpty()) {
             binding.tvNext.text = requireArguments().getString(TEXT_BUTTON_DIALOG, "")

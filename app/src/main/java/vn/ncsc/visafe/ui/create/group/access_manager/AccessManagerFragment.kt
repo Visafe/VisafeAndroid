@@ -299,7 +299,7 @@ class AccessManagerFragment : BaseFragment<FragmentAccessManagerBinding>() {
             requireContext().getString(R.string.pri_websites_group),
             requireContext().getString(R.string.websites),
             VisafeDialogBottomSheet.TYPE_INPUT_CONFIRM,
-            requireContext().getString(R.string.input_website),
+            requireContext().getString(R.string.input_website_prioritized),
             data?.title ?: ""
         )
         bottomSheet.show(parentFragmentManager, null)

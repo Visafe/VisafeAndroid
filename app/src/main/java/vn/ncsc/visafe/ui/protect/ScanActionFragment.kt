@@ -3,6 +3,7 @@ package vn.ncsc.visafe.ui.protect
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import vn.ncsc.visafe.R
+import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.databinding.FragmentScanActionBinding
 
@@ -32,7 +33,8 @@ class ScanActionFragment : BaseFragment<FragmentScanActionBinding>() {
                 }
                 AdvancedScanActivity.TYPE_PROTECT_WIFI -> {
                     binding.tvTitle.text = "BẢO VỆ WI-FI"
-                    binding.tvDescription.text = "Đang kiểm tra “Pit Studio 5GHz”"
+                    val wifiName = (activity as BaseActivity).getWifiName()
+                    binding.tvDescription.text = "Đang kiểm tra $wifiName"
                     binding.ivLogo.setBackgroundResource(R.drawable.ic_group_protect_wifi)
                 }
                 AdvancedScanActivity.TYPE_BLOCK_ADS -> {

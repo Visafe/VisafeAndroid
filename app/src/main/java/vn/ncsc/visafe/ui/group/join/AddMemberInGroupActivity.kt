@@ -14,7 +14,6 @@ import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivityAddMemberInGroupBinding
-import vn.ncsc.visafe.databinding.ActivityJoinGroupBinding
 import vn.ncsc.visafe.model.GroupData
 import vn.ncsc.visafe.model.UsersGroupInfo
 import vn.ncsc.visafe.model.request.UserInGroupRequest
@@ -92,14 +91,13 @@ class AddMemberInGroupActivity : BaseActivity() {
     private fun showDialogComplete(invited: UsersGroupInfo?) {
         val dialog = SuccessDialogFragment.newInstance(
             getString(R.string.join_group_success),
-            getString(R.string.content_join_group_success, binding.tvNameGroup.text.toString().trim())
+            ""
         )
         dialog.show(supportFragmentManager, "")
         dialog.setOnClickListener {
             when (it) {
                 Action.CONFIRM -> {
                     val intent = Intent()
-                    intent.putExtra(NEW_MEMBER, invited)
                     setResult(RESULT_OK, intent)
                     finish()
                 }

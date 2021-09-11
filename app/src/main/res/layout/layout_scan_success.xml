@@ -36,16 +36,16 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_10sdp"
         android:gravity="center"
-        android:text="KIỂM TRA BẢO MẬT"
+        android:text="Kiểm tra hoàn tất."
         android:textColor="@color/white"
         android:textSize="@dimen/_16sdp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tv2"
+        app:layout_constraintBottom_toTopOf="@+id/tvTimeScan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/tv2"
+        android:id="@+id/tvTimeScan"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_20sdp"
@@ -53,7 +53,7 @@
         android:layout_marginEnd="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_20sdp"
         android:gravity="center"
-        android:text="Lần quét gần đây nhất 15 phút trước"
+        tools:text="Lần quét gần đây nhất 15 phút trước"
         android:textColor="@color/white"
         android:textSize="@dimen/_11sdp"
         app:layout_constraintBottom_toTopOf="@+id/guideLineHorizontal05"

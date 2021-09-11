@@ -143,12 +143,14 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
             binding.cardViewStatistical.visibility = View.VISIBLE
             binding.view1.visibility = View.GONE
             binding.btnChangeWorkSpace.visibility = View.VISIBLE
+            binding.tvGroupDescription.visibility = View.GONE
         } else {
             binding.cardViewStatistical.visibility = View.GONE
             binding.view1.visibility = View.VISIBLE
             binding.btnChangeWorkSpace.visibility = View.GONE
             binding.tvGroupName.text = "Gia đình & nhóm"
             binding.tvGroupDescription.text = "Bảo vệ gia đình & người thân trên môi trường mạng"
+            binding.tvGroupDescription.visibility = View.VISIBLE
         }
         updateViewListGroup()
         initControl()
@@ -158,7 +160,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
         val typeWorkspaces = TYPE_WORKSPACES.fromIsTypeWorkSpaces(workspaceGroupData.type)
         typeWorkspaces?.let { type ->
             binding.tvGroupName.text = workspaceGroupData.name
-            binding.tvGroupDescription.text = type.content
+            binding.tvGroupDescription.visibility = View.GONE
             binding.bgTop.background = context?.let { ContextCompat.getDrawable(it, type.resDrawableBgTop) }
         }
     }

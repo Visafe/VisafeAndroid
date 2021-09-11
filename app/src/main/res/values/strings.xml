@@ -156,6 +156,7 @@
     <string name="block_sensitive">Chặn nội dung cờ bạc</string>
     <string name="sub_block_sensitive">Ngăn chặn các nội dung liên quan đến cờ bạc, cá độ</string>
     <string name="input_website">Nhập link website muốn chặn</string>
+    <string name="input_website_prioritized">Nhập link website ưu tiên sử dụng</string>
     <string name="confirm">Xác nhận</string>
     <string name="cancel">Hủy bỏ</string>
     <string name="reset">Đặt lại mặc định</string>
@@ -301,7 +302,6 @@
     <string name="thiet_lap_chan_noi_dung">Thiết lập chặn nội dung</string>
     <string name="account">Tài khoản</string>
     <string name="login_content">Đăng nhập để bảo mật toàn diện</string>
-    <string name="loai_tai_khoan">Loại tài khoản</string>
     <string name="nang_cap_goi">Nâng cấp gói</string>
     <string name="mat_khau_bao_mat">Mật khẩu &amp; bảo mật</string>
     <string name="trung_tam_tro_giup">Trung tâm trợ giúp</string>
@@ -317,11 +317,11 @@
     <string name="used_family_content">Phiên bản Family cho phép bạn truy cập không giới hạn tính năng của ứng dụng</string>
     <string name="bussiness_content">Nâng cấp lên phiên bản Business cho phép bạn quản lý và bảo vệ mọi thiết bị của thành viên trong công ty</string>
     <string name="used_bussiness_content">Phiên bản Business cho phép bạn truy cập không giới hạn tính năng của ứng dụng</string>
-    <string name="choose_account_type">Chọn loại Workspace</string>
+    <string name="choose_account_type">Chọn Workspace</string>
     <string name="display_statistical_for">Hiển thị thống kê theo</string>
-    <string name="add_account_type">Thêm loại Workspace mới</string>
-    <string name="nhap_ten_loai_tai_khoan">Nhập tên loại tài khoản</string>
-    <string name="create_account_type">Bạn muốn tên hiển thị của loại tài khoản là gì?</string>
+    <string name="add_account_type">Thêm mới Workspace</string>
+    <string name="nhap_ten_loai_tai_khoan">Nhập tên Workspace</string>
+    <string name="create_account_type">Bạn muốn tên hiển thị của Workspace là gì?</string>
     <string name="create">Tạo</string>
     <string name="change_pass">Đổi mật khẩu</string>
     <string name="update_pin_title">Cập nhật mã PIN</string>

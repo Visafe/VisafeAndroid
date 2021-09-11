@@ -1,5 +1,6 @@
 package vn.ncsc.visafe.ui.protect
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -13,6 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import vn.ncsc.visafe.R
+import vn.ncsc.visafe.ViSafeApp
 import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.NetworkClient
@@ -20,6 +22,7 @@ import vn.ncsc.visafe.databinding.ActivityAdvancedScanBinding
 import vn.ncsc.visafe.model.response.BotnetResponse
 import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
+import vn.ncsc.visafe.utils.getTimeAgo
 
 class AdvancedScanActivity : BaseActivity() {
 
@@ -34,7 +37,6 @@ class AdvancedScanActivity : BaseActivity() {
     private var isScan = false
     private var countdownTimer: CountDownTimer? = null
     private var botnet: BotnetResponse? = null
-    private var percent = 0f
     private var countSuccess = 0
     private var listError: MutableList<String> = mutableListOf()
     private var scanDeviceAdapter: ScanDeviceAdapter? = null
@@ -80,11 +82,7 @@ class AdvancedScanActivity : BaseActivity() {
                 binding.layoutScanSuccess.ctrlSuccess.visibility = View.GONE
                 binding.tabs.visibility = View.GONE
                 countdownTimer?.cancel()
-                percent = 0f
                 countSuccess = 0
-                binding.circularProgress.progress = percent
-                binding.circularProgress.circleProgressColor =
-                    ContextCompat.getColor(applicationContext, R.color.colorPrimary)
             }
 
         }
@@ -100,44 +98,33 @@ class AdvancedScanActivity : BaseActivity() {
         countdownTimer = object : CountDownTimer(18000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 when (updateTime(millisUntilFinished)) {
-                    16 -> {
+                    16 -> {//check chế độ bảo vệ
                         if (SharePreferenceKeyHelper.getInstance(application).getBoolean(PreferenceKey.STATUS_OPEN_VPN)) {
-                            percent += 25f
                             countSuccess++
                             setProgress()
-                            binding.circularProgress.progress = percent
-                            binding.circularProgress.circleProgressColor =
-                                ContextCompat.getColor(applicationContext, R.color.colorPrimary)
                         } else {
                             listError.add("Chế độ chống lừa đảo, mã độc, tấn công mạng chưa được kích hoạt!")
                         }
                     }
-                    12 -> {
+                    12 -> {//check wifi
                         checkBotnet()
                         addFragment(ScanActionFragment.newInstance(TYPE_PROTECT_WIFI), "")
                         onPageSelected(1)
                     }
-                    8 -> {
+                    8 -> {//check phương thức bảo vệ(pin,vân tay)
                         if (isAvailableFingerprint(applicationContext) || doesDeviceHaveSecuritySetup(applicationContext)) {
-                            percent += 25f
                             countSuccess++
                             setProgress()
-                            binding.circularProgress.progress = percent
-                            binding.circularProgress.circleProgressColor =
-                                ContextCompat.getColor(applicationContext, R.color.colorPrimary)
                         } else {
+                            listError.add("Phương thức bảo vệ(pin,vân tay) của thiết bị chưa được thiết lập")
                         }
                         addFragment(ScanActionFragment.newInstance(TYPE_BLOCK_ADS), "")
                         onPageSelected(2)
                     }
-                    4 -> {
+                    4 -> {//check hệ điều hành
                         if (isApiVersionGraterOrEqual()) {
-                            percent += 25f
                             countSuccess++
                             setProgress()
-                            binding.circularProgress.progress = percent
-                            binding.circularProgress.circleProgressColor =
-                                ContextCompat.getColor(applicationContext, R.color.colorPrimary)
                         } else {
                             listError.add("Hệ điều hành của bạn đang ở phiên bản 7.0 đã quá cũ, bạn cần nâng cấp hệ điều hành cho thiết bị!")
                         }
@@ -147,19 +134,20 @@ class AdvancedScanActivity : BaseActivity() {
                 }
             }
 
+            @SuppressLint("SetTextI18n")
             override fun onFinish() {
                 binding.btnScan.text = "Quét"
                 binding.layoutScanIntro.ctrlIntro.visibility = View.GONE
                 binding.frameContainerScan.visibility = View.GONE
                 binding.layoutScanSuccess.ctrlSuccess.visibility = View.VISIBLE
+                if (SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.TIME_LAST_SCAN).isNotEmpty()) {
+                    val time = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.TIME_LAST_SCAN)
+                    binding.layoutScanSuccess.tvTimeScan.text = "Lần quét gần đây nhất ${getTimeAgo(time.toLong())}"
+                }
                 binding.tabs.visibility = View.GONE
                 countdownTimer?.cancel()
                 isScan = false
-                percent = 0f
                 countSuccess = 0
-                binding.circularProgress.progress = percent
-                binding.circularProgress.circleProgressColor =
-                    ContextCompat.getColor(applicationContext, R.color.colorPrimary)
                 scanDeviceAdapter?.notifyDataSetChanged()
                 binding.vScan.visibility = View.VISIBLE
                 binding.progressBar.visibility = View.INVISIBLE
@@ -180,13 +168,9 @@ class AdvancedScanActivity : BaseActivity() {
                     val buffer = response.body()?.source()?.buffer?.readByteArray()
                     val dataString = buffer?.decodeToString()
                     botnet = Gson().fromJson(dataString, BotnetResponse::class.java)
-                    if (botnet?.status == NetworkClient.CODE_SUCCESS && isWPA2()) {
-                        percent += 25f
+                    if (isWPA2() && botnet?.status == NetworkClient.CODE_SUCCESS) {
                         countSuccess++
                         setProgress()
-                        binding.circularProgress.progress = percent
-                        binding.circularProgress.circleProgressColor =
-                            ContextCompat.getColor(applicationContext, R.color.colorPrimary)
                     } else {
                         listError.add("Wifi đang sử dụng là wifi không an toàn, vui lòng ngắt kết nối tới wifi này!")
                     }

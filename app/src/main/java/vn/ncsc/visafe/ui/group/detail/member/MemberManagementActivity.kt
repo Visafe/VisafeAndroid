@@ -19,9 +19,11 @@ import vn.ncsc.visafe.databinding.ActivityMemberManagementBinding
 import vn.ncsc.visafe.model.GroupData
 import vn.ncsc.visafe.model.UsersGroupInfo
 import vn.ncsc.visafe.model.request.UserInGroupRequest
+import vn.ncsc.visafe.ui.adapter.TimeStatistical
 import vn.ncsc.visafe.ui.create.group.access_manager.Action
 import vn.ncsc.visafe.ui.dialog.VisafeDialogBottomSheet
 import vn.ncsc.visafe.ui.group.join.AddMemberInGroupActivity
+import vn.ncsc.visafe.utils.getTextGroup
 import vn.ncsc.visafe.utils.setOnSingClickListener
 import java.lang.Exception
 
@@ -30,6 +32,8 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
     lateinit var binding: ActivityMemberManagementBinding
     private var groupData: GroupData? = null
     private var listUsersGroupInfo: MutableList<UsersGroupInfo> = mutableListOf()
+    private var listUsersActive: MutableList<String> = mutableListOf()
+    private var listUserManage: MutableList<String> = mutableListOf()
     private var groupName: String? = ""
     private var memberManagerAdapter: MemberManagerAdapter? = null
 
@@ -57,9 +61,11 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
             it.listUsersGroupInfo?.toMutableList()?.let { it1 -> listUsersGroupInfo.addAll(it1) }
             binding.tvNumberMember.text = "${listUsersGroupInfo.size} thành viên"
             binding.tvContent.text = it.name
+            it.usersActive?.let { it1 -> listUsersActive.addAll(it1) }
+            it.userManage?.let { it1 -> listUserManage.addAll(it1) }
         }
         memberManagerAdapter = MemberManagerAdapter(
-            groupData?.fkUserId, groupData?.userManage, groupData?.usersActive, this
+            groupData?.fkUserId, listUserManage, listUsersActive, this
         )
         memberManagerAdapter?.setData(listUsersGroupInfo)
         binding.rcvMember.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
@@ -93,17 +99,48 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
                 if (result.data != null) {
-                    val newMember = result.data?.getParcelableExtra<UsersGroupInfo>(AddMemberInGroupActivity.NEW_MEMBER)
-                    newMember?.let {
-                        binding.tvNumberMember.text = "${listUsersGroupInfo.size} thành viên"
-                        listUsersGroupInfo.add(it)
-                        memberManagerAdapter?.notifyDataSetChanged()
-                        groupData?.listUsersGroupInfo?.add(it)
-                    }
-
+                    groupData?.groupid?.let { doGetAGroupWithId(it) }
                 }
             }
         }
+
+
+    private fun doGetAGroupWithId(id: String) {
+        showProgressDialog()
+        val client = NetworkClient()
+        val call = client.client(context = applicationContext).doGetAGroupWithId(id)
+        call.enqueue(BaseCallback(this, object : Callback<GroupData> {
+            @SuppressLint("SetTextI18n")
+            override fun onResponse(
+                call: Call<GroupData>,
+                response: Response<GroupData>
+            ) {
+                dismissProgress()
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    response.body()?.let {
+                        groupName = it.name
+                        groupData = it
+                        it.listUsersGroupInfo?.let { it1 ->
+                            listUsersGroupInfo.clear()
+                            listUsersGroupInfo.addAll(it1)
+                            binding.tvNumberMember.text = "${listUsersGroupInfo.size} thành viên"
+                        }
+                        listUserManage.clear()
+                        listUsersActive.clear()
+                        it.usersActive?.let { it1 -> listUsersActive.addAll(it1) }
+                        it.userManage?.let { it1 -> listUserManage.addAll(it1) }
+                        memberManagerAdapter?.notifyDataSetChanged()
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<GroupData>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        }))
+    }
 
     override fun onSelectItem(item: UsersGroupInfo, position: Int) {
     }
@@ -158,6 +195,7 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
         }
     }
 
+    //xóa thành viên
     private fun deleteUser(fullName: String?, item: UsersGroupInfo, groupId: String?) {
         val removeUserRequest = UserInGroupRequest(userId = item.userID?.toInt(), groupId = groupId)
         showProgressDialog()
@@ -186,6 +224,7 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
         }))
     }
 
+    //đặt làm quản trị viên
     private fun upgradeUserToManager(item: UsersGroupInfo, groupId: String?) {
         val upgradeUserToManagerRequest = UserInGroupRequest(userId = item.userID?.toInt(), groupId = groupId)
         showProgressDialog()

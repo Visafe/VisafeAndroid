@@ -45,32 +45,37 @@ class NotificationAdapter(private val onSelectItemListener: OnSelectItemListener
         @SuppressLint("SetTextI18n")
         fun bindView(item: NotificationModel?) {
             var title = ""
+            var icon = 0
             when (item?.content?.type) {
                 "ALERT_DOMAIN" -> {
                     title =
                         "Thiết bị ${item.content?.affected?.name} đã cố gắng truy cập trang web: ${item.content?.target?.domain}"
+                    icon = R.drawable.ic_notify_protect_device
                 }
                 "INVITE_SUCCESS" -> {
                     title = "${item.content?.affected?.name} đã là thành viên của nhóm ${item.group?.name}"
+                    icon = R.drawable.ic_notify_protect_device
                 }
                 "JOIN_SUCCESS" -> {
                     title = "Bạn đã là thành viên của nhóm ${item.group?.name}"
+                    icon = R.drawable.ic_notify_protect_device
                 }
                 "DEVICE_JOIN_SUCCESS" -> {
                     title = "Thiết bị ${item.content?.affected?.name} vừa được thêm vào nhóm ${item.group?.name}"
+                    icon = R.drawable.ic_notify_protect_device
                 }
                 "ALERT_TRANSACTION" -> {
-                    if ("0" == item.content?.status_payment) {
-                        title =
-                            "Bạn đã giao dịch thành công gói ${item.content?.package_name} trong thời gian ${item.content?.duration} tháng"
+                    title = if ("0" == item.content?.status_payment) {
+                        "Bạn đã giao dịch thành công gói ${item.content?.package_name} trong thời gian ${item.content?.duration} tháng"
                     } else {
-                        title =
-                            "Giao dịch thất bại gói ${item.content?.package_name} trong thời gian ${item.content?.duration} tháng"
+                        "Giao dịch thất bại gói ${item.content?.package_name} trong thời gian ${item.content?.duration} tháng"
                     }
+                    icon = R.drawable.ic_notify_protect_device
                 }
             }
             itemView.tvTitle.text = title + "\uD83D\uDD25"
             itemView.tvTime.text = item?.createdAt?.let { getTimeAgo(it.toLong()) }
+            itemView.imgIcon.setImageDrawable(ContextCompat.getDrawable(itemView.context, icon))
             if (item?.isRead == true)
                 itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.white))
             else

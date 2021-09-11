@@ -112,12 +112,6 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
     @SuppressLint("LongLogTag", "RestrictedApi")
     override fun initView() {
         val pin = ViSafeApp().getPreference().getString(PreferenceKey.PIN_CODE)
-//        if (SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.TIME_LAST_SCAN).isEmpty()) {
-//            binding.tvTimeScan.text = "Bạn chưa quét lần nào"
-//        } else {
-//            val time = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.TIME_LAST_SCAN)
-//            binding.tvTimeScan.text = "Lần quét gần đây nhất ${getTimeAgo(time.toLong())}"
-//        }
         binding.viewStatistical.tvOverview.text = "Tổng quan của thiết bị"
         binding.layoutHomePass.view.visibility = if (pin.isNotEmpty()) View.VISIBLE else View.GONE
         (activity as MainActivity).listWorkSpaceLiveData.observe(this, {

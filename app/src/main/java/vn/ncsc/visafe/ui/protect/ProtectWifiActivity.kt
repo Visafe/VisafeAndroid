@@ -131,7 +131,7 @@ class ProtectWifiActivity : BaseActivity() {
     private fun handleProtected(isProtected: Boolean, botnet: BotnetResponse?) {
         val ipAddress = getIpAddress()
         if (isProtected) {
-            if (botnet?.status == NetworkClient.CODE_SUCCESS && isWPA2()) {
+            if (isWPA2() && botnet?.status == NetworkClient.CODE_SUCCESS) {
                 binding.ivCheck.setImageResource(R.drawable.ic_checkmark_circle)
                 binding.ivWifi.background =
                     ContextCompat.getDrawable(this, R.drawable.bg_stroke_color_green_circle)

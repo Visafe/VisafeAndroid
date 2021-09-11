@@ -173,6 +173,15 @@ open class BaseActivity : AppCompatActivity(), BaseController {
         return SharePreferenceKeyHelper.getInstance(application).isLogin()
     }
 
+
+    fun getWifiName(): String {
+        val wifi = applicationContext.getSystemService(WIFI_SERVICE) as WifiManager
+        val networkList = wifi.scanResults
+        //get current connected SSID for comparison to ScanResult
+        val wi = wifi.connectionInfo
+        return wi.ssid
+    }
+
     fun isWPA2(): Boolean {
         val wifi = applicationContext.getSystemService(WIFI_SERVICE) as WifiManager
         val networkList = wifi.scanResults
