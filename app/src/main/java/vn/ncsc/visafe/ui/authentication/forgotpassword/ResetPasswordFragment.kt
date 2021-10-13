@@ -9,17 +9,22 @@ import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.rengwuxian.materialedittext.MaterialEditText
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import vn.ncsc.visafe.R
+import vn.ncsc.visafe.ViSafeApp
 import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.data.BaseCallback
-import vn.ncsc.visafe.data.BaseResponse
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.FragmentResetPasswordBinding
 import vn.ncsc.visafe.model.request.ResetPasswordRequest
+import vn.ncsc.visafe.ui.create.group.SuccessDialogFragment
+import vn.ncsc.visafe.ui.create.group.access_manager.Action
+import vn.ncsc.visafe.utils.EventUtils
+import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.setSafeClickListener
 
 class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>() {
@@ -107,27 +112,43 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>() {
         val resetPasswordRequest = ResetPasswordRequest(email, otp, password, rePassword)
         val client = NetworkClient()
         val call = context?.let { client.clientWithoutToken(context = it).doResetPassword(resetPasswordRequest) }
-        call?.enqueue(
-            BaseCallback(
-                this, object : Callback<BaseResponse> {
-                    override fun onResponse(
-                        call: Call<BaseResponse>,
-                        response: Response<BaseResponse>
-                    ) {
-                        dismissProgress()
-                        if (response.body()?.status_code == NetworkClient.CODE_SUCCESS) {
-                            response.body()?.msg?.let { Log.e("onResponse: ", it) }
-                            (activity as ForgotPasswordActivity).finish()
-                            //auto login with new pass
-                        }
-                    }
+        call?.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                dismissProgress()
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    showDialogResetComplete("Reset Password thành công")
+                } else if (response.code() == NetworkClient.CODE_EXISTS_ACCOUNT) {
+                    (activity as BaseActivity).showToast("OTP không đúng, vui lòng thử lại")
+                    backFragment()
+                }
+            }
 
-                    override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
-                        t.message?.let { Log.e("onFailure: ", it) }
-                        dismissProgress()
-                    }
-                })
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        })
+    }
+
+    private fun showDialogResetComplete(title: String) {
+        val dialog = SuccessDialogFragment.newInstance(
+            title,
+            ""
         )
+        dialog.show(parentFragmentManager, "")
+        dialog.setOnClickListener {
+            when (it) {
+                Action.CONFIRM -> {
+                    (activity as ForgotPasswordActivity).finish()
+                }
+                else -> {
+                    return@setOnClickListener
+                }
+            }
+        }
     }
 
     private fun validateField(): Boolean {

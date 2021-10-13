@@ -26,23 +26,62 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvNameGroup"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/rllNameGroup"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10dp"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_4sdp"
-            android:ellipsize="end"
-            android:fontFamily="@font/sf_pro_text_regular_bold"
-            android:maxLines="2"
-            android:text="@{data.name}"
-            android:textColor="@color/color_222222"
-            android:textSize="@dimen/text_size_16sp"
-            app:layout_constraintEnd_toStartOf="@id/llLevel"
+            app:layout_constraintEnd_toStartOf="@+id/ivMore"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Fina Group" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvNameGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:ellipsize="end"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:maxWidth="@dimen/_190sdp"
+                android:text="@{data.name}"
+                android:textColor="@color/color_222222"
+                android:textSize="@dimen/text_size_16sp"
+                app:layout_constraintEnd_toStartOf="@id/llLevel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Fina Group F Fina Group F Fina Group F Fina Group F Fina Group F" />
+
+            <LinearLayout
+                android:id="@+id/llLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/tvNameGroup"
+                app:layout_constraintBottom_toBottomOf="@id/tvNameGroup"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tvNameGroup"
+                app:layout_constraintTop_toTopOf="@id/tvNameGroup">
+
+                <TextView
+                    android:id="@+id/tvLevel"
+                    set_type="@{data.isOwner()}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_radius_4dp"
+                    android:backgroundTint="@color/color_F9F1E2"
+                    android:fontFamily="@font/sf_pro_text_regular_bold"
+                    android:paddingStart="@dimen/_8dp"
+                    android:paddingTop="@dimen/_4dp"
+                    android:paddingEnd="@dimen/_8dp"
+                    android:paddingBottom="@dimen/_4dp"
+                    android:textColor="@color/color_FFB31F"
+                    android:textSize="@dimen/text_size_12sp"
+                    tools:text="Quản trị" />
+            </LinearLayout>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tvAmountGroup"
@@ -52,8 +91,8 @@
             android:fontFamily="@font/sf_pro_text_regular"
             android:textColor="@color/color_808080"
             android:textSize="@dimen/text_size_14sp"
-            app:layout_constraintStart_toStartOf="@id/tvNameGroup"
-            app:layout_constraintTop_toBottomOf="@id/tvNameGroup"
+            app:layout_constraintStart_toStartOf="@id/rllNameGroup"
+            app:layout_constraintTop_toBottomOf="@id/rllNameGroup"
             tools:text="5 nhóm" />
 
         <ImageView
@@ -61,45 +100,17 @@
             show_more_action="@{data.isSelected()}"
             android:layout_width="@dimen/_24dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_16dp"
+            android:layout_marginEnd="@dimen/_10dp"
             android:src="@drawable/ic_more_horizontal"
-            app:layout_constraintBottom_toBottomOf="@id/tvNameGroup"
+            app:layout_constraintBottom_toBottomOf="@id/tvAmountGroup"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tvNameGroup"
+            app:layout_constraintTop_toTopOf="@id/rllNameGroup"
             tools:ignore="ContentDescription" />
-
-        <LinearLayout
-            android:id="@+id/llLevel"
-            android:layout_width="@dimen/_0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/tvNameGroup"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tvNameGroup"
-            app:layout_constraintTop_toTopOf="@id/tvNameGroup">
-
-            <TextView
-                android:id="@+id/tvLevel"
-                set_type="@{data.isOwner()}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_44dp"
-                android:background="@drawable/bg_radius_4dp"
-                android:backgroundTint="@color/color_F9F1E2"
-                android:fontFamily="@font/sf_pro_text_regular_bold"
-                android:paddingStart="@dimen/_8dp"
-                android:paddingTop="@dimen/_4dp"
-                android:paddingEnd="@dimen/_8dp"
-                android:paddingBottom="@dimen/_4dp"
-                android:textColor="@color/color_FFB31F"
-                android:textSize="@dimen/text_size_12sp"
-                tools:text="Quản trị" />
-        </LinearLayout>
-
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:background="@color/color_EEEEEE"
             app:layout_constraintTop_toBottomOf="@id/tvAmountGroup" />
 

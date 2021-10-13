@@ -116,21 +116,6 @@ class AccessManagerFragment : BaseFragment<FragmentAccessManagerBinding>() {
         )
 
         mDataBlock = arrayListOf(
-//            Subject(
-//                "https://www.youtube.com/",
-//                "https://www.youtube.com/",
-//                R.drawable.ic_instagram
-//            ),
-//            Subject(
-//                "https://www.facebook.com/",
-//                "https://www.facebook.com/",
-//                R.drawable.ic_facebook
-//            ),
-//            Subject(
-//                "https://gmail.com/",
-//                "https://gmail.com/",
-//                R.drawable.ic_book
-//            )
         )
 
         mDataPrioritize = arrayListOf(
@@ -258,7 +243,7 @@ class AccessManagerFragment : BaseFragment<FragmentAccessManagerBinding>() {
                 Action.CONFIRM -> {
                     if (data == null) {
                         if (link.isNotBlank()) {
-                            blockAdapter?.addItem(Subject(link, link, -1))
+                            blockAdapter?.addItem(Subject(link, link, -1, true))
                         }
                     } else {
                         data.let { blockAdapter?.editItem(it, Subject(link, link, -1)) }

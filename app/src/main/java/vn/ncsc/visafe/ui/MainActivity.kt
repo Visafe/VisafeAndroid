@@ -27,6 +27,8 @@ import vn.ncsc.visafe.databinding.ActivityMainBinding
 import vn.ncsc.visafe.model.StatsWorkSpace
 import vn.ncsc.visafe.model.UserInfo
 import vn.ncsc.visafe.model.WorkspaceGroupData
+import vn.ncsc.visafe.model.request.SendTokenRequest
+import vn.ncsc.visafe.model.response.CheckDeviceInGroupResponse
 import vn.ncsc.visafe.model.response.StatsWorkspaceResponse
 import vn.ncsc.visafe.ui.adapter.TimeStatistical
 import vn.ncsc.visafe.ui.authentication.LoginActivity
@@ -58,10 +60,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private var listFragment = mutableListOf<Fragment>()
     private var listWorkSpace: MutableList<WorkspaceGroupData> = mutableListOf()
     private var currentPosition = 0
-//    private var overViewProtectFragment = OverViewProtectFragment()
-//    private var groupManagementFragment = GroupManagementFragment()
-//    private var notificationFragment = NotificationFragment()
-//    private var profileFragment = ProfileFragment()
 
     var mCurrentScreen: Int = POSITION_SCAN
     var userInfoLiveData: MutableLiveData<UserInfo> = MutableLiveData()
@@ -69,6 +67,8 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     var statisticalWorkSpaceLiveData: MutableLiveData<StatsWorkSpace> = MutableLiveData()
     var timeTypes: MutableLiveData<String> = MutableLiveData()
     var timeScanUpdate: MutableLiveData<String> = MutableLiveData()
+    var isOpenProtectedDevice: MutableLiveData<Boolean> = MutableLiveData()
+    var isLoadView: MutableLiveData<Boolean> = MutableLiveData()
     private var isLoadUserInfo = false
 
     private var timer: Timer? = null
@@ -134,8 +134,9 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             if (result.resultCode == Activity.RESULT_OK) {
                 checkPermissionWifi()
                 getNewTokenFCM()
-                initView()
+//                initView()
                 doGetUserInfo()
+                isLoadView.value = true
             }
         }
 
@@ -189,7 +190,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         binding.bottomView.setOnNavigationItemSelectedListener(this)
     }
 
-    private fun doGetUserInfo() {
+    fun doGetUserInfo() {
         if (!SharePreferenceKeyHelper.getInstance(application).isLogin())
             return
         if (ViSafeApp().getPreference().getUserInfo().userID == null || isLoadUserInfo) {
@@ -281,6 +282,15 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         currentPosition = position
         fragmentTransaction.commitNowAllowingStateLoss()
         changeColorTab(position)
+    }
+
+    fun openWorkspaceTab() {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.fr_container)
+        val newFragment = supportFragmentManager.findFragmentByTag(GroupManagementFragment().javaClass.simpleName)
+        doGetWorkSpaces()
+        binding.bottomView.menu.getItem(POSITION_GROUP).isChecked = true
+        currentFragment?.let { newFragment?.let { it1 -> fragmentTransaction.show(it1).hide(it).commit() } }
     }
 
     @SuppressLint("ResourceType")

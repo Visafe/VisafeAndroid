@@ -3,6 +3,7 @@ package vn.ncsc.visafe.ui.create.group.protected_group
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.widget.addTextChangedListener
@@ -13,12 +14,12 @@ import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.databinding.FragmentProtectedGroupBinding
 
-class ProtectedGroupFragment : BaseFragment<FragmentProtectedGroupBinding>() {
+class CreateNameGroupFragment : BaseFragment<FragmentProtectedGroupBinding>() {
     companion object {
-        fun newInstance(): ProtectedGroupFragment {
+        fun newInstance(): CreateNameGroupFragment {
             val args = Bundle()
 
-            val fragment = ProtectedGroupFragment()
+            val fragment = CreateNameGroupFragment()
             fragment.arguments = args
             return fragment
         }
@@ -42,6 +43,13 @@ class ProtectedGroupFragment : BaseFragment<FragmentProtectedGroupBinding>() {
         enableButton()
         binding.tvContent.text = HtmlCompat.fromHtml(getString(R.string.protect_group_content), HtmlCompat.FROM_HTML_MODE_LEGACY)
         binding.editNameGroup.addTextChangedListener {
+            if (binding.editNameGroup.length() in 4..99) {
+                binding.editNameGroup.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext)
+                binding.tvWarning.visibility = View.GONE
+            } else {
+                binding.editNameGroup.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_warning)
+                binding.tvWarning.visibility = View.VISIBLE
+            }
             enableButton()
         }
 
@@ -59,7 +67,7 @@ class ProtectedGroupFragment : BaseFragment<FragmentProtectedGroupBinding>() {
 
     private fun enableButton() {
         val groupName = binding.editNameGroup.text.toString()
-        if (groupName.isNotBlank()) {
+        if (groupName.isNotBlank() && binding.editNameGroup.length() in 4..99) {
             with(binding.tvNext) {
                 backgroundTintList =
                     resources.getColorStateList(R.color.color_FFB31F, requireContext().theme)

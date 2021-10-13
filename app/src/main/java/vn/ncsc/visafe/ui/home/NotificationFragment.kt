@@ -9,6 +9,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import vn.ncsc.visafe.R
+import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.NetworkClient
@@ -33,6 +34,23 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Notifi
     override fun layoutRes(): Int = R.layout.fragment_notification
 
     override fun initView() {
+
+        (activity as MainActivity).isLoadView.observe(this, {
+            if ((activity as MainActivity).isLogin()) {
+                val linearLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                notificationAdapter = NotificationAdapter(this)
+                binding.rcvNotification.layoutManager = linearLayoutManager
+                binding.rcvNotification.setLoadingListener(this)
+                binding.rcvNotification.setPullRefreshEnabled(true)
+                binding.rcvNotification.setLoadingMoreEnabled(true)
+                binding.rcvNotification.adapter = notificationAdapter
+                loadListNotification()
+            } else {
+                binding.tvNoData.visibility = View.VISIBLE
+                binding.rcvNotification.visibility = View.GONE
+            }
+        })
+
         if ((activity as MainActivity).isLogin()) {
             val linearLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             notificationAdapter = NotificationAdapter(this)

@@ -57,12 +57,14 @@
     <TextView
         android:id="@+id/tvName"
         style="@style/TitleToolbar"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_13sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
         android:gravity="center"
-        app:layout_constraintEnd_toEndOf="@+id/ivGroup"
-        app:layout_constraintStart_toStartOf="@+id/ivGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivGroup"
         tools:text="Phòng 1: Marketing" />
 

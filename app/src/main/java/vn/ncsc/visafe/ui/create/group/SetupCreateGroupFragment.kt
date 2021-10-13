@@ -8,11 +8,11 @@ import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.databinding.FragmentSetupCreateGroupBinding
 import vn.ncsc.visafe.ui.adapter.SetupCreateGroupAdapter
 import vn.ncsc.visafe.ui.create.group.access_manager.AccessManagerFragment
-import vn.ncsc.visafe.ui.create.group.block_tracking.BlockTracingAndAdsFragment
+import vn.ncsc.visafe.ui.create.group.block_tracking.BlockTracingAdsCreateGroupFragment
 import vn.ncsc.visafe.utils.OnSingleClickListener
 
 class SetupCreateGroupFragment : BaseFragment<FragmentSetupCreateGroupBinding>(),
-    BlockTracingAndAdsFragment.OnSaveBlockTrackingAndAds, BlockFollowCreateGroupFragment.OnSaveBlockFollowCreateGroup,
+    BlockTracingAdsCreateGroupFragment.OnSaveBlockTrackingAndAds, BlockFollowCreateGroupFragment.OnSaveBlockFollowCreateGroup,
     AccessManagerFragment.OnSaveAccessManager, BlockContentCreateGroupFragment.OnSaveBlockContent {
     companion object {
         fun newInstance(): SetupCreateGroupFragment {
@@ -53,7 +53,7 @@ class SetupCreateGroupFragment : BaseFragment<FragmentSetupCreateGroupBinding>()
                 when (group) {
                     SetupCreateGroup.CHAN_QUANG_CAO -> {
                         createGroupActivity?.addFragment(
-                            BlockTracingAndAdsFragment.newInstance(
+                            BlockTracingAdsCreateGroupFragment.newInstance(
                                 group.isSelected,
                                 this@SetupCreateGroupFragment
                             )

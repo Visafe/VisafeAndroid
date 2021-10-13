@@ -1,11 +1,13 @@
 package vn.ncsc.visafe.model
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import kotlinx.android.parcel.Parcelize
 import com.google.gson.annotations.SerializedName
 import vn.ncsc.visafe.model.response.DeviceGroup
 import vn.ncsc.visafe.ui.group.detail.member.TypePosition
 
+@Keep
 @Parcelize
 data class GroupData(
     @SerializedName("ids")
@@ -49,7 +51,7 @@ data class GroupData(
     @SerializedName("object_type")
     var object_type: List<String>? = listOf(),
     @SerializedName("block_webs")
-    var block_webs: List<String>? = listOf(),
+    var block_webs: MutableList<String>? = mutableListOf(),
     @SerializedName("workspace_id")
     var workspace_id: String? = null,
     @SerializedName("fkUserId")
@@ -77,7 +79,15 @@ data class GroupData(
     @SerializedName("days")
     var days: List<String>? = null,
     @SerializedName("whiteList")
-    var whiteList: List<String>? = null
+    var whiteList: List<String>? = null,
+    @SerializedName("link_ip")
+    var linkIp: String? = null,
+    @SerializedName("avatarUrl")
+    var avatarUrl: String? = null,
+    @SerializedName("avatarUrlTime")
+    var avatarUrlTime: String? = null,
+    @SerializedName("link_invite_device")
+    var linkInviteDevice: String? = null
 ) : Parcelable
 
 @Parcelize
@@ -94,7 +104,7 @@ data class TimesGroup(
 data class TimeItem(
     @SerializedName("hour")
     var hour: Int? = 0,
-    @SerializedName("end")
+    @SerializedName("minute")
     var minutes: Int? = 0
 ) : Parcelable
 
@@ -110,7 +120,7 @@ data class UsersGroupInfo(
     var phoneNumber: String? = null,
     @SerializedName("IsVerify")
     var isVerify: Boolean = false,
-    var typePosition: TypePosition?=null
+    var typePosition: TypePosition? = null
 ) : Parcelable
 
 @Parcelize

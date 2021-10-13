@@ -108,7 +108,6 @@ class ProtectWorkspaceFragment : BaseFragment<FragmentProtectWorkspaceBinding>()
 //                    || binding.checkBoxSchool.isChecked
 //                    || binding.checkBoxFamily.isChecked)
         ) {
-
             with(binding.tvNext) {
                 backgroundTintList =
                     resources.getColorStateList(R.color.color_FFB31F, requireContext().theme)

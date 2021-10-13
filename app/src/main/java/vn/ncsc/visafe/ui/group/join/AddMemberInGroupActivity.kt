@@ -15,7 +15,6 @@ import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivityAddMemberInGroupBinding
 import vn.ncsc.visafe.model.GroupData
-import vn.ncsc.visafe.model.UsersGroupInfo
 import vn.ncsc.visafe.model.request.UserInGroupRequest
 import vn.ncsc.visafe.model.response.AddMemberInGroupResponse
 import vn.ncsc.visafe.ui.create.group.SuccessDialogFragment
@@ -74,9 +73,7 @@ class AddMemberInGroupActivity : BaseActivity() {
                 response: Response<AddMemberInGroupResponse>
             ) {
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    if (response.body()?.invited?.isNotEmpty() == true) {
-                        response.body()?.invited?.let { showDialogComplete(it[0]) }
-                    }
+                    showDialogComplete()
                 }
                 dismissProgress()
             }
@@ -88,9 +85,9 @@ class AddMemberInGroupActivity : BaseActivity() {
         }))
     }
 
-    private fun showDialogComplete(invited: UsersGroupInfo?) {
+    private fun showDialogComplete() {
         val dialog = SuccessDialogFragment.newInstance(
-            getString(R.string.join_group_success),
+            "Mời tham gia nhóm thành công",
             ""
         )
         dialog.show(supportFragmentManager, "")

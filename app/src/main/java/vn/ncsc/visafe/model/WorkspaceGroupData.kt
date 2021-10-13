@@ -70,7 +70,7 @@ enum class TYPE_WORKSPACES(
     ENTERPRISE(
         "ENTERPRISE",
         "Bảo vệ tổ chức",
-        "Tất cả thành viên tham gia nhóm đều được ViSafe bảo vệ trên môi trường mạng",
+        "Tất cả thành viên tham gia nhóm đều được Visafe bảo vệ trên môi trường mạng",
         R.drawable.ic_business,
         R.drawable.bg_top_protect_enterprise_group
     ),

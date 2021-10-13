@@ -1,5 +1,6 @@
 package vn.ncsc.visafe.data
 
+import com.google.gson.Gson
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,10 +18,13 @@ class BaseCallback<T>(private val baseController: BaseController, private val mC
                         val jsonObject = JSONObject(it.string())
                         val statusCode = jsonObject.getString("status_code")
                         val msg = jsonObject.getString("msg")
-                        val baseResponse = BaseResponse(statusCode.toInt(), msg)
+                        val localMsg = jsonObject.getString("local_msg")
+                        val baseResponse = BaseResponse(statusCode.toInt(), msg, localMsg)
                         baseController.onError(baseResponse)
                     } else {
-                        val baseResponse = BaseResponse(response.code(), "Có lỗi xảy ra, vui lòng thử lại")
+                        val buffer = it.source().buffer.readByteArray()
+                        val dataString = buffer.decodeToString()
+                        val baseResponse = Gson().fromJson(dataString, BaseResponse::class.java)
                         baseController.onError(baseResponse)
                     }
                 }

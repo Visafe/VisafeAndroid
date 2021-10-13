@@ -23,6 +23,10 @@ class PreferenceKey {
         const val IS_ENABLE_PROTECTED_WIFI_HOME = "IS_ENABLE_PROTECTED_WIFI_HOME"
 
         const val TIME_LAST_SCAN = "TIME_LAST_SCAN"
+        const val NUMBER_OF_ERROR = "NUMBER_OF_ERROR"
+
+        const val KEY_STORE_DEVICE_ID = "KEY_STORE_DEVICE_ID"
+        const val WORKSPACE_CHOOSE = "WORKSPACE_CHOOSE"
     }
 
 }

@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/_16sdp">
+        android:paddingBottom="@dimen/_4sdp">
 
         <ImageView
             android:id="@+id/ivHomeFamily"
@@ -63,12 +63,12 @@
         <TextView
             android:id="@+id/btnHomeFamilyAddGroup"
             android:layout_width="match_parent"
-            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
             android:layout_below="@id/view"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_12sdp"
             android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/_10sdp"
             android:text="@string/create_group_title"
             android:textAllCaps="true"
             android:textColor="@color/color_FFB31F"

@@ -54,7 +54,7 @@ class ProtectDeviceGroupDetailActivity : BaseSetupProtectActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-//        setResult(RESULT_OK)
+        setResult(RESULT_OK)
         finish()
     }
 
@@ -71,7 +71,7 @@ class ProtectDeviceGroupDetailActivity : BaseSetupProtectActivity() {
         }
         binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
-//                setResult(RESULT_OK)
+                setResult(RESULT_OK)
                 finish()
             }
         })

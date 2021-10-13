@@ -2,6 +2,7 @@ package vn.ncsc.visafe.ui.group.detail.device
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
@@ -19,6 +20,7 @@ import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivityAddDeviceBinding
 import vn.ncsc.visafe.model.GroupData
+import vn.ncsc.visafe.ui.group.join.JoinGroupActivity
 import vn.ncsc.visafe.utils.saveImageToGallery
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
@@ -48,16 +50,15 @@ class AddDeviceActivity : BaseActivity() {
 
     private fun initView() {
         groupData?.let {
-            getDeepLink(it)
             binding.tvNameGroup.text = it.name
+            binding.tvNameGroup.isSelected = true
+            binding.tvLinkShare.text = it.linkInviteDevice.toString()
             val logoBitmap = BitmapFactory.decodeResource(
                 applicationContext.resources,
-                R.drawable.ic_logo_text
+                R.drawable.ic_loge_qr
             )
-            val myLogo = getCroppedBitmap(logoBitmap)
-            dataQr =
-                NetworkClient.URL_ROOT + "group/invite/device?groupId=${it.groupid}&groupName=${it.name}"
-            qRCodeGen(dataQr, myLogo)
+            dataQr = it.linkInviteDevice
+            qRCodeGen(dataQr, logoBitmap)
         }
     }
 
@@ -69,7 +70,9 @@ class AddDeviceActivity : BaseActivity() {
             .setLink(Uri.parse(builderLink))
             .setDomainUriPrefix("https://visafencsc.page.link/")
             .setIosParameters(DynamicLink.IosParameters.Builder("vn.visafe").setAppStoreId("1564635388").build())
-            .setAndroidParameters(DynamicLink.AndroidParameters.Builder(BuildConfig.APPLICATION_ID).build())
+            .setAndroidParameters(DynamicLink.AndroidParameters.Builder(BuildConfig.APPLICATION_ID).apply {
+                minimumVersion = BuildConfig.VERSION_CODE
+            }.build())
             .buildShortDynamicLink(ShortDynamicLink.Suffix.SHORT)
             .addOnCompleteListener { task: Task<ShortDynamicLink> ->
                 if (task.isSuccessful) {
@@ -86,7 +89,10 @@ class AddDeviceActivity : BaseActivity() {
     }
 
     private fun initControl() {
-        binding.ivBack.setOnSingClickListener { finish() }
+        binding.ivBack.setOnSingClickListener {
+            setResult(RESULT_OK)
+            finish()
+        }
         binding.tvLinkShare.setOnSingClickListener {
             copyToClipboard(binding.tvLinkShare.text.toString().replace(" ".toRegex(), ""))
         }
@@ -103,6 +109,12 @@ class AddDeviceActivity : BaseActivity() {
                     showToast("Bạn cần có quyền truy cập bộ nhớ")
                 }
             })
+        }
+        binding.tvAddDevice.setOnSingClickListener {
+            val intent = Intent(this@AddDeviceActivity, JoinGroupActivity::class.java)
+            intent.putExtra(JoinGroupActivity.GROUP_ID, groupData?.groupid)
+            intent.putExtra(JoinGroupActivity.GROUP_NAME, groupData?.name)
+            startActivity(intent)
         }
     }
 
@@ -121,7 +133,7 @@ class AddDeviceActivity : BaseActivity() {
             val width = point.x
             val height = point.y
             var smallerDimension = width.coerceAtMost(height)
-            smallerDimension = smallerDimension * 3 / 4
+            smallerDimension *= 4
             val qrgEncoder = QRGEncoder(textQR, null, QRGContents.Type.TEXT, smallerDimension)
             val bitmapQR = qrgEncoder.encodeAsBitmap()
             qrBitmapMerge = mergeBitmaps(bitmapQR, myLogo)
@@ -169,8 +181,8 @@ class AddDeviceActivity : BaseActivity() {
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
         canvas.drawBitmap(bitmap, rect, rect, paint)
         var bitmapCrop = Bitmap.createScaledBitmap(output, 60, 60, false)
-        bitmapCrop = addWhiteBorder(bitmapCrop)
-        return bitmapCrop
+//        bitmapCrop = addWhiteBorder(bitmapCrop)
+        return output
     }
 
     // thêm viền trắng cho logo

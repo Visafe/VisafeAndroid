@@ -50,7 +50,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_20sdp"
         android:gravity="center"
-        android:text="ViSafe giúp bạn kiểm tra toàn diện\nvề nguy hại, mã độc, quảng cáo &amp; theo dõi."
+        android:text="Visafe giúp bạn kiểm tra toàn diện\nvề nguy hại, mã độc, quảng cáo &amp; theo dõi."
         android:textColor="@color/white"
         android:textSize="@dimen/_11sdp"
         app:layout_constraintEnd_toEndOf="parent"

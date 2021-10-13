@@ -3,10 +3,12 @@ package vn.ncsc.visafe.ui.dialog
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
+import android.text.InputFilter
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.widget.addTextChangedListener
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseDialogBottomSheet
 import vn.ncsc.visafe.databinding.LayoutVisafeDialogBottomSheetBinding
@@ -23,9 +25,12 @@ class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSh
         const val TITLE_DELETE = "TITLE_DELETE"
         const val EDIT_HINT = "EDIT_HINT"
         const val EDIT_NAME = "EDIT_NAME"
+        const val TEXT_WARNING = "TEXT_WARNING"
+        const val MIN_INPUT = "MIN_INPUT"
+        const val MAX_INPUT = "MAX_INPUT"
 
         const val TYPE_EDIT_DELETE = "TYPE_EDIT_DELETE"
-        const val TYPE_CONFIRM_CANCLE = "TYPE_CONFIRM_CANCLE"
+        const val TYPE_CONFIRM_CANCEL = "TYPE_CONFIRM_CANCEL"
         const val TYPE_INPUT_CONFIRM = "TYPE_INPUT_CONFIRM"
         const val TYPE_INPUT_SAVE = "TYPE_INPUT_SAVE"
 
@@ -88,6 +93,30 @@ class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSh
             )
             return fragment
         }
+
+        fun newInstanceEdit(
+            title: String,
+            name: String,
+            type: String,
+            hint: String,
+            editText: String,
+            textWarning: String,
+            minInput: Int = 1,
+            maxInput: Int = 300
+        ): VisafeDialogBottomSheet {
+            val fragment = VisafeDialogBottomSheet()
+            fragment.arguments = bundleOf(
+                Pair(TYPE_DIALOG_KEY, type),
+                Pair(TITLE, title),
+                Pair(EDIT_HINT, hint),
+                Pair(NAME, name),
+                Pair(EDIT_NAME, editText),
+                Pair(TEXT_WARNING, textWarning),
+                Pair(MIN_INPUT, minInput),
+                Pair(MAX_INPUT, maxInput)
+            )
+            return fragment
+        }
     }
 
     private var mOnClickListener: ((String, Action) -> Unit)? = null
@@ -99,14 +128,20 @@ class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSh
         super.setupDialog(dialog, style)
         val contentView = View.inflate(context, R.layout.layout_visafe_dialog_bottom_sheet, null)
         dialog.setContentView(contentView)
-
-        val params = (contentView.parent as View)
-            .layoutParams as CoordinatorLayout.LayoutParams
-        val behavior = params.behavior
         (contentView.parent as View).setBackgroundColor(Color.TRANSPARENT)
     }
 
+//    var filter = InputFilter { source, start, end, dest, dstart, dend ->
+//        for (i in start until end) {
+//            if (Character.isWhitespace(source[i])) {
+//                return@InputFilter ""
+//            }
+//        }
+//        null
+//    }
+
     override fun initView() {
+//        binding.edtInput.filters = arrayOf(filter, InputFilter.LengthFilter(300))
         binding.tvCancel.setOnClickListener {
             hiddenKeyboard()
             dismiss()
@@ -131,7 +166,6 @@ class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSh
             mOnClickListener?.invoke(binding.edtInput.text.toString().trim(), Action.CONFIRM)
             dismiss()
         }
-
         val title = arguments?.getString(TITLE, "")
         binding.tvTitle.text = title
         binding.tvTitle.visibility = if (title.isNullOrEmpty()) View.GONE else View.VISIBLE
@@ -150,13 +184,28 @@ class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSh
         binding.edtInput.hint = hint
         val editName = arguments?.getString(EDIT_NAME, "")
         binding.edtInput.setText(editName)
-
         val type = arguments?.getString(TYPE_DIALOG_KEY, "")
         when (type) {
             TYPE_INPUT_CONFIRM -> {
                 showLayoutAdd()
+                binding.edtInput.addTextChangedListener {
+                    val minInput = arguments?.getInt(MIN_INPUT, 1)
+                    val maxInput = arguments?.getInt(MAX_INPUT, 300)
+                    if (binding.edtInput.length() in minInput!!..maxInput!!) {
+                        binding.edtInput.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext)
+                        binding.tvWarning.text = ""
+                        binding.tvWarning.visibility = View.GONE
+                    } else {
+                        val warnings = arguments?.getString(TEXT_WARNING, "")
+                        binding.edtInput.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_warning)
+                        binding.tvWarning.text = warnings
+                        binding.tvWarning.visibility = if (warnings?.isNotEmpty() == true) View.VISIBLE else View.GONE
+                    }
+                    enableButtonConfirm()
+                }
+                enableButtonConfirm()
             }
-            TYPE_CONFIRM_CANCLE -> {
+            TYPE_CONFIRM_CANCEL -> {
                 showLayoutConfirm()
             }
             TYPE_EDIT_DELETE -> {
@@ -164,6 +213,22 @@ class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSh
             }
             TYPE_INPUT_SAVE -> {
                 showLayoutSave()
+                binding.edtInput.addTextChangedListener {
+                    val minInput = arguments?.getInt(MIN_INPUT, 1)
+                    val maxInput = arguments?.getInt(MAX_INPUT, 300)
+                    if (binding.edtInput.length() in minInput!!..maxInput!!) {
+                        binding.edtInput.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext)
+                        binding.tvWarning.text = ""
+                        binding.tvWarning.visibility = View.GONE
+                    } else {
+                        val warnings = arguments?.getString(TEXT_WARNING, "")
+                        binding.edtInput.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_warning)
+                        binding.tvWarning.text = warnings
+                        binding.tvWarning.visibility = if (warnings?.isNotEmpty() == true) View.VISIBLE else View.GONE
+                    }
+                    enableButtonSave()
+                }
+                enableButtonSave()
             }
         }
     }
@@ -201,5 +266,81 @@ class VisafeDialogBottomSheet : BaseDialogBottomSheet<LayoutVisafeDialogBottomSh
 
     fun setOnClickListener(onConfirmListener: (String, Action) -> Unit) {
         mOnClickListener = onConfirmListener
+    }
+
+    private fun enableButtonConfirm() {
+        val edtInput = binding.edtInput.text.toString()
+        val minInput = arguments?.getInt(MIN_INPUT, 1)
+        val maxInput = arguments?.getInt(MAX_INPUT, 300)
+        if (edtInput.isNotBlank() && edtInput.length in minInput!!..maxInput!!) {
+            with(binding.tvConfirm) {
+                backgroundTintList =
+                    resources.getColorStateList(
+                        R.color.color_FFB31F,
+                        requireContext().theme
+                    )
+
+                setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.white
+                    )
+                )
+                isEnabled = true
+            }
+        } else {
+            with(binding.tvConfirm) {
+                backgroundTintList =
+                    resources.getColorStateList(
+                        R.color.color_F8F8F8,
+                        requireContext().theme
+                    )
+                setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.color_AAAAAA
+                    )
+                )
+                isEnabled = false
+            }
+        }
+    }
+
+    private fun enableButtonSave() {
+        val edtInput = binding.edtInput.text.toString()
+        val minInput = arguments?.getInt(MIN_INPUT, 1)
+        val maxInput = arguments?.getInt(MAX_INPUT, 300)
+        if (edtInput.isNotBlank() && edtInput.length in minInput!!..maxInput!!) {
+            with(binding.tvSave) {
+                backgroundTintList =
+                    resources.getColorStateList(
+                        R.color.color_FFB31F,
+                        requireContext().theme
+                    )
+
+                setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.white
+                    )
+                )
+                isEnabled = true
+            }
+        } else {
+            with(binding.tvSave) {
+                backgroundTintList =
+                    resources.getColorStateList(
+                        R.color.color_F8F8F8,
+                        requireContext().theme
+                    )
+                setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.color_AAAAAA
+                    )
+                )
+                isEnabled = false
+            }
+        }
     }
 }

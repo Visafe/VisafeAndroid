@@ -29,7 +29,7 @@ interface ApiService {
     fun doRequestEmailForgotPassword(@Body forgotPassword: LoginRequest): Call<ResponseBody>
 
     @POST("reset-password")
-    fun doResetPassword(@Body resetPasswordRequest: ResetPasswordRequest): Call<BaseResponse>
+    fun doResetPassword(@Body resetPasswordRequest: ResetPasswordRequest): Call<ResponseBody>
 
     @POST("activate-account")
     fun doActiveAccount(@Body activeAccountRequest: ActiveAccountRequest): Call<BaseResponse>
@@ -62,7 +62,7 @@ interface ApiService {
     fun doDeleteWorkspace(@Body deleteWorkSpaceRequest: DeleteWorkSpaceRequest): Call<ResponseBody>
 
     @PATCH("workspace/update/rename")
-    fun doUpdateNameWorkSpace(@Body updateNameWorkspaceRequest: UpdateNameWorkspaceRequest): Call<ResponseBody>
+    fun doUpdateNameWorkSpace(@Body updateNameWorkspaceRequest: UpdateNameWorkspaceRequest): Call<WorkspaceGroupData>
 
     @PATCH("workspace/update")
     fun doUpdateWorkspace(@Body updateWorkspaceRequest: WorkspaceGroupData): Call<ResponseBody>
@@ -79,6 +79,9 @@ interface ApiService {
 
     @PATCH("group/update")
     fun doUpdateGroup(@Body groupData: GroupData): Call<ResponseBody>
+
+    @PATCH("group/update/rename")
+    fun doUpdateNameGroup(@Body updateGroupNameRequest: UpdateGroupNameRequest): Call<ResponseBody>
 
     @HTTP(
         method = "DELETE",
@@ -121,6 +124,15 @@ interface ApiService {
     @POST("group/invite/device")
     fun doAddDeviceToGroup(@Body addDeviceRequest: AddDeviceRequest): Call<ResponseBody>
 
+    @PATCH("group/update/device")
+    fun doUpgradeDevice(@Body updateDevice: UpdateDeviceRequest): Call<ResponseBody>
+
+    @POST("device/request-out-group")
+    fun doRequestOutGroup(@Body outGroupRequest: OutGroupRequest): Call<ResponseBody>
+
+    @POST("device/active-vip")
+    fun doActiveVip(@Body activeVipRequest: ActiveVipRequest): Call<ResponseBody>
+
     /*=========Notification=================*/
     @GET("user/notifications")
     fun doGetNotification(@Query("page") page: Int?): Call<NotificationResponse>
@@ -155,7 +167,7 @@ interface ApiService {
     ): Call<StatsWorkspaceResponse>
 
     @POST("ipma")
-    fun doCheckBotnet(): Call<ResponseBody>
+    fun doCheckBotnet(): Call<BotnetResponse>
 
     @GET("querylog_group")
     fun doGetQueryLogGroup(
@@ -183,4 +195,7 @@ interface ApiService {
 
     @POST("order")
     fun doOderPayPackage(@Body oderPayRequest: OderPayRequest): Call<PayPackageResponse>
+
+    @POST("device/check")
+    fun doCheckDeviceInGroup(@Body checkDevice: SendTokenRequest): Call<CheckDeviceInGroupResponse>
 }

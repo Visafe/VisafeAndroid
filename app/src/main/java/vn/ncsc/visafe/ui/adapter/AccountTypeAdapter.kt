@@ -7,7 +7,7 @@ import vn.ncsc.visafe.databinding.ItemAccountTypeBinding
 import vn.ncsc.visafe.model.WorkspaceGroupData
 
 class AccountTypeAdapter(
-    private val groupList: MutableList<WorkspaceGroupData>,
+    private val workspaceList: MutableList<WorkspaceGroupData>,
     private val onClickMenu: OnClickMenu
 ) :
     RecyclerView.Adapter<AccountTypeAdapter.AccountTypeHolder>() {
@@ -15,6 +15,7 @@ class AccountTypeAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: WorkspaceGroupData) {
             binding.data = item
+            binding.tvNameGroup.isSelected = true
         }
 
         companion object {
@@ -31,37 +32,39 @@ class AccountTypeAdapter(
     }
 
     override fun onBindViewHolder(holder: AccountTypeHolder, position: Int) {
-        holder.bind(groupList[position])
+        holder.bind(workspaceList[position])
         holder.itemView.setOnClickListener {
-            onClickMenu.onClickMenu(groupList[position], position)
+            onClickMenu.onClickMenu(workspaceList[position], position)
         }
         holder.binding.ivMore.setOnClickListener {
-            onClickMenu.onMoreGroup(groupList[position], position)
+            onClickMenu.onMoreGroup(workspaceList[position], position)
         }
     }
 
-    override fun getItemCount(): Int = groupList.size
+    override fun getItemCount(): Int = workspaceList.size
 
     fun setSelected(position: Int) {
-        for (i in groupList.indices) {
-            if (i != position)
-                groupList[i].isSelected = false
+        if (workspaceList.size > 0) {
+            for (i in workspaceList.indices) {
+                if (i != position)
+                    workspaceList[i].isSelected = false
+            }
+            workspaceList[position].isSelected = true
+            notifyDataSetChanged()
         }
-        groupList[position].isSelected = true
-        notifyDataSetChanged()
     }
 
     fun deleteItem(data: WorkspaceGroupData, position: Int) {
-        groupList.remove(data)
+        workspaceList.remove(data)
         notifyItemRemoved(position)
-        for (i in groupList.indices) {
-            groupList[i].isSelected = i == 0
+        for (i in workspaceList.indices) {
+            workspaceList[i].isSelected = i == 0
         }
         notifyDataSetChanged()
     }
 
     fun updateName(newName: String, position: Int) {
-        groupList[position].name = newName
+        workspaceList[position].name = newName
         notifyDataSetChanged()
     }
 }

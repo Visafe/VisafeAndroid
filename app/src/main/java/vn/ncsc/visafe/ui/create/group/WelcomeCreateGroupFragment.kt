@@ -8,7 +8,7 @@ import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.databinding.FragmentWelcomeCreateGroupBinding
 import vn.ncsc.visafe.model.TYPE_WORKSPACES
 import vn.ncsc.visafe.model.WorkspaceGroupData
-import vn.ncsc.visafe.ui.create.group.protected_group.ProtectedGroupFragment
+import vn.ncsc.visafe.ui.create.group.protected_group.CreateNameGroupFragment
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
 class WelcomeCreateGroupFragment : BaseFragment<FragmentWelcomeCreateGroupBinding>() {
@@ -78,7 +78,7 @@ class WelcomeCreateGroupFragment : BaseFragment<FragmentWelcomeCreateGroupBindin
             }
         }
         binding.btnStart.setOnSingClickListener {
-            createGroupActivity?.addFragment(ProtectedGroupFragment.newInstance())
+            createGroupActivity?.addFragment(CreateNameGroupFragment.newInstance())
         }
         binding.ivBack.setOnClickListener {
             createGroupActivity?.onBackPressed()

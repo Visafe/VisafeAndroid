@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="vn.ncsc.visafe"
+    android:installLocation="auto"
     android:versionCode="1"
     android:versionName="1.0">
 
@@ -15,7 +16,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -25,7 +26,6 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
@@ -33,8 +33,9 @@
         tools:replace="android:allowBackup">
         <activity
             android:name=".ui.authentication.splash.SplashActivity"
-            android:screenOrientation="portrait"
+            android:alwaysRetainTaskState="true"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,9 +52,9 @@
                 <data
                     android:host="app.visafe.vn"
                     android:scheme="https" />
-<!--                <data-->
-<!--                    android:host="visafencsc.page.link"-->
-<!--                    android:scheme="https" />-->
+                <data
+                    android:host="firebase.visafe.vn"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
@@ -86,6 +87,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeMain" />
         <activity
@@ -115,9 +117,6 @@
             android:name=".ui.setting.SettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeSplash" />
-        <activity
-            android:name=".ui.group.dashboard.GroupDashboardActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.group.detail.GroupDetailActivity"
             android:screenOrientation="portrait"
@@ -173,6 +172,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeMain" />
 
+        <activity
+            android:name=".ui.pin.SettingPinActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash" />
+
+        <activity
+            android:name=".ui.VipMemberActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -202,6 +211,24 @@
             <meta-data
                 android:name="android.service.quicksettings.ACTIVE_TILE"
                 android:value="true" />
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_logo_noti" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimary" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/notification_channel_id" />
+
+        <service
+            android:name=".fcm.MyFirebaseService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
         </service>
 
         <provider

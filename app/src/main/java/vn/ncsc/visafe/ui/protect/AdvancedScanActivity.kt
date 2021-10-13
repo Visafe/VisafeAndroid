@@ -8,8 +8,6 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -144,6 +142,8 @@ class AdvancedScanActivity : BaseActivity() {
                     val time = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.TIME_LAST_SCAN)
                     binding.layoutScanSuccess.tvTimeScan.text = "Lần quét gần đây nhất ${getTimeAgo(time.toLong())}"
                 }
+                SharePreferenceKeyHelper.getInstance(application)
+                    .putString(PreferenceKey.NUMBER_OF_ERROR, listError.size.toString())
                 binding.tabs.visibility = View.GONE
                 countdownTimer?.cancel()
                 isScan = false
@@ -159,16 +159,14 @@ class AdvancedScanActivity : BaseActivity() {
     private fun checkBotnet() {
         val client = NetworkClient()
         val call = client.clientWithoutToken(context = applicationContext).doCheckBotnet()
-        call.enqueue(BaseCallback(this@AdvancedScanActivity, object : Callback<ResponseBody> {
+        call.enqueue(BaseCallback(this@AdvancedScanActivity, object : Callback<BotnetResponse> {
             override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
+                call: Call<BotnetResponse>,
+                response: Response<BotnetResponse>
             ) {
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    val buffer = response.body()?.source()?.buffer?.readByteArray()
-                    val dataString = buffer?.decodeToString()
-                    botnet = Gson().fromJson(dataString, BotnetResponse::class.java)
-                    if (isWPA2() && botnet?.status == NetworkClient.CODE_SUCCESS) {
+                    botnet = response.body()
+                    if (isWPA2() && botnet != null) {
                         countSuccess++
                         setProgress()
                     } else {
@@ -179,7 +177,7 @@ class AdvancedScanActivity : BaseActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<BotnetResponse>, t: Throwable) {
                 t.message?.let { Log.e("onFailure: ", it) }
             }
         }))

@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "364533202921-0i5a2sm5gkgrvt3utmrb47do2q9q0jst.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vn.ncsc.visafe",
+            "certificate_hash": "59829831de688bbbfdaedb69dfc10ebfaa28f3eb"
+          }
+        },
+        {
+          "client_id": "364533202921-cktk2a48e3fm2b55nb09kgf5sdllgoub.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vn.ncsc.visafe",
+            "certificate_hash": "f36783d6b898e3ebf8755302f3115eb734e00f80"
+          }
+        },
+        {
           "client_id": "364533202921-lp10kcgtj05sl874td29u2rufi6fmluv.apps.googleusercontent.com",
           "client_type": 3
         }

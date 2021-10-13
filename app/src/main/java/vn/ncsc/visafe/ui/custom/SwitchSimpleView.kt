@@ -5,6 +5,7 @@ import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.CompoundButton
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import vn.ncsc.visafe.R
@@ -24,7 +25,7 @@ class SwitchSimpleView @JvmOverloads constructor(
     private var disableExpanded = false
     private var mData: ArrayList<Subject> = arrayListOf()
     private var mOnSwitchChangeListener: ((Boolean) -> Unit)? = null
-    private var mOnSwitchItemChangeListener: ((Boolean, Int) -> Unit)? = null
+    private var mOnSwitchItemChangeListener: ((CompoundButton, Boolean, Int) -> Unit)? = null
 
     init {
         binding = LayoutSwitchSimpleBinding.inflate(LayoutInflater.from(context), this, true)
@@ -82,8 +83,8 @@ class SwitchSimpleView @JvmOverloads constructor(
                 mOnSwitchChangeListener?.invoke(isChecked)
             }
         }
-        subjectAdapter?.setOnSwitchItem { isChecked, position ->
-            mOnSwitchItemChangeListener?.invoke(isChecked, position)
+        subjectAdapter?.setOnSwitchItem { buttonView, isChecked, position ->
+            mOnSwitchItemChangeListener?.invoke(buttonView, isChecked, position)
         }
     }
 
@@ -91,7 +92,7 @@ class SwitchSimpleView @JvmOverloads constructor(
         mOnSwitchChangeListener = onSwitchChange
     }
 
-    fun setOnSwitchItemChangeListener(onSwitchItemChange: (Boolean, Int) -> Unit) {
+    fun setOnSwitchItemChangeListener(onSwitchItemChange: (CompoundButton, Boolean, Int) -> Unit) {
         mOnSwitchItemChangeListener = onSwitchItemChange
     }
 

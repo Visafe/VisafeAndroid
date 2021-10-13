@@ -26,16 +26,18 @@ class NetworkClient {
         const val CODE_NOT_EXISTS_ACCOUNT: Int = 404
         const val CODE_ACCOUNT_ALREADY_ACTIVE = 409
         const val CODE_DELETE_SUCCESS: Int = 204
+        const val CODE_406: Int = 406
+        const val CODE_403: Int = 403
         const val CODE_LIMIT_PAYMENT = 402
         const val CODE_SEVER_ERROR = 502
         const val CODE_TIMEOUT_SESSION = 401
         val ERROR_CODE =
-            listOf(403, 406, 409, 424, 502, 500)
+            listOf(406, 409, 424, 502, 500)
 
-//        const val URL_ROOT = "https://staging.visafe.vn/api/v1/"
-//        const val DOMAIN = "https://dns-staging.visafe.vn/dns-query/"
-        const val URL_ROOT = "https://app.visafe.vn/api/v1/"
-        const val DOMAIN = "https://dns.visafe.vn/dns-query/"
+        const val URL_ROOT = "https://staging.visafe.vn/api/v1/"
+        const val DOMAIN = "https://dns-staging.visafe.vn/dns-query/"
+//        const val URL_ROOT = "https://app.visafe.vn/api/v1/"
+//        const val DOMAIN = "https://dns.visafe.vn/dns-query/"
 
     }
 
@@ -45,10 +47,6 @@ class NetworkClient {
 
     fun clientWithoutToken(context: Context): ApiService {
         return provideApiService(provideRetrofit(provideHttpClientWithoutToken(context)))
-    }
-
-    fun clientCheckBotnet(context: Context): ApiService {
-        return provideApiService(provideRetrofitCheckBotnet(provideHttpClientCheckBotnet(context)))
     }
 
     private fun provideHttpClientWithoutToken(context: Context): OkHttpClient {
@@ -92,37 +90,6 @@ class NetworkClient {
                     if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
             })
 
-            .build()
-    }
-
-    private fun provideHttpClientCheckBotnet(context: Context): OkHttpClient {
-        val trustAllCerts = getTrustManager()
-        val sslContext = SSLContext.getInstance("SSL")
-        sslContext.init(null, trustAllCerts, SecureRandom())
-        // Create an ssl socket factory with our all-trusting manager
-        val sslSocketFactory: SSLSocketFactory = sslContext.socketFactory
-        return OkHttpClient.Builder()
-            .addInterceptor(ApplicationInterceptorWithCheckBotnet())
-            .callTimeout(API_READ_TIMEOUT, TimeUnit.SECONDS)
-            .readTimeout(API_READ_TIMEOUT, TimeUnit.SECONDS)
-            .connectTimeout(API_CONNECT_TIMEOUT, TimeUnit.SECONDS)
-            .addInterceptor(ResponseInterceptor(context))
-            .sslSocketFactory(sslSocketFactory, (trustAllCerts!![0] as X509TrustManager))
-            .hostnameVerifier(HostnameVerifier { _, _ -> true })
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level =
-                    if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
-            })
-
-            .build()
-    }
-
-    private fun provideRetrofitCheckBotnet(client: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .client(client)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https://run.mocky.io/v3/")
             .build()
     }
 

@@ -23,6 +23,11 @@ abstract class BaseDialogBottomSheet<T : ViewDataBinding> : BottomSheetDialogFra
 
     protected abstract fun initView()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme2)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

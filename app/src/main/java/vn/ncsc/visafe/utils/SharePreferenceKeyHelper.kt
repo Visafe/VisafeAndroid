@@ -3,7 +3,9 @@ package vn.ncsc.visafe.utils
 import android.app.Application
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import vn.ncsc.visafe.ViSafeApp
 import vn.ncsc.visafe.model.UserInfo
+import vn.ncsc.visafe.model.WorkspaceGroupData
 
 
 class SharePreferenceKeyHelper private constructor(context: Application) {
@@ -45,14 +47,28 @@ class SharePreferenceKeyHelper private constructor(context: Application) {
         return gson.fromJson(ch, UserInfo::class.java)
     }
 
+    fun getWorkspaceChoose(): WorkspaceGroupData {
+        val ch = sharedPref.getString(PreferenceKey.WORKSPACE_CHOOSE, "{}")!!
+        val gson = Gson()
+        return gson.fromJson(ch, WorkspaceGroupData::class.java)
+    }
+
     fun isEnableProtectedWifiHome(): Boolean {
         return sharedPref.getBoolean(PreferenceKey.IS_ENABLE_PROTECTED_WIFI_HOME, false)
     }
 
     fun clearAllData() {
         val editor = sharedPref.edit()
+        val isProtectedDevice = sharedPref.getBoolean(PreferenceKey.STATUS_OPEN_VPN, false)
+        val deviceId = sharedPref.getString(PreferenceKey.DEVICE_ID, "")
+        val timeScan = sharedPref.getString(PreferenceKey.TIME_LAST_SCAN, "")
+        val numberOfError = sharedPref.getString(PreferenceKey.NUMBER_OF_ERROR, "")
         editor.clear()
         editor.putBoolean(PreferenceKey.IS_FIRST_SHOW_ON_BOARDING, false)
+        editor.putBoolean(PreferenceKey.STATUS_OPEN_VPN, isProtectedDevice)
+        editor.putString(PreferenceKey.DEVICE_ID, deviceId)
+        editor.putString(PreferenceKey.TIME_LAST_SCAN, timeScan)
+        editor.putString(PreferenceKey.NUMBER_OF_ERROR, numberOfError)
         editor.apply()
     }
 

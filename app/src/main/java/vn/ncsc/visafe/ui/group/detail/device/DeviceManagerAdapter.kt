@@ -2,16 +2,20 @@ package vn.ncsc.visafe.ui.group.detail.device
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_member.view.*
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.model.response.DeviceGroup
+import vn.ncsc.visafe.utils.removeAccent
 import vn.ncsc.visafe.utils.setOnSingClickListener
+import java.util.*
 
 class DeviceManagerAdapter(private var onClickDevice: OnClickDevice) :
-    ListAdapter<DeviceGroup, DeviceManagerAdapter.MyViewHolder>(Comparator()) {
+    ListAdapter<DeviceGroup, DeviceManagerAdapter.MyViewHolder>(Comparator()), Filterable {
     private var deviceList: MutableList<DeviceGroup> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -67,6 +71,33 @@ class DeviceManagerAdapter(private var onClickDevice: OnClickDevice) :
 
         override fun areContentsTheSame(oldItem: DeviceGroup, newItem: DeviceGroup): Boolean {
             return oldItem == newItem
+        }
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val filteredList = mutableListOf<DeviceGroup>()
+                if (constraint == null || constraint.isEmpty()) {
+                    filteredList.addAll(deviceList)
+                } else {
+                    for (item in deviceList) {
+                        if (removeAccent(item.deviceName?.lowercase(Locale.ROOT))
+                                .contains(removeAccent(constraint.toString().lowercase(Locale.ROOT)))
+                        ) {
+                            filteredList.add(item)
+                        }
+                    }
+                }
+                val results = FilterResults()
+                results.values = filteredList
+                return results
+            }
+
+            @Suppress("UNCHECKED_CAST")
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                submitList(results?.values as MutableList<DeviceGroup>?)
+            }
         }
     }
 }

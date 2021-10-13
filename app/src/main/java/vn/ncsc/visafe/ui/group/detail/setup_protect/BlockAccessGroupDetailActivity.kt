@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,6 +21,7 @@ import vn.ncsc.visafe.model.Subject
 import vn.ncsc.visafe.model.request.DeleteLogRequest
 import vn.ncsc.visafe.model.request.UpdateWhiteListRequest
 import vn.ncsc.visafe.model.response.QueryLogResponse
+import vn.ncsc.visafe.ui.adapter.WebsiteCreatGroupAdapter
 import vn.ncsc.visafe.ui.create.group.access_manager.Action
 import vn.ncsc.visafe.ui.dialog.VisafeDialogBottomSheet
 import vn.ncsc.visafe.ui.group.detail.BaseSetupProtectActivity
@@ -47,8 +50,15 @@ class BlockAccessGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreIt
     private var blockServiceList: MutableList<String> = mutableListOf()
     private var listBlockServiceDefault: ArrayList<Subject> = arrayListOf()
 
+    private var blockAdapter: WebsiteCreatGroupAdapter? = null
+    private var mDataBlock: ArrayList<Subject> = arrayListOf()
+
+    private var prioritizeAdapter: WebsiteCreatGroupAdapter? = null
+    private var mDataPrioritize: ArrayList<Subject> = arrayListOf()
+
     override fun onBackPressed() {
         super.onBackPressed()
+        setResult(RESULT_OK)
         finish()
     }
 
@@ -74,9 +84,23 @@ class BlockAccessGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreIt
         binding.rcvBlockAccess.adapter = adapter
         adapter?.setOnClickListener(this)
 
+        blockAdapter = WebsiteCreatGroupAdapter {
+            showDialogEditBlock(it)
+        }
+        binding.rvBlock.layoutManager = LinearLayoutManager(applicationContext)
+        binding.rvBlock.adapter = blockAdapter
+
+        prioritizeAdapter = WebsiteCreatGroupAdapter {
+            showDialogEditPrioritize(it)
+        }
+        prioritizeAdapter?.setData(mDataPrioritize)
+        binding.rvPrioritize.layoutManager = LinearLayoutManager(applicationContext)
+        binding.rvPrioritize.adapter = prioritizeAdapter
+
         groupData?.let {
             binding.tvDescription.text = it.name
-            isBlockedAccess = groupData?.blocked_services?.isNotEmpty() == true
+            isBlockedAccess = groupData?.blocked_services?.isNotEmpty() == true ||
+                    groupData?.block_webs?.isNotEmpty() == true
             binding.switchBlockAccess.isChecked = isBlockedAccess
             handleProtected(isBlockedAccess)
             //init data group
@@ -91,12 +115,20 @@ class BlockAccessGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreIt
                 }
             }
             binding.itemBlockAccess.reloadData()
+            it.block_webs?.let { listBlock ->
+                for (i in listBlock) {
+                    mDataBlock.add(Subject(i, i, -1, true))
+                }
+                blockAdapter?.setData(mDataBlock)
+            }
+
         }
     }
 
     private fun initControl() {
         binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
+                setResult(RESULT_OK)
                 finish()
             }
         })
@@ -116,6 +148,9 @@ class BlockAccessGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreIt
                 "9gag",
                 "discord"
             ) else listOf()
+            if (!isChecked) {
+                groupData?.block_webs = mutableListOf()
+            }
             handleProtected(isChecked)
             doUpdateGroup(groupData, this)
         }
@@ -135,7 +170,13 @@ class BlockAccessGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreIt
             ) else listOf()
             doUpdateGroup(groupData, this)
         }
-        binding.itemBlockAccess.setOnSwitchItemChangeListener { isChecked, position ->
+        binding.itemBlockAccess.setOnSwitchItemChangeListener { buttonView,isChecked, position ->
+            if (buttonView.isPressed) {
+                Log.e("switchWidget: ", "click")
+            } else {
+                Log.e("switchWidget: ", "setChecked " + blockServiceList[position])
+                //triggered due to programmatic assignment using 'setChecked()' method.
+            }
             Log.e("initControl: ", " " + position + " " + isChecked + " " + blockServiceList.size)
 //            if (isChecked) {
 //                nativeTrackingList.add(position, listNativeTrackingDefault[position].value)
@@ -164,8 +205,43 @@ class BlockAccessGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreIt
             binding.llProtected.visibility = View.GONE
             binding.clSetupBlock.visibility = View.VISIBLE
         }
+
+        binding.btnBlockWebsite.setOnClickListener {
+            binding.btnBlockWebsite.alpha = 1f
+            binding.viewBlockWeb.visibility = View.VISIBLE
+            binding.rvBlock.visibility = View.VISIBLE
+
+            binding.btnPrioritizeWebsite.alpha = 0.5f
+            binding.viewPrioritize.visibility = View.INVISIBLE
+            binding.rvPrioritize.visibility = View.GONE
+        }
+
+        binding.btnPrioritizeWebsite.setOnClickListener {
+            binding.btnBlockWebsite.alpha = 0.5f
+            binding.viewBlockWeb.visibility = View.INVISIBLE
+            binding.rvBlock.visibility = View.GONE
+
+            binding.btnPrioritizeWebsite.alpha = 1f
+            binding.viewPrioritize.visibility = View.VISIBLE
+            binding.rvPrioritize.visibility = View.VISIBLE
+        }
+        binding.btnAddLink.setOnClickListener {
+            if (binding.viewBlockWeb.visibility == View.VISIBLE) {
+                showDialogBlock()
+            } else {
+                showDialogPrioritize()
+            }
+        }
+        binding.btnReset.setOnSingClickListener {
+            setCheckedForAll(false)
+        }
     }
 
+    private fun setCheckedForAll(isSelected: Boolean) {
+        binding.switchBlockAccess.isChecked = isSelected
+        blockAdapter?.clearAll()
+        prioritizeAdapter?.clearAll()
+    }
 
     private fun handleProtected(isProtected: Boolean) {
         if (isProtected) {
@@ -179,6 +255,13 @@ class BlockAccessGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreIt
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
             doGetQueryLog(groupData)
+            if (binding.viewSetupBlock.isVisible) {
+                binding.viewSetupBlock.visibility = View.VISIBLE
+                binding.llProtected.visibility = View.GONE
+            } else {
+                binding.viewSetupBlock.visibility = View.GONE
+                binding.llProtected.visibility = View.VISIBLE
+            }
         } else {
             binding.llNoProtect.visibility = View.VISIBLE
             binding.llProtected.visibility = View.GONE
@@ -401,7 +484,6 @@ class BlockAccessGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreIt
 
     override fun onUpdateSuccess(data: GroupData) {
         data.let {
-            binding.tvDescription.text = it.name
             isBlockedAccess = groupData?.blocked_services?.isNotEmpty() == true
             binding.switchBlockAccess.isChecked = isBlockedAccess
             handleProtected(isBlockedAccess)
@@ -418,6 +500,105 @@ class BlockAccessGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreIt
                     }
                 }
                 binding.itemBlockAccess.reloadData()
+            }
+        }
+    }
+
+    private fun showDialogEditPrioritize(data: Subject) {
+        val bottomSheet = VisafeDialogBottomSheet.newInstance(
+            getString(R.string.websites),
+            data.title,
+            VisafeDialogBottomSheet.TYPE_EDIT_DELETE,
+            getString(R.string.edit_websites),
+            getString(R.string.delete_websites)
+        )
+        bottomSheet.show(supportFragmentManager, null)
+        bottomSheet.setOnClickListener { text, action ->
+            when (action) {
+                Action.DELETE -> {
+                    prioritizeAdapter?.deleteItem(data)
+                }
+                Action.EDIT -> {
+                    showDialogPrioritize(data)
+                }
+            }
+        }
+    }
+
+    private fun showDialogPrioritize(data: Subject? = null) {
+        val bottomSheet = VisafeDialogBottomSheet.newInstanceEdit(
+            getString(R.string.pri_websites_group),
+            getString(R.string.websites),
+            VisafeDialogBottomSheet.TYPE_INPUT_CONFIRM,
+            getString(R.string.input_website_prioritized),
+            data?.title ?: ""
+        )
+        bottomSheet.show(supportFragmentManager, null)
+        bottomSheet.setOnClickListener { link, action ->
+            hideKeyboard(this@BlockAccessGroupDetailActivity)
+            when (action) {
+                Action.CONFIRM -> {
+                    if (data == null) {
+                        if (link.isNotBlank()) {
+                            prioritizeAdapter?.addItem(Subject(link, link, -1))
+                        }
+                    } else {
+                        data.let { prioritizeAdapter?.editItem(it, Subject(link, link, -1)) }
+                    }
+                }
+                else -> return@setOnClickListener
+            }
+        }
+    }
+
+    private fun showDialogEditBlock(data: Subject) {
+        val bottomSheet = VisafeDialogBottomSheet.newInstance(
+            getString(R.string.websites),
+            data.title,
+            VisafeDialogBottomSheet.TYPE_EDIT_DELETE,
+            getString(R.string.edit_websites),
+            getString(R.string.delete_websites)
+        )
+        bottomSheet.show(supportFragmentManager, null)
+        bottomSheet.setOnClickListener { text, action ->
+            when (action) {
+                Action.DELETE -> {
+                    blockAdapter?.deleteItem(data)
+                    groupData?.block_webs = blockAdapter?.getData()
+                    doUpdateGroup(groupData, this)
+                }
+                Action.EDIT -> {
+                    showDialogBlock(data)
+                }
+            }
+        }
+    }
+
+    private fun showDialogBlock(data: Subject? = null) {
+        val bottomSheet = VisafeDialogBottomSheet.newInstanceEdit(
+            getString(R.string.block_websites_group),
+            getString(R.string.websites),
+            VisafeDialogBottomSheet.TYPE_INPUT_CONFIRM,
+            getString(R.string.input_website),
+            data?.title ?: ""
+        )
+        bottomSheet.show(supportFragmentManager, null)
+        bottomSheet.setOnClickListener { link, action ->
+            hideKeyboard(this@BlockAccessGroupDetailActivity)
+            when (action) {
+                Action.CONFIRM -> {
+                    if (data == null) {
+                        if (link.isNotBlank()) {
+                            mDataBlock.add(Subject(link, link, -1, true))
+                            blockAdapter?.addItem(Subject(link, link, -1, true))
+                            groupData?.block_webs = blockAdapter?.getData()
+                            doUpdateGroup(groupData, this)
+                        }
+                    } else {
+                        data.let { blockAdapter?.editItem(it, Subject(link, link, -1, true)) }
+                    }
+                }
+                else -> return@setOnClickListener
             }
         }
     }

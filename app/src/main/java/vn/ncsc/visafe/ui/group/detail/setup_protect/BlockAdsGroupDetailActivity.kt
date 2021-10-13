@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import androidx.core.view.isVisible
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_upgrade.*
 import okhttp3.ResponseBody
@@ -51,6 +52,7 @@ class BlockAdsGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreItemQ
 
     override fun onBackPressed() {
         super.onBackPressed()
+        setResult(RESULT_OK)
         finish()
     }
 
@@ -77,7 +79,6 @@ class BlockAdsGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreItemQ
         adapter?.setOnClickListener(this)
 
         groupData?.let {
-            binding.tvDescription.text = it.name
             isAdsBlocked = (groupData?.adblock_enabled == true ||
                     groupData?.game_ads_enabled == true ||
                     groupData?.app_ads?.isNotEmpty() == true)
@@ -103,9 +104,13 @@ class BlockAdsGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreItemQ
     private fun initControl() {
         binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
+                setResult(RESULT_OK)
                 finish()
             }
         })
+        binding.btnReset.setOnSingClickListener {
+            binding.switchBlockAds.isChecked = false
+        }
 
         binding.switchBlockAds.setOnCheckedChangeListener { _, isChecked ->
             binding.itemBlockAdsWeb.setChecked(isChecked)
@@ -141,8 +146,14 @@ class BlockAdsGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreItemQ
             ) else listOf()
             doUpdateGroup(groupData, this)
         }
-        binding.itemBlockAdsApp.setOnSwitchItemChangeListener { isChecked, position ->
-            Log.e("initControl: ", " " + position + " " + isChecked)
+        binding.itemBlockAdsApp.setOnSwitchItemChangeListener { buttonView, isChecked, position ->
+            if (buttonView.isPressed) {
+                Log.e("switchWidget: ", "click")
+            } else {
+                Log.e("switchWidget: ", "setChecked " + listAppAdsDefault[position])
+                //triggered due to programmatic assignment using 'setChecked()' method.
+            }
+            Log.e("initControl: ", " " + position + " " + listAppAdsDefault.size)
 //            if (isChecked) {
 //                appAdsList.add(position, listAppAdsDefault[position].value)
 //            } else {
@@ -185,6 +196,13 @@ class BlockAdsGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreItemQ
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
             doGetQueryLog(groupData)
+            if (binding.viewSetupBlock.isVisible) {
+                binding.viewSetupBlock.visibility = View.VISIBLE
+                binding.llProtected.visibility = View.GONE
+            } else {
+                binding.viewSetupBlock.visibility = View.GONE
+                binding.llProtected.visibility = View.VISIBLE
+            }
         } else {
             binding.llNoProtect.visibility = View.VISIBLE
             binding.llProtected.visibility = View.GONE
@@ -359,7 +377,6 @@ class BlockAdsGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreItemQ
 
     override fun onUpdateSuccess(data: GroupData) {
         data.let {
-            binding.tvDescription.text = it.name
             isAdsBlocked = (groupData?.adblock_enabled == true ||
                     groupData?.game_ads_enabled == true ||
                     groupData?.app_ads?.isNotEmpty() == true)

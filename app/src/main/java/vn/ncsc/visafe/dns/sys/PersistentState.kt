@@ -8,9 +8,12 @@ import android.os.Build.VERSION_CODES
 import android.preference.PreferenceManager
 import android.util.Log
 import vn.ncsc.visafe.R
+import vn.ncsc.visafe.ViSafeApp
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.dns.net.setting.RandomString
 import vn.ncsc.visafe.dns.net.setting.Untemplate.strip
+import vn.ncsc.visafe.utils.PreferenceKey
+import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 import java.net.MalformedURLException
 import java.net.URL
 import java.util.*
@@ -133,11 +136,12 @@ class PersistentState {
                 + " " + VERSION_CODES::class.java.fields[Build.VERSION.SDK_INT].name)
         return if (userid === "") {
             if (url == null || url.isEmpty()) {
-                val rd = RandomString()
-                val randomId: String = rd.getAlphaNumericString(12)
-                urlDefault = NetworkClient.DOMAIN + randomId.lowercase(Locale.getDefault())
+                val deviceId = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(
+                    PreferenceKey.DEVICE_ID
+                )
+                urlDefault = NetworkClient.DOMAIN + deviceId.lowercase(Locale.getDefault())
                 val editor = share.edit()
-                editor.putString("userID", randomId.lowercase(Locale.getDefault()))
+                editor.putString("userID", deviceId.lowercase(Locale.getDefault()))
                 editor.putString(
                     "deviceName",
                     reqString.replace("\\s+".toRegex(), "").replace("[\\+\\.\\^\\-:,%&@*$;!#~=_<>?()]".toRegex(), "")

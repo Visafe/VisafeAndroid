@@ -135,7 +135,7 @@ public class GoVpnAdapter {
     private static ParcelFileDescriptor establishVpn(ViSafeVpnService vpnService) {
         try {
             VpnService.Builder builder = vpnService.newBuilder()
-                    .setSession("ViSafe go-tun2socks VPN")
+                    .setSession("Visafe go-tun2socks VPN")
                     .setMtu(VPN_INTERFACE_MTU)
                     .addAddress(LanIp.GATEWAY.make(IPV4_TEMPLATE), IPV4_PREFIX_LENGTH)
                     .addRoute("0.0.0.0", 0)

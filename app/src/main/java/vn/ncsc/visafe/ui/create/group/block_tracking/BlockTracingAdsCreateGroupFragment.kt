@@ -13,13 +13,13 @@ import vn.ncsc.visafe.model.Subject
 import vn.ncsc.visafe.utils.OnSingleClickListener
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
-class BlockTracingAndAdsFragment : BaseFragment<FragmentBlockTracingAndAdsBinding>() {
+class BlockTracingAdsCreateGroupFragment : BaseFragment<FragmentBlockTracingAndAdsBinding>() {
     companion object {
         const val KEY_SELECTED = "KEY_SELECTED"
-        fun newInstance(selected: Boolean, onCallBack: OnSaveBlockTrackingAndAds): BlockTracingAndAdsFragment {
+        fun newInstance(selected: Boolean, onCallBack: OnSaveBlockTrackingAndAds): BlockTracingAdsCreateGroupFragment {
             val args = Bundle()
             args.putBoolean(KEY_SELECTED, selected)
-            val fragment = BlockTracingAndAdsFragment()
+            val fragment = BlockTracingAdsCreateGroupFragment()
             fragment.arguments = args
             fragment.onCallBack = onCallBack
             return fragment

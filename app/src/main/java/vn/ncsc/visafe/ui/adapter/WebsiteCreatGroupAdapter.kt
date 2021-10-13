@@ -59,6 +59,10 @@ class WebsiteCreatGroupAdapter(private val onItemClick: (Subject) -> Unit) :
         notifyItemInserted(mData.size)
     }
 
+    fun clearAll() {
+        mData.clear()
+        notifyDataSetChanged()
+    }
 
     fun editItem(oldData: Subject, newData: Subject) {
         oldData.title = newData.title

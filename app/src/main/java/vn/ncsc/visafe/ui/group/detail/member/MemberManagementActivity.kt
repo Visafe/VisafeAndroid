@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,13 +21,10 @@ import vn.ncsc.visafe.databinding.ActivityMemberManagementBinding
 import vn.ncsc.visafe.model.GroupData
 import vn.ncsc.visafe.model.UsersGroupInfo
 import vn.ncsc.visafe.model.request.UserInGroupRequest
-import vn.ncsc.visafe.ui.adapter.TimeStatistical
 import vn.ncsc.visafe.ui.create.group.access_manager.Action
 import vn.ncsc.visafe.ui.dialog.VisafeDialogBottomSheet
 import vn.ncsc.visafe.ui.group.join.AddMemberInGroupActivity
-import vn.ncsc.visafe.utils.getTextGroup
 import vn.ncsc.visafe.utils.setOnSingClickListener
-import java.lang.Exception
 
 class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectItemListener {
 
@@ -61,6 +60,7 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
             it.listUsersGroupInfo?.toMutableList()?.let { it1 -> listUsersGroupInfo.addAll(it1) }
             binding.tvNumberMember.text = "${listUsersGroupInfo.size} thành viên"
             binding.tvContent.text = it.name
+            binding.tvContent.isSelected = true
             it.usersActive?.let { it1 -> listUsersActive.addAll(it1) }
             it.userManage?.let { it1 -> listUserManage.addAll(it1) }
         }
@@ -70,6 +70,19 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
         memberManagerAdapter?.setData(listUsersGroupInfo)
         binding.rcvMember.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         binding.rcvMember.adapter = memberManagerAdapter
+
+        binding.edtInputSearchMember.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                memberManagerAdapter?.filter?.filter(s)
+            }
+
+        })
     }
 
     override fun onBackPressed() {
@@ -180,7 +193,7 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
         val bottomSheet = VisafeDialogBottomSheet.newInstance(
             "",
             getString(R.string.delete_group_content, "thành viên ${fullName} khỏi nhóm?"),
-            VisafeDialogBottomSheet.TYPE_CONFIRM_CANCLE
+            VisafeDialogBottomSheet.TYPE_CONFIRM_CANCEL
         )
         bottomSheet.show(supportFragmentManager, null)
         bottomSheet.setOnClickListener { _, action ->
@@ -206,15 +219,12 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
                 call: Call<ResponseBody>,
                 response: Response<ResponseBody>
             ) {
+                dismissProgress()
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
                     showToast("Xóa thành viên $fullName thành công")
-                    memberManagerAdapter?.deleteItem(item)
-                    memberManagerAdapter?.notifyDataSetChanged()
-                    binding.tvNumberMember.text = "${listUsersGroupInfo.size} thành viên"
-                    groupData?.listUsersGroupInfo?.clear()
-                    groupData?.listUsersGroupInfo?.addAll(listUsersGroupInfo)
+                    groupData?.groupid?.let { doGetAGroupWithId(it) }
                 }
-                dismissProgress()
+
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -238,23 +248,7 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
                 dismissProgress()
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
                     showToast("Cập nhật thành công")
-                    try {
-                        groupData?.userManage?.add(item.userID.toString())
-                        val listActive: MutableList<String> = mutableListOf()
-                        groupData?.usersActive?.let { listActive.addAll(it) }
-                        groupData?.usersActive?.let { lstActive ->
-                            for (i in lstActive) {
-                                if (item.userID.toString() == i) {
-                                    listActive.remove(i)
-                                }
-                            }
-                        }
-                        groupData?.usersActive?.clear()
-                        groupData?.usersActive?.addAll(listActive)
-                        memberManagerAdapter?.notifyDataSetChanged()
-                    } catch (e: Exception) {
-                        e.message?.let { Log.e("upgradeUserToManager: ", it) }
-                    }
+                    groupData?.groupid?.let { doGetAGroupWithId(it) }
                 }
             }
 
@@ -276,27 +270,11 @@ class MemberManagementActivity : BaseActivity(), MemberManagerAdapter.OnSelectIt
                 call: Call<ResponseBody>,
                 response: Response<ResponseBody>
             ) {
+                dismissProgress()
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
                     showToast("Cập nhật thành công")
-                    try {
-                        groupData?.usersActive?.add(item.userID.toString())
-                        val listManage: MutableList<String> = mutableListOf()
-                        groupData?.userManage?.let { listManage.addAll(it) }
-                        groupData?.userManage?.let { lstActive ->
-                            for (i in lstActive) {
-                                if (item.userID.toString() == i) {
-                                    listManage.remove(i)
-                                }
-                            }
-                        }
-                        groupData?.userManage?.clear()
-                        groupData?.userManage?.addAll(listManage)
-                        memberManagerAdapter?.notifyDataSetChanged()
-                    } catch (e: Exception) {
-                        e.message?.let { Log.e("upgradeUserToViewer: ", it) }
-                    }
+                    groupData?.groupid?.let { doGetAGroupWithId(it) }
                 }
-                dismissProgress()
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
+        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
@@ -131,19 +132,33 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/llEdit" />
 
+            <TextView
+                android:id="@+id/tvWarning"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:textColor="@color/color_FF4451"
+                android:textSize="@dimen/_10sdp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/edtInput"
+                app:layout_constraintStart_toStartOf="@+id/edtInput"
+                app:layout_constraintTop_toBottomOf="@+id/edtInput"
+                tools:text="Tên nhóm phải lớn hơn 3 ký tự và ngắn hơn 100 ký tự"
+                tools:visibility="visible" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="vertical"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtInput">
+                app:layout_constraintTop_toBottomOf="@+id/tvWarning">
 
                 <TextView
                     android:id="@+id/tvConfirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_24dp"
                     android:background="@drawable/bg_radius_24dp"
                     android:backgroundTint="@color/color_FFB31F"
                     android:gravity="center"
@@ -157,7 +172,7 @@
                     android:id="@+id/tvSave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@drawable/bg_radius_24dp"
                     android:backgroundTint="@color/color_FFB31F"
                     android:gravity="center"
@@ -176,7 +191,7 @@
                     android:id="@+id/tvCancel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_12dp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@drawable/bg_radius_24dp"
                     android:backgroundTint="#1A111111"
                     android:fontFamily="@font/sf_pro_text_regular_bold"

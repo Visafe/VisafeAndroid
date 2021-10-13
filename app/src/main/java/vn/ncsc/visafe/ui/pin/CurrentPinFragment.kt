@@ -16,6 +16,8 @@ class CurrentPinFragment : BaseFragment<FragmentCurrentPinBinding>() {
     override fun layoutRes(): Int = R.layout.fragment_current_pin
 
     override fun initView() {
+        binding.etPinCode.requestFocus()
+        showKeyboard()
         val pin = ViSafeApp().getPreference().getString(PreferenceKey.PIN_CODE) ?: ""
         binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {

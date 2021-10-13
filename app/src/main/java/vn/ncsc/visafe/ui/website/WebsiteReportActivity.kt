@@ -81,7 +81,7 @@ class WebsiteReportActivity : BaseActivity() {
                 dismissProgress()
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
                     val dialog = SuccessDialogFragment.newInstance(
-                        "Gửi báo cáo thành công!", "Thông tin báo cáo của bạn đã được ViSafe tiếp nhận.", "Đã hiểu"
+                        "Gửi báo cáo thành công!", "Thông tin báo cáo của bạn đã được Visafe tiếp nhận.", "Đã hiểu"
                     )
                     dialog.show(supportFragmentManager, "")
                     dialog.setOnClickListener {

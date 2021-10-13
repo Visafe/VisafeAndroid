@@ -21,6 +21,7 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.annotation.GuardedBy
 import androidx.annotation.WorkerThread
+import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import protect.Protector
 import vn.ncsc.visafe.R
@@ -111,9 +112,9 @@ class ViSafeVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedP
             // survives under memory pressure.  Since this is a VPN service, it is presumably protected
             // anyway, but the foreground service mechanism allows us to set a persistent notification,
             // which helps users understand what's going on, and return to the app if they want.
-            val mainActivityIntent = PendingIntent.getActivity(
-                this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT
-            )
+//            val mainActivityIntent = PendingIntent.getActivity(
+//                this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT
+//            )
             var builder: Notification.Builder
             if (VERSION.SDK_INT >= VERSION_CODES.O) {
                 val name: CharSequence = getString(R.string.channel_name)
@@ -133,14 +134,13 @@ class ViSafeVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedP
                 builder = builder.setPriority(Notification.PRIORITY_MIN)
             }
             builder.setSmallIcon(R.drawable.ic_logo_noti)
+                .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
                 .setContentTitle(resources.getText(R.string.notification_title))
                 .setContentText(resources.getText(R.string.notification_content))
-                .setContentIntent(mainActivityIntent)
-            if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
-                // Secret notifications are not shown on the lock screen.  No need for this app to show there.
-                // Only available in API >= 21
-                builder = builder.setVisibility(Notification.VISIBILITY_SECRET)
-            }
+//                .setContentIntent(mainActivityIntent)
+            // Secret notifications are not shown on the lock screen.  No need for this app to show there.
+            // Only available in API >= 21
+            builder = builder.setVisibility(Notification.VISIBILITY_SECRET)
             startForeground(SERVICE_ID, builder.notification)
             //remove notification
             stopForeground(true)
@@ -221,13 +221,14 @@ class ViSafeVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedP
                 // Deprecated in API 26.
                 builder = builder.setPriority(Notification.PRIORITY_MAX)
             }
-            val mainActivityIntent = PendingIntent.getActivity(
-                this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT
-            )
+//            val mainActivityIntent = PendingIntent.getActivity(
+//                this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT
+//            )
             builder.setSmallIcon(R.drawable.ic_logo_noti)
+                .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
                 .setContentTitle(resources.getText(R.string.warning_title))
                 .setContentText(resources.getText(R.string.notification_content))
-                .setFullScreenIntent(mainActivityIntent, true) // Open the main UI if possible.
+//                .setFullScreenIntent(mainActivityIntent, true) // Open the main UI if possible.
                 .setAutoCancel(true)
             if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
                 builder.setCategory(Notification.CATEGORY_ERROR)

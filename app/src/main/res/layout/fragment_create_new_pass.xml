@@ -68,85 +68,119 @@
 
 
         <RelativeLayout
-            android:orientation="horizontal"
             android:id="@+id/rlPassNew"
-            android:layout_below="@id/tvEmail"
-            android:background="@drawable/bg_edittext"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/_24dp"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_below="@id/tvEmail"
             android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_24dp"
             android:layout_marginEnd="@dimen/_24dp"
-            android:layout_height="@dimen/_48sdp">
+            android:background="@drawable/bg_edittext"
+            android:orientation="horizontal">
 
             <EditText
-                android:layout_margin="@dimen/_2dp"
                 android:id="@+id/edtPassNew"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="@dimen/_2dp"
+                android:layout_toStartOf="@id/ivPassNew"
                 android:background="@color/white"
                 android:ellipsize="end"
-                android:textSize="@dimen/text_size_16sp"
                 android:fontFamily="@font/sf_pro_text_regular"
                 android:hint="@string/input_new_pass"
                 android:inputType="textPassword"
                 android:maxLength="32"
-                android:layout_toStartOf="@id/ivPassNew"
                 android:paddingHorizontal="@dimen/_16dp"
                 android:singleLine="true"
-                android:textColor="@color/color_111111" />
+                android:textColor="@color/color_111111"
+                android:textSize="@dimen/text_size_16sp" />
 
             <ImageView
-                android:focusable="false"
                 android:id="@+id/ivPassNew"
-                android:layout_centerVertical="true"
-                android:padding="@dimen/_8dp"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_eye_on"
                 android:layout_width="@dimen/_32dp"
                 android:layout_height="@dimen/_42dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:focusable="false"
+                android:padding="@dimen/_8dp"
+                android:src="@drawable/ic_eye_on"
                 app:tint="@color/color_aaaaaa"
                 tools:ignore="ContentDescription" />
         </RelativeLayout>
 
         <TextView
-            android:visibility="gone"
-            android:layout_below="@id/rlPassNew"
-            android:text="@string/pass_warning"
             android:id="@+id/tvWarning"
-            android:textColor="@color/color_FF4451"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:layout_marginStart="@dimen/_40sdp"
-            android:layout_marginEnd="@dimen/_24dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rlPassNew"
+            android:layout_marginStart="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:text="@string/pass_warning"
+            android:textColor="@color/color_FF4451"
+            android:visibility="gone" />
 
-        <EditText
-            android:id="@+id/edtPassNewAgain"
+        <RelativeLayout
+            android:id="@+id/rlPassNewAgain"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_48sdp"
             android:layout_below="@id/tvWarning"
-            android:layout_marginTop="@dimen/_12sdp"
             android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_24dp"
             android:layout_marginEnd="@dimen/_24dp"
             android:background="@drawable/bg_edittext"
-            android:ellipsize="end"
-            android:textSize="@dimen/text_size_16sp"
-            android:fontFamily="@font/sf_pro_text_regular"
-            android:hint="@string/input_new_pass_again"
-            android:inputType="textPassword"
-            android:maxLength="32"
-            android:paddingHorizontal="@dimen/_16dp"
-            android:singleLine="true"
-            android:textColor="@color/color_111111" />
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edtPassNewAgain"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_2dp"
+                android:layout_toStartOf="@id/ivPassNewAgain"
+                android:background="@color/white"
+                android:ellipsize="end"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:hint="@string/input_new_pass_again"
+                android:inputType="textPassword"
+                android:maxLength="32"
+                android:paddingHorizontal="@dimen/_16dp"
+                android:singleLine="true"
+                android:textColor="@color/color_111111"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <ImageView
+                android:id="@+id/ivPassNewAgain"
+                android:layout_width="@dimen/_32dp"
+                android:layout_height="@dimen/_42dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:focusable="false"
+                android:padding="@dimen/_8dp"
+                android:src="@drawable/ic_eye_on"
+                app:tint="@color/color_aaaaaa"
+                tools:ignore="ContentDescription" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvWarningAgain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rlPassNewAgain"
+            android:layout_marginStart="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:text="@string/pass_warning"
+            android:textColor="@color/color_FF4451"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_44sdp"
-            android:layout_below="@id/edtPassNewAgain"
+            android:layout_below="@id/rlPassNewAgain"
             android:layout_marginStart="@dimen/_24dp"
-            android:layout_marginEnd="@dimen/_24dp"
             android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_24dp"
             android:background="@drawable/bg_radius_8dp"
             android:backgroundTint="@color/color_FFB31F"
             android:fontFamily="@font/sf_pro_text_regular_bold"

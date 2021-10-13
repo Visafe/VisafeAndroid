@@ -12,11 +12,13 @@ import android.view.View
 import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
 import com.facebook.login.LoginManager
+import com.google.gson.Gson
 import com.rengwuxian.materialedittext.MaterialEditText
 import kotlinx.android.synthetic.main.item_config.*
 import retrofit2.Call
 import retrofit2.Response
 import vn.ncsc.visafe.R
+import vn.ncsc.visafe.data.BaseResponse
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivityLoginBinding
 import vn.ncsc.visafe.model.request.LoginRequest
@@ -39,7 +41,18 @@ class LoginActivity : BaseAuthenticationActivity() {
         initControl()
     }
 
+    var filter = InputFilter { source, start, end, dest, dstart, dend ->
+        for (i in start until end) {
+            if (Character.isWhitespace(source[i])) {
+                return@InputFilter ""
+            }
+        }
+        null
+    }
+
     private fun initView() {
+        viewBinding.edtInputEmail.filters = arrayOf(filter, InputFilter.LengthFilter(50))
+        viewBinding.edtInputPassword.filters = arrayOf(filter, InputFilter.LengthFilter(50))
         viewBinding.edtInputEmail.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
@@ -143,24 +156,32 @@ class LoginActivity : BaseAuthenticationActivity() {
                 call: Call<LoginResponse>,
                 response: Response<LoginResponse>
             ) {
-                dismissProgress()
-                if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    response.body()?.msg?.let { Log.e("onResponse: ", it) }
-                    val token = response.body()?.token
-                    token?.let {
-                        SharePreferenceKeyHelper.getInstance(application).putString(
-                            PreferenceKey.AUTH_TOKEN, it
-                        )
-                        SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.ISLOGIN, true)
+                when {
+                    response.code() == NetworkClient.CODE_SUCCESS -> {
+                        response.body()?.msg?.let { Log.e("onResponse: ", it) }
+                        val token = response.body()?.token
+                        token?.let {
+                            SharePreferenceKeyHelper.getInstance(application).putString(
+                                PreferenceKey.AUTH_TOKEN, it
+                            )
+                            SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.ISLOGIN, true)
+                        }
+                        setResult(RESULT_OK)
+                        finish()
                     }
-//                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-//                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                    startActivity(intent)
-                    setResult(RESULT_OK)
-                    finish()
-                } else if (response.code() == NetworkClient.CODE_NOT_EXISTS_ACCOUNT) {
-                    response.body()?.msg?.let { showToast(it) }
+                    response.code() == NetworkClient.CODE_NOT_EXISTS_ACCOUNT -> {
+                        response.body()?.msg?.let { showToast(it) }
+                    }
+                    response.code() == NetworkClient.CODE_TIMEOUT_SESSION -> {
+                        response.errorBody()?.let {
+                            val buffer = it?.source()?.buffer?.readByteArray()
+                            val dataString = buffer?.decodeToString()
+                            val jsonObject = Gson().fromJson(dataString, BaseResponse::class.java)
+                            jsonObject.localMsg?.let { it1 -> showToast(it1) }
+                        }
+                    }
                 }
+                dismissProgress()
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
@@ -173,7 +194,7 @@ class LoginActivity : BaseAuthenticationActivity() {
     private fun validateField(): Boolean {
         var isValidField = true
         listError.clear()
-        if (viewBinding.edtInputEmail.text.isNullOrEmpty()) {
+        if (viewBinding.edtInputEmail.text.isNullOrBlank()) {
             viewBinding.edtInputEmail.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
             viewBinding.tvInputEmailError.visibility = View.VISIBLE
             viewBinding.tvInputEmailError.text = getString(R.string.warning_input_number_phone_email)

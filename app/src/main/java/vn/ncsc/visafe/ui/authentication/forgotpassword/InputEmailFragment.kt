@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
+import com.google.gson.Gson
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -14,7 +15,7 @@ import retrofit2.Response
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.base.BaseFragment
-import vn.ncsc.visafe.data.BaseCallback
+import vn.ncsc.visafe.data.BaseResponse
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.FragmentInputEmailBinding
 import vn.ncsc.visafe.model.request.LoginRequest
@@ -102,44 +103,61 @@ class InputEmailFragment : BaseFragment<FragmentInputEmailBinding>(), InputOTPFr
                 return
             }
         }
-        getOtpForgotPassword()
+        getOtpForgotPassword(false)
     }
 
-    private fun getOtpForgotPassword() {
-        showProgressDialog()
+    private fun getOtpForgotPassword(isResendOtp: Boolean) {
+        if (!isResendOtp)
+            showProgressDialog()
         username = if (isNumber(binding.edtInputEmail.text.toString()))
             formatMobileHead84(binding.edtInputEmail.text.toString()) else binding.edtInputEmail.text.toString()
         val client = NetworkClient()
-        val call = context?.let { client.clientWithoutToken(context = it).doRequestEmailForgotPassword(LoginRequest(username = username)) }
-        call?.enqueue(
-            BaseCallback(
-                this, object : Callback<ResponseBody> {
-                    override fun onResponse(
-                        call: Call<ResponseBody>,
-                        response: Response<ResponseBody>
-                    ) {
-                        dismissProgress()
-                        if (response.code() == NetworkClient.CODE_SUCCESS) {
-                            if (inputOTPFragment == null || inputOTPFragment?.isVisible == false) {
-                                inputOTPFragment = InputOTPFragment(
-                                    onInputOtpDialog = this@InputEmailFragment,
-                                    InputOTPFragment.TypeOTP.FORGOT_PASSWORD,
-                                    "Xác thực tài khoản",
-                                    username
-                                )
-                                inputOTPFragment?.show(childFragmentManager, "inputOTPFragment")
-                            } else {
-                                (activity as BaseActivity).showToast("Mã xác nhận đã được gửi lại vào email/số điện thoại của bạn")
-                            }
-                        }
+        val call = context?.let {
+            client.clientWithoutToken(context = it).doRequestEmailForgotPassword(LoginRequest(username = username))
+        }
+        call?.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                if (!isResendOtp)
+                    dismissProgress()
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    if (inputOTPFragment == null || inputOTPFragment?.isVisible == false) {
+                        inputOTPFragment = InputOTPFragment(
+                            onInputOtpDialog = this@InputEmailFragment,
+                            InputOTPFragment.TypeOTP.FORGOT_PASSWORD,
+                            "Xác thực tài khoản",
+                            username
+                        )
+                        inputOTPFragment?.show(childFragmentManager, "inputOTPFragment")
+                    } else {
+                        (activity as BaseActivity).showToast("Mã xác nhận đã được gửi lại vào email/số điện thoại của bạn")
                     }
+                } else if (response.code() == NetworkClient.CODE_EXISTS_ACCOUNT) {
+                    (activity as BaseActivity).showToast(
+                        "Email hoặc số điện thoại của bạn không hợp lệ, vui lòng kiểm tra lại"
+                    )
+                } else if (response.code() == NetworkClient.CODE_406) {
+                    (activity as BaseActivity).showToast(
+                        "OTP chỉ có thể được gửi lại sau 60 giây"
+                    )
+                } else {
+                    response.errorBody()?.let {
+                        val buffer = it?.source()?.buffer?.readByteArray()
+                        val dataString = buffer?.decodeToString()
+                        val jsonObject = Gson().fromJson(dataString, BaseResponse::class.java)
+                        jsonObject.localMsg?.let { it1 -> (activity as BaseActivity).showToast(it1) }
+                    }
+                }
+            }
 
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        t.message?.let { Log.e("onFailure: ", it) }
-                        dismissProgress()
-                    }
-                })
-        )
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                if (!isResendOtp)
+                    dismissProgress()
+            }
+        })
     }
 
     override fun onInputOTP(otp: String) {
@@ -152,7 +170,7 @@ class InputEmailFragment : BaseFragment<FragmentInputEmailBinding>(), InputOTPFr
     }
 
     override fun onSendToOtp() {
-        getOtpForgotPassword()
+        getOtpForgotPassword(true)
     }
 
 }

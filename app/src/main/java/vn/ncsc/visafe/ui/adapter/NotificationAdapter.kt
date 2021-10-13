@@ -72,6 +72,10 @@ class NotificationAdapter(private val onSelectItemListener: OnSelectItemListener
                     }
                     icon = R.drawable.ic_notify_protect_device
                 }
+                "REQUEST_OUT_GROUP" -> {
+                    title = "Thiết bị ${item.content?.deviceName} yêu cầu rời khỏi nhóm ${item.group?.name}"
+                    icon = R.drawable.ic_notify_protect_device
+                }
             }
             itemView.tvTitle.text = title + "\uD83D\uDD25"
             itemView.tvTime.text = item?.createdAt?.let { getTimeAgo(it.toLong()) }

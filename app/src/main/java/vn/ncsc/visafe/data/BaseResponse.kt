@@ -8,5 +8,7 @@ open class BaseResponse(
     @SerializedName("status_code")
     open var status_code: Int? = null,
     @SerializedName("msg")
-    open var msg: String? = null
+    open var msg: String? = null,
+    @SerializedName("local_msg")
+    open var localMsg: String? = null
 )

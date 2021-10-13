@@ -3,6 +3,7 @@ package vn.ncsc.visafe.ui.authentication
 import android.content.Intent
 import android.os.Bundle
 import android.text.*
+import android.text.InputFilter
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.LinkMovementMethod
 import android.text.method.PasswordTransformationMethod
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat
 import com.facebook.login.LoginManager
 import com.google.android.material.textfield.TextInputEditText
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.item_config.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,6 +33,7 @@ import vn.ncsc.visafe.ui.MainActivity
 import vn.ncsc.visafe.ui.authentication.forgotpassword.InputOTPFragment
 import vn.ncsc.visafe.utils.*
 
+
 class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputOtpDialog {
 
     lateinit var viewBinding: ActivityRegisterBinding
@@ -46,7 +49,18 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
         initControl()
     }
 
+    var filter = InputFilter { source, start, end, dest, dstart, dend ->
+        for (i in start until end) {
+            if (Character.isWhitespace(source[i])) {
+                return@InputFilter ""
+            }
+        }
+        null
+    }
+
     private fun initView() {
+        viewBinding.edtInputEmail.filters = arrayOf(filter, InputFilter.LengthFilter(50))
+        viewBinding.edtInputPassword.filters = arrayOf(filter, InputFilter.LengthFilter(50))
         viewBinding.edtInputEmail.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
@@ -57,8 +71,8 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
                     ContextCompat.getDrawable(applicationContext, R.drawable.bg_custom_edittext)
             }
 
-            override fun afterTextChanged(p0: Editable?) {
-                viewBinding.btnClearTextInputEmail.visibility = if (p0.isNullOrEmpty()) View.GONE else View.VISIBLE
+            override fun afterTextChanged(s: Editable?) {
+                viewBinding.btnClearTextInputEmail.visibility = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE
             }
 
         })
@@ -170,13 +184,12 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
         registerRequest.repeatPassword = viewBinding.edtInputPassword.text.toString()
         val client = NetworkClient()
         val call = client.clientWithoutToken(context = applicationContext).doRegister(registerRequest)
-        call.enqueue(BaseCallback(this, object : Callback<BaseResponse> {
+        call.enqueue(object : Callback<BaseResponse> {
             override fun onResponse(
                 call: Call<BaseResponse>,
                 response: Response<BaseResponse>
             ) {
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    dismissProgress()
                     response.body()?.msg?.let {
                         Toast.makeText(
                             applicationContext,
@@ -190,8 +203,16 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
                     )
                     inputOTPFragment?.show(supportFragmentManager, "inputOTPFragment")
                 } else if (response.code() == NetworkClient.CODE_EXISTS_ACCOUNT) {
-                    doReSendOTP()
+                    doReSendOTP(false)
+                } else {
+                    response.errorBody()?.let {
+                        val buffer = it?.source()?.buffer?.readByteArray()
+                        val dataString = buffer?.decodeToString()
+                        val jsonObject = Gson().fromJson(dataString, BaseResponse::class.java)
+                        jsonObject.localMsg?.let { it1 -> showToast(it1) }
+                    }
                 }
+                dismissProgress()
             }
 
             override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
@@ -199,11 +220,12 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
                 dismissProgress()
             }
 
-        }))
+        })
     }
 
-    private fun doReSendOTP() {
-        showProgressDialog()
+    private fun doReSendOTP(isResendOtp: Boolean) {
+        if (!isResendOtp)
+            showProgressDialog()
         val reSendOTP = LoginRequest()
         if (isNumber(viewBinding.edtInputEmail.text.toString())) {
             reSendOTP.username = formatMobileHead84(viewBinding.edtInputEmail.text.toString())
@@ -212,7 +234,7 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
         }
         val client = NetworkClient()
         val call = client.clientWithoutToken(context = applicationContext).doReActiveAccount(reSendOTP)
-        call.enqueue(BaseCallback(this, object : Callback<BaseResponse> {
+        call.enqueue(object : Callback<BaseResponse> {
             override fun onResponse(
                 call: Call<BaseResponse>,
                 response: Response<BaseResponse>
@@ -235,22 +257,33 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
                     } else {
                         showToast("Mã xác nhận đã được gửi lại vào email/số điện thoại của bạn")
                     }
+                } else if (response.code() == NetworkClient.CODE_ACCOUNT_ALREADY_ACTIVE) {
+                    showToast("Số điện thoại hoặc Email đã tồn tại!")
+                } else {
+                    response.errorBody()?.let {
+                        val buffer = it?.source()?.buffer?.readByteArray()
+                        val dataString = buffer?.decodeToString()
+                        val jsonObject = Gson().fromJson(dataString, BaseResponse::class.java)
+                        jsonObject.localMsg?.let { it1 -> showToast(it1) }
+                    }
                 }
-                dismissProgress()
+                if (!isResendOtp)
+                    dismissProgress()
             }
 
             override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
                 t.message?.let { Log.e("onFailure: ", it) }
-                dismissProgress()
+                if (!isResendOtp)
+                    dismissProgress()
             }
 
-        }))
+        })
     }
 
     private fun validateField(): Boolean {
         var isValidField = true
         listError.clear()
-        if (viewBinding.edtInputFullName.text.isNullOrEmpty()) {
+        if (viewBinding.edtInputFullName.text.isNullOrBlank()) {
             viewBinding.edtInputFullName.background = ContextCompat.getDrawable(applicationContext, R.drawable.bg_edittext_error)
             viewBinding.tvInputFullNameError.visibility = View.VISIBLE
             viewBinding.tvInputFullNameError.text = getString(R.string.warning_input_full_name)
@@ -342,25 +375,26 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
         activeAccountRequest.otp = otp
         val client = NetworkClient()
         val call = client.clientWithoutToken(context = applicationContext).doActiveAccount(activeAccountRequest)
-        call.enqueue(BaseCallback(this, object : Callback<BaseResponse> {
+        call.enqueue(object : Callback<BaseResponse> {
             override fun onResponse(
                 call: Call<BaseResponse>,
                 response: Response<BaseResponse>
             ) {
-                dismissProgress()
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
                     inputOTPFragment?.dismiss()
-                    response.body()?.msg?.let {
+                    response.body()?.localMsg?.let {
                         Toast.makeText(
                             applicationContext,
-                            "Đăng ký tài khoản thành công",
+                            it,
                             Toast.LENGTH_LONG
                         ).show()
                     }
-                    autoLogin()
+                    finish()
+//                    autoLogin()
                 } else {
                     inputOTPFragment?.setErrorOtp("Mã xác thực không chính xác")
                 }
+                dismissProgress()
             }
 
             override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
@@ -368,7 +402,7 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
                 dismissProgress()
             }
 
-        }))
+        })
     }
 
     private fun autoLogin() {
@@ -382,7 +416,7 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
         loginRequest.password = viewBinding.edtInputPassword.text.toString()
         val client = NetworkClient()
         val call = client.clientWithoutToken(context = applicationContext).doLogin(loginRequest)
-        call.enqueue(BaseCallback(this@RegisterActivity, object : Callback<LoginResponse> {
+        call.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(
                 call: Call<LoginResponse>,
                 response: Response<LoginResponse>
@@ -408,10 +442,10 @@ class RegisterActivity : BaseAuthenticationActivity(), InputOTPFragment.OnInputO
                 t.message?.let { Log.e("onFailure: ", it) }
                 dismissProgress()
             }
-        }))
+        })
     }
 
     override fun onSendToOtp() {
-        doReSendOTP()
+        doReSendOTP(true)
     }
 }

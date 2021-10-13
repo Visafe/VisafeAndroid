@@ -1,5 +1,6 @@
 package vn.ncsc.visafe.ui.group.join
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
@@ -8,7 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.google.gson.Gson
 import okhttp3.ResponseBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,8 +18,8 @@ import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.BaseResponse
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivityJoinGroupBinding
+import vn.ncsc.visafe.model.GroupData
 import vn.ncsc.visafe.model.request.AddDeviceRequest
-import vn.ncsc.visafe.model.response.BotnetResponse
 import vn.ncsc.visafe.ui.create.group.SuccessDialogFragment
 import vn.ncsc.visafe.ui.create.group.access_manager.Action
 import vn.ncsc.visafe.utils.PreferenceKey
@@ -42,9 +42,9 @@ class JoinGroupActivity : BaseActivity() {
         setContentView(binding.root)
         intent?.let {
             groupId = it.getStringExtra(GROUP_ID)
-            groupName = it.getStringExtra(GROUP_NAME)
         }
-        binding.tvNameGroup.text = groupName
+
+        groupId?.let { it1 -> doGetAGroupWithId(it1) }
         binding.ivBack.setOnClickListener {
             finish()
         }
@@ -70,6 +70,7 @@ class JoinGroupActivity : BaseActivity() {
         dialog.setOnClickListener {
             when (it) {
                 Action.CONFIRM -> {
+                    setResult(RESULT_OK)
                     finish()
                 }
                 else -> {
@@ -79,6 +80,33 @@ class JoinGroupActivity : BaseActivity() {
         }
     }
 
+
+    private fun doGetAGroupWithId(id: String) {
+        showProgressDialog()
+        val client = NetworkClient()
+        val call = client.client(context = applicationContext).doGetAGroupWithId(id)
+        call.enqueue(BaseCallback(this, object : Callback<GroupData> {
+            @SuppressLint("SetTextI18n")
+            override fun onResponse(
+                call: Call<GroupData>,
+                response: Response<GroupData>
+            ) {
+                dismissProgress()
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    response.body()?.let {
+                        groupName = it.name
+                        binding.tvNameGroup.text = groupName
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<GroupData>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        }))
+    }
 
     private fun enableButton() {
         val name = binding.etName.text.toString()
@@ -136,22 +164,15 @@ class JoinGroupActivity : BaseActivity() {
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
                     showDialogComplete()
                 } else if (response.code() == NetworkClient.CODE_EXISTS_ACCOUNT) {
-                    response.errorBody()?.let {
-                        val buffer = response.errorBody()?.source()?.buffer?.readByteArray()
-                        val dataString = buffer?.decodeToString()
-                        val responseData = Gson().fromJson(dataString, BaseResponse::class.java)
-                        responseData.msg?.let {
-                            val builder = AlertDialog.Builder(this@JoinGroupActivity)
-                            with(builder)
-                            {
-                                setTitle(getString(R.string.thong_bao))
-                                setMessage(it)
-                                setPositiveButton(
-                                    getString(R.string.dong_y)
-                                ) { _, _ -> finish() }
-                                show()
-                            }
-                        }
+                    val builder = AlertDialog.Builder(this@JoinGroupActivity)
+                    with(builder)
+                    {
+                        setTitle(getString(R.string.thong_bao))
+                        setMessage("Thiết bị đã được thêm vào nhóm")
+                        setPositiveButton(
+                            getString(R.string.dong_y)
+                        ) { _, _ -> finish() }
+                        show()
                     }
                 }
             }

@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.ViSafeApp
+import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.databinding.FragmentCreateNewPassBinding
 import vn.ncsc.visafe.utils.OnSingleClickListener
@@ -16,6 +17,7 @@ import vn.ncsc.visafe.utils.setOnSingClickListener
 class CreateNewPassFragment : BaseFragment<FragmentCreateNewPassBinding>() {
 
     private var isShowPassNew = false
+    private var isShowPassNewAgain = false
     private var changePasswordActivity: ChangePasswordActivity? = null
 
     override fun layoutRes(): Int = R.layout.fragment_create_new_pass
@@ -30,7 +32,12 @@ class CreateNewPassFragment : BaseFragment<FragmentCreateNewPassBinding>() {
     override fun initView() {
         enableButton()
         handleShowPasswordNew()
+        handleShowPasswordNewAgain()
         binding.btnSave.setOnSingClickListener {
+            if (binding.edtPassNew.text.toString() != binding.edtPassNewAgain.text.toString()) {
+                (activity as BaseActivity).showToast("Mật khẩu nhập lại không trùng với mật khẩu mới, vui lòng kiểm tra lại")
+                return@setOnSingClickListener
+            }
             changePasswordActivity?.changePasswordRequest?.newPassword = binding.edtPassNew.text.toString()
             changePasswordActivity?.changePasswordRequest?.repeatPassword = binding.edtPassNewAgain.text.toString()
             changePasswordActivity?.doChangePassword()
@@ -47,6 +54,13 @@ class CreateNewPassFragment : BaseFragment<FragmentCreateNewPassBinding>() {
             enableButton()
         }
         binding.edtPassNewAgain.addTextChangedListener {
+            if (binding.edtPassNewAgain.length() in 6..32) {
+                binding.rlPassNewAgain.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext)
+                binding.tvWarningAgain.visibility = View.GONE
+            } else {
+                binding.rlPassNewAgain.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_edittext_warning)
+                binding.tvWarningAgain.visibility = View.VISIBLE
+            }
             enableButton()
         }
         binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
@@ -56,6 +70,9 @@ class CreateNewPassFragment : BaseFragment<FragmentCreateNewPassBinding>() {
         })
         binding.ivPassNew.setOnClickListener {
             handleShowPasswordNew()
+        }
+        binding.ivPassNewAgain.setOnClickListener {
+            handleShowPasswordNewAgain()
         }
         val userInfo = ViSafeApp().getPreference().getUserInfo()
         userInfo.let {
@@ -114,6 +131,25 @@ class CreateNewPassFragment : BaseFragment<FragmentCreateNewPassBinding>() {
                 binding.ivPassNew.setImageResource(R.drawable.ic_eye_on)
             }
             binding.edtPassNew.setSelection(binding.edtPassNew.text.toString().trim().length)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun handleShowPasswordNewAgain() {
+        try {
+            if (!isShowPassNewAgain) {
+                isShowPassNewAgain = true
+                binding.edtPassNewAgain.transformationMethod =
+                    PasswordTransformationMethod.getInstance()
+                binding.ivPassNewAgain.setImageResource(R.drawable.ic_eye_off)
+            } else {
+                isShowPassNewAgain = false
+                binding.edtPassNewAgain.transformationMethod =
+                    HideReturnsTransformationMethod.getInstance()
+                binding.ivPassNewAgain.setImageResource(R.drawable.ic_eye_on)
+            }
+            binding.edtPassNewAgain.setSelection(binding.edtPassNewAgain.text.toString().trim().length)
         } catch (e: Exception) {
             e.printStackTrace()
         }

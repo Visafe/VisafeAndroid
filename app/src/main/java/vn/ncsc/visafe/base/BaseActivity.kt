@@ -173,7 +173,6 @@ open class BaseActivity : AppCompatActivity(), BaseController {
         return SharePreferenceKeyHelper.getInstance(application).isLogin()
     }
 
-
     fun getWifiName(): String {
         val wifi = applicationContext.getSystemService(WIFI_SERVICE) as WifiManager
         val networkList = wifi.scanResults
@@ -337,37 +336,6 @@ open class BaseActivity : AppCompatActivity(), BaseController {
         return keyguardManager.isKeyguardSecure
     }
 
-    fun getDeviceId() {
-        if (SharePreferenceKeyHelper.getInstance(application).getString(PreferenceKey.DEVICE_ID).isEmpty()) {
-            val client = NetworkClient()
-            val call = client.clientWithoutToken(context = applicationContext).doGetDeviceId()
-            call.enqueue(BaseCallback(this, object : Callback<DeviceIdResponse> {
-                override fun onResponse(
-                    call: Call<DeviceIdResponse>,
-                    response: Response<DeviceIdResponse>
-                ) {
-                    if (response.code() == NetworkClient.CODE_SUCCESS) {
-                        response.body()?.deviceId?.let {
-                            SharePreferenceKeyHelper.getInstance(application).putString(PreferenceKey.DEVICE_ID, it.lowercase())
-                        }
-                    } else {
-                        val rd = RandomString()
-                        val randomId: String = rd.getAlphaNumericString(12)
-                        SharePreferenceKeyHelper.getInstance(application)
-                            .putString(PreferenceKey.DEVICE_ID, randomId.lowercase())
-                    }
-                }
-
-                override fun onFailure(call: Call<DeviceIdResponse>, t: Throwable) {
-                    t.message?.let { Log.e("onFailure: ", it) }
-                    val rd = RandomString()
-                    val randomId: String = rd.getAlphaNumericString(12)
-                    SharePreferenceKeyHelper.getInstance(application).putString(PreferenceKey.DEVICE_ID, randomId.lowercase())
-                }
-            }))
-        }
-    }
-
     fun getNewTokenFCM() {
         if (SharePreferenceKeyHelper.getInstance(application).getString(PreferenceKey.TOKEN_FCM).isEmpty()) {
             FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -389,30 +357,28 @@ open class BaseActivity : AppCompatActivity(), BaseController {
     }
 
     private fun requestSendToken() {
-        if (!SharePreferenceKeyHelper.getInstance(application).getBoolean(PreferenceKey.STATUS_SEND_TOKEN)) {
-            val tokenFCM = SharePreferenceKeyHelper.getInstance(application).getString(PreferenceKey.TOKEN_FCM)
-            val deviceId = SharePreferenceKeyHelper.getInstance(application).getString(PreferenceKey.DEVICE_ID)
-            val client = NetworkClient()
-            val call = client.clientWithoutToken(context = applicationContext)
-                .doSendToken(SendTokenRequest(token = tokenFCM, deviceId = deviceId))
-            call.enqueue(BaseCallback(this, object : Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
-                ) {
-                    if (response.code() == NetworkClient.CODE_SUCCESS) {
-                        SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.STATUS_SEND_TOKEN, true)
-                    } else {
-                        SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.STATUS_SEND_TOKEN, false)
-                    }
-                }
-
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    t.message?.let { Log.e("onFailure: ", it) }
+        val tokenFCM = SharePreferenceKeyHelper.getInstance(application).getString(PreferenceKey.TOKEN_FCM)
+        val deviceId = SharePreferenceKeyHelper.getInstance(application).getString(PreferenceKey.DEVICE_ID)
+        val client = NetworkClient()
+        val call = client.clientWithoutToken(context = applicationContext)
+            .doSendToken(SendTokenRequest(token = tokenFCM, deviceId = deviceId))
+        call.enqueue(BaseCallback(this, object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.STATUS_SEND_TOKEN, true)
+                } else {
                     SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.STATUS_SEND_TOKEN, false)
                 }
-            }))
-        }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                SharePreferenceKeyHelper.getInstance(application).putBoolean(PreferenceKey.STATUS_SEND_TOKEN, false)
+            }
+        }))
     }
 
     fun checkPermission(permissions: Array<String>, onPermissionGranted: OnPermissionGranted) {

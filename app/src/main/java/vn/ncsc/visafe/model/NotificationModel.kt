@@ -56,7 +56,11 @@ data class ContentNotis(
     @SerializedName("package_name")
     var package_name: String? = null,
     @SerializedName("status_payment")
-    var status_payment: String? = null
+    var status_payment: String? = null,
+    @SerializedName("deviceId")
+    var deviceId: String? = null,
+    @SerializedName("deviceName")
+    var deviceName: String? = null
 ) : Parcelable
 
 @Parcelize

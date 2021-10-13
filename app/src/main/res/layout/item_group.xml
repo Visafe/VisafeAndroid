@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ctrlItemGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -33,7 +34,7 @@
             android:maxLines="2"
             android:textColor="@color/color_222222"
             android:textSize="@dimen/_12sdp"
-            app:layout_constraintEnd_toStartOf="@id/ivMore"
+            app:layout_constraintEnd_toStartOf="@id/rllImage"
             app:layout_constraintStart_toEndOf="@id/ivGroup"
             app:layout_constraintTop_toTopOf="@+id/ivGroup"
             tools:text="Tên group" />
@@ -49,15 +50,34 @@
             app:layout_constraintTop_toBottomOf="@id/tvName"
             tools:text="15 thành viên - 20 thiết bị" />
 
-        <ImageView
-            android:id="@+id/ivMore"
+        <RelativeLayout
+            android:id="@+id/rllImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_13sdp"
-            android:src="@drawable/ic_stroke"
             app:layout_constraintBottom_toBottomOf="@+id/tvContent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvName"
-            tools:ignore="ContentDescription" />
+            app:layout_constraintTop_toTopOf="@+id/tvName">
+
+            <ImageView
+                android:id="@+id/ivMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_stroke"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/ivLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_logout"
+                android:visibility="gone"
+                app:tint="@color/colorPrimary"
+                tools:ignore="ContentDescription" />
+
+        </RelativeLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

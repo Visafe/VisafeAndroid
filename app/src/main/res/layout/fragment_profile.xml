@@ -37,7 +37,7 @@
                     android:id="@+id/ivUser"
                     android:layout_width="@dimen/_48dp"
                     android:layout_height="@dimen/_48dp"
-                    android:layout_margin="@dimen/_16dp"
+                    android:layout_margin="@dimen/_16sdp"
                     android:src="@drawable/ic_user_default"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -47,7 +47,7 @@
                     android:id="@+id/ctrlInfo"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginEnd="@dimen/_24dp"
+                    android:layout_marginEnd="@dimen/_16sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/ivUser"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ivUser"
@@ -64,6 +64,7 @@
                         android:gravity="start"
                         android:maxLines="1"
                         android:text="@string/login"
+                        android:textSize="@dimen/_12sdp"
                         app:layout_constraintBottom_toTopOf="@+id/tvPhone"
                         app:layout_constraintEnd_toStartOf="@id/ivArrow"
                         app:layout_constraintStart_toStartOf="parent"
@@ -80,6 +81,7 @@
                         android:maxLines="1"
                         android:text="@string/login_content"
                         android:textColor="@color/color_666666"
+                        android:textSize="@dimen/_10sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/ivArrow"
                         app:layout_constraintStart_toStartOf="@+id/tvName"
@@ -116,7 +118,7 @@
                         android:id="@+id/ivUpgrade"
                         android:layout_width="@dimen/_20dp"
                         android:layout_height="@dimen/_20dp"
-                        android:layout_margin="@dimen/_16dp"
+                        android:layout_margin="@dimen/_14dp"
                         android:src="@drawable/ic_upgrade"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -127,7 +129,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8dp"
-                        android:text="@string/nang_cap_goi"
+                        android:text="@string/goi_cuoc_dang_dung"
                         android:textColor="@color/color_222222"
                         app:layout_constraintBottom_toBottomOf="@id/ivUpgrade"
                         app:layout_constraintStart_toEndOf="@id/ivUpgrade"
@@ -196,7 +198,7 @@
                         android:id="@+id/ivSetting"
                         android:layout_width="@dimen/_20dp"
                         android:layout_height="@dimen/_20dp"
-                        android:layout_margin="@dimen/_16dp"
+                        android:layout_margin="@dimen/_14dp"
                         android:src="@drawable/ic_setting"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -256,7 +258,7 @@
                         android:id="@+id/ivSupport"
                         android:layout_width="@dimen/_20dp"
                         android:layout_height="@dimen/_20dp"
-                        android:layout_margin="@dimen/_16dp"
+                        android:layout_margin="@dimen/_14dp"
                         android:src="@drawable/ic_headphones"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -305,7 +307,7 @@
                         android:id="@+id/ivShare"
                         android:layout_width="@dimen/_20dp"
                         android:layout_height="@dimen/_20dp"
-                        android:layout_margin="@dimen/_16dp"
+                        android:layout_margin="@dimen/_14dp"
                         android:src="@drawable/ic_share"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -354,7 +356,7 @@
                         android:id="@+id/ivRate"
                         android:layout_width="@dimen/_20dp"
                         android:layout_height="@dimen/_20dp"
-                        android:layout_margin="@dimen/_16dp"
+                        android:layout_margin="@dimen/_14dp"
                         android:src="@drawable/ic_star"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -391,12 +393,72 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clVip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/clRate">
+
+                    <ImageView
+                        android:id="@+id/ivVip"
+                        android:layout_width="@dimen/_20dp"
+                        android:layout_height="@dimen/_20dp"
+                        android:layout_margin="@dimen/_14dp"
+                        android:src="@drawable/ic_vip"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        style="@style/Content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8dp"
+                        android:text="@string/thanh_vien_vip"
+                        android:textColor="@color/color_222222"
+                        app:layout_constraintBottom_toBottomOf="@id/ivVip"
+                        app:layout_constraintStart_toEndOf="@id/ivVip"
+                        app:layout_constraintTop_toTopOf="@id/ivVip" />
+
+                    <TextView
+                        style="@style/Content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_12dp"
+                        android:text="@string/nhap_ma"
+                        android:textColor="@color/color_666666"
+                        app:layout_constraintBottom_toBottomOf="@id/ivVip"
+                        app:layout_constraintEnd_toStartOf="@id/ivArrow6"
+                        app:layout_constraintTop_toTopOf="@id/ivVip" />
+
+                    <ImageView
+                        android:id="@+id/ivArrow6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_24dp"
+                        android:src="@drawable/ic_stroke"
+                        app:layout_constraintBottom_toBottomOf="@id/ivVip"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/ivVip"
+                        tools:ignore="ContentDescription" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="6dp"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:background="@color/color_EEEEEE"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ivVip" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clLogout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/clRate">
+                    app:layout_constraintTop_toBottomOf="@+id/clVip">
 
                     <ImageView
                         android:id="@+id/ivLogout"

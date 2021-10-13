@@ -96,7 +96,7 @@ class AccountTypeDialogBottomSheet :
         val bottomSheet = VisafeDialogBottomSheet.newInstance(
             "",
             getString(R.string.delete_workspace_content, data.name),
-            VisafeDialogBottomSheet.TYPE_CONFIRM_CANCLE
+            VisafeDialogBottomSheet.TYPE_CONFIRM_CANCEL
         )
         bottomSheet.show(parentFragmentManager, null)
         bottomSheet.setOnClickListener { inputText, action ->

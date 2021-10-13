@@ -2,6 +2,8 @@ package vn.ncsc.visafe.ui.group.detail.member
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -10,8 +12,10 @@ import kotlinx.android.synthetic.main.item_member.view.*
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.model.TimeProtection
 import vn.ncsc.visafe.model.UsersGroupInfo
+import vn.ncsc.visafe.utils.removeAccent
 import vn.ncsc.visafe.utils.setBackgroundTint
 import vn.ncsc.visafe.utils.setOnSingClickListener
+import java.util.*
 
 class MemberManagerAdapter(
     private var fkUserId: Int?,
@@ -19,7 +23,7 @@ class MemberManagerAdapter(
     private var listUsersActive: MutableList<String>?,
     private var onSelectItemListener: OnSelectItemListener
 ) :
-    ListAdapter<UsersGroupInfo, MemberManagerAdapter.MyViewHolder>(Comparator()) {
+    ListAdapter<UsersGroupInfo, MemberManagerAdapter.MyViewHolder>(Comparator()), Filterable {
     private var memberList: MutableList<UsersGroupInfo> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -93,6 +97,34 @@ class MemberManagerAdapter(
             itemView.tvContent.text =
                 "Được phép chỉnh sửa cấu hình,..."/*if (item.email.isNullOrEmpty()) "Chưa có email" else item.email*/
         }
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val filteredList = mutableListOf<UsersGroupInfo>()
+                if (constraint == null || constraint.isEmpty()) {
+                    filteredList.addAll(memberList)
+                } else {
+                    for (item in memberList) {
+                        if (removeAccent(item.fullName?.lowercase(Locale.ROOT))
+                                .contains(removeAccent(constraint.toString().lowercase(Locale.ROOT)))
+                        ) {
+                            filteredList.add(item)
+                        }
+                    }
+                }
+                val results = FilterResults()
+                results.values = filteredList
+                return results
+            }
+
+            @Suppress("UNCHECKED_CAST")
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                submitList(results?.values as MutableList<UsersGroupInfo>?)
+            }
+        }
+
     }
 
     interface OnSelectItemListener {

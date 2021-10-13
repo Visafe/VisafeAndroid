@@ -2,6 +2,7 @@ package vn.ncsc.visafe.ui.home
 
 import android.annotation.SuppressLint
 import android.app.*
+import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.*
 import android.graphics.Color
@@ -31,12 +32,17 @@ import vn.ncsc.visafe.ViSafeApp
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.databinding.FragmentHomeBinding
 import vn.ncsc.visafe.dns.net.doh.Transaction
-import vn.ncsc.visafe.dns.sys.*
+import vn.ncsc.visafe.dns.sys.InternalNames
+import vn.ncsc.visafe.dns.sys.PersistentState
+import vn.ncsc.visafe.dns.sys.ViSafeVpnService
+import vn.ncsc.visafe.dns.sys.VpnController
+import vn.ncsc.visafe.fcm.MyFirebaseService
+import vn.ncsc.visafe.model.WorkspaceGroupData
 import vn.ncsc.visafe.ui.MainActivity
+import vn.ncsc.visafe.ui.pin.UpdatePinActivity
 import vn.ncsc.visafe.ui.protect.AdvancedScanActivity
 import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
-import vn.ncsc.visafe.utils.getTimeAgo
 import vn.ncsc.visafe.utils.setOnSingClickListener
 import java.net.NetworkInterface
 import java.net.SocketException
@@ -62,7 +68,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
             val transaction = intent.getSerializableExtra(InternalNames.TRANSACTION.name) as Transaction?
             if (InternalNames.RESULT.name == intent.action) {
                 transaction?.let {
-                    Log.e("onReceive: ", "" + it)
+                    Log.e("onReceive: ", "" + it.name)
                 }
             } else if (InternalNames.DNS_STATUS.name == intent.action) {
                 syncDnsStatus()
@@ -93,9 +99,47 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
         aniRotateClk = AnimationUtils.loadAnimation(context, R.anim.round_animation)
     }
 
+    private var resultLauncherOpenInputPin =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                (activity as MainActivity).isOpenProtectedDevice.value = false
+            } else if (result.resultCode == RESULT_CANCELED) {
+                (activity as MainActivity).isOpenProtectedDevice.value = true
+            }
+        }
+
     override fun layoutRes(): Int = R.layout.fragment_home
 
     override fun initView() {
+        (activity as MainActivity).isOpenProtectedDevice.observe(this, {
+            if (SharePreferenceKeyHelper.getInstance(ViSafeApp())
+                    .getBoolean(PreferenceKey.STATUS_OPEN_VPN)
+            ) {
+                sendNotificationWhenClickButtonOnOff = true
+                if (VERSION.SDK_INT >= 26) {
+                    vibrator?.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+                } else {
+                    vibrator?.vibrate(200)
+                }
+                status_button = 0
+                binding.ivStatus.visibility = View.GONE
+                binding.tvTap.visibility = View.GONE
+                binding.status.text = getString(R.string.status_waiting)
+                binding.roundImage.visibility = View.VISIBLE
+                binding.roundImage.startAnimation(aniRotateClk)
+                prepareAndStartDnsVpn()
+            } else {
+//                if (ViSafeApp().getPreference().getString(PreferenceKey.PIN_CODE).isNotEmpty()) {
+//                    val intent = Intent(context, UpdatePinActivity::class.java)
+//                    intent.putExtra(UpdatePinActivity.TYPE_ACTION, UpdatePinActivity.IS_CONFIRM_PIN)
+//                    resultLauncherOpenInputPin.launch(intent)
+//                } else {
+                status_button = 1
+                stopDnsVpnService()
+//                }
+            }
+        })
+
         if (SharePreferenceKeyHelper.getInstance(ViSafeApp())
                 .getBoolean(PreferenceKey.STATUS_OPEN_VPN)
         ) {
@@ -106,7 +150,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                 vibrator?.vibrate(200)
             }
             status_button = 0
-            binding.roundImage.visibility = View.INVISIBLE
+            binding.ivStatus.visibility = View.GONE
+            binding.tvTap.visibility = View.GONE
+            binding.status.text = getString(R.string.status_waiting)
+            binding.roundImage.visibility = View.VISIBLE
+            binding.roundImage.startAnimation(aniRotateClk)
             prepareAndStartDnsVpn()
         } else {
             status_button = 1
@@ -114,19 +162,45 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
         }
 
         binding.buttonActive.setOnSingClickListener {
-            sendNotificationWhenClickButtonOnOff = true
-            if (VERSION.SDK_INT >= 26) {
-                vibrator?.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+            if (ViSafeApp().getPreference().getString(PreferenceKey.PIN_CODE).isNotEmpty()) {
+                if (SharePreferenceKeyHelper.getInstance(ViSafeApp())
+                        .getBoolean(PreferenceKey.STATUS_OPEN_VPN)
+                ) {
+                    val intent = Intent(context, UpdatePinActivity::class.java)
+                    intent.putExtra(UpdatePinActivity.TYPE_ACTION, UpdatePinActivity.IS_CONFIRM_PIN)
+                    resultLauncherOpenInputPin.launch(intent)
+                } else {
+                    sendNotificationWhenClickButtonOnOff = true
+                    if (VERSION.SDK_INT >= 26) {
+                        vibrator?.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+                    } else {
+                        vibrator?.vibrate(200)
+                    }
+                    status_button = 0
+                    binding.ivStatus.visibility = View.GONE
+                    binding.tvTap.visibility = View.GONE
+                    binding.status.text = getString(R.string.status_waiting)
+                    binding.roundImage.visibility = View.VISIBLE
+                    binding.roundImage.startAnimation(aniRotateClk)
+                    prepareAndStartDnsVpn()
+                }
             } else {
-                vibrator?.vibrate(200)
-            }
-            if (status_button == 0) {
-                status_button = 1
-                stopDnsVpnService()
-            } else {
-                status_button = 0
-                binding.roundImage.visibility = View.INVISIBLE
-                prepareAndStartDnsVpn()
+                sendNotificationWhenClickButtonOnOff = true
+                if (VERSION.SDK_INT >= 26) {
+                    vibrator?.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+                } else {
+                    vibrator?.vibrate(200)
+                }
+                if (status_button == 0) {
+                    status_button = 1
+                    stopDnsVpnService()
+                    (activity as MainActivity).isOpenProtectedDevice.value = false
+                } else {
+                    status_button = 0
+                    binding.roundImage.visibility = View.INVISIBLE
+                    prepareAndStartDnsVpn()
+                    (activity as MainActivity).isOpenProtectedDevice.value = true
+                }
             }
         }
         binding.detailModeStatus.setOnSingClickListener {
@@ -241,6 +315,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                             binding.imageStatus.setImageResource(R.drawable.ic_earth)
                             binding.buttonStatus.setImageResource(R.drawable.on_button)
                             binding.roundImage.clearAnimation()
+                            binding.roundImage.visibility = View.INVISIBLE
                         }
                         else -> {
                             binding.ivStatus.visibility = View.GONE
@@ -249,9 +324,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                             binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
                             binding.buttonStatus.setImageResource(R.drawable.off_button)
                             binding.roundImage.clearAnimation()
+                            binding.roundImage.visibility = View.INVISIBLE
                         }
                     }
                 } else if (isAnotherVpnActive()) {
+                    status_button = 1
                     binding.ivStatus.setImageDrawable(
                         context?.let { it1 ->
                             ContextCompat.getDrawable(
@@ -265,13 +342,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                     binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
                     binding.buttonStatus.setImageResource(R.drawable.off_button)
                     binding.roundImage.clearAnimation()
+                    binding.roundImage.visibility = View.INVISIBLE
                     if (count_noti_off == 0 && sendNotificationWhenClickButtonOnOff) {
-                        sendNotification("Bạn đã tắt chế độ bảo vệ!", "Thiết bị của bạn có thể bị ảnh hưởng bởi tấn công mạng")
+                        sendNotification(
+                            "Bạn đã tắt chế độ bảo vệ!",
+                            "Thiết bị của bạn có thể bị ảnh hưởng bởi tấn công mạng"
+                        )
                         count_noti_off++
                         count_noti_on = 0
                         sendNotificationWhenClickButtonOnOff = false
                     }
                 } else {
+                    status_button = 1
                     privateDnsMode = getPrivateDnsMode()
                     if (privateDnsMode == PrivateDnsMode.STRICT) {
                         binding.ivStatus.visibility = View.GONE
@@ -280,6 +362,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                         binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
                         binding.buttonStatus.setImageResource(R.drawable.off_button)
                         binding.roundImage.clearAnimation()
+                        binding.roundImage.visibility = View.INVISIBLE
                     } else if (privateDnsMode == PrivateDnsMode.UPGRADED) {
                         binding.ivStatus.setImageDrawable(
                             context?.let { it1 ->
@@ -294,6 +377,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                         binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
                         binding.buttonStatus.setImageResource(R.drawable.off_button)
                         binding.roundImage.clearAnimation()
+                        binding.roundImage.visibility = View.INVISIBLE
                         if (count_noti_off == 0 && sendNotificationWhenClickButtonOnOff) {
                             sendNotification(
                                 "Bạn đã tắt chế độ bảo vệ!",
@@ -318,6 +402,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                         binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
                         binding.buttonStatus.setImageResource(R.drawable.off_button)
                         binding.roundImage.clearAnimation()
+                        binding.roundImage.visibility = View.INVISIBLE
                         if (count_noti_off == 0 && sendNotificationWhenClickButtonOnOff) {
                             sendNotification(
                                 "Bạn đã tắt chế độ bảo vệ!",
@@ -398,21 +483,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
         val mainActivityIntent = PendingIntent.getActivity(
             context, 0, Intent(requireContext(), MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT
         )
-        builder.setContentTitle(title)
-            .setContentText(body)
-            .setAutoCancel(true)
-            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-            .setContentInfo("Hello")
-            .setLights(Color.RED, 1000, 100)
-            .setDefaults(Notification.DEFAULT_ALL)
-            .setSmallIcon(R.drawable.ic_logo_noti)
-            .setNumber(++MyFirebaseService.numMessages)
-            .setStyle(
-                Notification.BigTextStyle()
-                    .bigText(body)
-            )
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setFullScreenIntent(mainActivityIntent, true)
+        context?.let {
+            builder.setContentTitle(title)
+                .setContentText(body)
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setContentInfo("Hello")
+                .setLights(Color.RED, 1000, 100)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setSmallIcon(R.drawable.ic_logo_noti)
+                .setColor(ContextCompat.getColor(it, R.color.accent_color))
+                .setNumber(++MyFirebaseService.numMessages)
+                .setStyle(
+                    Notification.BigTextStyle()
+                        .bigText(body)
+                )
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setFullScreenIntent(mainActivityIntent, true)
+                .setVisibility(Notification.VISIBILITY_SECRET)
+        }
         if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
             builder.setCategory(Notification.CATEGORY_ERROR)
         }

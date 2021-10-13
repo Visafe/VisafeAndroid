@@ -18,8 +18,8 @@ import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivityGroupDetailBinding
 import vn.ncsc.visafe.model.GroupData
 import vn.ncsc.visafe.model.StatsWorkSpace
-import vn.ncsc.visafe.model.UsersGroupInfo
 import vn.ncsc.visafe.model.request.DeleteGroupRequest
+import vn.ncsc.visafe.model.request.UpdateGroupNameRequest
 import vn.ncsc.visafe.model.response.StatsWorkspaceResponse
 import vn.ncsc.visafe.ui.adapter.TimeStatistical
 import vn.ncsc.visafe.ui.create.group.SuccessDialogFragment
@@ -38,11 +38,9 @@ class GroupDetailActivity : BaseSetupProtectActivity(), SetupProtectGroupDetailA
 
     companion object {
         const val DATA_ID = "DATA_ID"
-        const val DATA_POSITION = "DATA_POSITION"
     }
 
     private var groupId: String? = null
-    private var positionGroup: Int? = null
     private var groupName: String? = null
     private var mIdGroup: String? = null
     private var fkUserId: Int? = null
@@ -51,55 +49,40 @@ class GroupDetailActivity : BaseSetupProtectActivity(), SetupProtectGroupDetailA
 
     private var adapter: SetupProtectGroupDetailAdapter? = null
 
+    //quản lý thành viên
     @SuppressLint("SetTextI18n")
     private var resultLauncherMemberManager =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
-                if (result.data != null) {
-                    groupData = result.data?.getParcelableExtra(MemberManagementActivity.KEY_DATA)
-                    binding.tvNumberMember.text = "${groupData?.listUsersGroupInfo?.size} thành viên"
-                }
+                groupId?.let { doGetAGroupWithId(it) }
             }
         }
 
+    //quản lý thiết bị
     private var resultLauncherDeviceManager =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
-                if (result.data != null) {
-                    groupData = result.data?.getParcelableExtra(MemberManagementActivity.KEY_DATA)
-                    binding.tvNumberDevice.text = "${groupData?.listDevicesGroupInfo?.size} thiết bị"
-                }
+                groupId?.let { doGetAGroupWithId(it) }
             }
         }
 
+    //thêm thành viên
     private var resultLauncherAddMember =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
-                if (result.data != null) {
-                    val newMember = result.data?.getParcelableExtra<UsersGroupInfo>(AddMemberInGroupActivity.NEW_MEMBER)
-                    newMember?.let {
-                        groupData?.listUsersGroupInfo?.add(it)
-                        binding.tvNumberMember.text = "${groupData?.listUsersGroupInfo?.size} thành viên"
-                    }
-
-                }
+                groupId?.let { doGetAGroupWithId(it) }
             }
         }
 
+    //thêm thiết bị
     private var resultLauncherAddDevice =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
-                if (result.data != null) {
-//                    val newMember = result.data?.getParcelableExtra<UsersGroupInfo>(JoinGroupActivity.NEW_MEMBER)
-//                    newMember?.let {
-//                        groupData?.listUsersGroupInfo?.add(it)
-//                        binding.tvNumberMember.text = "${groupData?.listUsersGroupInfo?.size} thành viên"
-//                    }
-                }
+                groupId?.let { doGetAGroupWithId(it) }
             }
         }
 
@@ -109,7 +92,6 @@ class GroupDetailActivity : BaseSetupProtectActivity(), SetupProtectGroupDetailA
         setContentView(binding.root)
         intent?.let {
             groupId = it.getStringExtra(DATA_ID)
-            positionGroup = it.getIntExtra(DATA_POSITION, 0)
         }
         initView()
         initControl()
@@ -133,7 +115,7 @@ class GroupDetailActivity : BaseSetupProtectActivity(), SetupProtectGroupDetailA
             bottomSheet.setOnClickListener { _, action ->
                 when (action) {
                     Action.EDIT -> {
-//                    showDialogUpdateNameWorkSpace(data, position)
+                        showDialogUpdateName()
                     }
                     Action.DELETE -> {
                         showDialogDeleteGroup()
@@ -208,7 +190,7 @@ class GroupDetailActivity : BaseSetupProtectActivity(), SetupProtectGroupDetailA
         val bottomSheet = VisafeDialogBottomSheet.newInstance(
             "",
             getString(R.string.delete_group_content, groupName),
-            VisafeDialogBottomSheet.TYPE_CONFIRM_CANCLE
+            VisafeDialogBottomSheet.TYPE_CONFIRM_CANCEL
         )
         bottomSheet.show(supportFragmentManager, null)
         bottomSheet.setOnClickListener { _, action ->
@@ -289,6 +271,9 @@ class GroupDetailActivity : BaseSetupProtectActivity(), SetupProtectGroupDetailA
                         doGetStaticAGroup(groupData, TimeStatistical.HANG_NGAY.value)
                         updateSetupProtect(it)
                     }
+                } else if (response.code() == NetworkClient.CODE_403) {
+                    showToast("Bạn không có quyền xem nhóm này")
+                    finish()
                 }
 
             }
@@ -346,60 +331,53 @@ class GroupDetailActivity : BaseSetupProtectActivity(), SetupProtectGroupDetailA
 
     }
 
+    //bảo vệ thiết bị
     @SuppressLint("SetTextI18n")
     private var resultLauncherProtectDevice =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
-                if (result.data != null) {
-                    groupData = result.data?.getParcelableExtra(MemberManagementActivity.KEY_DATA)
-                    binding.tvNumberMember.text = "${groupData?.listUsersGroupInfo?.size} thành viên"
-                }
+                groupId?.let { doGetAGroupWithId(it) }
             }
         }
 
+    //chặn quảng cáo
     @SuppressLint("SetTextI18n")
     private var resultLauncherBlockAds =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
-                if (result.data != null) {
-                    groupData = result.data?.getParcelableExtra(MemberManagementActivity.KEY_DATA)
-                }
+                groupId?.let { doGetAGroupWithId(it) }
             }
         }
 
+    //chặn theo dõi
     @SuppressLint("SetTextI18n")
     private var resultLauncherBlockTracking =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
-                if (result.data != null) {
-                    groupData = result.data?.getParcelableExtra(MemberManagementActivity.KEY_DATA)
-                }
+                groupId?.let { doGetAGroupWithId(it) }
             }
         }
 
+    //chặn truy cập
     @SuppressLint("SetTextI18n")
     private var resultLauncherBlockAccess =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
-                if (result.data != null) {
-                    groupData = result.data?.getParcelableExtra(MemberManagementActivity.KEY_DATA)
-                }
+                groupId?.let { doGetAGroupWithId(it) }
             }
         }
 
+    //chặn nội dung
     @SuppressLint("SetTextI18n")
     private var resultLauncherBlockContent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
-                if (result.data != null) {
-                    groupData = result.data?.getParcelableExtra(BlockContentGroupDetailActivity.DATA_GROUP_KEY)
-                    groupData?.let { updateSetupProtect(it) }
-                }
+                groupId?.let { doGetAGroupWithId(it) }
             }
         }
 
@@ -408,19 +386,19 @@ class GroupDetailActivity : BaseSetupProtectActivity(), SetupProtectGroupDetailA
             for (group in it.dataList) {
                 if (group == data) {
                     when (group) {
-                        SetupProtectDetailGroup.BAO_VE_THIET_BI -> {
-                            val intent = Intent(this@GroupDetailActivity, ProtectDeviceGroupDetailActivity::class.java)
-                            intent.putExtra(ProtectDeviceGroupDetailActivity.DATA_GROUP_KEY, groupData)
-                            intent.putExtra(
-                                ProtectDeviceGroupDetailActivity.NUM_DANGEROUS_DOMAIN,
-                                statsWorkSpace?.num_dangerous_domain
-                            )
-                            intent.putExtra(
-                                ProtectDeviceGroupDetailActivity.NUM_DANGEROUS_DOMAIN_ALL,
-                                statsWorkSpace?.num_dangerous_domain_all
-                            )
-                            resultLauncherProtectDevice.launch(intent)
-                        }
+//                        SetupProtectDetailGroup.BAO_VE_THIET_BI -> {
+//                            val intent = Intent(this@GroupDetailActivity, ProtectDeviceGroupDetailActivity::class.java)
+//                            intent.putExtra(ProtectDeviceGroupDetailActivity.DATA_GROUP_KEY, groupData)
+//                            intent.putExtra(
+//                                ProtectDeviceGroupDetailActivity.NUM_DANGEROUS_DOMAIN,
+//                                statsWorkSpace?.num_dangerous_domain
+//                            )
+//                            intent.putExtra(
+//                                ProtectDeviceGroupDetailActivity.NUM_DANGEROUS_DOMAIN_ALL,
+//                                statsWorkSpace?.num_dangerous_domain_all
+//                            )
+//                            resultLauncherProtectDevice.launch(intent)
+//                        }
                         SetupProtectDetailGroup.CHAN_QUANG_CAO -> {
                             val intent = Intent(this@GroupDetailActivity, BlockAdsGroupDetailActivity::class.java)
                             intent.putExtra(BlockAdsGroupDetailActivity.DATA_GROUP_KEY, groupData)
@@ -513,12 +491,12 @@ class GroupDetailActivity : BaseSetupProtectActivity(), SetupProtectGroupDetailA
                                     "discord"
                                 ) else listOf()
                             groupData?.block_webs =
-                                if (isChecked) listOf(
+                                if (isChecked) mutableListOf(
                                     "https://www.youtube.com/",
                                     "https://www.facebook.com/",
                                     "https://gmail.com/",
                                     "https://www.youtube.com/"
-                                ) else listOf()
+                                ) else mutableListOf()
                         }
                         SetupProtectDetailGroup.CHAN_NOI_DUNG -> {
                             groupData?.porn_enabled = isChecked
@@ -537,8 +515,63 @@ class GroupDetailActivity : BaseSetupProtectActivity(), SetupProtectGroupDetailA
         }
         doUpdateGroup(groupData, object : OnUpdateSuccess {
             override fun onUpdateSuccess(groupData: GroupData) {
+                groupId?.let { doGetAGroupWithId(it) }
             }
 
         })
+    }
+
+    private fun showDialogUpdateName() {
+        val bottomSheet = groupName?.let {
+            VisafeDialogBottomSheet.newInstanceEdit(
+                "",
+                getString(R.string.update_name_workspace),
+                VisafeDialogBottomSheet.TYPE_INPUT_SAVE,
+                "", it, "Tên nhóm phải lớn hơn 3 ký tự và ngắn hơn 100 ký tự", 4, 99
+            )
+        }
+        bottomSheet?.show(supportFragmentManager, null)
+        bottomSheet?.setOnClickListener { inputText, action ->
+            when (action) {
+                Action.SAVE -> {
+                    doUpdateNameGroup(inputText)
+                    bottomSheet.dismiss()
+                }
+                else -> {
+                    return@setOnClickListener
+                }
+            }
+        }
+    }
+
+    private fun doUpdateNameGroup(newName: String) {
+        showProgressDialog()
+        val client = NetworkClient()
+        val call = client.client(context = applicationContext)
+            .doUpdateNameGroup(UpdateGroupNameRequest(groupId = groupId, groupName = newName))
+        call.enqueue(BaseCallback(this, object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    response.body()?.let { data ->
+                        groupData?.name = newName
+                        groupName = newName
+                        binding.tvName.text = newName
+                        binding.ivGroup.text = getTextGroup(newName)
+                    }
+
+                } else if (response.code() == NetworkClient.CODE_EXISTS_ACCOUNT) {
+                    showToast("Tên group đã có, vui lòng thử lại")
+                }
+                dismissProgress()
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        }))
     }
 }

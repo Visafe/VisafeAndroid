@@ -11,9 +11,12 @@ import vn.ncsc.visafe.utils.PreferenceKey
 class UpdatePinActivity : BaseActivity() {
 
     lateinit var binding: ActivityUpdatePinBinding
+    private var mType = ""
 
     companion object {
-        const val UPDATE_PIN_KEY = "UPDATE_PIN_KEY"
+        const val TYPE_ACTION = "TYPE_ACTION"
+        const val IS_DELETE_PIN = "IS_DELETE_PIN"
+        const val IS_CONFIRM_PIN = "IS_CONFIRM_PIN"
         var rootId: Int = R.id.fragment_pin
     }
 
@@ -21,15 +24,28 @@ class UpdatePinActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUpdatePinBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        intent?.let {
+            mType = it.getStringExtra(TYPE_ACTION).toString()
+        }
         initView()
     }
 
     private fun initView() {
         val pin = ViSafeApp().getPreference().getString(PreferenceKey.PIN_CODE) ?: ""
-        if (pin.isNotEmpty()) {
-            handlerFragment(CurrentPinFragment(), rootId, tag = "CurrentPinFragment")
-        } else {
-            handlerFragment(CreateNewPinFragment(), rootId, tag = "CreateNewPinFragment")
+        when (mType) {
+            IS_DELETE_PIN -> {
+                handlerFragment(ConfirmNewPinFragment.newInstance(1), rootId, tag = "ConfirmNewPinFragment")
+            }
+            IS_CONFIRM_PIN -> {
+                handlerFragment(ConfirmNewPinFragment.newInstance(2), rootId, tag = "ConfirmNewPinFragment")
+            }
+            else -> {
+                if (pin.isNotEmpty()) {
+                    handlerFragment(CurrentPinFragment(), rootId, tag = "CurrentPinFragment")
+                } else {
+                    handlerFragment(CreateNewPinFragment(), rootId, tag = "CreateNewPinFragment")
+                }
+            }
         }
     }
 

@@ -2,9 +2,12 @@ package vn.ncsc.visafe.ui.authentication.forgotpassword
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.base.BaseDialogFragment
@@ -19,6 +22,17 @@ class InputOTPFragment(
 
     lateinit var viewBinding: FragmentInputOtpBinding
     private var otpValue: String = ""
+
+    private val timeCountDown = object : CountDownTimer(30000, 1000) {
+        @SuppressLint("SetTextI18n")
+        override fun onTick(millisUntilFinished: Long) {
+            viewBinding.tvTime.text = "(${millisUntilFinished / 1000}s)"
+        }
+
+        override fun onFinish() {
+            viewBinding.tvTime.visibility = View.GONE
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +49,10 @@ class InputOTPFragment(
     }
 
     fun initView() {
+        enableButton()
+        viewBinding.tvTime.text = "30s"
+        viewBinding.tvTime.visibility = View.VISIBLE
+        timeCountDown.start()
         when (type) {
             TypeOTP.FORGOT_PASSWORD -> {
                 viewBinding.tvTitle.text = title
@@ -60,6 +78,9 @@ class InputOTPFragment(
                 }
             }
         })
+        viewBinding.otpEditText.addTextChangedListener {
+            enableButton()
+        }
         viewBinding.otpEditText.setOnChangeListener(object : OnChangeListener {
             override fun onChange(value: String?) {
                 viewBinding.tvOtpError.visibility = View.GONE
@@ -67,18 +88,18 @@ class InputOTPFragment(
         })
 
         viewBinding.btnNext.setOnClickListener {
-            otpValue?.let {
+            otpValue.let {
                 if (otpValue.length == 6) {
                     onInputOtpDialog.onInputOTP(it)
-                } else {
-                    viewBinding.tvOtpError.visibility = View.VISIBLE
-                    viewBinding.tvOtpError.text = "Mã OTP không hợp lệ"
                 }
             }
         }
 
-        viewBinding.tvSendToOtp.setOnClickListener {
+        viewBinding.ctrlResendOTP.setOnClickListener {
             onInputOtpDialog.onSendToOtp()
+            viewBinding.tvTime.text = "30s"
+            viewBinding.tvTime.visibility = View.VISIBLE
+            timeCountDown.start()
         }
     }
 
@@ -86,6 +107,34 @@ class InputOTPFragment(
         viewBinding.tvOtpError.visibility = View.VISIBLE
         viewBinding.tvOtpError.text = msg
         (activity as BaseActivity).showKeyboard()
+    }
+
+    private fun enableButton() {
+        val pin = viewBinding.otpEditText.text.toString()
+        if (pin.isNotBlank()) {
+            with(viewBinding.btnNext) {
+                backgroundTintList =
+                    resources.getColorStateList(R.color.color_FFB31F, requireContext().theme)
+
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                isEnabled = true
+            }
+        } else {
+            with(viewBinding.btnNext) {
+                backgroundTintList =
+                    resources.getColorStateList(
+                        R.color.color_F8F8F8,
+                        requireContext().theme
+                    )
+                setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.color_AAAAAA
+                    )
+                )
+                isEnabled = false
+            }
+        }
     }
 
     interface OnInputOtpDialog {

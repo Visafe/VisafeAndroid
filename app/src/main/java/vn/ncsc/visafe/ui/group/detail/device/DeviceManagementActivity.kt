@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +20,7 @@ import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivityDeviceManagementBinding
 import vn.ncsc.visafe.model.GroupData
 import vn.ncsc.visafe.model.request.RemoveDeviceRequest
+import vn.ncsc.visafe.model.request.UpdateDeviceRequest
 import vn.ncsc.visafe.model.response.DeviceGroup
 import vn.ncsc.visafe.ui.create.group.access_manager.Action
 import vn.ncsc.visafe.ui.dialog.VisafeDialogBottomSheet
@@ -52,11 +55,25 @@ class DeviceManagementActivity : BaseActivity(), DeviceManagerAdapter.OnClickDev
             it.listDevicesGroupInfo?.toMutableList()?.let { it1 -> listDeviceManager.addAll(it1) }
             binding.tvNumberDevice.text = "${listDeviceManager.size} thiết bị"
             binding.tvContent.text = it.name
+            binding.tvContent.isSelected = true
         }
         deviceManagerAdapter = DeviceManagerAdapter(this)
         deviceManagerAdapter?.setData(listDeviceManager)
         binding.rcvMember.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         binding.rcvMember.adapter = deviceManagerAdapter
+
+        binding.edtInputSearchDevice.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                deviceManagerAdapter?.filter?.filter(s)
+            }
+
+        })
     }
 
     override fun onBackPressed() {
@@ -85,13 +102,7 @@ class DeviceManagementActivity : BaseActivity(), DeviceManagerAdapter.OnClickDev
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
-                if (result.data != null) {
-//                    val newMember = result.data?.getParcelableExtra<UsersGroupInfo>(JoinGroupActivity.NEW_MEMBER)
-//                    newMember?.let {
-//                        groupData?.listUsersGroupInfo?.add(it)
-//                        binding.tvNumberMember.text = "${groupData?.listUsersGroupInfo?.size} thành viên"
-//                    }
-                }
+                groupData?.groupid?.let { doGetAGroupWithId(it) }
             }
         }
 
@@ -127,7 +138,26 @@ class DeviceManagementActivity : BaseActivity(), DeviceManagerAdapter.OnClickDev
         }
     }
 
-    private fun removeDeviceFromGroup(data: DeviceGroup, position: Int) {
+    private fun showDialogDelete(data: DeviceGroup, position: Int) {
+        val bottomSheet = VisafeDialogBottomSheet.newInstance(
+            "",
+            getString(R.string.delete_device_content, data.deviceName, data.deviceOwner),
+            VisafeDialogBottomSheet.TYPE_CONFIRM_CANCEL
+        )
+        bottomSheet.show(supportFragmentManager, null)
+        bottomSheet.setOnClickListener { _, action ->
+            when (action) {
+                Action.CONFIRM -> {
+                    removeDeviceFromGroup(data)
+                }
+                else -> {
+                    return@setOnClickListener
+                }
+            }
+        }
+    }
+
+    private fun removeDeviceFromGroup(data: DeviceGroup) {
         val removeDeviceRequest =
             RemoveDeviceRequest(deviceId = data.deviceID, groupId = data.groupID, deviceMonitorID = data.deviceMonitorID)
         showProgressDialog()
@@ -138,15 +168,11 @@ class DeviceManagementActivity : BaseActivity(), DeviceManagerAdapter.OnClickDev
                 call: Call<ResponseBody>,
                 response: Response<ResponseBody>
             ) {
+                dismissProgress()
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
                     showToast("Xóa thiết bị ${data.deviceName} thành công")
-                    deviceManagerAdapter?.deleteItem(data)
-                    deviceManagerAdapter?.notifyDataSetChanged()
-                    binding.tvNumberDevice.text = "${listDeviceManager.size} thiết bị"
-                    groupData?.listDevicesGroupInfo?.clear()
-                    groupData?.listDevicesGroupInfo?.addAll(listDeviceManager)
+                    groupData?.groupid?.let { doGetAGroupWithId(it) }
                 }
-                dismissProgress()
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -156,17 +182,19 @@ class DeviceManagementActivity : BaseActivity(), DeviceManagerAdapter.OnClickDev
         }))
     }
 
-    private fun showDialogDelete(data: DeviceGroup, position: Int) {
-        val bottomSheet = VisafeDialogBottomSheet.newInstance(
-            "",
-            getString(R.string.delete_device_content, data.deviceName, data.deviceOwner),
-            VisafeDialogBottomSheet.TYPE_CONFIRM_CANCLE
+    private fun showDialogEditName(data: DeviceGroup) {
+        val bottomSheet = VisafeDialogBottomSheet.newInstanceEdit(
+            data.deviceName!!,
+            data.deviceOwner!!,
+            VisafeDialogBottomSheet.TYPE_INPUT_SAVE,
+            getString(R.string.input_name_device),
+            data.deviceOwner!!
         )
         bottomSheet.show(supportFragmentManager, null)
-        bottomSheet.setOnClickListener { _, action ->
+        bottomSheet.setOnClickListener { inputText, action ->
             when (action) {
-                Action.CONFIRM -> {
-                    removeDeviceFromGroup(data, position)
+                Action.SAVE -> {
+                    updateDevice(data, inputText)
                 }
                 else -> {
                     return@setOnClickListener
@@ -175,24 +203,66 @@ class DeviceManagementActivity : BaseActivity(), DeviceManagerAdapter.OnClickDev
         }
     }
 
-    private fun showDialogEditName(data: DeviceGroup) {
-        val bottomSheet = VisafeDialogBottomSheet.newInstanceEdit(
-            data.deviceName!!,
-            data.deviceOwner!!,
-            VisafeDialogBottomSheet.TYPE_INPUT_SAVE,
-            getString(R.string.input_name_device),
-            ""
+    private fun updateDevice(data: DeviceGroup, newName: String) {
+        showProgressDialog()
+        val data = UpdateDeviceRequest(
+            deviceMonitorId = data.deviceMonitorID,
+            deviceId = data.deviceID,
+            groupId = data.groupID,
+            deviceOwner = newName
         )
-        bottomSheet.show(supportFragmentManager, null)
-        bottomSheet.setOnClickListener { inputText, action ->
-            when (action) {
-                Action.SAVE -> {
-                    deviceManagerAdapter?.deleteItem(data)
+        val client = NetworkClient()
+        val call = client.client(context = applicationContext).doUpgradeDevice(data)
+        call.enqueue(BaseCallback(this, object : Callback<ResponseBody> {
+            @SuppressLint("SetTextI18n")
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                dismissProgress()
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    showToast("Đổi tên thiết bị thành công")
+                    groupData?.groupid?.let { doGetAGroupWithId(it) }
                 }
-                else -> {
-                    return@setOnClickListener
-                }
+
             }
-        }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        }))
+    }
+
+    private fun doGetAGroupWithId(id: String) {
+        showProgressDialog()
+        val client = NetworkClient()
+        val call = client.client(context = applicationContext).doGetAGroupWithId(id)
+        call.enqueue(BaseCallback(this, object : Callback<GroupData> {
+            @SuppressLint("SetTextI18n")
+            override fun onResponse(
+                call: Call<GroupData>,
+                response: Response<GroupData>
+            ) {
+                dismissProgress()
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    response.body()?.let {
+                        groupData = it
+                        it.listDevicesGroupInfo?.let { it1 ->
+                            listDeviceManager.clear()
+                            listDeviceManager.addAll(it1)
+                            binding.tvNumberDevice.text = "${listDeviceManager.size} thiết bị"
+                        }
+                        deviceManagerAdapter?.notifyDataSetChanged()
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<GroupData>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        }))
     }
 }

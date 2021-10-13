@@ -8,6 +8,7 @@ import android.widget.CompoundButton
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import androidx.core.view.isVisible
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -49,9 +50,7 @@ class BlockContentGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreI
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val intent = Intent()
-        intent.putExtra(DATA_GROUP_KEY, groupData)
-        setResult(RESULT_OK, intent)
+        setResult(RESULT_OK)
         finish()
     }
 
@@ -105,12 +104,14 @@ class BlockContentGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreI
     private fun initControl() {
         binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
-                val intent = Intent()
-                intent.putExtra(DATA_GROUP_KEY, groupData)
-                setResult(RESULT_OK, intent)
+                setResult(RESULT_OK)
                 finish()
             }
         })
+
+        binding.btnReset.setOnSingClickListener {
+            binding.switchBlockContent.isChecked = false
+        }
 
         binding.switchBlockContent.setOnCheckedChangeListener(mListener)
 
@@ -177,6 +178,13 @@ class BlockContentGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreI
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
             doGetQueryLog(groupData)
+            if (binding.viewSetupBlock.isVisible) {
+                binding.viewSetupBlock.visibility = View.VISIBLE
+                binding.llProtected.visibility = View.GONE
+            } else {
+                binding.viewSetupBlock.visibility = View.GONE
+                binding.llProtected.visibility = View.VISIBLE
+            }
         } else {
             binding.llNoProtect.visibility = View.VISIBLE
             binding.llProtected.visibility = View.GONE

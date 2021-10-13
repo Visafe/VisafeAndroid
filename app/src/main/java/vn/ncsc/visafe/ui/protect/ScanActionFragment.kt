@@ -1,6 +1,5 @@
 package vn.ncsc.visafe.ui.protect
 
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseActivity
@@ -28,7 +27,7 @@ class ScanActionFragment : BaseFragment<FragmentScanActionBinding>() {
             when (type) {
                 AdvancedScanActivity.TYPE_PROTECT_DEVICE -> {
                     binding.tvTitle.text = "CHẾ ĐỘ BẢO VỆ"
-                    binding.tvDescription.text = "Đang bật chế độ bảo vệ ViSafe"
+                    binding.tvDescription.text = "Đang bật chế độ bảo vệ Visafe"
                     binding.ivLogo.setBackgroundResource(R.drawable.ic_group_protect_device)
                 }
                 AdvancedScanActivity.TYPE_PROTECT_WIFI -> {

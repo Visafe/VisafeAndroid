@@ -1,4 +1,4 @@
-package vn.ncsc.visafe.dns.sys;
+package vn.ncsc.visafe.fcm;
 
 import android.app.Notification;
 import android.app.NotificationChannel;

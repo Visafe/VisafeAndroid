@@ -106,22 +106,20 @@ class ProtectWifiActivity : BaseActivity() {
         showProgressDialog()
         val client = NetworkClient()
         val call = client.clientWithoutToken(context = applicationContext).doCheckBotnet()
-        call.enqueue(BaseCallback(this@ProtectWifiActivity, object : Callback<ResponseBody> {
+        call.enqueue(BaseCallback(this@ProtectWifiActivity, object : Callback<BotnetResponse> {
             override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
+                call: Call<BotnetResponse>,
+                response: Response<BotnetResponse>
             ) {
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    val buffer = response.body()?.source()?.buffer?.readByteArray()
-                    val dataString = buffer?.decodeToString()
-                    val botNetResponse = Gson().fromJson(dataString, BotnetResponse::class.java)
-                    botnetResponse = botNetResponse
+                    val data = response.body()
+                    botnetResponse = data
                     handleProtected(true, botnetResponse)
                 }
                 dismissProgress()
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<BotnetResponse>, t: Throwable) {
                 t.message?.let { Log.e("onFailure: ", it) }
                 dismissProgress()
             }
@@ -131,7 +129,7 @@ class ProtectWifiActivity : BaseActivity() {
     private fun handleProtected(isProtected: Boolean, botnet: BotnetResponse?) {
         val ipAddress = getIpAddress()
         if (isProtected) {
-            if (isWPA2() && botnet?.status == NetworkClient.CODE_SUCCESS) {
+            if (isWPA2() && botnet != null) {
                 binding.ivCheck.setImageResource(R.drawable.ic_checkmark_circle)
                 binding.ivWifi.background =
                     ContextCompat.getDrawable(this, R.drawable.bg_stroke_color_green_circle)
@@ -151,7 +149,7 @@ class ProtectWifiActivity : BaseActivity() {
                 binding.tvDescription.text = "Địa chỉ IP: $ipAddress"
             }
 
-            if (botnet?.msg?.detail?.size == 0) {
+            if (botnet?.detail?.size == 0) {
                 binding.llProtected.visibility = View.GONE
                 binding.llNoProtect.visibility = View.VISIBLE
                 binding.tvNotification.text = "Không có mã độc nào được phát hiện"
@@ -159,7 +157,7 @@ class ProtectWifiActivity : BaseActivity() {
                 binding.ivError.visibility = View.GONE
             } else {
                 listBotnetDetail.clear()
-                botnet?.msg?.detail?.let { listBotnetDetail.addAll(it) }
+                botnet?.detail?.let { listBotnetDetail.addAll(it) }
                 adapter.notifyDataSetChanged()
                 binding.llProtected.visibility = View.VISIBLE
                 binding.llNoProtect.visibility = View.GONE

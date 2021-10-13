@@ -7,6 +7,7 @@ import vn.ncsc.visafe.ui.noticonfig.NotificationConfigActivity
 import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.databinding.ActivitySettingBinding
 import vn.ncsc.visafe.ui.authentication.changepass.ChangePasswordActivity
+import vn.ncsc.visafe.ui.pin.SettingPinActivity
 import vn.ncsc.visafe.ui.pin.UpdatePinActivity
 import vn.ncsc.visafe.utils.OnSingleClickListener
 import vn.ncsc.visafe.utils.setOnSingClickListener
@@ -30,7 +31,7 @@ class SettingActivity : BaseActivity() {
 
         })
         binding.clUpdatePin.setOnSingClickListener {
-            startActivity(Intent(this, UpdatePinActivity::class.java))
+            startActivity(Intent(this, SettingPinActivity::class.java))
         }
         binding.clNoti.setOnSingClickListener {
             startActivity(Intent(this, NotificationConfigActivity::class.java))

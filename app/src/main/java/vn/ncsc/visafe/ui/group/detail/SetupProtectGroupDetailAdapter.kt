@@ -1,6 +1,7 @@
 package vn.ncsc.visafe.ui.group.detail
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,9 +56,16 @@ class SetupProtectGroupDetailAdapter(
         holder.binding.tvAdvance.setOnSingClickListener {
             onClickSetupGroup?.onClickSetupGroup(dataList[position])
         }
-        holder.binding.switchWidget.setOnCheckedChangeListener { _, isChecked ->
-            dataList[position].isEnable = isChecked
-            onClickSetupGroup?.onSwitchItemChange(dataList[position],isChecked)
+        holder.binding.switchWidget.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (buttonView.isPressed) {
+                Log.e("switchWidget: ", "click")
+                dataList[position].isEnable = isChecked
+                onClickSetupGroup?.onSwitchItemChange(dataList[position], isChecked)
+            } else {
+                Log.e("switchWidget: ", "setChecked " + dataList[position])
+                //triggered due to programmatic assignment using 'setChecked()' method.
+            }
+
         }
     }
 
@@ -79,15 +87,15 @@ enum class SetupProtectDetailGroup(
     var isHighSetup: Boolean,
     var isShowSwitch: Boolean
 ) {
-    BAO_VE_THIET_BI(
-        R.drawable.ic_device_manager,
-        R.string.protect_device,
-        R.string.content_protect_device,
-        "Xem chi tiết",
-        true,
-        true,
-        false
-    ),
+//    BAO_VE_THIET_BI(
+//        R.drawable.ic_device_manager,
+//        R.string.protect_device,
+//        R.string.content_protect_device,
+//        "Xem chi tiết",
+//        true,
+//        true,
+//        false
+//    ),
     CHAN_QUANG_CAO(
         R.drawable.ic_chan_quang_cao,
         R.string.chan_quang_cao,

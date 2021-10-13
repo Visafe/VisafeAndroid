@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import androidx.core.view.isVisible
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -49,6 +50,7 @@ class BlockTrackingGroupDetailActivity : BaseSetupProtectActivity(), OnClickMore
 
     override fun onBackPressed() {
         super.onBackPressed()
+        setResult(RESULT_OK)
         finish()
     }
 
@@ -79,7 +81,6 @@ class BlockTrackingGroupDetailActivity : BaseSetupProtectActivity(), OnClickMore
         adapter?.setOnClickListener(this)
 
         groupData?.let {
-            binding.tvDescription.text = it.name
             isBlockedTracking = groupData?.native_tracking?.isNotEmpty() == true
             binding.switchBlockTracking.isChecked = isBlockedTracking
             handleProtected(isBlockedTracking)
@@ -101,25 +102,18 @@ class BlockTrackingGroupDetailActivity : BaseSetupProtectActivity(), OnClickMore
     private fun initControl() {
         binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
+                setResult(RESULT_OK)
                 finish()
             }
         })
 
+        binding.btnReset.setOnSingClickListener {
+            binding.switchBlockTracking.isChecked = false
+        }
+
         binding.switchBlockTracking.setOnCheckedChangeListener { _, isChecked ->
             binding.itemBlockTrackingDevice.setChecked(isChecked)
-            binding.switchBlockTracking.isChecked = isChecked
-            groupData?.native_tracking = if (isChecked) listOf(
-                "alexa",
-                "apple",
-                "huawei",
-                "roku",
-                "samsung",
-                "sonos",
-                "windows",
-                "xiaomi"
-            ) else listOf()
             handleProtected(isChecked)
-            doUpdateGroup(groupData, this)
         }
 
         binding.itemBlockTrackingDevice.setOnSwitchChangeListener { isChecked ->
@@ -135,7 +129,13 @@ class BlockTrackingGroupDetailActivity : BaseSetupProtectActivity(), OnClickMore
             ) else listOf()
             doUpdateGroup(groupData, this)
         }
-        binding.itemBlockTrackingDevice.setOnSwitchItemChangeListener { isChecked, position ->
+        binding.itemBlockTrackingDevice.setOnSwitchItemChangeListener { buttonView, isChecked, position ->
+            if (buttonView.isPressed) {
+                Log.e("switchWidget: ", "click")
+            } else {
+                Log.e("switchWidget: ", "setChecked " + nativeTrackingList[position])
+                //triggered due to programmatic assignment using 'setChecked()' method.
+            }
             Log.e("initControl: ", " " + position + " " + isChecked + " " + nativeTrackingList.size)
 //            if (isChecked) {
 //                nativeTrackingList.add(position, listNativeTrackingDefault[position].value)
@@ -179,6 +179,13 @@ class BlockTrackingGroupDetailActivity : BaseSetupProtectActivity(), OnClickMore
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
             doGetQueryLog(groupData)
+            if (binding.viewSetupBlock.isVisible) {
+                binding.viewSetupBlock.visibility = View.VISIBLE
+                binding.llProtected.visibility = View.GONE
+            } else {
+                binding.viewSetupBlock.visibility = View.GONE
+                binding.llProtected.visibility = View.VISIBLE
+            }
         } else {
             binding.llNoProtect.visibility = View.VISIBLE
             binding.llProtected.visibility = View.GONE
@@ -385,7 +392,6 @@ class BlockTrackingGroupDetailActivity : BaseSetupProtectActivity(), OnClickMore
 
     override fun onUpdateSuccess(data: GroupData) {
         data.let {
-            binding.tvDescription.text = it.name
             isBlockedTracking = groupData?.native_tracking?.isNotEmpty() == true
             binding.switchBlockTracking.isChecked = isBlockedTracking
             handleProtected(isBlockedTracking)

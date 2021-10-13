@@ -2,6 +2,7 @@ package vn.ncsc.visafe.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import vn.ncsc.visafe.databinding.ItemSubjectBinding
@@ -10,7 +11,7 @@ import vn.ncsc.visafe.model.Subject
 class SubjectAdapter : RecyclerView.Adapter<SubjectAdapter.ViewHolder>() {
 
     private val mData = ArrayList<Subject>()
-    private var mOnSwitchItemListener: ((Boolean, Int) -> Unit)? = null
+    private var mOnSwitchItemListener: ((CompoundButton, Boolean, Int) -> Unit)? = null
 
     inner class ViewHolder(private val binding: ItemSubjectBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -23,9 +24,9 @@ class SubjectAdapter : RecyclerView.Adapter<SubjectAdapter.ViewHolder>() {
                 .into(binding.ivItem)
             binding.switchWidget.isChecked = data.isChecked
 
-            binding.switchWidget.setOnCheckedChangeListener { _, isChecked ->
+            binding.switchWidget.setOnCheckedChangeListener { buttonView, isChecked ->
                 data.isChecked = isChecked
-                mOnSwitchItemListener?.invoke(isChecked, adapterPosition)
+                mOnSwitchItemListener?.invoke(buttonView, isChecked, adapterPosition)
             }
         }
     }
@@ -47,7 +48,7 @@ class SubjectAdapter : RecyclerView.Adapter<SubjectAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    fun setOnSwitchItem(onSwitchChange: (Boolean, Int) -> Unit) {
+    fun setOnSwitchItem(onSwitchChange: (CompoundButton, Boolean, Int) -> Unit) {
         mOnSwitchItemListener = onSwitchChange
     }
 

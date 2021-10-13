@@ -3,13 +3,15 @@ package vn.ncsc.visafe.ui.home
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.text.Html
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -104,6 +106,27 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
                     val time = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.TIME_LAST_SCAN)
                     binding.tvTimeScan.text = "Lần quét gần đây nhất ${getTimeAgo(time.toLong())}"
                 }
+                val errorNumber = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.NUMBER_OF_ERROR)
+                if (errorNumber.isNotEmpty()
+                    && "0" != errorNumber
+                ) {
+                    binding.tvTitle.text = HtmlCompat.fromHtml(
+                        getString(R.string.title_your_dangerous, errorNumber),
+                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                    )
+                } else {
+                    binding.tvTitle.text = HtmlCompat.fromHtml(
+                        getString(R.string.title_your_save),
+                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                    )
+                }
+            }
+        }
+
+    private var resultLauncherCreateGroup =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                (activity as MainActivity).openWorkspaceTab()
             }
         }
 
@@ -111,12 +134,39 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
 
     @SuppressLint("LongLogTag", "RestrictedApi")
     override fun initView() {
+        (activity as MainActivity).isLoadView.observe(this, {
+            if ((activity as BaseActivity).isLogin()) {
+                binding.layoutHomeProtect.llHomeBlockAds.visibility = View.VISIBLE
+                binding.layoutHomeProtect.llHomeBlockTracking.visibility = View.VISIBLE
+                binding.cardViewStatistical.visibility = View.VISIBLE
+                binding.layoutAddVpn.cardViewAddVpn.visibility = View.VISIBLE
+                binding.layoutHomeProtectFamily.cardViewHomeProtectFamily.visibility = View.VISIBLE
+                binding.layoutUpgrade.llRegisterNow.visibility = View.GONE
+            } else {
+                binding.layoutHomeProtect.llHomeBlockAds.visibility = View.GONE
+                binding.layoutHomeProtect.llHomeBlockTracking.visibility = View.GONE
+                binding.cardViewStatistical.visibility = View.GONE
+                binding.layoutAddVpn.cardViewAddVpn.visibility = View.GONE
+                binding.layoutHomeProtectFamily.cardViewHomeProtectFamily.visibility = View.GONE
+                binding.layoutUpgrade.llRegisterNow.visibility = View.VISIBLE
+            }
+        })
+
         val pin = ViSafeApp().getPreference().getString(PreferenceKey.PIN_CODE)
         binding.viewStatistical.tvOverview.text = "Tổng quan của thiết bị"
         binding.layoutHomePass.view.visibility = if (pin.isNotEmpty()) View.VISIBLE else View.GONE
         (activity as MainActivity).listWorkSpaceLiveData.observe(this, {
             if (it != null) {
                 if (it.isNotEmpty()) {
+                    for (workSpace in it) {
+                        if (workSpace.id == SharePreferenceKeyHelper.getInstance(ViSafeApp()).getWorkspaceChoose().id) {
+                            mWorkspaceGroupData = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getWorkspaceChoose()
+                            mWorkspaceGroupData?.let { workSpaceChoose ->
+                                doGetAGroupWithId(workSpaceChoose)
+                            }
+                            return@observe
+                        }
+                    }
                     it[0].let { workspaceGroupData ->
                         mWorkspaceGroupData = workspaceGroupData
                         doGetAGroupWithId(workspaceGroupData)
@@ -127,18 +177,89 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
         EventUtils.isCreatePass.observe(this, {
             binding.layoutHomePass.cvHomePass.visibility = if (it) View.GONE else View.VISIBLE
         })
+
+        if (SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.TIME_LAST_SCAN).isNullOrEmpty()) {
+            binding.tvTitle.text = "Thiết bị của bạn có an toàn?"
+            binding.tvTimeScan.visibility = View.GONE
+            binding.tvScan.text = "KIỂM TRA NGAY"
+        } else {
+            val time = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.TIME_LAST_SCAN)
+            binding.tvTimeScan.text = "Lần quét gần đây nhất ${getTimeAgo(time.toLong())}"
+            binding.tvTimeScan.visibility = View.VISIBLE
+            binding.tvScan.text = "QUÉT LẦN NỮA"
+            val errorNumber = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.NUMBER_OF_ERROR)
+            if (errorNumber.isNotEmpty()
+                && "0" != errorNumber
+            ) {
+                binding.tvTitle.text = HtmlCompat.fromHtml(
+                    getString(R.string.title_your_dangerous, errorNumber),
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
+            } else {
+                binding.tvTitle.text = HtmlCompat.fromHtml(
+                    getString(R.string.title_your_save),
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
+            }
+        }
+
+
         (activity as MainActivity).timeScanUpdate.observe(this, {
             if (it.isEmpty()) {
-                binding.tvTimeScan.text = "Bạn chưa quét lần nào"
+                binding.tvTitle.text = "Thiết bị của bạn có an toàn?"
+                binding.tvTimeScan.visibility = View.GONE
+                binding.tvScan.text = "KIỂM TRA NGAY"
             } else {
                 binding.tvTimeScan.text = "Lần quét gần đây nhất ${getTimeAgo(it.toLong())}"
+                binding.tvTimeScan.visibility = View.VISIBLE
+                binding.tvScan.text = "QUÉT LẦN NỮA"
+                val errorNumber = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.NUMBER_OF_ERROR)
+                if (errorNumber.isNotEmpty()
+                    && "0" != errorNumber
+                ) {
+                    binding.tvTitle.text = HtmlCompat.fromHtml(
+                        getString(R.string.title_your_dangerous, errorNumber),
+                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                    )
+                } else {
+                    binding.tvTitle.text = HtmlCompat.fromHtml(
+                        getString(R.string.title_your_save),
+                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                    )
+                }
             }
         })
+        (activity as MainActivity).isOpenProtectedDevice.observe(this, {
+            binding.layoutHomeProtect.switchHomeProtectDevice.isChecked = it
+            binding.layoutHomeProtect.ivHomeProtectDevice.setImageResource(
+                if (it) {
+                    R.drawable.ic_mobile
+                } else {
+                    R.drawable.ic_info_circle
+                }
+            )
+//            binding.layoutAddVpn.btnHomeVpnAdd.text = if (it) "Đã kết nối VPN" else "Thêm VPN"
+            binding.layoutAddVpn.cardViewAddVpn.visibility = if (it) View.GONE else View.VISIBLE
+        })
+
+        binding.layoutAddVpn.btnHomeVpnAdd.text =
+            if (SharePreferenceKeyHelper.getInstance(ViSafeApp())
+                    .getBoolean(PreferenceKey.STATUS_OPEN_VPN)
+            ) "Đã kết nối VPN" else "Thêm VPN"
+
         binding.layoutHomeProtect.switchHomeProtectWifi.isChecked =
             SharePreferenceKeyHelper.getInstance(ViSafeApp()).isEnableProtectedWifiHome()
 
         binding.layoutHomeProtect.switchHomeProtectDevice.isChecked =
             SharePreferenceKeyHelper.getInstance(ViSafeApp()).getBoolean(PreferenceKey.STATUS_OPEN_VPN)
+
+        binding.layoutHomeProtect.ivHomeProtectDevice.setImageResource(
+            if (SharePreferenceKeyHelper.getInstance(ViSafeApp()).getBoolean(PreferenceKey.STATUS_OPEN_VPN)) {
+                R.drawable.ic_mobile
+            } else {
+                R.drawable.ic_info_circle
+            }
+        )
 
         if ((activity as BaseActivity).isLogin()) {
             binding.layoutHomeProtect.llHomeBlockAds.visibility = View.VISIBLE
@@ -159,7 +280,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
         //show thong tin thanh toan
         otherUtilitiesAdapter = OtherUtilitiesAdapter(getListUtilities(), this)
         val gridLayoutManager: RecyclerView.LayoutManager
-        gridLayoutManager = GridLayoutManager(context, 2)
+        gridLayoutManager = GridLayoutManager(context, 3)
         gridLayoutManager.setAutoMeasureEnabled(true)
         binding.layoutUtilities.rcvOtherUtilities.layoutManager = gridLayoutManager
         binding.layoutUtilities.rcvOtherUtilities.itemAnimator = DefaultItemAnimator()
@@ -169,9 +290,22 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
         initControl()
     }
 
+    private var resultLauncherOpenInputPin =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                (activity as MainActivity).isOpenProtectedDevice.value = false
+            } else if (result.resultCode == Activity.RESULT_CANCELED) {
+                (activity as MainActivity).isOpenProtectedDevice.value = true
+            }
+        }
+
     private fun initControl() {
         binding.layoutAddVpn.btnHomeVpnAdd.setOnSingClickListener {
-            showAddVpn()
+            if (SharePreferenceKeyHelper.getInstance(ViSafeApp()).getBoolean(PreferenceKey.STATUS_OPEN_VPN)) {
+                (activity as MainActivity).isOpenProtectedDevice.value = false
+            } else {
+                showAddVpn()
+            }
         }
         binding.tvScan.setOnSingClickListener {
             val intent = Intent(requireContext(), AdvancedScanActivity::class.java)
@@ -182,21 +316,18 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
         }
         binding.layoutHomeProtectFamily.btnHomeFamilyAddGroup.setOnSingClickListener {
             val intent = Intent(requireContext(), CreateGroupActivity::class.java)
-            intent.putExtra(GroupManagementFragment.DATA_WORKSPACE, mWorkspaceGroupData)
-            startActivity(intent)
-        }
-        binding.layoutHomeProtect.switchHomeProtectDevice.setOnCheckedChangeListener { _, isChecked ->
-            binding.layoutHomeProtect.ivHomeProtectDevice.setImageResource(
-                if (isChecked) {
-                    R.drawable.ic_mobile
-                } else {
-                    R.drawable.ic_info_circle
-                }
+            intent.putExtra(
+                GroupManagementFragment.DATA_WORKSPACE,
+                SharePreferenceKeyHelper.getInstance(ViSafeApp()).getWorkspaceChoose()
             )
+            resultLauncherCreateGroup.launch(intent)
         }
 
         //bảo vệ thiết bị
         binding.layoutHomeProtect.llHomeProtectDevice.setOnSingClickListener {
+            if ((activity as MainActivity).needLogin(MainActivity.POSITION_PROTECT)) {
+                return@setOnSingClickListener
+            }
             val intent = Intent(requireContext(), ProtectDeviceActivity::class.java)
             intent.putExtra(ProtectDeviceActivity.DATA_GROUP_KEY, groupData)
             intent.putExtra(
@@ -211,11 +342,32 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
         }
         //switch thiết bị
         binding.layoutHomeProtect.switchHomeProtectDevice.setOnCheckedChangeListener { _, isChecked ->
-            SharePreferenceKeyHelper.getInstance(ViSafeApp()).putBoolean(PreferenceKey.STATUS_OPEN_VPN, isChecked)
+            if (ViSafeApp().getPreference().getString(PreferenceKey.PIN_CODE).isNotEmpty()) {
+                if (SharePreferenceKeyHelper.getInstance(ViSafeApp()).getBoolean(PreferenceKey.STATUS_OPEN_VPN)) {
+                    val intent = Intent(context, UpdatePinActivity::class.java)
+                    intent.putExtra(UpdatePinActivity.TYPE_ACTION, UpdatePinActivity.IS_CONFIRM_PIN)
+                    resultLauncherOpenInputPin.launch(intent)
+                } else {
+                    (activity as MainActivity).isOpenProtectedDevice.value = true
+                }
+            } else {
+                SharePreferenceKeyHelper.getInstance(ViSafeApp()).putBoolean(PreferenceKey.STATUS_OPEN_VPN, isChecked)
+                binding.layoutHomeProtect.ivHomeProtectDevice.setImageResource(
+                    if (isChecked) {
+                        R.drawable.ic_mobile
+                    } else {
+                        R.drawable.ic_info_circle
+                    }
+                )
+                (activity as MainActivity).isOpenProtectedDevice.value = isChecked
+            }
         }
 
         //bảo vệ wifi
         binding.layoutHomeProtect.llHomeProtectWifi.setOnSingClickListener {
+            if ((activity as MainActivity).needLogin(MainActivity.POSITION_PROTECT)) {
+                return@setOnSingClickListener
+            }
             val intent = Intent(requireContext(), ProtectWifiActivity::class.java)
             intent.putExtra(
                 ProtectWifiActivity.PROTECT_WIFI_KEY,
@@ -333,7 +485,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
     private fun showAddVpn() {
         val dialog = ImageDialog.newsIntance(ImageDialog.TYPE_ADD_VPN)
         dialog.setOnClickListener {
-            Toast.makeText(requireContext(), "Add VPN", Toast.LENGTH_SHORT).show()
+            (activity as MainActivity).isOpenProtectedDevice.value = true
         }
         dialog.show(parentFragmentManager, null)
     }
@@ -397,37 +549,39 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
         if (!(activity as BaseActivity).isLogin())
             return
         showProgressDialog()
-        val id = workspaceGroupData.groupIds?.get(0)
-        val client = NetworkClient()
-        val call = client.client(context = requireContext()).doGetAGroupWithId(id)
-        call.enqueue(BaseCallback(this, object : Callback<GroupData> {
-            @SuppressLint("SetTextI18n")
-            override fun onResponse(
-                call: Call<GroupData>,
-                response: Response<GroupData>
-            ) {
-                if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    response.body()?.let {
-                        groupData = it
-                        binding.layoutHomeProtect.switchHomeBlockAds.isChecked = it.adblock_enabled ||
-                                it.game_ads_enabled ||
-                                it.app_ads?.isNotEmpty() == true
-                        binding.layoutHomeProtect.switchHomeBlockTracking.isChecked =
-                            it.native_tracking?.isNotEmpty() == true
-                        doGetStaticAGroup(false, groupData, TimeStatistical.HANG_NGAY.value)
-                        doGetStaticDevice(it, TimeStatistical.HANG_NGAY.value)
+        if (workspaceGroupData.groupIds?.size!! > 0) {
+            val id = workspaceGroupData.groupIds?.get(0)
+            val client = NetworkClient()
+            val call = client.client(context = requireContext()).doGetAGroupWithId(id)
+            call.enqueue(BaseCallback(this, object : Callback<GroupData> {
+                @SuppressLint("SetTextI18n")
+                override fun onResponse(
+                    call: Call<GroupData>,
+                    response: Response<GroupData>
+                ) {
+                    if (response.code() == NetworkClient.CODE_SUCCESS) {
+                        response.body()?.let {
+                            groupData = it
+                            binding.layoutHomeProtect.switchHomeBlockAds.isChecked = it.adblock_enabled ||
+                                    it.game_ads_enabled ||
+                                    it.app_ads?.isNotEmpty() == true
+                            binding.layoutHomeProtect.switchHomeBlockTracking.isChecked =
+                                it.native_tracking?.isNotEmpty() == true
+                            doGetStaticAGroup(false, groupData, TimeStatistical.HANG_NGAY.value)
+                            doGetStaticDevice(it, TimeStatistical.HANG_NGAY.value)
+                        }
+                    } else {
+                        dismissProgress()
                     }
-                } else {
-                    dismissProgress()
+
                 }
 
-            }
-
-            override fun onFailure(call: Call<GroupData>, t: Throwable) {
-                t.message?.let { Log.e("onFailure: ", it) }
-                dismissProgress()
-            }
-        }))
+                override fun onFailure(call: Call<GroupData>, t: Throwable) {
+                    t.message?.let { Log.e("onFailure: ", it) }
+                    dismissProgress()
+                }
+            }))
+        }
     }
 
     fun doGetStaticAGroup(isShowProgress: Boolean, groupData: GroupData?, timeLimit: String) {
@@ -486,6 +640,8 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
     }
 
     fun doGetStaticDevice(groupData: GroupData?, timeLimit: String) {
+        val userInfo = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getUserInfo()
+        val deviceId = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.DEVICE_ID)
         groupData?.let {
             if (it.ids?.size == 0) {
                 return@let
@@ -493,8 +649,8 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
             val client = NetworkClient()
             val call =
                 client.client(context = requireContext())
-                    .doGetStatisticalOneDeviceInGroup(it.groupid, it.ids?.get(0), timeLimit)
-            call.enqueue(BaseCallback(this, object : Callback<StatsWorkspaceResponse> {
+                    .doGetStatisticalOneDeviceInGroup(userInfo.DefaultGroup, deviceId, timeLimit)
+            call.enqueue(object : Callback<StatsWorkspaceResponse> {
                 override fun onResponse(
                     call: Call<StatsWorkspaceResponse>,
                     response: Response<StatsWorkspaceResponse>
@@ -511,7 +667,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
                 override fun onFailure(call: Call<StatsWorkspaceResponse>, t: Throwable) {
                     t.message?.let { Log.e("onFailure: ", it) }
                 }
-            }))
+            })
         }
     }
 }

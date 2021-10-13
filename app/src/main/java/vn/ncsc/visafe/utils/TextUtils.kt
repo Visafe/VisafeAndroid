@@ -1,15 +1,13 @@
 package vn.ncsc.visafe.utils
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.util.Patterns
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import vn.ncsc.visafe.R
 import java.lang.System.currentTimeMillis
-import java.text.SimpleDateFormat
+import java.text.Normalizer
 import java.util.*
 
 fun isValidEmail(target: CharSequence): Boolean {
@@ -184,4 +182,16 @@ fun formatPrices(token: Long): String {
         return String(ch.toCharArray())
     }
     return "0"
+}
+
+fun toLowerCaseAndRemoveAccent(str: String): String? {
+    var str = str
+    str = str.lowercase(Locale.getDefault())
+    str = Normalizer.normalize(str, Normalizer.Form.NFD)
+    str = str.replace("[^\\p{ASCII}]".toRegex(), "")
+    return str
+}
+
+fun removeAccent(s: String?): String {
+    return VNCharacterUtils.removeAccent(s).replace("[^\\p{ASCII}]", "").replace("[\\[\\]!@#$%^&*(),\\-+=]", "")
 }

@@ -12,15 +12,26 @@ import android.view.Window
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseActivity
+import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivitySplashBinding
+import vn.ncsc.visafe.dns.net.setting.RandomString
+import vn.ncsc.visafe.model.response.DeviceIdResponse
 import vn.ncsc.visafe.ui.MainActivity
 import vn.ncsc.visafe.ui.adapter.SectionsPagerAdapter
 import vn.ncsc.visafe.ui.group.join.JoinGroupActivity
 import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
+import java.io.IOException
+import java.security.KeyStoreException
+import java.security.NoSuchAlgorithmException
+import javax.security.cert.CertificateException
+
 
 class SplashActivity : BaseActivity() {
 
@@ -68,8 +79,10 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun handleDeeplink() {
-        if (data != null && data.toString().contains("group/invite/device")) {
-            val dataString = data.toString().replace(NetworkClient.URL_ROOT + "group/invite/device?", "")
+        if (data != null && data.toString().contains("group/invite/device?")) {
+            val subStringUrl =
+                data.toString().substring(0, data.toString().indexOf("group/invite/device?") + "group/invite/device?".length)
+            val dataString = data.toString().replace(subStringUrl, "")
             val items: Array<String> = dataString.split("&".toRegex()).toTypedArray()
             try {
                 for (item in items) {
@@ -166,5 +179,29 @@ class SplashActivity : BaseActivity() {
             }
 
         })
+    }
+
+    fun getDeviceId() {
+        if (SharePreferenceKeyHelper.getInstance(application).getString(PreferenceKey.DEVICE_ID).isEmpty()) {
+            val client = NetworkClient()
+            val call = client.clientWithoutToken(context = applicationContext).doGetDeviceId()
+            call.enqueue(BaseCallback(this, object : Callback<DeviceIdResponse> {
+                override fun onResponse(
+                    call: Call<DeviceIdResponse>,
+                    response: Response<DeviceIdResponse>
+                ) {
+                    if (response.code() == NetworkClient.CODE_SUCCESS) {
+                        response.body()?.deviceId?.let {
+                            SharePreferenceKeyHelper.getInstance(application)
+                                .putString(PreferenceKey.DEVICE_ID, it.lowercase())
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<DeviceIdResponse>, t: Throwable) {
+                    t.message?.let { Log.e("onFailure: ", it) }
+                }
+            }))
+        }
     }
 }

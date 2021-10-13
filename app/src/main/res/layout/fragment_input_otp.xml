@@ -90,13 +90,11 @@
             android:id="@+id/tvOtpError"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_6sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
             android:fontFamily="@font/sf_pro_text_regular"
-            android:gravity="center"
+            android:gravity="start"
             android:textColor="@color/color_FF4451"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/_10sdp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@+id/otpEditText"
             app:layout_constraintStart_toStartOf="@+id/otpEditText"
@@ -119,21 +117,42 @@
             app:layout_constraintStart_toStartOf="@+id/otpEditText"
             app:layout_constraintTop_toBottomOf="@+id/tvOtpError" />
 
-        <TextView
-            android:id="@+id/tvSendToOtp"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ctrlResendOTP"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_24sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:fontFamily="@font/sf_pro_text_regular"
-            android:gravity="center"
-            android:text="Gửi lại mã OTP (30s)"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toEndOf="@+id/btnNext"
             app:layout_constraintStart_toStartOf="@+id/btnNext"
-            app:layout_constraintTop_toBottomOf="@+id/btnNext" />
+            app:layout_constraintTop_toBottomOf="@+id/btnNext">
+
+            <TextView
+                android:id="@+id/tvSendToOtp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:gravity="center"
+                android:text="Gửi lại mã OTP"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_12sdp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/tvSendToOtp"
+                app:layout_constraintStart_toEndOf="@+id/tvSendToOtp"
+                app:layout_constraintTop_toTopOf="@+id/tvSendToOtp"
+                tools:text="(30s)" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

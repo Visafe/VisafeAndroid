@@ -26,7 +26,7 @@ data class UserInfo(
     @SerializedName("TimeEnd")
     var TimeEnd: String? = null,
     @SerializedName("MaxWorkspace")
-    var MaxWorkspace: Int? = null,
+    var MaxWorkspace: Int = 0,
     @SerializedName("MaxGroup")
     var MaxGroup: Int? = null,
     @SerializedName("MaxDevice")
