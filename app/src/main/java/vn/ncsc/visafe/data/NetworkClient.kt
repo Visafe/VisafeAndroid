@@ -34,10 +34,10 @@ class NetworkClient {
         val ERROR_CODE =
             listOf(406, 409, 424, 502, 500)
 
-        const val URL_ROOT = "https://staging.visafe.vn/api/v1/"
-        const val DOMAIN = "https://dns-staging.visafe.vn/dns-query/"
-//        const val URL_ROOT = "https://app.visafe.vn/api/v1/"
-//        const val DOMAIN = "https://dns.visafe.vn/dns-query/"
+//        const val URL_ROOT = "https://staging.visafe.vn/api/v1/"
+//        const val DOMAIN = "https://dns-staging.visafe.vn/dns-query/"
+        const val URL_ROOT = "https://app.visafe.vn/api/v1/"
+        const val DOMAIN = "https://dns.visafe.vn/dns-query/"
 
     }
 

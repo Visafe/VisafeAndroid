@@ -72,7 +72,7 @@ fun updateOTPCode(
     tvOtp6: TextView,
     context: Context
 ) {
-    tvOtp1.background = ContextCompat.getDrawable(context, R.drawable.ic_otp_number)
+    tvOtp1.background = ContextCompat.getDrawable(context, R.drawable.ic_otp_highlight)
     tvOtp2.background = ContextCompat.getDrawable(context, R.drawable.ic_otp_number)
     tvOtp3.background = ContextCompat.getDrawable(context, R.drawable.ic_otp_number)
     tvOtp4.background = ContextCompat.getDrawable(context, R.drawable.ic_otp_number)

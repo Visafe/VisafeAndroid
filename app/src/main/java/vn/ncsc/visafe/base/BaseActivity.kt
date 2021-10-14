@@ -130,7 +130,7 @@ open class BaseActivity : AppCompatActivity(), BaseController {
             val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("", text)
             clipboard.setPrimaryClip(clip)
-            showToast("Copy success")
+            showToast("Sao chép liên kết thành công")
         }
     }
 

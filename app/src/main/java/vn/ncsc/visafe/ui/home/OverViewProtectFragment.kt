@@ -82,8 +82,9 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
-                if (result.data != null) {
-                    groupData = result.data?.getParcelableExtra(MemberManagementActivity.KEY_DATA)
+                mWorkspaceGroupData = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getWorkspaceChoose()
+                mWorkspaceGroupData?.let { workSpaceChoose ->
+                    doGetAGroupWithId(workSpaceChoose)
                 }
             }
         }
@@ -93,8 +94,9 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
-                if (result.data != null) {
-                    groupData = result.data?.getParcelableExtra(MemberManagementActivity.KEY_DATA)
+                mWorkspaceGroupData = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getWorkspaceChoose()
+                mWorkspaceGroupData?.let { workSpaceChoose ->
+                    doGetAGroupWithId(workSpaceChoose)
                 }
             }
         }
@@ -178,7 +180,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
             binding.layoutHomePass.cvHomePass.visibility = if (it) View.GONE else View.VISIBLE
         })
 
-        if (SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.TIME_LAST_SCAN).isNullOrEmpty()) {
+        if (SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.TIME_LAST_SCAN).isEmpty()) {
             binding.tvTitle.text = "Thiết bị của bạn có an toàn?"
             binding.tvTimeScan.visibility = View.GONE
             binding.tvScan.text = "KIỂM TRA NGAY"
@@ -476,10 +478,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
     private fun getDataStatistical(item: TimeStatistical) {
         timeStatistical = item.value
         timeType = item.time
-        groupData?.let {
-            doGetStaticDevice(it, timeStatistical)
-        }
-
+        doGetStaticAGroup(true, TimeStatistical.HANG_NGAY.value)
     }
 
     private fun showAddVpn() {
@@ -567,8 +566,8 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
                                     it.app_ads?.isNotEmpty() == true
                             binding.layoutHomeProtect.switchHomeBlockTracking.isChecked =
                                 it.native_tracking?.isNotEmpty() == true
-                            doGetStaticAGroup(false, groupData, TimeStatistical.HANG_NGAY.value)
-                            doGetStaticDevice(it, TimeStatistical.HANG_NGAY.value)
+                            doGetStaticAGroup(false, TimeStatistical.HANG_NGAY.value)
+//                            doGetStaticDevice(it, TimeStatistical.HANG_NGAY.value)
                         }
                     } else {
                         dismissProgress()
@@ -584,32 +583,34 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
         }
     }
 
-    fun doGetStaticAGroup(isShowProgress: Boolean, groupData: GroupData?, timeLimit: String) {
+    fun doGetStaticAGroup(isShowProgress: Boolean, timeLimit: String) {
         if (isShowProgress)
             showProgressDialog()
-        groupData?.groupid.let {
-            val client = NetworkClient()
-            val call = client.client(context = requireContext()).doGetStatisticalOneGroup(it, timeLimit)
-            call.enqueue(BaseCallback(this, object : Callback<StatsWorkspaceResponse> {
-                override fun onResponse(
-                    call: Call<StatsWorkspaceResponse>,
-                    response: Response<StatsWorkspaceResponse>
-                ) {
-                    if (response.code() == NetworkClient.CODE_SUCCESS) {
-                        response.body()?.let { data ->
-                            statsWorkSpace = StatsWorkSpace(data)
-                        }
+        val userInfo = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getUserInfo()
+        val client = NetworkClient()
+        val call = client.client(context = requireContext()).doGetStatisticalOneGroup(userInfo.DefaultGroup, timeLimit)
+        call.enqueue(BaseCallback(this, object : Callback<StatsWorkspaceResponse> {
+            override fun onResponse(
+                call: Call<StatsWorkspaceResponse>,
+                response: Response<StatsWorkspaceResponse>
+            ) {
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    response.body()?.let { data ->
+                        statsWorkSpace = StatsWorkSpace(data)
+                        binding.viewStatistical.tvValueDangerous.text = data.num_dangerous_domain.toString()
+                        binding.viewStatistical.tvValueAds.text = data.num_ads_blocked.toString()
+                        binding.viewStatistical.tvValueViolate.text = data.num_violation.toString()
                     }
-                    if (isShowProgress)
-                        dismissProgress()
                 }
-
-                override fun onFailure(call: Call<StatsWorkspaceResponse>, t: Throwable) {
-                    t.message?.let { Log.e("onFailure: ", it) }
+                if (isShowProgress)
                     dismissProgress()
-                }
-            }))
-        }
+            }
+
+            override fun onFailure(call: Call<StatsWorkspaceResponse>, t: Throwable) {
+                t.message?.let { Log.e("onFailure: ", it) }
+                dismissProgress()
+            }
+        }))
     }
 
     private fun doUpdateGroup(data: GroupData?) {

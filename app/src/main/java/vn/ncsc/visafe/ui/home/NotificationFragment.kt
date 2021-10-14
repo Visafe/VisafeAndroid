@@ -9,7 +9,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import vn.ncsc.visafe.R
-import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.NetworkClient
@@ -41,7 +40,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Notifi
                 notificationAdapter = NotificationAdapter(this)
                 binding.rcvNotification.layoutManager = linearLayoutManager
                 binding.rcvNotification.setLoadingListener(this)
-                binding.rcvNotification.setPullRefreshEnabled(true)
+                binding.rcvNotification.setPullRefreshEnabled(false)
                 binding.rcvNotification.setLoadingMoreEnabled(true)
                 binding.rcvNotification.adapter = notificationAdapter
                 loadListNotification()
@@ -56,13 +55,18 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Notifi
             notificationAdapter = NotificationAdapter(this)
             binding.rcvNotification.layoutManager = linearLayoutManager
             binding.rcvNotification.setLoadingListener(this)
-            binding.rcvNotification.setPullRefreshEnabled(true)
+            binding.rcvNotification.setPullRefreshEnabled(false)
             binding.rcvNotification.setLoadingMoreEnabled(true)
             binding.rcvNotification.adapter = notificationAdapter
             loadListNotification()
         } else {
             binding.tvNoData.visibility = View.VISIBLE
             binding.rcvNotification.visibility = View.GONE
+        }
+
+        binding.swipeRefresh.setOnRefreshListener {
+            mPage = 1
+            doGetNotification(TypeLoad.REFRESH)
         }
     }
 
@@ -104,7 +108,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Notifi
                 }
                 when (type) {
                     TypeLoad.FIRST_LOAD -> dismissProgress()
-                    TypeLoad.REFRESH -> binding.rcvNotification.refreshComplete()
+                    TypeLoad.REFRESH -> binding.swipeRefresh.isRefreshing = false
                     TypeLoad.LOAD_MORE -> binding.rcvNotification.loadMoreComplete()
                 }
             }
@@ -113,7 +117,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Notifi
                 t.message?.let { Log.e("onFailure: ", it) }
                 when (type) {
                     TypeLoad.FIRST_LOAD -> dismissProgress()
-                    TypeLoad.REFRESH -> binding.rcvNotification.refreshComplete()
+                    TypeLoad.REFRESH -> binding.swipeRefresh.isRefreshing = false
                     TypeLoad.LOAD_MORE -> binding.rcvNotification.loadMoreComplete()
                 }
             }

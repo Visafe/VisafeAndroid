@@ -58,7 +58,7 @@ class ChangePasswordActivity : BaseActivity() {
             ) {
                 dismissProgress()
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    val dialog = SuccessDialogFragment.newInstance("Đổi password thành công", "")
+                    val dialog = SuccessDialogFragment.newInstance("Đổi mật khẩu thành công", "")
                     dialog.show(supportFragmentManager, "")
                     dialog.setOnClickListener {
                         when (it) {

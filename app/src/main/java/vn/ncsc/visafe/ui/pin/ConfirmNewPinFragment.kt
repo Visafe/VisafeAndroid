@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.ViSafeApp
+import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.databinding.FragmentConfirmNewPinBinding
 import vn.ncsc.visafe.ui.create.group.SuccessDialogFragment
@@ -103,7 +104,19 @@ class ConfirmNewPinFragment : BaseFragment<FragmentConfirmNewPinBinding>() {
                 if (binding.etPinCode.length() == 6) {
                     when (mType) {
                         1 -> {
-                            showDialogDeleteComplete("Xóa mã pin thành công")
+                            if (binding.etPinCode.text.toString() == ViSafeApp().getPreference()
+                                    .getString(PreferenceKey.PIN_CODE)
+                            ) {
+                                hiddenKeyboard()
+                                binding.etPinCode.clearFocus()
+                                showDialogDeleteComplete("Xóa mã pin thành công")
+                            } else {
+                                //báo lỗi sai pin
+                                showAlert("Thông báo", "Mã pin vừa nhập không trùng khớp!") {
+                                    binding.etPinCode.setText("")
+                                }
+                            }
+
                         }
                         2 -> {
                             if (binding.etPinCode.text.toString() == ViSafeApp().getPreference()
@@ -112,9 +125,14 @@ class ConfirmNewPinFragment : BaseFragment<FragmentConfirmNewPinBinding>() {
                                 activity?.let {
                                     it.setResult(AppCompatActivity.RESULT_OK)
                                     (it as UpdatePinActivity).finish()
+                                    hiddenKeyboard()
+                                    binding.etPinCode.clearFocus()
                                 }
                             } else {
                                 //báo lỗi sai pin
+                                showAlert("Thông báo", "Mã pin vừa nhập không trùng khớp!") {
+                                    binding.etPinCode.setText("")
+                                }
                             }
                         }
                         else -> {
@@ -123,6 +141,8 @@ class ConfirmNewPinFragment : BaseFragment<FragmentConfirmNewPinBinding>() {
                                 ViSafeApp().getPreference().putString(PreferenceKey.PIN_CODE, pinInput)
                                 EventUtils.isCreatePass.value = true
                                 showDialogComplete(getString(R.string.create_new_pin_success))
+                                hiddenKeyboard()
+                                binding.etPinCode.clearFocus()
                             } else {
                                 showAlert("Thông báo", "Mã pin vừa nhập không trùng khớp!") {
                                     binding.etPinCode.setText("")

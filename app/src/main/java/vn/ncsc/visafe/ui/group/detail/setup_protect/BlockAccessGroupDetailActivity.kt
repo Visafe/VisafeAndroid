@@ -51,7 +51,7 @@ class BlockAccessGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreIt
     private var listBlockServiceDefault: ArrayList<Subject> = arrayListOf()
 
     private var blockAdapter: WebsiteCreatGroupAdapter? = null
-    private var mDataBlock: ArrayList<Subject> = arrayListOf()
+    private var mListDataBlock: ArrayList<Subject> = arrayListOf()
 
     private var prioritizeAdapter: WebsiteCreatGroupAdapter? = null
     private var mDataPrioritize: ArrayList<Subject> = arrayListOf()
@@ -117,9 +117,16 @@ class BlockAccessGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreIt
             binding.itemBlockAccess.reloadData()
             it.block_webs?.let { listBlock ->
                 for (i in listBlock) {
-                    mDataBlock.add(Subject(i, i, -1, true))
+                    mListDataBlock.add(Subject(i, i, -1, true))
                 }
-                blockAdapter?.setData(mDataBlock)
+                blockAdapter?.setData(mListDataBlock)
+            }
+
+            it.whiteList?.let { listWhitelist ->
+                for (i in listWhitelist) {
+                    mDataPrioritize.add(Subject(i, i, -1, true))
+                }
+                prioritizeAdapter?.setData(mDataPrioritize)
             }
 
         }
@@ -170,7 +177,7 @@ class BlockAccessGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreIt
             ) else listOf()
             doUpdateGroup(groupData, this)
         }
-        binding.itemBlockAccess.setOnSwitchItemChangeListener { buttonView,isChecked, position ->
+        binding.itemBlockAccess.setOnSwitchItemChangeListener { buttonView, isChecked, position ->
             if (buttonView.isPressed) {
                 Log.e("switchWidget: ", "click")
             } else {
@@ -589,7 +596,7 @@ class BlockAccessGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreIt
                 Action.CONFIRM -> {
                     if (data == null) {
                         if (link.isNotBlank()) {
-                            mDataBlock.add(Subject(link, link, -1, true))
+                            mListDataBlock.add(Subject(link, link, -1, true))
                             blockAdapter?.addItem(Subject(link, link, -1, true))
                             groupData?.block_webs = blockAdapter?.getData()
                             doUpdateGroup(groupData, this)

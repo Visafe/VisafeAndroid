@@ -80,12 +80,12 @@ data class GroupData(
     var days: List<String>? = null,
     @SerializedName("whiteList")
     var whiteList: List<String>? = null,
-    @SerializedName("link_ip")
-    var linkIp: String? = null,
-    @SerializedName("avatarUrl")
-    var avatarUrl: String? = null,
-    @SerializedName("avatarUrlTime")
-    var avatarUrlTime: String? = null,
+//    @SerializedName("link_ip")
+//    var linkIp: String? = null,
+//    @SerializedName("avatarUrl")
+//    var avatarUrl: String? = null,
+//    @SerializedName("avatarUrlTime")
+//    var avatarUrlTime: String? = null,
     @SerializedName("link_invite_device")
     var linkInviteDevice: String? = null
 ) : Parcelable
