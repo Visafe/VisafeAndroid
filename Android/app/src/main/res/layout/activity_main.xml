@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:id="@+id/activity_main"
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent"
+     android:fitsSystemWindows="false"
+     android:background="@color/white"
+    android:overScrollMode="never"
+     tools:context=".ui.MainActivity">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1">
+
+      <include
+          android:id="@+id/frame_main"
+          layout="@layout/main_recycler"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:visibility="visible" />
+
+      <include
+          android:id="@+id/settings"
+          layout="@layout/placeholder"
+          android:visibility="gone"/>
+      <include
+          android:id="@+id/dashboard_layout"
+          layout="@layout/placeholder"
+          android:visibility="gone"/>
+      <include
+          android:id="@+id/extension_layout"
+          layout="@layout/placeholder"
+          android:visibility="gone"/>
+      <include
+          android:id="@+id/info_page"
+          layout="@layout/info_page"
+          android:visibility="gone"/>
+    </FrameLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav_view"
+        app:labelVisibilityMode="labeled"
+        android:layout_width="match_parent"
+        android:layout_height="0.001dp"
+        android:layout_gravity="bottom"
+        android:background="@color/darkblue"
+        android:padding="2dp"
+        app:itemIconTint="@color/botton_nav_change"
+        app:itemTextColor="@color/botton_nav_change"
+        app:menu="@menu/bottom_nav_menu"
+        />
+  </LinearLayout>
+  <app.visafe.ui.PadNavigationView
+          android:id="@+id/outer_drawer"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:fitsSystemWindows="true"
+          android:layout_gravity="start">
+
+    <androidx.core.widget.NestedScrollView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:scrollbars="vertical" android:fillViewport="true">
+
+      <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+                                                         android:layout_height="match_parent">
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/drawer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:textColor="@color/cardview_dark_background"
+            app:layout_constraintBottom_toTopOf="@id/nav_space"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/drawer_menu" />
+        <Space
+            android:id="@+id/nav_space"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/credit_text_view"
+            app:layout_constraintTop_toBottomOf="@id/drawer"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <TextView
+            android:id="@+id/credit_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:linksClickable="true"
+            android:textColor="@color/cardview_dark_background"
+            android:text="@string/credits_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            app:layout_constraintBottom_toTopOf="@id/nav_image"
+            app:layout_constraintTop_toBottomOf="@id/nav_space"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <ImageView
+            android:id="@+id/nav_image"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/thumbnail"
+            tools:ignore="ContentDescription"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toBottomOf="@id/credit_text_view"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:adjustViewBounds="true"/>
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+  </app.visafe.ui.PadNavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>

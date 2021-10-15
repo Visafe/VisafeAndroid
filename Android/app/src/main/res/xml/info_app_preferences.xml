@@ -1,0 +1,48 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="build_number"
+        android:title="Phiên bản"
+        android:icon="@drawable/ic_baseline_add_to_home_screen_24"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"/>
+    <Preference
+        android:key="hotline"
+        android:title="Hỗ trợ trực tuyến"
+        android:icon="@drawable/ic_baseline_call_24"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"/>
+    <Preference
+        android:key="questions"
+        android:title="Các câu hỏi thường gặp"
+        android:icon="@drawable/ic_baseline_question_answer_24"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"/>
+    <Preference
+        android:key="policy"
+        android:title="Chính sách"
+        android:icon="@drawable/ic_baseline_policy_24"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"/>
+    <Preference
+        android:key="rate"
+        android:title="Đánh giá ứng dụng"
+        android:icon="@drawable/ic_baseline_star_rate_24"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"/>
+    <Preference
+        android:key="contact_facebook"
+        android:title="VISAFE trên Facebook"
+        android:icon="@drawable/ic_baseline_facebook_24"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"/>
+    <SwitchPreference
+        android:key="anonymous"
+        android:title="Thông tin ẩn danh"
+        
+        app:allowDividerAbove="true"
+        android:scaleX="1.5"
+        app:isPreferenceVisible="false"
+        android:scaleY="1.5"
+        app:allowDividerBelow="true"/>
+</PreferenceScreen>

@@ -1,0 +1,404 @@
+<!--    <string name="textid"></string>-->
+<!--    &lt;!&ndash; Intro text &ndash;&gt;-->
+<!--    <string name="intro_benefit_headline" description="Headline for intro page describing key benefit">-->
+<!--      TRUNG TÂM GIÁM SÁT AN TOÀN-->
+
+<!--  </string>-->
+
+<!--    <string name="intro_benefit_body" description="Body text for intro page describing key benefit">-->
+<!--            KHÔNG GIAN MẠNG QUỐC GIA-->
+<!--  </string>-->
+
+<!--    <string name="intro_manipulation_headline" description="Headline for intro page describing manipulation">-->
+<!--    Protection from DNS manipulation-->
+<!--  </string>-->
+
+<!--    <string name="intro_manipulation_body" description="Body text for intro page describing manipulation">-->
+<!--    WeSafe protects your connection to the Domain Name System (DNS), which provides the exact addresses you need to visit a website or open an app.\n\nWeSafe uses encryption to ensure that results can\’t be manipulated, helping you safely access the internet.-->
+<!--  </string>-->
+
+<!--    <string name="intro_details_headline" description="Headline for intro page describing permissions and privacy">-->
+
+<!--  </string>-->
+
+<!--    <string name="intro_details_body" description="Body text for intro page describing permissions and privacy">-->
+<!--    Tap Accept to allow WeSafe to protect your DNS requests.-->
+<!--  </string>-->
+
+<!--    <string name="intro_back" description="Button label to see the previous page of introduction">-->
+<!--    back-->
+<!--  </string>-->
+
+<!--    <string name="intro_next" description="Button label to see the next page of introduction">-->
+<!--    next-->
+<!--  </string>-->
+
+<!--    <string name="intro_accept" description="Button label to acknowledge legal terms and VPN access permission request">-->
+<!--    OK-->
+<!--  </string>-->
+
+<!--    <string name="drawer_open" description="Hint for visually impaired users to access the menu.">-->
+<!--    Open navigation drawer-->
+<!--  </string>-->
+
+<!--    <string name="drawer_close" description="Hint for visually impaired users to leave the menu.">-->
+<!--    Close navigation drawer-->
+<!--  </string>-->
+
+<!--    <string name="home" description="Menu label to return to the app's main screen.">-->
+<!--    Home-->
+<!--  </string>-->
+
+<!--    <string name="settings" description="Menu label to access the Settings page.">-->
+<!--    Settings-->
+<!--  </string>-->
+
+<!--    <string name="support" description="Menu entry that links to documentation and interactive support.">-->
+<!--    Support-->
+<!--  </string>-->
+
+<!--    <string name="privacy_link" description="Link to the privacy policy.">-->
+<!--    Privacy Policy-->
+<!--  </string>-->
+
+<!--    <string name="tos_link" description="Link to the terms of service.">-->
+<!--    Terms of Service-->
+<!--  </string>-->
+
+<!--    <string name="source_code" description="Link to the source code for this app.">-->
+<!--    Source Code-->
+<!--  </string>-->
+
+<!--    <string name="credits_text" description="Credits to contributing parties. 'NCSC' and 'WeSafe' are not translatable.">-->
+<!--    WeSafe was made by Trung tâm giám sát an toàn không gian mạng quốc gia <a href="https://khonggianmang.vn/">(NCSC)</a>.-->
+<!--  </string>-->
+
+<!--    <string name="indicator_on" description="This is a large message at the top of the main screen.">-->
+<!--    On-->
+<!--  </string>-->
+
+<!--    <string name="indicator_off" description="This is a large message at the top of the main screen.">-->
+<!--    Off-->
+<!--  </string>-->
+
+<!--    <string name="status_exposed" description="This is a large message in a scary color.  It indicates that DNS queries can be surveilled or modified in transit.">-->
+<!--    <b>Not Protected</b>-->
+<!--  </string>-->
+
+<!--    <string name="explanation_exposed" description="Expanded form of status_exposed">-->
+<!--    Your connection is exposed to DNS attacks.-->
+<!--  </string>-->
+
+<!--    <string name="status_protected" description="This is a large message in a reassuring color.  It indicates that DNS queries can't be surveilled or modified in transit.">-->
+<!--    <b>Protected</b>-->
+<!--  </string>-->
+
+<!--    <string name="explanation_protected" description="Expanded form of status_protected">-->
+<!--    Your connection is protected from DNS attacks.-->
+<!--  </string>-->
+
+<!--    <string name="status_upgraded" description="This is similar to status_exposed, and indicates weak protection that an attacker could disable.">-->
+<!--    Not Protected-->
+<!--  </string>-->
+
+<!--    <string name="explanation_upgraded" description="Corresponds to status_upgraded.">-->
+<!--    Your connection is currently protected by Android Private DNS, but an attacker could disable-->
+<!--    or undermine this protection.-->
+<!--  </string>-->
+
+<!--    <string name="status_strict" description="This is similar to dns_on, but the protection is being provided by the operating system, not by WeSafe.  It is not color-highlighted.">-->
+<!--    Protected by Android-->
+<!--  </string>-->
+
+<!--    <string name="explanation_strict" description="Explanation on the main screen for users who have Private DNS strict mode enabled at the OS level.">-->
+<!--    WeSafe has detected that the Android Private DNS setting is enabled.  This means your DNS-->
+<!--    queries are already protected, so there\'s no need to enable WeSafe.-->
+<!--  </string>-->
+
+<!--    <string name="status_starting" description="This text briefly appears while starting.">-->
+<!--    Starting&#8230;-->
+<!--  </string>-->
+
+<!--    <string name="explanation_starting" description="Corresponds to status_starting">-->
+<!--    Hang tight.  WeSafe is establishing a server connection.-->
+<!--  </string>-->
+
+<!--    <string name="status_waiting" description="This text appears during the connection process if WeSafe needs user permission or the phone is offline.">-->
+<!--    <b>Waiting</b>&#8230;-->
+<!--  </string>-->
+
+<!--    <string name="status_failing" description="This text appears if the connection is currently not working correctly. [CHAR_LIMIT=NONE]">-->
+<!--    Not Protected-->
+<!--  </string>-->
+
+<!--    <string name="explanation_offline" description="Status indicator shown when there is no network connection.">-->
+<!--    Your device is offline.  WeSafe is waiting for a network connection.-->
+<!--  </string>-->
+
+<!--    <string name="explanation_vpn" description="Warning text shown on the main screen before the user starts WeSafe">-->
+<!--    WeSafe has detected another VPN on your device.  If you enable WeSafe, that VPN will be disabled.-->
+<!--    WeSafe is not as secure as a trusted VPN.-->
+<!--  </string>-->
+
+<!--    <string name="explanation_failing">-->
+<!--    Warning: Queries are failing.  You may want to choose a different server or restart WeSafe.-->
+<!--  </string>-->
+
+<!--    <string name="system_details" description="This is the title of a section containing information on the system configuration and-->
+<!--  status.">-->
+<!--    System details-->
+<!--  </string>-->
+
+<!--    <string name="num_requests" description="This text appears under the number of queries protected so far.">-->
+<!--    Lifetime queries-->
+<!--  </string>-->
+
+<!--    <string name="num_requests_headline">-->
+<!--    DNS queries happen when your device looks up the IP address for a domain name-->
+<!--  </string>-->
+
+<!--    <string name="num_requests_body">-->
+<!--    This value shows the total number of DNS queries that your device has performed while WeSafe was-->
+<!--    active.  WeSafe encrypts these queries and sends them to a trusted server to make sure you\'re-->
+<!--    getting authentic results.-->
+<!--  </string>-->
+
+<!--    <string name="queries_per_minute" description="This text appears under the number of queries protected in the past minute.">-->
+<!--    Recent queries-->
+<!--  </string>-->
+
+<!--    <string name="queries_per_minute_headline">-->
+<!--    DNS queries happen at the beginning of each connection-->
+<!--  </string>-->
+
+<!--    <string name="queries_per_minute_body">-->
+<!--    This value shows the number of DNS queries that your device has performed in the last minute.-->
+<!--    Loading a complex webpage can require over a hundred DNS queries.-->
+<!--  </string>-->
+
+<!--    <string name="transport_label" description="This text appears under the name of the secure protocol currently in use.  Currently, that-->
+<!--   is always 'https'.">-->
+<!--    Encrypted transport-->
+<!--  </string>-->
+
+<!--    <string name="transport_headline">-->
+<!--    Encryption protects your queries from prying eyes-->
+<!--  </string>-->
+
+<!--    <string name="transport_body">-->
+<!--    When you use WeSafe, your DNS queries are encrypted, so that only you and your DNS server can see-->
+<!--    what DNS queries you are making.  WeSafe implements the DNS over HTTPS protocol for encryption.-->
+<!--  </string>-->
+
+<!--    <string name="default_transport_label" description="This text appears under the name of the DNS protocol in use when WeSafe is off.  Currently,-->
+<!--  that is usually 'unencrypted'.">-->
+<!--    Default transport-->
+<!--  </string>-->
+
+<!--    <string name="insecure_transport" description="Indicates that normal, insecure DNS is in use.">-->
+<!--    unencrypted-->
+<!--  </string>-->
+
+<!--    <string name="tls_transport" description="Indicates that 'DNS over TLS' protocol is in use" translatable="false">-->
+<!--    tls-->
+<!--  </string>-->
+
+<!--    <string name="insecure_transport_headline">-->
+<!--    Basic DNS is unencrypted-->
+<!--  </string>-->
+
+<!--    <string name="insecure_transport_body">-->
+<!--    Most devices and networks use basic DNS, which is unencrypted, so your DNS queries could be-->
+<!--    observed or modified by anyone on the network.  Some new devices support DNS over TLS, which-->
+<!--    encrypts your queries but can\'t protect you if the server is malicious.-->
+<!--  </string>-->
+
+<!--    <string name="server_label" description="This text appears under the domain name of the secure server currently in use, e.g. 'dns.google.com'.">-->
+<!--    Secure DNS server-->
+<!--  </string>-->
+
+<!--    <string name="server_headline">-->
+<!--    You deserve to use a trustworthy DNS server-->
+<!--  </string>-->
+
+<!--    <string name="server_body">-->
+<!--    This field shows the name of the secure DNS server that you\'re using.  You can also change to a-->
+<!--    different server in the Settings menu.-->
+<!--  </string>-->
+
+<!--    <string name="default_server_label" description="This text appears under the name of the insecure server currently in use.">-->
+<!--    Current DNS server-->
+<!--  </string>-->
+
+<!--    <string name="insecure_server_headline">-->
+<!--    You can choose your own DNS server-->
+<!--  </string>-->
+
+<!--    <string name="insecure_server_body">-->
+<!--    When WeSafe is disabled, most devices are pre-configured to use the DNS server your network-->
+<!--    operator picks. This field shows the IP address of the DNS server that your device is currently-->
+<!--    using. With WeSafe or Android P, you can easily select a server of your choice.-->
+<!--  </string>-->
+
+<!--    <string name="strict_mode_server_headline">-->
+<!--    You\'ve selected a secure server-->
+<!--  </string>-->
+
+<!--    <string name="strict_mode_server_body">-->
+<!--    This field shows the name of the DNS server that you configured in Android\'s Private DNS-->
+<!--    setting.  When WeSafe is disabled, your apps should send DNS queries to this server.-->
+<!--  </string>-->
+
+<!--    <string name="unknown_server" description="This is a placeholder, used when the server address is unknown.">-->
+<!--    (unknown server)-->
+<!--  </string>-->
+
+<!--    <string name="show_history" description="This label appears next to a checkbox.  When the box is checked, recent queries will start-->
+<!--  being shown.">-->
+<!--    Show recent queries-->
+<!--  </string>-->
+
+<!--    <string name="query_label" description="This text appears under the domain name for which a DNS query was issued.">-->
+<!--    Query-->
+<!--  </string>-->
+
+<!--    <string name="type_label" description="This text appears under the type of query that was issued ('A' or 'AAAA').">-->
+<!--    Type-->
+<!--  </string>-->
+
+<!--    <string name="latency_label" description="This text appears under a measurement of network latency, like '923 ms'.">-->
+<!--    Latency-->
+<!--  </string>-->
+
+<!--    <string name="resolver_label" description="This text appears under a two-letter ISO country code, indicating the country where the-->
+<!--  DNS resolver is located.">-->
+<!--    Resolver location-->
+<!--  </string>-->
+
+<!--    <string name="destination_label" description="This text appears under a two-letter ISO country code, indicating the country where the-->
+<!--  resolved domain's IP address is located.">-->
+<!--    Destination server-->
+<!--  </string>-->
+
+<!--    <string name="latency_ms" description="Template for forming latency strings.  Time is in milliseconds." translatable="false">-->
+<!--    <xliff:g example="29" id="time">%d</xliff:g> ms-->
+<!--  </string>-->
+
+<!--    <string name="server_choice_key" translatable="false">pref_server_url</string>-->
+
+<!--    <string name="server_choice" description="Title of the setting to choose your server">-->
+<!--    DNS over HTTPS Server-->
+<!--  </string>-->
+
+<!--    <string name="server_choice_summary" description="Template for text that appears under the server choice option">-->
+<!--    Currently <xliff:g example="abc" id="server_name">%s</xliff:g>-->
+<!--  </string>-->
+
+<!--    <string name="server_choice_builtin" description="Label for option to select from a short list of servers. [CHAR_LIMIT=NONE]">-->
+<!--    Built-in server-->
+<!--  </string>-->
+
+<!--    <string name="server_choice_website_notice" description="Warning text about a DNS server, with a hyperlink. [CHAR_LIMIT=NONE]">-->
+<!--    Please visit <a href="https://www.example.com/">their website</a> to review their privacy policy and any applicable terms of service.-->
+<!--  </string>-->
+
+<!--    <string name="server_website_button" description="Label for a button that will open the website. [CHAR_LIMIT=NONE]">-->
+<!--    Visit Website-->
+<!--  </string>-->
+
+<!--    <string name="try_all_servers" description="Label for a button to check all known servers to find one that is working. [CHAR_LIMIT=NONE]">-->
+<!--    Try all built-in servers-->
+<!--  </string>-->
+
+<!--    <string name="checking_servers" description="Text shown on a deactivated button while the checks are in progress. [CHAR_LIMIT=NONE]">-->
+<!--    Checking all servers-->
+<!--  </string>-->
+
+<!--    <string name="found_fastest" description="Template for success indication, shown when the fastest server for you is found. [CHAR_LIMIT=NONE]">-->
+<!--    Your fastest server is <xliff:g example="Google Public DNS">%s</xliff:g>.-->
+<!--  </string>-->
+
+<!--    <string name="all_servers_failed" description="Notification shown briefly if all known servers were unreachable. [CHAR_LIMIT=NONE]">-->
+<!--    Failed to identify a working server: connection failed to all built-in servers.-->
+<!--  </string>-->
+
+<!--    <string name="server_choice_custom" description="Label for option to type in your own server URL">-->
+<!--    Custom server URL-->
+<!--  </string>-->
+
+<!--    <string name="server_choice_warning" description="">-->
+<!--    Turn back and turn on Protected-->
+<!--  </string>-->
+
+<!--    <string name="excluded_apps" color="#FFFFFF" description="Title of the 'Excluded apps' setting, which allows the user to select apps that will not use WeSafe.">-->
+
+<!--  </string>-->
+
+<!--    <string name="excluded_apps_summary" color="#FFFFFF" description="Summary of how the Excluded apps' setting works">-->
+
+<!--  </string>-->
+
+<!--    <string name="excluded_apps_title" color="#FFFFFF" description="Title to appear over the 'Excluded apps' selection list.  Must be short.">-->
+<!--    Mark apps to exclude from WeSafe-->
+<!--  </string>-->
+
+<!--    <string name="old_android" description="Shown when a user-interface element requires a newer OS version">-->
+<!--    This functionality is not available on your version of Android.-->
+<!--  </string>-->
+
+<!--    <string name="notification_title" description="Status indicator text shown in a persistent notification.">-->
+<!--    DNS protection is active-->
+<!--  </string>-->
+
+<!--    <string name="notification_content" description="Indicates what will happen if the user taps the notification." translatable="false">-->
+<!--    Tap to change DNS protection setting-->
+<!--  </string>-->
+
+<!--    <string name="channel_name" description="Description of the notification, as shown in the system's advanced notifications settings-->
+<!--  page." translatable="false">-->
+<!--    DNS Protection Active Notification-->
+<!--  </string>-->
+<!--    <string name="channel_description">-->
+<!--    This notification appears while DNS protection is active.-->
+<!--  </string>-->
+
+<!--    <string name="warning_title" description="Status indicator text shown in a warning notification.">-->
+<!--    Warning: WeSafe has been deactivated-->
+<!--  </string>-->
+
+<!--    <string name="warning_channel_name" description="This is the name of the class of notifications that show warnings.  It's only-->
+<!--  visible in the system's advanced notifications settings page.">-->
+<!--    Warning-->
+<!--  </string>-->
+<!--    <string name="warning_channel_description" description="This is the explanatory text describing the 'Warning' notification class.  It's-->
+<!--  only visible in the system's advanced notifications settings page.">-->
+<!--    Shown when WeSafe has encountered a problem.-->
+<!--  </string>-->
+<!--    <string name="title_activity_settings" translatable="false">SettingsActivity</string>-->
+
+<!--    &lt;!&ndash; Preference Titles &ndash;&gt;-->
+<!--    <string name="messages_header" translatable="false">Messages</string>-->
+<!--    <string name="sync_header" translatable="false">Sync</string>-->
+
+<!--    &lt;!&ndash; Messages Preferences &ndash;&gt;-->
+<!--    <string name="signature_title" translatable="false">Set name device</string>-->
+<!--    <string name="reply_title" translatable="false">Default reply action</string>-->
+
+<!--    &lt;!&ndash; Sync Preferences &ndash;&gt;-->
+<!--    <string name="sync_title" translatable="false">Sync email periodically</string>-->
+<!--    <string name="attachment_title" translatable="false">Download incoming attachments</string>-->
+<!--    <string name="attachment_summary_on" translatable="false">Automatically download attachments for incoming emails-->
+<!--    </string>-->
+<!--    <string name="attachment_summary_off" translatable="false">Only download attachments when manually requested</string>-->
+<!--    <string name="qr_summary" translatable="false">Scan QR to join group</string>-->
+<!--  <string name = "title_post" translatable="false">Do you want to join group</string>-->
+<!--  <string name ="button_accept" translatable="false">Yes</string>-->
+<!--  <string name ="button_cancel" translatable="false">No</string>-->
+<!--  <string name="hint_dialog" translatable="false">Enter specified device name </string>-->
+<!--  <string name="title_post_plus" translatable="false">Device name:</string>-->
+<!--  <string name="title_post_plus_plus" translatable="false">Or you can rename device</string>-->
+<!--  <string name="passcode" translatable="false">Set passcode</string>-->
+<!--  <string name="passcode_summary" translatable="false">Protect your application</string>-->
+<!--  <string name="setting_passcode_message" translatable="false">Choose options Passcode</string>-->
+<!--  <string name="change_passcode" translatable="false">Change</string>-->
+<!--  <string name="delete_passcode" translatable="false">Remove</string>-->

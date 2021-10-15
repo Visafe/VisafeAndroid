@@ -1,0 +1,246 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name" translatable="false">Visafe</string>
+    <string name="server_choice_key" translatable="false">pref_server_url</string>
+    <string name="intro_benefit_headline">Chống lừa đảo, mã độc,\n tấn công mạng</string>
+    <string name="intro_benefit_body">Phòng tránh nguy cơ, thiệt hại từ \n các cuộc tấn công mạng, lừa đảo trực tuyến</string>
+    <string name="intro2" translatable="false">Bảo vệ quyền riêng tư</string>
+    <string name="intro3" translatable="false">Kiểm soát chủ động</string>
+    <string name="intro4" translatable="false">Quản trị Dashboard</string>
+    <string name="intro5" translatable="false">Chào mừng</string>
+    <string name="detail_intro1" translatable="false">Giảm quảng cáo khi truy cập Internet</string>
+    <string name="detail_intro2" translatable="false">Ngăn chặn các tấn công mạng cho thiết bị</string>
+    <string name="detail_intro3" translatable="false">Quản lý các website, ứng dụng được phép truy cập</string>
+    <string name="detail_intro4" translatable="false">Dễ dàng bảo vệ thiết bị và người dùng theo nhóm</string>
+    <string name="detail_intro5" translatable="false">Các tính năng được trang bị</string>
+    <string name="notification_channel_id">default</string>
+    <string name="intro_manipulation_headline">Bảo vệ khỏi thao túng DNS</string>
+    <string name="intro_manipulation_body">VISAFE bảo vệ kết nối của bạn đến Hệ thống tên miền (DNS), hệ thống này cung cấp địa chỉ chính xác mà bạn cần để truy cập vào một trang web hoặc mở một ứng dụng.\n\nVISAFE sử dụng tính năng mã hóa để đảm bảo không thể thay đổi được kết quả, giúp bạn truy cập vào Internet một cách an toàn.</string>
+    <string name="intro_details_headline">Chặn quảng cáo</string>
+    <string name="intro_details_body">Nhấn vào "Chấp nhận" để cho phép VISAFE bảo vệ bạn.</string>
+    <string name="intro_back">quay lại</string>
+    <string name="intro_next">tiếp theo</string>
+    <string name="intro_accept">chấp nhận</string>
+    <string name="drawer_open">Mở ngăn di chuyển</string>
+    <string name="drawer_close">Đóng ngăn di chuyển</string>
+    <string name="home">Màn hình chính</string>
+    <string name="settings">Cài đặt</string>
+    <string name="support">Hỗ trợ</string>
+    <string name="privacy_link">Chính sách quyền riêng tư</string>
+    <string name="tos_link">Điều khoản dịch vụ</string>
+    <string name="source_code">Mã nguồn</string>
+    <string name="credits_text">VISAFE do <a href="https://khonggianmang.vn">NCSC</a> thiết kế. Các vị trí thông qua IP dựa trên dữ liệu
+    từ DB-IP.com.</string>
+    <string name="indicator_on">Bật</string>
+    <string name="indicator_off">Tắt</string>
+    <string name="status_exposed">Bấm để bật tính năng bảo vệ</string>
+    <string name="explanation_exposed">Kết nối của bạn không được bảo vệ khỏi các cuộc tấn công DNS.</string>
+    <string name="status_protected">Bạn đã được bảo vệ</string>
+    <string name="explanation_protected">Kết nối của bạn đã được bảo vệ khỏi các cuộc tấn công DNS.</string>
+    <string name="status_upgraded">Bấm để bật tính năng bảo vệ</string>
+    <string name="explanation_upgraded">Kết nối của bạn hiện đang được DNS riêng tư của Android bảo vệ, tuy nhiên, kẻ tấn công có thể vô hiệu hóa
+    hoặc phá hoại lớp bảo vệ này.</string>
+    <string name="status_strict">Được Android bảo vệ</string>
+    <string name="explanation_strict">VISAFE đã phát hiện thấy tùy chọn cài đặt DNS riêng tư của Android đang bật. Điều này có nghĩa là truy vấn
+    DNS của bạn đã được bảo vệ nên không nhất thiết phải bật VISAFE.</string>
+    <string name="status_starting">Đang khởi động…</string>
+    <string name="explanation_starting">Vui lòng chờ. VISAFE đang thiết lập kết nối đến máy chủ.</string>
+    <string name="status_waiting">Đang kết nối</string>
+    <string name="status_failing">Lỗi kết nối</string>
+    <string name="explanation_offline">Thiết bị hiện không có kết nối mạng. VISAFE đang chờ kết nối mạng.</string>
+    <string name="explanation_vpn">VISAFE đã phát hiện thấy một VPN khác trên thiết bị. Nếu bạn bật VISAFE, thì VPN đó sẽ tắt.
+    VISAFE không bảo mật bằng một VPN đáng tin cậy.</string>
+    <string name="explanation_failing">Cảnh báo: Truy vấn không thành công.</string>
+    <string name="system_details">Chi tiết hệ thống</string>
+    <string name="num_requests">Số lượng truy vấn được bảo vệ cho tới giờ</string>
+    <string name="num_requests_headline">Truy vấn DNS xảy ra khi thiết bị của bạn tra cứu địa chỉ IP cho một tên miền</string>
+    <string name="num_requests_body">Giá trị này hiển thị tổng số truy vấn DNS mà thiết bị của bạn đã thực hiện trong khi VISAFE
+    đang hoạt động. VISAFE mã hóa và gửi các truy vấn này đến một máy chủ đáng tin cậy để đảm bảo bạn sẽ
+    nhận được kết quả xác thực.</string>
+    <string name="queries_per_minute">Số lượng truy vấn gần đây</string>
+    <string name="queries_per_minute_headline">Truy vấn DNS xảy ra ở đầu mỗi kết nối</string>
+    <string name="queries_per_minute_body">Giá trị này hiển thị số lượng truy vấn DNS mà thiết bị của bạn đã thực hiện trong một vài phút trước.
+    Việc tải một trang web phức tạp có thể yêu cầu phải thực hiện hơn một trăm truy vấn DNS.</string>
+    <string name="transport_label">Đường truyền mã hóa</string>
+    <string name="transport_headline">Tính năng mã hóa bảo vệ các truy vấn của bạn khỏi các cặp mắt tò mò</string>
+    <string name="transport_body">Khi bạn sử dụng VISAFE, các truy vấn DNS của bạn được mã hóa, do đó, chỉ bạn và máy chủ DNS của bạn mới có thể xem
+    các truy vấn DNS mà bạn đang thực hiện. VISAFE triển khai DNS qua giao thức HTTPS để mã hóa.</string>
+    <string name="default_transport_label">Truyền tải mặc định</string>
+    <string name="insecure_transport">không được mã hóa</string>
+    <string name="insecure_transport_headline">DNS cơ bản không được mã hóa</string>
+    <string name="insecure_transport_body">Hầu hết các thiết bị và mạng đều sử dụng DNS cơ bản, không được mã hóa, vì vậy, các truy vấn DNS của bạn có thể
+    bị bất kỳ ai trên mạng quan sát hoặc sửa đổi. Một số thiết bị mới hỗ trợ DNS qua Bảo mật lớp truyền tải (TLS),
+    tiêu chuẩn này mã hóa các truy vấn của bạn nhưng không thể bảo vệ bạn nếu máy chủ độc hại.</string>
+    <string name="server_label">Máy chủ DNS an toàn</string>
+    <string name="server_headline">Bạn xứng đáng được sử dụng một máy chủ DNS đáng tin cậy</string>
+    <string name="server_body">Trường này hiển thị tên của máy chủ DNS bảo mật mà bạn đang sử dụng. Bạn cũng có thể thay đổi sang một
+    máy chủ khác trong menu Cài đặt.</string>
+    <string name="default_server_label">Máy chủ DNS hiện tại</string>
+    <string name="insecure_server_headline">Bạn có thể tự chọn máy chủ DNS của mình</string>
+    <string name="insecure_server_body">Khi tắt VISAFE, hầu hết các thiết bị được cấu hình sẵn là dùng máy chủ DNS mà nhà mạng của bạn
+    chọn lựa. Trường này hiển thị địa chỉ IP của máy chủ DNS mà thiết bị của bạn hiện đang
+    sử dụng. Với VISAFE hoặc Android P, bạn có thể dễ dàng lựa chọn máy chủ theo ý mình.</string>
+    <string name="strict_mode_server_headline">Bạn đã chọn một máy chủ bảo mật</string>
+    <string name="strict_mode_server_body">Trường này hiển thị tên của máy chủ DNS bạn đã cấu hình trong mục cài đặt DNS riêng của
+    Android.  Khi bạn tắt VISAFE, ứng dụng của bạn sẽ gửi truy vấn DNS đến máy chủ này.</string>
+    <string name="unknown_server">(máy chủ không xác định)</string>
+    <string name="show_history">Hiển thị các truy vấn gần đây</string>
+    <string name="query_label">Truy vấn</string>
+    <string name="type_label">Loại</string>
+    <string name="latency_label">Thời gian chờ</string>
+    <string name="resolver_label">Vị trí công cụ phân giải tên miền</string>
+    <string name="destination_label">Máy chủ đích</string>
+    <string name="server_choice">Cấu hình hệ thống</string>
+    <string name="server_choice_summary">Hiện tại là %s</string>
+    <string name="server_choice_builtin">Máy chủ tích hợp</string>
+    <string name="server_choice_website_notice">Vui lòng truy cập vào <a href="https://www.example.com/">trang web của các đơn vị này</a> để xem lại chính sách quyền riêng tư của họ và các điều khoản dịch vụ hiện hành.</string>
+    <string name="server_website_button">Truy cập trang web</string>
+    <string name="try_all_servers">Thử tất cả các máy chủ tích hợp</string>
+    <string name="checking_servers">Đang kiểm tra tất cả máy chủ</string>
+    <string name="found_fastest">Máy chủ nhanh nhất của bạn là %s.</string>
+    <string name="all_servers_failed">Không thể xác định một máy chủ đang hoạt động: không kết nối được với tất cả các máy chủ tích hợp.</string>
+    <string name="server_choice_custom">Thông tin cấu hình</string>
+    <string name="server_choice_warning">Bạn chưa có máy chủ, vui lòng bật chế độ Protected</string>
+    <string name="excluded_apps" color="#FFFFFF"> </string>
+    <string name="excluded_apps_summary" color="#FFFFFF"></string>
+    <string name="excluded_apps_title" color="#FFFFFF">Đánh dấu các ứng dụng không dùng VISAFE</string>
+    <string name="old_android">Chức năng này không có sẵn trên phiên bản Android của bạn.</string>
+    <string name="notification_title">VISAFE đang hoạt động</string>
+    <string name="notification_content">Trở lại VISAFE</string>
+    <string name="channel_name">VISAFE đang bảo vệ bạn</string>
+    <string name="channel_description">Thông báo này xuất hiện khi VISAFE đang hoạt động.</string>
+    <string name="warning_title">Cảnh báo: VISAFE đã bị vô hiệu hóa</string>
+    <string name="warning_channel_name">Cảnh báo</string>
+    <string name="warning_channel_description">Hiển thị khi VISAFE gặp sự cố.</string>
+    <string name="textid"></string>
+    <string name="signature_title" translatable="false">Đặt tên thiết bị</string>
+    <string name="qr_summary" translatable="false">Quét QR để tham gia nhóm</string>
+    <string name="title_post" translatable="false">Bạn có muốn tham gia nhóm </string>
+    <string name="title_post_plus" translatable="false">với tên là</string>
+    <string name="title_post_plus_plus" translatable="false">Hoặc bạn có thể đặt lại</string>
+    <string name="button_accept" translatable="false">Đồng ý</string>
+    <string name="button_cancel" translatable="false">Không</string>
+    <string name="latency_ms" description="Template for forming latency strings.  Time is in milliseconds." translatable="false">
+      <xliff:g example="29" id="time">%d</xliff:g> ms
+    </string>
+
+    <string name="hint_dialog" translatable="false">Nhập tên định danh thiết bị</string>
+    <string name="passcode" translatable="false">Bảo mật</string>
+    <string name="passcode_summary" translatable="false">Đặt Passcode</string>
+    <string name="setting_passcode_message" translatable="false">Chọn hành động với Passcode</string>
+    <string name="change_passcode" translatable="false">Đổi</string>
+    <string name="delete_passcode" translatable="false">Xóa</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_share_app">ShareAppActivity</string>
+    <string name="title_activity_info__app_">Info_App_Activity</string>
+    <string name="title_activity_policy">ScrollingActivity</string>
+    <string name="large_text">
+        "Material is the metaphor.\n\n"
+
+        "A material metaphor is the unifying theory of a rationalized space and a system of motion."
+        "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
+        "technologically advanced and open to imagination and magic.\n"
+        "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
+        "use of familiar tactile attributes helps users quickly understand affordances. Yet the "
+        "flexibility of the material creates new affordances that supercede those in the physical "
+        "world, without breaking the rules of physics.\n"
+        "The fundamentals of light, surface, and movement are key to conveying how objects move, "
+        "interact, and exist in space and in relation to each other. Realistic lighting shows "
+        "seams, divides space, and indicates moving parts.\n\n"
+
+        "Bold, graphic, intentional.\n\n"
+
+        "The foundational elements of print based design typography, grids, space, scale, color, "
+        "and use of imagery guide visual treatments. These elements do far more than please the "
+        "eye. They create hierarchy, meaning, and focus. Deliberate color choices, edge to edge "
+        "imagery, large scale typography, and intentional white space create a bold and graphic "
+        "interface that immerse the user in the experience.\n"
+        "An emphasis on user actions makes core functionality immediately apparent and provides "
+        "waypoints for the user.\n\n"
+
+        "Motion provides meaning.\n\n"
+
+        "Motion respects and reinforces the user as the prime mover. Primary user actions are "
+        "inflection points that initiate motion, transforming the whole design.\n"
+        "All action takes place in a single environment. Objects are presented to the user without "
+        "breaking the continuity of experience even as they transform and reorganize.\n"
+        "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
+        "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
+
+        "3D world.\n\n"
+
+        "The material environment is a 3D space, which means all objects have x, y, and z "
+        "dimensions. The z-axis is perpendicularly aligned to the plane of the display, with the "
+        "positive z-axis extending towards the viewer. Every sheet of material occupies a single "
+        "position along the z-axis and has a standard 1dp thickness.\n"
+        "On the web, the z-axis is used for layering and not for perspective. The 3D world is "
+        "emulated by manipulating the y-axis.\n\n"
+
+        "Light and shadow.\n\n"
+
+        "Within the material environment, virtual lights illuminate the scene. Key lights create "
+        "directional shadows, while ambient light creates soft shadows from all angles.\n"
+        "Shadows in the material environment are cast by these two light sources. In Android "
+        "development, shadows occur when light sources are blocked by sheets of material at "
+        "various positions along the z-axis. On the web, shadows are depicted by manipulating the "
+        "y-axis only. The following example shows the card with a height of 6dp.\n\n"
+
+        "Resting elevation.\n\n"
+
+        "All material objects, regardless of size, have a resting elevation, or default elevation "
+        "that does not change. If an object changes elevation, it should return to its resting "
+        "elevation as soon as possible.\n\n"
+
+        "Component elevations.\n\n"
+
+        "The resting elevation for a component type is consistent across apps (e.g., FAB elevation "
+        "does not vary from 6dp in one app to 16dp in another app).\n"
+        "Components may have different resting elevations across platforms, depending on the depth "
+        "of the environment (e.g., TV has a greater depth than mobile or desktop).\n\n"
+
+        "Responsive elevation and dynamic elevation offsets.\n\n"
+
+        "Some component types have responsive elevation, meaning they change elevation in response "
+        "to user input (e.g., normal, focused, and pressed) or system events. These elevation "
+        "changes are consistently implemented using dynamic elevation offsets.\n"
+        "Dynamic elevation offsets are the goal elevation that a component moves towards, relative "
+        "to the component’s resting state. They ensure that elevation changes are consistent "
+        "across actions and component types. For example, all components that lift on press have "
+        "the same elevation change relative to their resting elevation.\n"
+        "Once the input event is completed or cancelled, the component will return to its resting "
+        "elevation.\n\n"
+
+        "Avoiding elevation interference.\n\n"
+
+        "Components with responsive elevations may encounter other components as they move between "
+        "their resting elevations and dynamic elevation offsets. Because material cannot pass "
+        "through other material, components avoid interfering with one another any number of ways, "
+        "whether on a per component basis or using the entire app layout.\n"
+        "On a component level, components can move or be removed before they cause interference. "
+        "For example, a floating action button (FAB) can disappear or move off screen before a "
+        "user picks up a card, or it can move if a snackbar appears.\n"
+        "On the layout level, design your app layout to minimize opportunities for interference. "
+        "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
+        "when a user tries to pick up one of cards.\n\n"
+    </string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_questions">ScrollingActivity</string>
+    <string name="title_activity_security">SecurityActivity</string>
+    <string name="title_activity_contact">ContactActivity</string>
+    <string name="login_fogotpassword"><u>Quên mật khẩu?</u></string>
+    <string name="facebook_app_id">545622383516478</string>
+    <string name="fb_login_protocol_scheme">fb545622383516478</string>
+
+</resources>

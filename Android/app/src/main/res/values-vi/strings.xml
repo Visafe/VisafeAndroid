@@ -1,0 +1,128 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="notification_channel_id">default</string>
+  <string name="intro_benefit_headline">Chống lừa đảo, mã độc,\n tấn công mạng</string>
+  <string name="intro_benefit_body">Phòng tránh nguy cơ, thiệt hại từ \n các cuộc tấn công mạng, lừa đảo trực tuyến</string>
+  <string name="intro_manipulation_headline">Bảo vệ khỏi thao túng DNS</string>
+  <string name="intro_details_headline">Chặn quảng cáo</string>
+  <string name="intro_details_body">Nhấn vào "Chấp nhận" để cho phép VISAFE bảo vệ bạn.</string>
+  <string name="intro_manipulation_body">VISAFE bảo vệ kết nối của bạn đến Hệ thống tên miền (DNS), hệ thống này cung cấp địa chỉ chính xác mà bạn cần để truy cập vào một trang web hoặc mở một ứng dụng.\n\nVISAFE sử dụng tính năng mã hóa để đảm bảo không thể thay đổi được kết quả, giúp bạn truy cập vào Internet một cách an toàn.</string>
+  <string name="intro2" translatable="false">Chặn theo dõi, quảng cáo</string>
+  <string name="intro3" translatable="false">Quản lý truy cập, nội dung</string>
+  <string name="intro4" translatable="false">Quản trị Dashboard</string>
+  <string name="intro5" translatable="false">Chào mừng</string>
+  <string name="detail_intro1" translatable="false">Giảm quảng cáo khi truy cập Internet</string>
+  <string name="detail_intro2" translatable="false">Bảo đảm quyền riêng tư trên mạng \n và chặn các quảng cáo độc hại, khó chịu</string>
+  <string name="detail_intro3" translatable="false">Tự quản lý, bảo đảm một không gian mạng \n xanh, sạch cho gia đình, tổ chức</string>
+  <string name="detail_intro4" translatable="false">Dễ dàng bảo vệ thiết bị và người dùng theo nhóm</string>
+  <string name="detail_intro5" translatable="false">Các tính năng được trang bị</string>
+  <string name="intro_back">quay lại</string>
+  <string name="intro_next">tiếp theo</string>
+  <string name="intro_accept">chấp nhận</string>
+  <string name="drawer_open">Mở ngăn di chuyển</string>
+  <string name="drawer_close">Đóng ngăn di chuyển</string>
+  <string name="home">Màn hình chính</string>
+  <string name="settings">Cài đặt</string>
+  <string name="support">Hỗ trợ</string>
+  <string name="privacy_link">Chính sách quyền riêng tư</string>
+  <string name="tos_link">Điều khoản dịch vụ</string>
+  <string name="source_code">Mã nguồn</string>
+  <string name="credits_text">VISAFE do <a href="https://khonggianmang.vn">NCSC</a> thiết kế. Các vị trí thông qua IP dựa trên dữ liệu
+    từ DB-IP.com.</string>
+  <string name="indicator_on">Bật</string>
+  <string name="indicator_off">Tắt</string>
+  <string name="status_exposed">Bấm để bật tính năng bảo vệ</string>
+  <string name="explanation_exposed">Kết nối của bạn không được bảo vệ khỏi các cuộc tấn công DNS.</string>
+  <string name="status_protected">Đã được bảo vệ</string>
+  <string name="explanation_protected">Kết nối của bạn đã được bảo vệ khỏi các cuộc tấn công DNS.</string>
+  <string name="status_upgraded">Bấm để bật tính năng bảo vệ</string>
+  <string name="explanation_upgraded">Kết nối của bạn hiện đang được DNS riêng tư của Android bảo vệ, tuy nhiên, kẻ tấn công có thể vô hiệu hóa
+    hoặc phá hoại lớp bảo vệ này.</string>
+  <string name="status_strict">Được Android bảo vệ</string>
+  <string name="explanation_strict">VISAFE đã phát hiện thấy tùy chọn cài đặt DNS riêng tư của Android đang bật. Điều này có nghĩa là truy vấn
+    DNS của bạn đã được bảo vệ nên không nhất thiết phải bật VISAFE.</string>
+  <string name="status_starting">Đang khởi động…</string>
+  <string name="explanation_starting">Vui lòng chờ. VISAFE đang thiết lập kết nối đến máy chủ.</string>
+  <string name="status_waiting">Đang kết nối...</string>
+  <string name="status_failing">Lỗi kết nối</string>
+  <string name="explanation_offline">Thiết bị hiện không có kết nối mạng. VISAFE đang chờ kết nối mạng.</string>
+  <string name="explanation_vpn">VISAFE đã phát hiện thấy một VPN khác trên thiết bị. Nếu bạn bật VISAFE, thì VPN đó sẽ tắt.
+    VISAFE không bảo mật bằng một VPN đáng tin cậy.</string>
+  <string name="explanation_failing">Cảnh báo: Truy vấn không thành công.</string>
+  <string name="system_details">Chi tiết hệ thống</string>
+  <string name="num_requests">Số lượng truy vấn được bảo vệ cho tới giờ</string>
+  <string name="num_requests_headline">Truy vấn DNS xảy ra khi thiết bị của bạn tra cứu địa chỉ IP cho một tên miền</string>
+  <string name="num_requests_body">Giá trị này hiển thị tổng số truy vấn DNS mà thiết bị của bạn đã thực hiện trong khi VISAFE
+    đang hoạt động. VISAFE mã hóa và gửi các truy vấn này đến một máy chủ đáng tin cậy để đảm bảo bạn sẽ
+    nhận được kết quả xác thực.</string>
+  <string name="queries_per_minute">Số lượng truy vấn gần đây</string>
+  <string name="queries_per_minute_headline">Truy vấn DNS xảy ra ở đầu mỗi kết nối</string>
+  <string name="queries_per_minute_body">Giá trị này hiển thị số lượng truy vấn DNS mà thiết bị của bạn đã thực hiện trong một vài phút trước.
+    Việc tải một trang web phức tạp có thể yêu cầu phải thực hiện hơn một trăm truy vấn DNS.</string>
+  <string name="transport_label">Đường truyền mã hóa</string>
+  <string name="transport_headline">Tính năng mã hóa bảo vệ các truy vấn của bạn khỏi các cặp mắt tò mò</string>
+  <string name="transport_body">Khi bạn sử dụng VISAFE, các truy vấn DNS của bạn được mã hóa, do đó, chỉ bạn và máy chủ DNS của bạn mới có thể xem
+    các truy vấn DNS mà bạn đang thực hiện. VISAFE triển khai DNS qua giao thức HTTPS để mã hóa.</string>
+  <string name="default_transport_label">Truyền tải mặc định</string>
+  <string name="insecure_transport">không được mã hóa</string>
+  <string name="insecure_transport_headline">DNS cơ bản không được mã hóa</string>
+  <string name="insecure_transport_body">Hầu hết các thiết bị và mạng đều sử dụng DNS cơ bản, không được mã hóa, vì vậy, các truy vấn DNS của bạn có thể
+    bị bất kỳ ai trên mạng quan sát hoặc sửa đổi. Một số thiết bị mới hỗ trợ DNS qua Bảo mật lớp truyền tải (TLS),
+    tiêu chuẩn này mã hóa các truy vấn của bạn nhưng không thể bảo vệ bạn nếu máy chủ độc hại.</string>
+  <string name="server_label">Máy chủ DNS an toàn</string>
+  <string name="server_headline">Bạn xứng đáng được sử dụng một máy chủ DNS đáng tin cậy</string>
+  <string name="server_body">Trường này hiển thị tên của máy chủ DNS bảo mật mà bạn đang sử dụng. Bạn cũng có thể thay đổi sang một
+    máy chủ khác trong menu Cài đặt.</string>
+  <string name="default_server_label">Máy chủ DNS hiện tại</string>
+  <string name="insecure_server_headline">Bạn có thể tự chọn máy chủ DNS của mình</string>
+  <string name="insecure_server_body">Khi tắt VISAFE, hầu hết các thiết bị được cấu hình sẵn là dùng máy chủ DNS mà nhà mạng của bạn
+    chọn lựa. Trường này hiển thị địa chỉ IP của máy chủ DNS mà thiết bị của bạn hiện đang
+    sử dụng. Với VISAFE hoặc Android P, bạn có thể dễ dàng lựa chọn máy chủ theo ý mình.</string>
+  <string name="strict_mode_server_headline">Bạn đã chọn một máy chủ bảo mật</string>
+  <string name="strict_mode_server_body">Trường này hiển thị tên của máy chủ DNS bạn đã cấu hình trong mục cài đặt DNS riêng của
+    Android.  Khi bạn tắt VISAFE, ứng dụng của bạn sẽ gửi truy vấn DNS đến máy chủ này.</string>
+  <string name="unknown_server">(máy chủ không xác định)</string>
+  <string name="show_history">Hiển thị các truy vấn gần đây</string>
+  <string name="query_label">Truy vấn</string>
+  <string name="type_label">Loại</string>
+  <string name="latency_label">Thời gian chờ</string>
+  <string name="resolver_label">Vị trí công cụ phân giải tên miền</string>
+  <string name="destination_label">Máy chủ đích</string>
+  <string name="server_choice">Cấu hình hệ thống</string>
+  <string name="server_choice_summary">Hiện tại là %s</string>
+  <string name="server_choice_builtin">Máy chủ tích hợp</string>
+  <string name="server_choice_website_notice">Vui lòng truy cập vào <a href="https://www.example.com/">trang web của các đơn vị này</a> để xem lại chính sách quyền riêng tư của họ và các điều khoản dịch vụ hiện hành.</string>
+  <string name="server_website_button">Truy cập trang web</string>
+  <string name="try_all_servers">Thử tất cả các máy chủ tích hợp</string>
+  <string name="checking_servers">Đang kiểm tra tất cả máy chủ</string>
+  <string name="found_fastest">Máy chủ nhanh nhất của bạn là %s.</string>
+  <string name="all_servers_failed">Không thể xác định một máy chủ đang hoạt động: không kết nối được với tất cả các máy chủ tích hợp.</string>
+  <string name="server_choice_custom">Thông tin cấu hình</string>
+  <string name="server_choice_warning">Bạn chưa có máy chủ, vui lòng bật chế độ Protected</string>
+  <string name="excluded_apps" color="#FFFFFF"> </string>
+  <string name="excluded_apps_summary" color="#FFFFFF"></string>
+  <string name="excluded_apps_title" color="#FFFFFF">Đánh dấu các ứng dụng không dùng VISAFE</string>
+  <string name="old_android">Chức năng này không có sẵn trên phiên bản Android của bạn.</string>
+  <string name="notification_title">VISAFE đang hoạt động</string>
+  <string name="notification_content">Trở lại VISAFE</string>
+  <string name="channel_name">VISAFE đang bảo vệ bạn</string>
+  <string name="channel_description">Thông báo này xuất hiện khi VISAFE đang hoạt động.</string>
+  <string name="warning_title">Cảnh báo: VISAFE đã bị vô hiệu hóa</string>
+  <string name="warning_channel_name">Cảnh báo</string>
+  <string name="warning_channel_description">Hiển thị khi VISAFE gặp sự cố.</string>
+  <string name="textid"></string>
+  <string name="signature_title" translatable="false">Đặt tên thiết bị</string>
+  <string name="qr_summary" translatable="false">Quét QR để tham gia nhóm</string>
+  <string name = "title_post" translatable="false">Bạn có muốn tham gia nhóm </string>
+  <string name="title_post_plus" translatable="false">với tên là:</string>
+  <string name="title_post_plus_plus" translatable="false">Hoặc bạn có thể đặt lại</string>
+  <string name ="button_accept" translatable="false">Đồng ý</string>
+  <string name ="button_cancel" translatable="false">Không</string>
+  <string name="hint_dialog" translatable="false">Nhập tên định danh thiết bị</string>
+  <string name="passcode" translatable="false">Bảo mật</string>
+  <string name="passcode_summary" translatable="false">Đặt Passcode</string>
+  <string name="setting_passcode_message" translatable="false">Chọn hành động với Passcode</string>
+  <string name="change_passcode" translatable="false">Đổi</string>
+  <string name="delete_passcode" translatable="false">Xóa</string>
+  <string name="facebook_app_id">545622383516478</string> <string name="fb_login_protocol_scheme">fb545622383516478</string>
+
+</resources>

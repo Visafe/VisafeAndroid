@@ -1,0 +1,25 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    app:iconSpaceReserved="false">
+
+    <Preference
+        android:key="register_by_qr"
+        android:title="Quét mã QR"
+        android:icon="@drawable/ic_baseline_qr_code_scanner_24_green"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"/>
+    <Preference
+        android:key="register_by_inputtext"
+        app:iconSpaceReserved="false"
+        android:title="Nhập mã tham gia"
+        app:isPreferenceVisible="false"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"/>
+    <Preference
+        android:key="register_protect"
+        android:title="Bảo vệ thiết bị này"
+        app:iconSpaceReserved="false"
+        app:allowDividerAbove="true"
+        app:isPreferenceVisible="false"
+        app:allowDividerBelow="true"/>
+</PreferenceScreen>

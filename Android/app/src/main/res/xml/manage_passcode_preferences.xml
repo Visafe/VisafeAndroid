@@ -1,0 +1,22 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="create_passcode"
+        android:title="Tạo mới mã bảo vệ"
+        android:icon="@drawable/ic_baseline_add_24"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"/>
+    <Preference
+        android:key="change_passcode"
+        android:title="Thay đổi mã bảo vệ"
+        app:allowDividerAbove="true"
+        android:icon="@drawable/ic_baseline_published_with_changes_24"
+        app:allowDividerBelow="true"/>
+    <Preference
+        android:key="remove_passcode"
+        android:title="Xoá mã bảo vệ"
+        app:allowDividerAbove="true"
+        android:icon="@drawable/ic_baseline_delete_forever_24"
+        app:allowDividerBelow="true"/>
+
+</PreferenceScreen>

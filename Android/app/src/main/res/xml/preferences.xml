@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fragment="app.visafe.ui.settings.NewSettingFragment"
+    app:iconSpaceReserved="false">
+    <Preference
+        android:key="register_device"
+        android:fragment="app.visafe.ui.settings.NewSettingFragment"
+        android:layout="@layout/fragment_new_setting" />
+    <Preference
+        android:icon="@drawable/manage_passcode"
+        android:key="manage_passcode"
+        android:title="Quản lý mã bảo vệ"
+        app:allowDividerBelow="true" />
+    <Preference
+        android:icon="@drawable/info"
+        android:key="info_product"
+        android:title="Thông tin sản phẩm"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true" />
+    <Preference
+        android:icon="@drawable/app_share"
+        android:key="app_share"
+        android:title="Chia sẻ ứng dụng"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true" />
+    <SwitchPreference
+        android:icon="@drawable/vip_icon"
+        android:key="switch_vip"
+        android:switchTextOff="OFF"
+        android:switchTextOn="ON"
+        android:title="Chế độ VIP"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true" />
+    <EditTextPreference
+        android:id="@+id/user_id_setting"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:defaultValue=""
+        android:dialogTitle="@string/signature_title"
+        android:inputType="text"
+        android:key="user_id"
+        android:negativeButtonText="Hủy"
+        android:positiveButtonText="Đồng ý"
+        android:shouldDisableView="true"
+        android:title="@string/signature_title"
+        app:iconSpaceReserved="false"
+        app:isPreferenceVisible="false" />
+    <Preference
+        android:key="QRcode"
+        android:summary="@string/qr_summary"
+        android:title="QR code"
+        app:iconSpaceReserved="false"
+        app:isPreferenceVisible="false" />
+    <Preference
+        android:key="passcode"
+        android:summary="@string/passcode_summary"
+        android:title="@string/passcode"
+        app:iconSpaceReserved="false"
+        app:isPreferenceVisible="false" />
+    <app.visafe.ui.settings.ServerChooser
+        android:dialogTitle="@string/server_choice"
+        android:key="@string/server_choice_key"
+        android:title="@string/server_choice"
+        app:iconSpaceReserved="false"
+        app:isPreferenceVisible="false" />
+    <MultiSelectListPreference
+        android:dialogTitle="@string/excluded_apps_title"
+        android:enabled="false"
+        android:key="pref_apps"
+        android:summary="@string/excluded_apps_summary"
+        android:title="@string/excluded_apps"
+        app:iconSpaceReserved="false"
+        app:isPreferenceVisible="false" />
+</PreferenceScreen>

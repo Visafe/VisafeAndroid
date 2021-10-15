@@ -1,0 +1,19 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="contact_by_phone"
+        android:title="Hỗ trợ qua hotline"
+        app:iconSpaceReserved="false"
+        android:icon="@drawable/ic_baseline_contact_phone_24"
+        android:summary="Điện thoại: (+84) 24 3209 1616 "
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"/>
+    <Preference
+        android:key="contact_by_email"
+        app:iconSpaceReserved="false"
+        android:title="Hỗ trợ qua email"
+        android:icon="@drawable/ic_baseline_email_24"
+        android:summary="Email: ncsc@ais.gov.vn"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"/>
+</PreferenceScreen>

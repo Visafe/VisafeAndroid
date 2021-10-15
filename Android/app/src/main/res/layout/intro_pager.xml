@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/welcome_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="RelativeOverlap"
+        android:layout_marginBottom="10dp">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/intro_dots"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabBackground="@drawable/tab_selector"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp"
+            tools:ignore="UnusedAttribute"
+            android:layout_marginBottom="40dp"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/intro_back"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:textColor="#FFB600"
+            android:text="@string/intro_back"
+            android:visibility="gone"
+            tools:visibility="gone" />
+
+        <Button
+            android:id="@+id/intro_next"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:textColor="#FFB600"
+            android:text="@string/intro_next"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/intro_accept"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/intro_accept"
+            android:textColor="#FFB600"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/button_intro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_shape1"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="Bắt đầu ngay"
+        android:textAlignment="center"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="45dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
+</LinearLayout>

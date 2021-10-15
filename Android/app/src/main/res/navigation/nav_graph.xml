@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:label="Home"
+        tools:layout="@layout/main_content" />
+
+    <fragment
+        android:id="@+id/dashboard"
+        android:label="Dashboard"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/navigation_settting"
+        android:name="app.visafe.ui.settings.SettingsFragment"
+        android:label="Setting"
+        tools:layout="@layout/settings_activity" />
+</navigation>

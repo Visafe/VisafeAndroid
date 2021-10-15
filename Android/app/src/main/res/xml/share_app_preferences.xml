@@ -1,0 +1,18 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="android"
+        android:title="Chia sẻ cho hệ điều hành Android"
+        android:icon="@drawable/google_play"
+        app:iconSpaceReserved="false"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"/>
+    <Preference
+        android:key="mac"
+        android:title="Chia sẻ cho hệ điều hành iOS"
+        android:icon = "@drawable/app_store"
+        app:iconSpaceReserved="false"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"/>
+
+</PreferenceScreen>

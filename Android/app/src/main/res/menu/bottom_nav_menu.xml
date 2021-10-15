@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--    <item-->
+<!--        android:id="@+id/navigation_admin"-->
+<!--        android:icon="@drawable/ic_layers"-->
+<!--        android:title="Visafe+" />-->
+
+<!--    <item-->
+<!--        android:id="@+id/navigation_home"-->
+<!--        android:icon="@drawable/home"-->
+<!--        android:title="Bảo vệ" />-->
+
+<!--    <item-->
+<!--        android:id="@+id/extension_app"-->
+<!--        android:icon="@drawable/ic_baseline_apps_24"-->
+<!--        android:title="Tiện ích" />-->
+
+<!--    <item-->
+<!--        android:id="@+id/navigation_settting"-->
+<!--        android:icon="@drawable/setting"-->
+<!--        android:title="Cài đặt" />-->
+
+</menu>
