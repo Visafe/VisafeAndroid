@@ -158,10 +158,9 @@ public class PersistentState {
         System.out.println(url_default);
         return url_default;
       }
-      System.out.println("URL_DOH" + url_default);
     }
     else {
-       url_default = getDOH() + userid;
+      url_default = getDOH() + userid;
     }
     System.out.println(url_default);
     return url_default;
@@ -293,6 +292,6 @@ public class PersistentState {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    return result.toLowerCase()+"/dns-query/";
+    return "https://" + result.toLowerCase() + "/dns-query/";
   }
 }
