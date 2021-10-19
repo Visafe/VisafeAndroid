@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img width="300px" src="https://app.visafe.vn/static/media/logo.90ea0558.svg"/>
+  <img width="300px" src="https://app.visafe.vn/static/media/wesafe_icon.ddf9251c.png"/>
 </p>
 <h1 align="center">Visafe - Internet an toàn cho người Việt</h1>
 
