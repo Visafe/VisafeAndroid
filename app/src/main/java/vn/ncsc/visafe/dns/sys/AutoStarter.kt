@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.VpnService
-import vn.ncsc.visafe.dns.RemoteConfig
 import vn.ncsc.visafe.ui.MainActivity
 
 class AutoStarter : BroadcastReceiver() {
@@ -24,9 +23,6 @@ class AutoStarter : BroadcastReceiver() {
                 context?.startActivity(startIntent)
                 return
             }
-            // Delay start until after the remote configuration has been updated, or failed to update.
-            // Delay start until after the remote configuration has been updated, or failed to update.
-            RemoteConfig.update().addOnCompleteListener { success -> controller.start(context!!) }
         }
     }
 }

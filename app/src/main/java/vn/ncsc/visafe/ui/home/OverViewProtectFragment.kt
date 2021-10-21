@@ -138,8 +138,8 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
     override fun initView() {
         (activity as MainActivity).isLoadView.observe(this, {
             if ((activity as BaseActivity).isLogin()) {
-                binding.layoutHomeProtect.llHomeBlockAds.visibility = View.VISIBLE
-                binding.layoutHomeProtect.llHomeBlockTracking.visibility = View.VISIBLE
+                binding.layoutHomeProtect.llHomeBlockAds.visibility = View.GONE
+                binding.layoutHomeProtect.llHomeBlockTracking.visibility = View.GONE
                 binding.cardViewStatistical.visibility = View.VISIBLE
                 binding.layoutAddVpn.cardViewAddVpn.visibility = View.VISIBLE
                 binding.layoutHomeProtectFamily.cardViewHomeProtectFamily.visibility = View.VISIBLE
@@ -264,8 +264,8 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
         )
 
         if ((activity as BaseActivity).isLogin()) {
-            binding.layoutHomeProtect.llHomeBlockAds.visibility = View.VISIBLE
-            binding.layoutHomeProtect.llHomeBlockTracking.visibility = View.VISIBLE
+            binding.layoutHomeProtect.llHomeBlockAds.visibility = View.GONE
+            binding.layoutHomeProtect.llHomeBlockTracking.visibility = View.GONE
             binding.cardViewStatistical.visibility = View.VISIBLE
             binding.layoutAddVpn.cardViewAddVpn.visibility = View.VISIBLE
             binding.layoutHomeProtectFamily.cardViewHomeProtectFamily.visibility = View.VISIBLE

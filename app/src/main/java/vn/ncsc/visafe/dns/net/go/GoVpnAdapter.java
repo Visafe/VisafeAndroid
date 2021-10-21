@@ -27,14 +27,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import vn.ncsc.visafe.dns.RemoteConfig;
-import vn.ncsc.visafe.dns.sys.ViSafeVpnService;
-import vn.ncsc.visafe.dns.sys.PersistentState;
-import vn.ncsc.visafe.dns.sys.VpnController;
-
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Locale;
 
@@ -42,6 +35,9 @@ import doh.Transport;
 import protect.Protector;
 import tun2socks.Tun2socks;
 import vn.ncsc.visafe.R;
+import vn.ncsc.visafe.dns.sys.PersistentState;
+import vn.ncsc.visafe.dns.sys.ViSafeVpnService;
+import vn.ncsc.visafe.dns.sys.VpnController;
 
 /**
  * This is a VpnAdapter that captures all traffic and routes it through a go-tun2socks instance with
@@ -237,17 +233,6 @@ public class GoVpnAdapter {
                 ret = ips[i];
                 break;
             }
-        }
-        try {
-            String domain = new URL(url).getHost();
-            String extraIPs = RemoteConfig.INSTANCE.getExtraIPs(domain);
-            if (ret.isEmpty()) {
-                ret = extraIPs;
-            } else if (!extraIPs.isEmpty()) {
-                ret += "," + extraIPs;
-            }
-        } catch (MalformedURLException e) {
-            Log.d("getIpString: ", e.getMessage());
         }
         return ret;
     }
