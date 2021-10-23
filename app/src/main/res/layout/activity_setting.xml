@@ -22,10 +22,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clChangePass"
-        android:layout_marginTop="@dimen/_6sdp"
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/ivChangePass"
@@ -70,9 +70,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clUpdatePin"
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/ivUpdatePin"
@@ -117,9 +117,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clNoti"
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/ivNoti"
@@ -129,7 +130,7 @@
             android:src="@drawable/ic_notification_v2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription"/>
+            tools:ignore="ContentDescription" />
 
         <TextView
             style="@style/Content"
@@ -205,11 +206,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_12dp"
+            android:text="@string/vietnamese"
             android:textColor="@color/color_666666"
             app:layout_constraintBottom_toBottomOf="@id/ivLanguage"
             app:layout_constraintEnd_toStartOf="@id/ivArrow4"
-            app:layout_constraintTop_toTopOf="@id/ivLanguage"
-            android:text="@string/vietnamese" />
+            app:layout_constraintTop_toTopOf="@id/ivLanguage" />
 
         <View
             android:layout_width="match_parent"

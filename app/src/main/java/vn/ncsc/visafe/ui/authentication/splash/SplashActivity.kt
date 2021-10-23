@@ -12,16 +12,22 @@ import android.view.Window
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
+import com.facebook.share.Share
+import com.squareup.okhttp.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.data.BaseCallback
+import vn.ncsc.visafe.data.BaseResponse
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.ActivitySplashBinding
 import vn.ncsc.visafe.dns.net.setting.RandomString
+import vn.ncsc.visafe.model.RoutingResponse
+import vn.ncsc.visafe.model.request.LoginSocialRequest
 import vn.ncsc.visafe.model.response.DeviceIdResponse
+import vn.ncsc.visafe.model.response.LoginResponse
 import vn.ncsc.visafe.ui.MainActivity
 import vn.ncsc.visafe.ui.adapter.SectionsPagerAdapter
 import vn.ncsc.visafe.ui.group.join.JoinGroupActivity
@@ -30,6 +36,7 @@ import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 import java.io.IOException
 import java.security.KeyStoreException
 import java.security.NoSuchAlgorithmException
+import java.util.*
 import javax.security.cert.CertificateException
 
 
@@ -58,6 +65,41 @@ class SplashActivity : BaseActivity() {
         }
         handleDeeplink()
         getDeviceId()
+        val client = NetworkClient()
+        val call = client.clientWithoutToken(context = applicationContext).doGetDnsUrl()
+        call.enqueue(object : Callback<RoutingResponse> {
+            override fun onResponse(call: Call<RoutingResponse>, response: Response<RoutingResponse>) {
+                if (response.code() == NetworkClient.CODE_SUCCESS) {
+                    response.body()?.let {
+                        SharePreferenceKeyHelper.getInstance(application)
+                            .putString(
+                                PreferenceKey.HOST_NAME,
+                                "https://" + it.hostname?.lowercase(Locale.getDefault()) + "/dns-query/"
+                            )
+                    }
+                } else {
+                    SharePreferenceKeyHelper.getInstance(application)
+                        .putString(
+                            PreferenceKey.HOST_NAME,
+                            NetworkClient.DOMAIN
+                        )
+                }
+                handleProcessing()
+            }
+
+            override fun onFailure(call: Call<RoutingResponse>, t: Throwable) {
+                SharePreferenceKeyHelper.getInstance(application)
+                    .putString(
+                        PreferenceKey.HOST_NAME,
+                        NetworkClient.DOMAIN
+                    )
+                handleProcessing()
+            }
+
+        })
+    }
+
+    private fun handleProcessing() {
         if (SharePreferenceKeyHelper.getInstance(application).isLogin()
             || !SharePreferenceKeyHelper.getInstance(application).isFirstShowOnBoarding()
         ) {

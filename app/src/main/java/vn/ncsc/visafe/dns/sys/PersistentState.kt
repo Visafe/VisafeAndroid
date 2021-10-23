@@ -10,7 +10,6 @@ import android.util.Log
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.ViSafeApp
 import vn.ncsc.visafe.data.NetworkClient
-import vn.ncsc.visafe.dns.net.setting.RandomString
 import vn.ncsc.visafe.dns.net.setting.Untemplate.strip
 import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.SharePreferenceKeyHelper

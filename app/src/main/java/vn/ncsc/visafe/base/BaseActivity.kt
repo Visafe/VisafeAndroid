@@ -109,7 +109,7 @@ open class BaseActivity : AppCompatActivity(), BaseController {
 
     override fun onError(baseResponse: BaseResponse) {
         dismissProgress()
-        baseResponse.msg?.let { showAlert(it) }
+        baseResponse.localMsg?.let { showAlert(it) }
     }
 
     fun showAlert(msg: String) {
@@ -212,37 +212,6 @@ open class BaseActivity : AppCompatActivity(), BaseController {
         return false
     }
 
-    fun checkPermissionWifi(): Boolean {
-        val permissionsList: MutableList<String> = ArrayList()
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_WIFI_STATE) != PackageManager.PERMISSION_GRANTED) {
-            permissionsList.add(Manifest.permission.ACCESS_WIFI_STATE)
-        }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CHANGE_WIFI_STATE) != PackageManager.PERMISSION_GRANTED) {
-            permissionsList.add(Manifest.permission.CHANGE_WIFI_STATE)
-        }
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            permissionsList.add(Manifest.permission.ACCESS_FINE_LOCATION)
-        }
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            permissionsList.add(Manifest.permission.ACCESS_COARSE_LOCATION)
-        }
-        if (permissionsList.size > 0) {
-            ActivityCompat.requestPermissions(
-                this, permissionsList.toTypedArray(),
-                MainActivity.MY_PERMISSIONS_ACCESS_COARSE_LOCATION
-            )
-            return false
-        }
-        return true
-    }
 
     open fun getPhoneName(): String? {
         val myDevice = BluetoothAdapter.getDefaultAdapter()

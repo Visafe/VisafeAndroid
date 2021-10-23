@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="vn.ncsc.visafe"
     android:installLocation="auto"
-    android:versionCode="1"
-    android:versionName="1.0">
+    android:versionCode="20"
+    android:versionName="1.5.4">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,10 +12,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <uses-feature android:name="android.hardware.camera" />
@@ -52,9 +50,9 @@
                 <data
                     android:host="app.visafe.vn"
                     android:scheme="https" />
-                <data
-                    android:host="firebase.visafe.vn"
-                    android:scheme="https" />
+                <!--                <data-->
+                <!--                    android:host="firebase.visafe.vn"-->
+                <!--                    android:scheme="https" />-->
             </intent-filter>
         </activity>
         <activity
@@ -241,16 +239,16 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
-<!--        <receiver-->
-<!--            android:name=".dns.sys.AutoStarter"-->
-<!--            android:enabled="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.BOOT_COMPLETED" />-->
-<!--            </intent-filter>-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />-->
-<!--            </intent-filter>-->
-<!--        </receiver>-->
+        <!--        <receiver-->
+        <!--            android:name=".dns.sys.AutoStarter"-->
+        <!--            android:enabled="true">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.BOOT_COMPLETED" />-->
+        <!--            </intent-filter>-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />-->
+        <!--            </intent-filter>-->
+        <!--        </receiver>-->
     </application>
 
 </manifest>

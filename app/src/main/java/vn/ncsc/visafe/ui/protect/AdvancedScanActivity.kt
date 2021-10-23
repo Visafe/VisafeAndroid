@@ -166,7 +166,7 @@ class AdvancedScanActivity : BaseActivity() {
             ) {
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
                     botnet = response.body()
-                    if (isWPA2() && botnet != null) {
+                    if (botnet != null) {
                         countSuccess++
                         setProgress()
                     } else {

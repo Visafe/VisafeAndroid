@@ -3,7 +3,7 @@ package vn.ncsc.visafe.utils
 import android.app.Application
 import android.content.SharedPreferences
 import com.google.gson.Gson
-import vn.ncsc.visafe.ViSafeApp
+import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.model.UserInfo
 import vn.ncsc.visafe.model.WorkspaceGroupData
 
@@ -55,6 +55,10 @@ class SharePreferenceKeyHelper private constructor(context: Application) {
 
     fun isEnableProtectedWifiHome(): Boolean {
         return sharedPref.getBoolean(PreferenceKey.IS_ENABLE_PROTECTED_WIFI_HOME, false)
+    }
+
+    fun getHostName(): String? {
+        return sharedPref.getString(PreferenceKey.HOST_NAME, NetworkClient.DOMAIN)
     }
 
     fun clearAllData() {

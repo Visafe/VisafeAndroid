@@ -14,7 +14,9 @@ import vn.ncsc.visafe.base.BaseDialogFragment
 import vn.ncsc.visafe.databinding.FragmentInputOtpBinding
 import vn.ncsc.visafe.ui.custom.otp.OnChangeListener
 import vn.ncsc.visafe.ui.custom.otp.OnCompleteListener
+import vn.ncsc.visafe.utils.isNumber
 import vn.ncsc.visafe.utils.setSafeClickListener
+import vn.ncsc.visafe.utils.validatePhone
 
 class InputOTPFragment(
     var onInputOtpDialog: OnInputOtpDialog, var type: TypeOTP, var title: String?, var account: String?
@@ -53,10 +55,11 @@ class InputOTPFragment(
         viewBinding.tvTime.text = "30s"
         viewBinding.tvTime.visibility = View.VISIBLE
         timeCountDown.start()
+        val typeAcc = if (isNumber(account.toString()) && validatePhone(account)) "số điện thoại" else "email"
         when (type) {
             TypeOTP.FORGOT_PASSWORD -> {
                 viewBinding.tvTitle.text = title
-                viewBinding.tvDescription.text = String.format(getString(R.string.visafe_gui_ma_xac_thuc), account)
+                viewBinding.tvDescription.text = String.format(getString(R.string.visafe_gui_ma_xac_thuc), typeAcc, account)
             }
             TypeOTP.REGISTER -> {
                 viewBinding.tvTitle.text = title

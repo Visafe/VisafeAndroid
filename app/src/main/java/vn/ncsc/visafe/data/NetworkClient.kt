@@ -14,8 +14,8 @@ import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.*
 
-private const val API_READ_TIMEOUT: Long = 160
-private const val API_CONNECT_TIMEOUT: Long = 160
+private const val API_READ_TIMEOUT: Long = 30
+private const val API_CONNECT_TIMEOUT: Long = 30
 
 class NetworkClient {
     companion object {
@@ -34,7 +34,7 @@ class NetworkClient {
         val ERROR_CODE =
             listOf(406, 409, 424, 502, 500)
 
-//        const val URL_ROOT = "https://staging.visafe.vn/api/v1/"
+        //        const val URL_ROOT = "https://staging.visafe.vn/api/v1/"
 //        const val DOMAIN = "https://dns-staging.visafe.vn/dns-query/"
         const val URL_ROOT = "https://app.visafe.vn/api/v1/"
         const val DOMAIN = "https://dns.visafe.vn/dns-query/"

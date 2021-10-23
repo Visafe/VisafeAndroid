@@ -82,8 +82,8 @@
     DNS của bạn đã được bảo vệ nên không nhất thiết phải bật VISAFE.</string>
     <!--==========Demo=============-->
     <string name="app_name">Visafe</string>
-    <string name="facebook_app_id">545622383516478</string>
-    <string name="fb_login_protocol_scheme">fb545622383516478</string>
+    <string name="facebook_app_id">300828164912304</string>
+    <string name="fb_login_protocol_scheme">fb300828164912304</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main2">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -263,7 +263,7 @@
     <string name="note_term"><![CDATA[Khi nhấn Đăng ký nghĩa là bạn đồng ý với\n<b><font color=\'#222222\'>điều khoản và điều kiện </font></b>
     sử dụng của Visafe]]></string>
     <string name="splash_title1">Chống lừa đảo, mã độc,\ntấn công mạng</string>
-    <string name="splash_title2">Chặn theo dõi, quảng cáo</string>
+    <string name="splash_title2">Chặn theo dõi</string>
     <string name="splash_title3">Quản lý truy cập, nội dung</string>
     <string name="splash_content1">Phòng tránh nguy cơ, thiệt hại từ các cuộc tấn công mạng, lừa đảo trực tuyến</string>
     <string name="splash_content2">Bảo đảm quyền riêng tư trên mạng &amp; chặn các quảng cáo độc hại, khó chịu</string>
@@ -273,7 +273,7 @@
     <string name="start">Bắt đầu</string>
     <string name="text_input_pass_for_acc">Hãy nhập mật khẩu mới cho tài khoản %s</string>
     <string name="xac_thuc_tai_khoan">Xác thực tài khoản</string>
-    <string name="visafe_gui_ma_xac_thuc">Visafe đã gửi mã xác thực OTP đến email %s</string>
+    <string name="visafe_gui_ma_xac_thuc">Visafe đã gửi mã xác thực OTP đến %s %s</string>
 
     <string name="warning_input_number_phone_email">Vui lòng nhập số điện thoại/email</string>
     <string name="warning_input_full_name">Vui lòng nhập họ và tên</string>

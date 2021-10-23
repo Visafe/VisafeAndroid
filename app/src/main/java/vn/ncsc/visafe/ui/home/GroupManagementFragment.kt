@@ -18,6 +18,7 @@ import vn.ncsc.visafe.ViSafeApp
 import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.data.BaseCallback
+import vn.ncsc.visafe.data.BaseResponse
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.FragmentGroupManagementBinding
 import vn.ncsc.visafe.model.GroupData
@@ -73,6 +74,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
+                doGetGroupWithId()
                 checkDeviceInGroup()
             }
         }
@@ -200,6 +202,12 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
         updateViewListGroup()
         initControl()
         reloadView()
+        (activity as MainActivity).isLoadDeviceJoinGroup.observe(this, {
+            if (it) {
+                doGetGroupWithId()
+                checkDeviceInGroup()
+            }
+        })
     }
 
     private fun reloadView() {
@@ -323,9 +331,11 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
         binding.btnCreateNewGroup.setOnSingClickListener {
             if ((activity as MainActivity).needLogin(MainActivity.POSITION_GROUP))
                 return@setOnSingClickListener
-            val intent = Intent(requireContext(), CreateGroupActivity::class.java)
-            intent.putExtra(DATA_WORKSPACE, mWorkspaceGroupData)
-            resultLauncherCreateGroupActivity.launch(intent)
+            if (mWorkspaceGroupData?.id?.isNotEmpty() == true) {
+                val intent = Intent(requireContext(), CreateGroupActivity::class.java)
+                intent.putExtra(DATA_WORKSPACE, mWorkspaceGroupData)
+                resultLauncherCreateGroupActivity.launch(intent)
+            }
         }
 
         binding.btnJoinGroup.setOnSingClickListener {
@@ -632,20 +642,20 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
             client.client(context = it)
                 .doRequestOutGroup(OutGroupRequest(deviceId = deviceId, groupId = groupId))
         }
-        call?.enqueue(BaseCallback(this, object : Callback<ResponseBody> {
+        call?.enqueue(BaseCallback(this, object : Callback<BaseResponse> {
             override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
+                call: Call<BaseResponse>,
+                response: Response<BaseResponse>
             ) {
                 dismissProgress()
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
                     response.body()?.let { data ->
-                        (activity as BaseActivity).showToast("Gửi yêu cầu rời nhóm thành công!")
+                        data.localMsg?.let { (activity as BaseActivity).showToast(it) }
                     }
                 }
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
                 t.message?.let { Log.e("onFailure: ", it) }
                 dismissProgress()
             }

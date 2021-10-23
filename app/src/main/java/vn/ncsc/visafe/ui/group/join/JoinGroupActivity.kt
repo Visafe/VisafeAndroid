@@ -7,8 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
-import com.google.gson.Gson
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,6 +23,7 @@ import vn.ncsc.visafe.ui.create.group.access_manager.Action
 import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 import vn.ncsc.visafe.utils.setOnSingClickListener
+import java.net.URLDecoder
 
 class JoinGroupActivity : BaseActivity() {
     companion object {
@@ -42,9 +41,10 @@ class JoinGroupActivity : BaseActivity() {
         setContentView(binding.root)
         intent?.let {
             groupId = it.getStringExtra(GROUP_ID)
+            groupName = it.getStringExtra(GROUP_NAME)
         }
-
-        groupId?.let { it1 -> doGetAGroupWithId(it1) }
+        binding.tvNameGroup.text = URLDecoder.decode(groupName, "UTF-8")
+//        groupId?.let { it1 -> doGetAGroupWithId(it1) }
         binding.ivBack.setOnClickListener {
             finish()
         }
@@ -61,9 +61,9 @@ class JoinGroupActivity : BaseActivity() {
         }
     }
 
-    private fun showDialogComplete() {
+    private fun showDialogComplete(localMsg: String) {
         val dialog = SuccessDialogFragment.newInstance(
-            getString(R.string.join_group_success),
+            localMsg,
             getString(R.string.content_join_group_success, binding.tvNameGroup.text.toString().trim())
         )
         dialog.show(supportFragmentManager, "")
@@ -155,20 +155,20 @@ class JoinGroupActivity : BaseActivity() {
         showProgressDialog()
         val client = NetworkClient()
         val call = client.client(context = applicationContext).doAddDeviceToGroup(addDeviceRequest)
-        call.enqueue(BaseCallback(this, object : Callback<ResponseBody> {
+        call.enqueue(BaseCallback(this, object : Callback<BaseResponse> {
             override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
+                call: Call<BaseResponse>,
+                response: Response<BaseResponse>
             ) {
                 dismissProgress()
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    showDialogComplete()
+                    response.body()?.localMsg?.let { showDialogComplete(it) }
                 } else if (response.code() == NetworkClient.CODE_EXISTS_ACCOUNT) {
                     val builder = AlertDialog.Builder(this@JoinGroupActivity)
                     with(builder)
                     {
                         setTitle(getString(R.string.thong_bao))
-                        setMessage("Thiết bị đã được thêm vào nhóm")
+                        setMessage(response.body()?.localMsg)
                         setPositiveButton(
                             getString(R.string.dong_y)
                         ) { _, _ -> finish() }
@@ -177,7 +177,7 @@ class JoinGroupActivity : BaseActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
                 t.message?.let { Log.e("onFailure: ", it) }
                 dismissProgress()
             }

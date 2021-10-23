@@ -27,6 +27,8 @@ class PreferenceKey {
 
         const val KEY_STORE_DEVICE_ID = "KEY_STORE_DEVICE_ID"
         const val WORKSPACE_CHOOSE = "WORKSPACE_CHOOSE"
+
+        const val HOST_NAME = "HOST_NAME"
     }
 
 }

@@ -24,6 +24,8 @@ class SettingActivity : BaseActivity() {
     }
 
     private fun initView() {
+        binding.clChangePass.visibility = if (isLogin()) View.VISIBLE else View.GONE
+
         binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {
                 finish()

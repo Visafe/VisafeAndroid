@@ -1,5 +1,6 @@
 package vn.ncsc.visafe.data
 
+import android.util.Log
 import com.google.gson.Gson
 import org.json.JSONObject
 import retrofit2.Call
@@ -24,8 +25,12 @@ class BaseCallback<T>(private val baseController: BaseController, private val mC
                     } else {
                         val buffer = it.source().buffer.readByteArray()
                         val dataString = buffer.decodeToString()
-                        val baseResponse = Gson().fromJson(dataString, BaseResponse::class.java)
-                        baseController.onError(baseResponse)
+                        try {
+                            val baseResponse = Gson().fromJson(dataString, BaseResponse::class.java)
+                            baseController.onError(baseResponse)
+                        } catch (e: Exception) {
+                            e.message?.let { it1 -> Log.e("BaseCallback: ", it1) }
+                        }
                     }
                 }
             }

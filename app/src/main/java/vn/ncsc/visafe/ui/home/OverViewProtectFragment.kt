@@ -53,11 +53,6 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
     private var otherUtilitiesAdapter: OtherUtilitiesAdapter? = null
     private var groupData: GroupData? = null
 
-    companion object {
-        @JvmStatic
-        fun newInstance() = OverViewProtectFragment()
-    }
-
     private var resultLauncherSwitchWifi =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -231,6 +226,8 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
                 }
             }
         })
+
+        //update switch protect device
         (activity as MainActivity).isOpenProtectedDevice.observe(this, {
             binding.layoutHomeProtect.switchHomeProtectDevice.isChecked = it
             binding.layoutHomeProtect.ivHomeProtectDevice.setImageResource(
@@ -240,7 +237,6 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
                     R.drawable.ic_info_circle
                 }
             )
-//            binding.layoutAddVpn.btnHomeVpnAdd.text = if (it) "Đã kết nối VPN" else "Thêm VPN"
             binding.layoutAddVpn.cardViewAddVpn.visibility = if (it) View.GONE else View.VISIBLE
         })
 
@@ -343,25 +339,29 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
             resultLauncherProtectDevice.launch(intent)
         }
         //switch thiết bị
-        binding.layoutHomeProtect.switchHomeProtectDevice.setOnCheckedChangeListener { _, isChecked ->
-            if (ViSafeApp().getPreference().getString(PreferenceKey.PIN_CODE).isNotEmpty()) {
-                if (SharePreferenceKeyHelper.getInstance(ViSafeApp()).getBoolean(PreferenceKey.STATUS_OPEN_VPN)) {
-                    val intent = Intent(context, UpdatePinActivity::class.java)
-                    intent.putExtra(UpdatePinActivity.TYPE_ACTION, UpdatePinActivity.IS_CONFIRM_PIN)
-                    resultLauncherOpenInputPin.launch(intent)
-                } else {
-                    (activity as MainActivity).isOpenProtectedDevice.value = true
-                }
-            } else {
-                SharePreferenceKeyHelper.getInstance(ViSafeApp()).putBoolean(PreferenceKey.STATUS_OPEN_VPN, isChecked)
-                binding.layoutHomeProtect.ivHomeProtectDevice.setImageResource(
-                    if (isChecked) {
-                        R.drawable.ic_mobile
+        binding.layoutHomeProtect.switchHomeProtectDevice.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (buttonView.isPressed) {//switchWidget: ", "click
+                if (ViSafeApp().getPreference().getString(PreferenceKey.PIN_CODE).isNotEmpty()) {
+                    if (SharePreferenceKeyHelper.getInstance(ViSafeApp()).getBoolean(PreferenceKey.STATUS_OPEN_VPN)) {
+                        val intent = Intent(context, UpdatePinActivity::class.java)
+                        intent.putExtra(UpdatePinActivity.TYPE_ACTION, UpdatePinActivity.IS_CONFIRM_PIN)
+                        resultLauncherOpenInputPin.launch(intent)
                     } else {
-                        R.drawable.ic_info_circle
+                        (activity as MainActivity).isOpenProtectedDevice.value = true
                     }
-                )
-                (activity as MainActivity).isOpenProtectedDevice.value = isChecked
+                } else {
+                    SharePreferenceKeyHelper.getInstance(ViSafeApp()).putBoolean(PreferenceKey.STATUS_OPEN_VPN, isChecked)
+                    binding.layoutHomeProtect.ivHomeProtectDevice.setImageResource(
+                        if (isChecked) {
+                            R.drawable.ic_mobile
+                        } else {
+                            R.drawable.ic_info_circle
+                        }
+                    )
+                    (activity as MainActivity).isOpenProtectedDevice.value = isChecked
+                }
+            } else {//"switchWidget: ", "setChecked "
+                //triggered due to programmatic assignment using 'setChecked()' method.
             }
         }
 

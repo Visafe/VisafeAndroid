@@ -176,11 +176,11 @@
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginTop="@dimen/_13sdp"
                         android:layout_marginEnd="@dimen/_6sdp"
-                        android:background="@drawable/bg_button_color_primary_radius_32"
+                        android:background="@drawable/bg_button_border_color_primary_radius_32"
                         android:gravity="center"
                         android:text="Tạo nhóm mới"
                         android:textAllCaps="true"
-                        android:textColor="@color/white"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_12sdp"
                         app:layout_constraintEnd_toStartOf="@+id/guideline"
                         app:layout_constraintTop_toBottomOf="@+id/btnChangeWorkSpace" />

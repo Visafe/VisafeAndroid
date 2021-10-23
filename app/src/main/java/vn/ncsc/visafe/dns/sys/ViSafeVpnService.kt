@@ -3,7 +3,6 @@ package vn.ncsc.visafe.dns.sys
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Intent
 import android.content.SharedPreferences
@@ -25,9 +24,10 @@ import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import protect.Protector
 import vn.ncsc.visafe.R
+import vn.ncsc.visafe.ViSafeApp
 import vn.ncsc.visafe.dns.net.doh.Transaction
 import vn.ncsc.visafe.dns.net.go.GoVpnAdapter
-import vn.ncsc.visafe.ui.MainActivity
+import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 import java.util.*
 
 class ViSafeVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedPreferenceChangeListener, Protector {
@@ -76,7 +76,7 @@ class ViSafeVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedP
             restartVpn()
         }
         if (PersistentState.URL_KEY == key) {
-            url = PersistentState.instance.getServerUrl(this)
+            url = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getHostName()/*PersistentState.instance.getServerUrl(this)*/
             spawnServerUpdate()
         }
     }
@@ -93,9 +93,8 @@ class ViSafeVpnService : VpnService(), NetworkManager.NetworkListener, OnSharedP
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         synchronized(vpnController) {
-            Log.i(LOG_TAG, String.format("Starting DNS VPN service, url=%s", url))
             url = PersistentState.instance.getServerUrl(this)
-
+            Log.i(LOG_TAG, String.format("Starting DNS VPN service, url=%s", url))
             // Registers this class as a listener for user preference changes.
             PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this)
             if (networkManager != null) {

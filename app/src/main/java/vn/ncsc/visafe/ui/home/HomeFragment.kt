@@ -114,10 +114,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
         binding.roundImage.visibility = View.VISIBLE
         binding.roundImage.startAnimation(aniRotateClk)
 
-        (activity as MainActivity).isOpenProtectedDevice.observe(this, {
-            if (SharePreferenceKeyHelper.getInstance(ViSafeApp())
-                    .getBoolean(PreferenceKey.STATUS_OPEN_VPN)
-            ) {
+        (activity as MainActivity).isOpenProtectedDevice.observe(this, { isOpen ->
+            if (isOpen) {
                 sendNotificationWhenClickButtonOnOff = true
                 if (VERSION.SDK_INT >= 26) {
                     vibrator?.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
@@ -128,18 +126,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                 binding.ivStatus.visibility = View.GONE
                 binding.tvTap.visibility = View.GONE
                 binding.status.text = getString(R.string.status_waiting)
-//                binding.roundImage.visibility = View.VISIBLE
-//                binding.roundImage.startAnimation(aniRotateClk)
                 prepareAndStartDnsVpn()
             } else {
-//                if (ViSafeApp().getPreference().getString(PreferenceKey.PIN_CODE).isNotEmpty()) {
-//                    val intent = Intent(context, UpdatePinActivity::class.java)
-//                    intent.putExtra(UpdatePinActivity.TYPE_ACTION, UpdatePinActivity.IS_CONFIRM_PIN)
-//                    resultLauncherOpenInputPin.launch(intent)
-//                } else {
                 status_button = 1
                 stopDnsVpnService()
-//                }
             }
         })
 
@@ -156,8 +146,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
             binding.ivStatus.visibility = View.GONE
             binding.tvTap.visibility = View.GONE
             binding.status.text = getString(R.string.status_waiting)
-//            binding.roundImage.visibility = View.VISIBLE
-//            binding.roundImage.startAnimation(aniRotateClk)
             prepareAndStartDnsVpn()
         } else {
             status_button = 1
@@ -184,6 +172,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                     binding.tvTap.visibility = View.GONE
                     binding.status.text = getString(R.string.status_waiting)
                     prepareAndStartDnsVpn()
+                    (activity as MainActivity).isOpenProtectedDevice.value = true
                 }
             } else {
                 sendNotificationWhenClickButtonOnOff = true
@@ -488,7 +477,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
             builder.setContentTitle(title)
                 .setContentText(body)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setContentInfo("Hello")
                 .setLights(Color.RED, 1000, 100)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setSmallIcon(R.drawable.ic_logo_noti)

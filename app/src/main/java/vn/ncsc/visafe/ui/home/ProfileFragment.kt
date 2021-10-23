@@ -53,7 +53,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                 })
                 binding.ivUser.setImageDrawable(context?.let { ContextCompat.getDrawable(it, R.drawable.ic_anonymous) })
                 binding.clLogout.visibility = View.VISIBLE
-                binding.clUpgrade.visibility = View.VISIBLE
+                binding.clUpgrade.visibility = View.GONE
                 binding.layoutUpgrade.llRegisterNow.visibility = View.GONE
             } else {
                 binding.ivUser.setImageDrawable(context?.let { ContextCompat.getDrawable(it, R.drawable.ic_user_default) })
@@ -75,7 +75,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             })
             binding.ivUser.setImageDrawable(context?.let { ContextCompat.getDrawable(it, R.drawable.ic_anonymous) })
             binding.clLogout.visibility = View.VISIBLE
-            binding.clUpgrade.visibility = View.VISIBLE
+            binding.clUpgrade.visibility = View.GONE
             binding.layoutUpgrade.llRegisterNow.visibility = View.GONE
         } else {
             binding.ivUser.setImageDrawable(context?.let { ContextCompat.getDrawable(it, R.drawable.ic_user_default) })
@@ -88,8 +88,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     private fun initControl() {
         binding.clSetting.setOnSingClickListener {
-            if ((activity as MainActivity).needLogin(MainActivity.POSITION_PROFILE))
-                return@setOnSingClickListener
             startActivity(Intent(context, SettingActivity::class.java))
         }
         binding.clSupport.setOnSingClickListener {
@@ -101,8 +99,23 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             showDialogEditName()
         }
         binding.clLogout.setOnSingClickListener {
-            SharePreferenceKeyHelper.getInstance(ViSafeApp()).clearAllData()
-            (activity as MainActivity).isLoadView.value = true
+            val bottomSheet = VisafeDialogBottomSheet.newInstance(
+                "",
+                "Bạn có chắc chắn muốn đăng xuất không?",
+                VisafeDialogBottomSheet.TYPE_CONFIRM_CANCEL
+            )
+            bottomSheet.show(parentFragmentManager, null)
+            bottomSheet.setOnClickListener { _, action ->
+                when (action) {
+                    Action.CONFIRM -> {
+                        SharePreferenceKeyHelper.getInstance(ViSafeApp()).clearAllData()
+                        (activity as MainActivity).isLoadView.value = true
+                    }
+                    else -> {
+                        return@setOnClickListener
+                    }
+                }
+            }
         }
         binding.clUpgrade.setOnSingClickListener {
             if ((activity as MainActivity).needLogin(MainActivity.POSITION_PROFILE))
@@ -149,8 +162,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             }
         }
         binding.clVip.setOnSingClickListener {
-            if ((activity as MainActivity).needLogin(MainActivity.POSITION_PROFILE))
-                return@setOnSingClickListener
             val intent = Intent(requireContext(), VipMemberActivity::class.java)
             resultLauncherVipActivity.launch(intent)
         }
@@ -210,7 +221,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     private var resultLauncherVipActivity =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                (activity as MainActivity).doGetUserInfo()
+//                (activity as MainActivity).doGetUserInfo()
             }
         }
 

@@ -69,6 +69,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     var timeScanUpdate: MutableLiveData<String> = MutableLiveData()
     var isOpenProtectedDevice: MutableLiveData<Boolean> = MutableLiveData()
     var isLoadView: MutableLiveData<Boolean> = MutableLiveData()
+    var isLoadDeviceJoinGroup: MutableLiveData<Boolean> = MutableLiveData()
     private var isLoadUserInfo = false
 
     private var timer: Timer? = null
@@ -108,21 +109,43 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         }
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.let {
+            val groupId = it.getStringExtra(JoinGroupActivity.GROUP_ID)
+            val groupName = it.getStringExtra(JoinGroupActivity.GROUP_NAME)
+            isLoadUserInfo = it.getBooleanExtra(SplashActivity.LOAD_USER_INFO, false)
+            if (groupId?.isNotEmpty() == true && groupName?.isNotEmpty() == true) {
+                val intentJoinGroup = Intent(this@MainActivity, JoinGroupActivity::class.java)
+                intentJoinGroup.putExtra(JoinGroupActivity.GROUP_ID, groupId)
+                intentJoinGroup.putExtra(JoinGroupActivity.GROUP_NAME, groupName)
+                resultJoinGroupActivity.launch(intentJoinGroup)
+            }
+        }
+    }
+
+    private var resultJoinGroupActivity =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                isLoadDeviceJoinGroup.value = true
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        checkPermissionWifi()
         getNewTokenFCM()
         intent?.let {
             val groupId = it.getStringExtra(JoinGroupActivity.GROUP_ID)
             val groupName = it.getStringExtra(JoinGroupActivity.GROUP_NAME)
             isLoadUserInfo = it.getBooleanExtra(SplashActivity.LOAD_USER_INFO, false)
             if (groupId?.isNotEmpty() == true && groupName?.isNotEmpty() == true) {
-                val intent = Intent(this@MainActivity, JoinGroupActivity::class.java)
-                intent.putExtra(JoinGroupActivity.GROUP_ID, groupId)
-                intent.putExtra(JoinGroupActivity.GROUP_NAME, groupName)
-                startActivity(intent)
+                val intentJoinGroup = Intent(this@MainActivity, JoinGroupActivity::class.java)
+                intentJoinGroup.putExtra(JoinGroupActivity.GROUP_ID, groupId)
+                intentJoinGroup.putExtra(JoinGroupActivity.GROUP_NAME, groupName)
+                resultJoinGroupActivity.launch(intentJoinGroup)
             }
         }
         initView()
@@ -132,7 +155,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private var resultLauncherLoginActivity =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                checkPermissionWifi()
                 getNewTokenFCM()
 //                initView()
                 doGetUserInfo()

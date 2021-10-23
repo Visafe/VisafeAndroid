@@ -39,7 +39,6 @@ class ProtectWifiActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityProtectWifiBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        checkPermissionWifi()
         initView()
     }
 
@@ -58,14 +57,14 @@ class ProtectWifiActivity : BaseActivity() {
         })
         val isProtected = intent.extras?.getBoolean(PROTECT_WIFI_KEY, false) ?: false
         if (isProtected) {
-            checkPermissionScanWifi()
+            checkBotnet()
         } else {
             binding.switchProtectWifi.isChecked = false
             handleProtected(false, null)
         }
         binding.switchProtectWifi.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                checkPermissionScanWifi()
+                checkBotnet()
             } else {
                 binding.switchProtectWifi.isChecked = false
                 handleProtected(false, null)
@@ -82,23 +81,6 @@ class ProtectWifiActivity : BaseActivity() {
             override fun onMoreWifi(data: DetailBotnet, position: Int) {
             }
 
-        })
-    }
-
-    private fun checkPermissionScanWifi() {
-        checkPermission(arrayOf(
-            Manifest.permission.ACCESS_WIFI_STATE,
-            Manifest.permission.CHANGE_WIFI_STATE,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        ), object : OnPermissionGranted {
-            override fun onPermission() {
-                checkBotnet()
-            }
-
-            override fun onPermissionDenied() {
-                showToast("Bạn cần cấp quyền truy cập vị trí, wifi để sử dụng tính năng này")
-            }
         })
     }
 
@@ -129,7 +111,7 @@ class ProtectWifiActivity : BaseActivity() {
     private fun handleProtected(isProtected: Boolean, botnet: BotnetResponse?) {
         val ipAddress = getIpAddress()
         if (isProtected) {
-            if (isWPA2() && botnet != null) {
+            if (botnet != null) {
                 binding.ivCheck.setImageResource(R.drawable.ic_checkmark_circle)
                 binding.ivWifi.background =
                     ContextCompat.getDrawable(this, R.drawable.bg_stroke_color_green_circle)

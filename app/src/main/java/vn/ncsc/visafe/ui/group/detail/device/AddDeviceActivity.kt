@@ -133,7 +133,7 @@ class AddDeviceActivity : BaseActivity() {
             val width = point.x
             val height = point.y
             var smallerDimension = width.coerceAtMost(height)
-            smallerDimension *= 4
+            smallerDimension = smallerDimension * 3 / 4
             val qrgEncoder = QRGEncoder(textQR, null, QRGContents.Type.TEXT, smallerDimension)
             val bitmapQR = qrgEncoder.encodeAsBitmap()
             qrBitmapMerge = mergeBitmaps(bitmapQR, myLogo)
@@ -150,7 +150,7 @@ class AddDeviceActivity : BaseActivity() {
         val canvasWidth = canvas.width
         val canvasHeight = canvas.height
         canvas.drawBitmap(qrCode, Matrix(), null)
-        val resizeLogo = logo?.let { Bitmap.createScaledBitmap(it, canvasWidth / 5, canvasHeight / 5, true) }
+        val resizeLogo = logo?.let { Bitmap.createScaledBitmap(it, canvasWidth / 6, canvasHeight / 6, true) }
         resizeLogo?.let { resizeLogo ->
             val centreX = (canvasWidth - resizeLogo.width) / 2
             val centreY = (canvasHeight - resizeLogo.height) / 2

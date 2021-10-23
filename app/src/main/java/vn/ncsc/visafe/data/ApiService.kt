@@ -6,6 +6,7 @@ import vn.ncsc.visafe.model.WorkspaceGroupData
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
+import vn.ncsc.visafe.model.RoutingResponse
 import vn.ncsc.visafe.model.request.*
 import vn.ncsc.visafe.model.response.*
 
@@ -122,13 +123,13 @@ interface ApiService {
     fun doRemoveDeviceFromGroup(@Body removeDeviceRequest: RemoveDeviceRequest): Call<ResponseBody>
 
     @POST("group/invite/device")
-    fun doAddDeviceToGroup(@Body addDeviceRequest: AddDeviceRequest): Call<ResponseBody>
+    fun doAddDeviceToGroup(@Body addDeviceRequest: AddDeviceRequest): Call<BaseResponse>
 
     @PATCH("group/update/device")
     fun doUpgradeDevice(@Body updateDevice: UpdateDeviceRequest): Call<ResponseBody>
 
     @POST("device/request-out-group")
-    fun doRequestOutGroup(@Body outGroupRequest: OutGroupRequest): Call<ResponseBody>
+    fun doRequestOutGroup(@Body outGroupRequest: OutGroupRequest): Call<BaseResponse>
 
     @POST("device/active-vip")
     fun doActiveVip(@Body activeVipRequest: ActiveVipRequest): Call<ResponseBody>
@@ -198,4 +199,7 @@ interface ApiService {
 
     @POST("device/check")
     fun doCheckDeviceInGroup(@Body checkDevice: SendTokenRequest): Call<CheckDeviceInGroupResponse>
+
+    @GET("routing")
+    fun doGetDnsUrl(): Call<RoutingResponse>
 }
