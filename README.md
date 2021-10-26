@@ -35,4 +35,8 @@
 
 <img src="/Images/main.png" style="width:200px"/> <img src="/Images/warm.png" style="width:205px"/>  <img src="/Images/workspace.png" style="width:205px"/>
 
+Phát triển dựa trên
+https://github.com/Jigsaw-Code/Intra 
+https://github.com/Jigsaw-Code/outline-go-tun2socks
+
 Xem thêm tại: https://visafe.vn 
