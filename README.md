@@ -35,6 +35,4 @@
 
 <img src="/Images/main.png" style="width:200px"/> <img src="/Images/warm.png" style="width:205px"/>  <img src="/Images/workspace.png" style="width:205px"/>
 
-<h3 align="left">4. Đơn vị thực hiện</h3>
-
- + <h4>Trung tâm Giám sát an toàn không gian mạng Quốc gia</h4> <img src="https://khonggianmang.vn/assets/img/logoNEWNCSC.png" style="width:100px"/>
+Xem thêm tại: https://visafe.vn 
