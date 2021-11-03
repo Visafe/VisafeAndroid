@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/_10sdp">
+
+    <View
+        android:id="@+id/viewLine"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvSave" />
+
+    <RelativeLayout
+        android:id="@+id/rlYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_24sdp"
+        android:layout_marginEnd="@dimen/_24sdp"
+        android:background="@drawable/bg_radius_8dp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewLine">
+
+        <TextView
+            android:id="@+id/tvDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:text="@string/goi_nam"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/_10sdp" />
+
+        <TextView
+            android:id="@+id/tvDayTrial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvDuration"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginBottom="@dimen/_16dp"
+            android:background="@drawable/bg_radius_4dp"
+            android:backgroundTint="@color/color_15A1FA"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:paddingStart="@dimen/_8dp"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingEnd="@dimen/_8dp"
+            android:paddingBottom="@dimen/_2sdp"
+            android:text="@string/try_month_day"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_7sdp" />
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/_16dp"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:text="@string/price_business"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/_10sdp"
+            tools:ignore="RelativeOverlap" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bg_radius_16dp"
+        android:backgroundTint="@color/color_FFB31F"
+        android:drawablePadding="@dimen/_4dp"
+        android:fontFamily="@font/sf_pro_text_regular_bold"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/_8dp"
+        android:paddingTop="@dimen/_4dp"
+        android:paddingEnd="@dimen/_8dp"
+        android:paddingBottom="@dimen/_4dp"
+        android:text="@string/save_64"
+        android:textAllCaps="true"
+        android:textColor="#061448"
+        android:textSize="@dimen/text_size_10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

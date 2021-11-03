@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:orientation="vertical"
+            tools:context=".ui.upgrade.UpgradeVersionFragment">
+
+            <LinearLayout
+                android:id="@+id/llUpgradeTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/_16dp"
+                android:layout_marginEnd="@dimen/_24sdp"
+                android:gravity="center_horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvUpgradeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_8dp"
+                    android:fontFamily="@font/sf_pro_text_regular_bold"
+                    android:text="@string/dang_ky_goi"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_18sp" />
+
+                <TextView
+                    android:id="@+id/tvUpgradeStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_radius_16dp"
+                    android:backgroundTint="@color/color_FFB31F"
+                    android:drawablePadding="@dimen/_4dp"
+                    android:fontFamily="@font/sf_pro_text_regular_bold"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_2dp"
+                    android:paddingTop="@dimen/_4dp"
+                    android:paddingEnd="@dimen/_8dp"
+                    android:paddingBottom="@dimen/_4dp"
+                    android:text="@string/premium"
+                    android:textAllCaps="true"
+                    android:textColor="@color/color_0641448"
+                    android:textSize="@dimen/text_size_10sp"
+                    app:drawableStartCompat="@drawable/ic_subtract" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvUpgradeContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llUpgradeTitle"
+                android:layout_marginStart="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:layout_marginEnd="@dimen/_24sdp"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:gravity="center"
+                android:text="@string/premium_content"
+                android:textColor="@color/color_80_ffffff"
+                android:textSize="@dimen/text_size_12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/llUpgradeTitle" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvUpgradeContent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvListPrices"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvUpgradeContent"
+                android:layout_marginTop="@dimen/_12dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvData" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

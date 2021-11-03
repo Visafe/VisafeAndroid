@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <vn.ncsc.visafe.ui.custom.VisafeToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:toolbar_left_icon_src="@drawable/ic_arrow_left_black"
+        app:toolbar_title="@string/protect_wifi"
+        app:toolbar_visible_title="true" />
+
+    <View
+        android:id="@+id/view"
+        style="@style/Divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_0_5dp" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/_16sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivWifi"
+                android:layout_width="@dimen/_64sdp"
+                android:layout_height="@dimen/_64sdp"
+                android:layout_marginTop="@dimen/_24dp"
+                android:background="@drawable/bg_stroke_color_green_circle"
+                android:padding="@dimen/_4sdp"
+                android:src="@drawable/ic_wifi_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/ivCheck"
+                android:layout_width="@dimen/_24dp"
+                android:layout_height="@dimen/_24dp"
+                android:background="@drawable/bg_circle"
+                android:src="@drawable/ic_checkmark_circle"
+                android:translationX="6dp"
+                android:translationY="-6dp"
+                app:layout_constraintEnd_toEndOf="@id/ivWifi"
+                app:layout_constraintTop_toTopOf="@id/ivWifi" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_16sdp"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:gravity="center_horizontal"
+                android:textColor="@color/color_111111"
+                android:textSize="@dimen/text_size_20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivWifi"
+                tools:text="Wifi đang sử dụng an toàn" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                style="@style/Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:textColor="@color/color_70_222222"
+                app:layout_constraintEnd_toEndOf="@id/tvTitle"
+                app:layout_constraintStart_toStartOf="@id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle"
+                tools:text="Pit Studio 5GHz" />
+
+            <ImageView
+                android:id="@+id/ivWifiIcon"
+                android:layout_width="@dimen/_36sdp"
+                android:layout_height="@dimen/_36sdp"
+                android:layout_marginTop="@dimen/_32sdp"
+                android:background="@drawable/bg_circle"
+                android:backgroundTint="@color/color_FFCE21"
+                android:padding="@dimen/_4sdp"
+                android:src="@drawable/ic_wifi_black"
+                app:layout_constraintStart_toStartOf="@id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvDescription"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tvProtectWifi"
+                style="@style/Content_Bold"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:text="@string/protect_wifi"
+                app:layout_constraintEnd_toStartOf="@id/switchProtectWifi"
+                app:layout_constraintStart_toEndOf="@id/ivWifiIcon"
+                app:layout_constraintTop_toTopOf="@id/ivWifiIcon" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchProtectWifi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:thumb="@drawable/thumb_selector"
+                app:layout_constraintEnd_toEndOf="@id/tvTitle"
+                app:layout_constraintTop_toTopOf="@id/ivWifiIcon"
+                app:track="@drawable/track_selector" />
+
+            <TextView
+                android:id="@+id/tvProtectWifiContent"
+                style="@style/Content_Small"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:text="@string/protect_wifi_content"
+                android:textColor="@color/color_70_222222"
+                app:layout_constraintEnd_toEndOf="@id/tvProtectWifi"
+                app:layout_constraintStart_toStartOf="@id/tvProtectWifi"
+                app:layout_constraintTop_toBottomOf="@id/tvProtectWifi" />
+
+            <View
+                android:id="@+id/view1"
+                style="@style/Divider"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="@dimen/_0_5dp"
+                android:layout_marginTop="@dimen/_16sdp"
+                app:layout_constraintEnd_toEndOf="@id/tvTitle"
+                app:layout_constraintStart_toStartOf="@id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvProtectWifiContent" />
+
+            <TextView
+                android:id="@+id/tvTitleAmout"
+                style="@style/Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/ma_doc_phat_hien"
+                app:layout_constraintStart_toStartOf="@id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@id/view1" />
+
+            <LinearLayout
+                android:id="@+id/llProtected"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitleAmout">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:background="@drawable/bg_radius_12dp"
+                    android:backgroundTint="@color/color_F8F8F8">
+
+                    <TextView
+                        android:id="@+id/tvAmoutEvery"
+                        android:layout_width="@dimen/_0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:fontFamily="@font/sf_pro_text_regular_bold"
+                        android:gravity="center_horizontal"
+                        android:text="0"
+                        android:textColor="@color/color_222222"
+                        android:textSize="@dimen/text_size_20sp"
+                        app:layout_constraintEnd_toStartOf="@id/view2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="1dp"
+                        android:layout_height="@dimen/_0dp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:background="@color/color_DDDDDD"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tvAmoutToday"
+                        app:layout_constraintStart_toEndOf="@id/tvAmoutEvery"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvAmoutToday"
+                        android:layout_width="@dimen/_0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:fontFamily="@font/sf_pro_text_regular_bold"
+                        android:gravity="center_horizontal"
+                        android:text="0"
+                        android:textColor="@color/color_222222"
+                        android:textSize="@dimen/text_size_20sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/view2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/Content_Small"
+                        android:layout_width="@dimen/_0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_16sdp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/moi_luc"
+                        android:textColor="@color/color_70_222222"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/tvAmoutEvery"
+                        app:layout_constraintStart_toStartOf="@id/tvAmoutEvery"
+                        app:layout_constraintTop_toBottomOf="@id/tvAmoutEvery" />
+
+                    <TextView
+                        style="@style/Content_Small"
+                        android:layout_width="@dimen/_0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_16sdp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/today"
+                        android:textColor="@color/color_70_222222"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/tvAmoutToday"
+                        app:layout_constraintStart_toStartOf="@id/tvAmoutToday"
+                        app:layout_constraintTop_toBottomOf="@id/tvAmoutToday" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_protect_device" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llNoProtect"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/tvTitle"
+                app:layout_constraintStart_toStartOf="@id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvTitleAmout"
+                tools:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/ivError"
+                    android:layout_width="@dimen/_52sdp"
+                    android:layout_height="@dimen/_52sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_info_circle"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/tvNotification"
+                    style="@style/Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_24dp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/khong_kiem_tra_duoc_ma_doc" />
+
+                <TextView
+                    android:id="@+id/tvNote"
+                    style="@style/Content_Small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/bat_wifi"
+                    android:textColor="@color/color_222222" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

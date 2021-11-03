@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline05"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline08"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <ImageView
+        android:id="@+id/ivAlert"
+        android:layout_width="@dimen/_38sdp"
+        android:layout_height="@dimen/_38sdp"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:background="@drawable/bg_circle_ffeee7"
+        android:padding="@dimen/_10sdp"
+        android:src="@drawable/ic_alert_triangle"
+        app:layout_constraintEnd_toEndOf="@+id/guideline02"
+        app:layout_constraintStart_toStartOf="@+id/guideline02"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvValueDangerous"
+        style="@style/TitleToolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="0"
+        app:layout_constraintEnd_toEndOf="@+id/guideline02"
+        app:layout_constraintStart_toStartOf="@+id/guideline02"
+        app:layout_constraintTop_toBottomOf="@+id/ivAlert" />
+
+    <TextView
+        android:id="@+id/tvDangerous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nguy_hai"
+        app:layout_constraintEnd_toEndOf="@+id/guideline02"
+        app:layout_constraintStart_toStartOf="@+id/guideline02"
+        app:layout_constraintTop_toBottomOf="@+id/tvValueDangerous" />
+
+    <ImageView
+        android:id="@+id/ivShield"
+        android:layout_width="@dimen/_38sdp"
+        android:layout_height="@dimen/_38sdp"
+        android:background="@drawable/bg_circle_fff9ed"
+        android:padding="@dimen/_10sdp"
+        android:src="@drawable/ic_shield_off_stats"
+        app:layout_constraintEnd_toEndOf="@+id/guideline05"
+        app:layout_constraintStart_toStartOf="@+id/guideline05"
+        app:layout_constraintTop_toTopOf="@+id/ivAlert" />
+
+    <TextView
+        android:id="@+id/tvValueViolate"
+        style="@style/TitleToolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="0"
+        app:layout_constraintEnd_toEndOf="@+id/guideline05"
+        app:layout_constraintStart_toStartOf="@+id/guideline05"
+        app:layout_constraintTop_toBottomOf="@+id/ivShield" />
+
+    <TextView
+        android:id="@+id/tvViolate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/vi_pham"
+        app:layout_constraintEnd_toEndOf="@+id/guideline05"
+        app:layout_constraintStart_toStartOf="@+id/guideline05"
+        app:layout_constraintTop_toBottomOf="@+id/tvValueViolate" />
+
+    <ImageView
+        android:id="@+id/ivAds"
+        android:layout_width="@dimen/_38sdp"
+        android:layout_height="@dimen/_38sdp"
+        android:background="@drawable/bg_circle_ecf7ff"
+        android:padding="@dimen/_10sdp"
+        android:src="@drawable/ic_ads"
+        app:layout_constraintEnd_toEndOf="@+id/guideline08"
+        app:layout_constraintStart_toStartOf="@+id/guideline08"
+        app:layout_constraintTop_toTopOf="@+id/ivAlert" />
+
+    <TextView
+        android:id="@+id/tvValueAds"
+        style="@style/TitleToolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="0"
+        app:layout_constraintEnd_toEndOf="@+id/guideline08"
+        app:layout_constraintStart_toStartOf="@+id/guideline08"
+        app:layout_constraintTop_toBottomOf="@+id/ivAds" />
+
+    <TextView
+        android:id="@+id/tvAds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/quang_cao"
+        app:layout_constraintEnd_toEndOf="@+id/guideline08"
+        app:layout_constraintStart_toStartOf="@+id/guideline08"
+        app:layout_constraintTop_toBottomOf="@+id/tvValueAds" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@color/color_EEEEEE"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDangerous" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

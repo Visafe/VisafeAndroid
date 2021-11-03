@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <vn.ncsc.visafe.dns.net.setting.ServerChooser
+        android:dialogTitle="@string/server_choice"
+        android:key="@string/server_choice_key"
+        android:title="@string/server_choice" />
+    <MultiSelectListPreference
+        android:dialogTitle="@string/excluded_apps_title"
+        android:key="pref_apps"
+        android:summary="@string/excluded_apps_summary"
+        android:title="@string/excluded_apps" />
+</PreferenceScreen>

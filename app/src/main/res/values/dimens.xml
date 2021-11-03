@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <dimen name="_5dp">@dimen/_5sdp</dimen>
+    <dimen name="_16dp">@dimen/_16sdp</dimen>
+    <dimen name="_13dp">@dimen/_13sdp</dimen>
+    <dimen name="_24dp">@dimen/_24sdp</dimen>
+    <dimen name="_18dp">@dimen/_18sdp</dimen>
+    <dimen name="_12dp">@dimen/_12sdp</dimen>
+    <dimen name="_10dp">@dimen/_10sdp</dimen>
+    <dimen name="_28dp">@dimen/_28sdp</dimen>
+    <dimen name="_30dp">@dimen/_30sdp</dimen>
+    <dimen name="_50dp">@dimen/_50sdp</dimen>
+    <dimen name="_8dp">@dimen/_8sdp</dimen>
+    <dimen name="_4dp">@dimen/_4sdp</dimen>
+    <dimen name="_2dp">@dimen/_2sdp</dimen>
+    <dimen name="_0dp">0dp</dimen>
+    <dimen name="_0_5dp">0.5dp</dimen>
+    <dimen name="_20dp">@dimen/_20sdp</dimen>
+    <dimen name="text_size_8sp">8sp</dimen>
+    <dimen name="text_size_10sp">10sp</dimen>
+    <dimen name="text_size_11sp">11sp</dimen>
+    <dimen name="text_size_12sp">12sp</dimen>
+    <dimen name="text_size_13sp">13sp</dimen>
+    <dimen name="text_size_14sp">14sp</dimen>
+    <dimen name="text_size_15sp">15sp</dimen>
+    <dimen name="text_size_18sp">18sp</dimen>
+    <dimen name="text_size_16sp">16sp</dimen>
+    <dimen name="text_size_20sp">20sp</dimen>
+    <dimen name="text_size_22sp">22sp</dimen>
+    <dimen name="text_size_26sp">26sp</dimen>
+    <dimen name="text_size_24sp">24sp</dimen>
+    <dimen name="text_size_28sp">28sp</dimen>
+    <dimen name="text_size_32sp">32sp</dimen>
+    <dimen name="fab_margin">@dimen/_16sdp</dimen>
+    <dimen name="app_bar_height">@dimen/_240sdp</dimen>
+    <dimen name="text_margin">@dimen/_16sdp</dimen>
+    <dimen name="_140dp">@dimen/_140sdp</dimen>
+    <dimen name="_180dp">@dimen/_180sdp</dimen>
+    <dimen name="_72dp">@dimen/_72sdp</dimen>
+    <dimen name="_32dp">@dimen/_32sdp</dimen>
+    <dimen name="_52dp">@dimen/_52sdp</dimen>
+    <dimen name="_48dp">@dimen/_48sdp</dimen>
+    <dimen name="_44dp">@dimen/_44sdp</dimen>
+    <dimen name="_56dp">@dimen/_56sdp</dimen>
+    <dimen name="_42dp">@dimen/_42sdp</dimen>
+    <dimen name="_40dp">@dimen/_40sdp</dimen>
+    <dimen name="_36dp">@dimen/_36sdp</dimen>
+    <dimen name="_35dp">@dimen/_35sdp</dimen>
+    <dimen name="_14dp">@dimen/_14sdp</dimen>
+    <dimen name="_66dp">@dimen/_66sdp</dimen>
+    <dimen name="_64dp">@dimen/_64sdp</dimen>
+    <dimen name="_100dp">@dimen/_100sdp</dimen>
+    <dimen name="_88dp">@dimen/_88sdp</dimen>
+    <dimen name="_70dp">@dimen/_70sdp</dimen>
+    <dimen name="_110dp">@dimen/_110sdp</dimen>
+    <dimen name="_120dp">@dimen/_120sdp</dimen>
+    <dimen name="_22dp">@dimen/_22sdp</dimen>
+    <dimen name="_220dp">@dimen/_220sdp</dimen>
+    <dimen name="_122dp">@dimen/_122sdp</dimen>
+    <dimen name="_144dp">@dimen/_144sdp</dimen>
+    <dimen name="_80dp">@dimen/_80sdp</dimen>
+    <dimen name="_250dp">@dimen/_250sdp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">@dimen/_16sdp</dimen>
+    <dimen name="activity_vertical_margin">@dimen/_16sdp</dimen>
+    <dimen name="nav_header_vertical_spacing">@dimen/_8sdp</dimen>
+    <dimen name="nav_header_height">@dimen/_176sdp</dimen>
+    <dimen name="_34dp">@dimen/_34sdp</dimen>
+
+    <dimen name="design_bottom_navigation_text_size" tools:override="true">11sp</dimen>
+    <dimen name="design_bottom_navigation_active_text_size" tools:override="true">12sp</dimen>
+
+</resources>

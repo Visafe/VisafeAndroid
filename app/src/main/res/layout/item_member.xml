@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_13sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_13sdp"
+        android:background="@drawable/bg_button_border_color_eeeeee_radius_12"
+        android:padding="@dimen/_10sdp">
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_2dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:maxLines="2"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Fina Group" />
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:textColor="@color/color_808080"
+            android:textSize="@dimen/text_size_14sp"
+            app:layout_constraintStart_toStartOf="@id/tvName"
+            app:layout_constraintTop_toBottomOf="@id/tvName"
+            tools:text="5 nhóm" />
+
+        <ImageView
+            android:id="@+id/ivMore"
+            android:layout_width="@dimen/_24dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:src="@drawable/ic_more_horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/tvContent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvName"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tvLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:background="@drawable/bg_radius_4dp"
+            android:backgroundTint="@color/color_F9F1E2"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:paddingStart="@dimen/_8dp"
+            android:paddingTop="@dimen/_4dp"
+            android:paddingEnd="@dimen/_8dp"
+            android:paddingBottom="@dimen/_4dp"
+            android:textColor="@color/color_FFB31F"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvName"
+            app:layout_constraintStart_toEndOf="@+id/tvName"
+            app:layout_constraintTop_toTopOf="@id/tvName"
+            android:text="Quản trị viên" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

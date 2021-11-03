@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="vn.ncsc.visafe.model.ApplicationMostData" />
+
+        <variable
+            name="data"
+            type="vn.ncsc.visafe.model.ApplicationMostData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivSocial"
+            android:layout_width="@dimen/_32dp"
+            android:layout_height="@dimen/_32dp"
+            android:layout_marginTop="@dimen/_18dp"
+            android:layout_marginBottom="@dimen/_18dp"
+            android:src="@drawable/ic_social"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12dp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:text="@{data.name}"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/text_size_14sp"
+            app:layout_constraintStart_toEndOf="@id/ivSocial"
+            app:layout_constraintTop_toTopOf="@id/ivSocial" />
+
+        <FrameLayout
+            android:id="@+id/frProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_4dp"
+            android:layout_marginTop="@dimen/_4dp"
+            app:layout_constraintStart_toStartOf="@id/tvName"
+            app:layout_constraintTop_toBottomOf="@id/tvName">
+
+            <View
+                android:id="@+id/viewProgress"
+                set_progress="@{data.progress}"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="@dimen/_4dp"
+                android:background="@color/color_DDDDDD" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_2dp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:text="@{data.time}"
+            android:textColor="@color/color_50_222222"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintBottom_toBottomOf="@id/frProgress"
+            app:layout_constraintStart_toEndOf="@id/frProgress"
+            app:layout_constraintTop_toTopOf="@id/frProgress" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_EDEDED"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
