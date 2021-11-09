@@ -376,11 +376,11 @@
     <string name="add_vpn_title">Thêm cấu hình VPN</string>
     <string name="add_vpn_content">Để giúp bạn bảo vệ thiết bị khỏi các nguy hại, Visafe cần bạn cho phép thêm cấu hình VPN.</string>
     <string name="protect_family_content">Tạo nhóm mới để bảo vệ gia đình &amp; người thân trên môi trường mạng</string>
-    <string name="home_pass_title">Thiết lập mật mã</string>
-    <string name="home_pass_content">Thiết lập mật mã cho Visafe để bảo mật thông tin trên ứng dụng</string>
-    <string name="create_pass">Tạo mật mã</string>
-    <string name="an_toan_tuyet_doi">An toàn tuyệt đối</string>
-    <string name="tien_ich_bao_mat">Tiện ích bảo mật khác</string>
+    <string name="home_pass_title">Thiết lập mã bảo vệ</string>
+    <string name="home_pass_content">Thiết lập mã bảo vệ cho Visafe để ngăn chặn việc tự ý tắt chế độ bảo vệ</string>
+    <string name="create_pass">Tạo mã bảo vệ</string>
+    <string name="an_toan_tuyet_doi"></string>
+    <string name="tien_ich_bao_mat">Tiện ích an toàn thông tin</string>
     <string name="add_vpn_dialog">Thêm cấu hình VPN để sử dụng tính năng này</string>
     <string name="cho_phep">Cho phép</string>
     <string name="turn_on_noti_title">Bật thông báo để nhận cảnh báo về các nguy hại</string>
