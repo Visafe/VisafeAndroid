@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_6sdp"
-        android:src="@drawable/ic_scan"
+        android:src="@drawable/ic_shielddone"
         app:backgroundTint="@color/colorPrimary"
         app:fabCustomSize="@dimen/_43sdp"
         app:layout_anchor="@id/bottom_view"
