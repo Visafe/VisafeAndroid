@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="vn.ncsc.visafe.model.GroupPeopleData" />
+
+        <variable
+            name="data"
+            type="vn.ncsc.visafe.model.GroupPeopleData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8dp"
+        android:paddingBottom="@dimen/_16dp"
+        android:background="@drawable/bg_stroke_1dp">
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16dp"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:gravity="center"
+            android:text="@{data.name}"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Iphone X - Nguyễn Văn A" />
+
+        <LinearLayout
+            android:id="@+id/llStati"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@id/tvName"
+            app:layout_constraintStart_toStartOf="@id/tvName"
+            app:layout_constraintTop_toBottomOf="@id/tvName">
+
+            <TextView
+                android:id="@+id/tvAmoutDanger"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_24dp"
+                android:layout_weight="1"
+                android:background="@color/color_E01D1D"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:gravity="center"
+                android:padding="@dimen/_2dp"
+                android:text="@{data.amoutDanger.toString()}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_10sp"
+                tools:text="05" />
+
+            <TextView
+                android:id="@+id/tvAmoutInfringe"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_24dp"
+                android:layout_weight="1"
+                android:background="@color/color_FA8316"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:gravity="center"
+                android:padding="@dimen/_2dp"
+                android:text="@{data.amoutInfringe.toString()}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_10sp"
+                tools:text="05" />
+
+            <TextView
+                android:id="@+id/tvAmoutAdvertisement"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_24dp"
+                android:layout_weight="1"
+                android:background="@color/color_089405"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:gravity="center"
+                android:padding="@dimen/_2dp"
+                android:text="@{data.amoutAdvertisement.toString()}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_10sp"
+                tools:text="05" />
+
+            <TextView
+                android:id="@+id/tvAmoutAccess"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/color_3E6FEF"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:gravity="center"
+                android:padding="@dimen/_2dp"
+                android:text="@{data.amoutAccess.toString()}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_10sp"
+                tools:text="05" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvNoti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20dp"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:text="@string/thong_bao_gan_day"
+            android:textColor="@color/color_111111"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintStart_toStartOf="@id/tvName"
+            app:layout_constraintTop_toBottomOf="@id/llStati" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvGroupPeopleNoti"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/tvName"
+            app:layout_constraintStart_toStartOf="@id/tvName"
+            app:layout_constraintTop_toBottomOf="@id/tvNoti" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

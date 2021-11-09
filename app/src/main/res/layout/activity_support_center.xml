@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F7F8FA"
+    android:orientation="vertical"
+    tools:context=".ui.support.SupportCenterActivity">
+
+    <vn.ncsc.visafe.ui.custom.VisafeToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:toolbar_background="@color/white"
+        app:toolbar_left_icon_src="@drawable/ic_arrow_left_black"
+        app:toolbar_title="@string/trung_tam_tro_giup"
+        app:toolbar_visible_title="true" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/_6sdp"
+        android:paddingBottom="@dimen/_16sdp">
+
+        <LinearLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/dieu_khoan_chinh_sach" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clFAQ"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivFaq"
+                    android:layout_width="@dimen/_20dp"
+                    android:layout_height="@dimen/_20dp"
+                    android:layout_margin="@dimen/_16dp"
+                    android:src="@drawable/ic_question"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    style="@style/Content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8dp"
+                    android:text="@string/cau_hoi_thuong_gap"
+                    android:textColor="@color/color_222222"
+                    app:layout_constraintBottom_toBottomOf="@id/ivFaq"
+                    app:layout_constraintStart_toEndOf="@id/ivFaq"
+                    app:layout_constraintTop_toTopOf="@id/ivFaq" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_24dp"
+                    android:src="@drawable/ic_stroke"
+                    app:layout_constraintBottom_toBottomOf="@id/ivFaq"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/ivFaq"
+                    tools:ignore="ContentDescription" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:background="@color/color_EEEEEE"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivFaq" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clRules"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivRule"
+                    android:layout_width="@dimen/_20dp"
+                    android:layout_height="@dimen/_20dp"
+                    android:layout_margin="@dimen/_16dp"
+                    android:src="@drawable/ic_document"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    style="@style/Content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8dp"
+                    android:text="@string/dieu_khoan_dieu_kien"
+                    android:textColor="@color/color_222222"
+                    app:layout_constraintBottom_toBottomOf="@id/ivRule"
+                    app:layout_constraintStart_toEndOf="@id/ivRule"
+                    app:layout_constraintTop_toTopOf="@id/ivRule" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_24dp"
+                    android:src="@drawable/ic_stroke"
+                    app:layout_constraintBottom_toBottomOf="@id/ivRule"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/ivRule"
+                    tools:ignore="ContentDescription" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:background="@color/color_EEEEEE"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivRule" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clProtect"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivProtect"
+                    android:layout_width="@dimen/_20dp"
+                    android:layout_height="@dimen/_20dp"
+                    android:layout_margin="@dimen/_16dp"
+                    android:src="@drawable/ic_shield_blue"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription"
+                    app:tint="@color/color_666666" />
+
+                <TextView
+                    style="@style/Content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8dp"
+                    android:text="@string/chinh_sach_bao_mat"
+                    android:textColor="@color/color_222222"
+                    app:layout_constraintBottom_toBottomOf="@id/ivProtect"
+                    app:layout_constraintStart_toEndOf="@id/ivProtect"
+                    app:layout_constraintTop_toTopOf="@id/ivProtect" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_24dp"
+                    android:src="@drawable/ic_stroke"
+                    app:layout_constraintBottom_toBottomOf="@id/ivProtect"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/ivProtect"
+                    tools:ignore="ContentDescription" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:background="@color/color_EEEEEE"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivProtect" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:background="@color/color_F7F8FA"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_6sdp"/>
+
+            <TextView
+                style="@style/Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/support_now" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clHotlineSupport"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivHotline"
+                    android:layout_width="@dimen/_20dp"
+                    android:layout_height="@dimen/_20dp"
+                    android:layout_margin="@dimen/_16dp"
+                    android:src="@drawable/ic_calling"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    style="@style/Content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8dp"
+                    android:text="@string/tong_dai_cskh"
+                    android:textColor="@color/color_222222"
+                    app:layout_constraintBottom_toBottomOf="@id/ivHotline"
+                    app:layout_constraintStart_toEndOf="@id/ivHotline"
+                    app:layout_constraintTop_toTopOf="@id/ivHotline" />
+
+                <TextView
+                    android:textColor="@color/color_15A1FA"
+                    style="@style/Content"
+                    android:text="@string/hotline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_24dp"
+                    app:layout_constraintBottom_toBottomOf="@id/ivHotline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/ivHotline"
+                    tools:ignore="ContentDescription" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:background="@color/color_EEEEEE"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivHotline" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clEmail"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivEmail"
+                    android:layout_width="@dimen/_20dp"
+                    android:layout_height="@dimen/_20dp"
+                    android:layout_margin="@dimen/_16dp"
+                    android:src="@drawable/ic_mail"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    style="@style/Content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8dp"
+                    android:text="@string/email"
+                    android:textColor="@color/color_222222"
+                    app:layout_constraintBottom_toBottomOf="@id/ivEmail"
+                    app:layout_constraintStart_toEndOf="@id/ivEmail"
+                    app:layout_constraintTop_toTopOf="@id/ivEmail" />
+
+                <TextView
+                    android:textColor="@color/color_15A1FA"
+                    style="@style/Content"
+                    android:text="@string/email_support"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_24dp"
+                    app:layout_constraintBottom_toBottomOf="@id/ivEmail"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/ivEmail"
+                    tools:ignore="ContentDescription" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:background="@color/color_EEEEEE"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivEmail" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clMessenger"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivMess"
+                    android:layout_width="@dimen/_20dp"
+                    android:layout_height="@dimen/_20dp"
+                    android:layout_margin="@dimen/_16dp"
+                    android:src="@drawable/ic_messenger"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    style="@style/Content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8dp"
+                    android:text="@string/messenger"
+                    android:textColor="@color/color_222222"
+                    app:layout_constraintBottom_toBottomOf="@id/ivMess"
+                    app:layout_constraintStart_toEndOf="@id/ivMess"
+                    app:layout_constraintTop_toTopOf="@id/ivMess" />
+
+                <TextView
+                    android:textColor="@color/color_15A1FA"
+                    style="@style/Content"
+                    android:text="@string/fb_com_govsoc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_24dp"
+                    app:layout_constraintBottom_toBottomOf="@id/ivMess"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/ivMess"
+                    tools:ignore="ContentDescription" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:background="@color/color_EEEEEE"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivMess" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clFacebook"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivFacebook"
+                    android:layout_width="@dimen/_20dp"
+                    android:layout_height="@dimen/_20dp"
+                    android:layout_margin="@dimen/_16dp"
+                    android:src="@drawable/ic_facebook"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    style="@style/Content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8dp"
+                    android:text="@string/facebook"
+                    android:textColor="@color/color_222222"
+                    app:layout_constraintBottom_toBottomOf="@id/ivFacebook"
+                    app:layout_constraintStart_toEndOf="@id/ivFacebook"
+                    app:layout_constraintTop_toTopOf="@id/ivFacebook" />
+
+                <TextView
+                    android:textColor="@color/color_15A1FA"
+                    style="@style/Content"
+                    android:text="@string/fb_com_govsoc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_24dp"
+                    app:layout_constraintBottom_toBottomOf="@id/ivFacebook"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/ivFacebook"
+                    tools:ignore="ContentDescription" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:background="@color/color_EEEEEE"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivFacebook" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cbLink"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24dp"
+            android:background="@null"
+            android:button="@drawable/checkbox_selector"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:paddingHorizontal="@dimen/_12dp"
+            android:textSize="@dimen/text_size_14sp"
+            app:layout_constraintBottom_toBottomOf="@id/ivMore"
+            app:layout_constraintEnd_toStartOf="@id/ivMore"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivMore"
+            tools:text="www.facebook.com" />
+
+        <ImageView
+            android:id="@+id/ivMore"
+            android:layout_width="@dimen/_24dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16dp"
+            android:layout_marginEnd="@dimen/_16dp"
+            android:rotation="90"
+            android:src="@drawable/ic_more_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <View
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:background="@color/color_EEEEEE"
+            app:layout_constraintEnd_toEndOf="@id/ivMore"
+            app:layout_constraintStart_toStartOf="@id/cbLink"
+            app:layout_constraintTop_toBottomOf="@id/cbLink" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

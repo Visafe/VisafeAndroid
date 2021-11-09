@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.home.ConfigurationFragment">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:text="@string/thiet_lap_bao_mat"
+            android:textColor="@color/color_111111"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            tools:listitem="@layout/item_config"
+            tools:itemCount="3"
+            android:id="@+id/rvConfig"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</layout>

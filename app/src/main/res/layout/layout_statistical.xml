@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctrlStatistical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_12sdp">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.2" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline05"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline08"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.8" />
+
+        <TextView
+            android:id="@+id/tvOverview"
+            style="@style/Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:text="Tổng quan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:alpha="0.7"
+            android:drawablePadding="@dimen/_4sdp"
+            android:text="Trong ngày"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/_10sdp"
+            app:drawableEndCompat="@drawable/ic_arrow_dropdown_grey"
+            app:layout_constraintBottom_toBottomOf="@+id/tvOverview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvOverview" />
+
+        <ImageView
+            android:id="@+id/ivAlert"
+            android:layout_width="@dimen/_38sdp"
+            android:layout_height="@dimen/_38sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:background="@drawable/bg_circle_ffeee7"
+            android:padding="@dimen/_10sdp"
+            android:src="@drawable/ic_alert_triangle"
+            app:layout_constraintEnd_toEndOf="@+id/guideline02"
+            app:layout_constraintStart_toStartOf="@+id/guideline02"
+            app:layout_constraintTop_toBottomOf="@+id/tvOverview" />
+
+        <TextView
+            android:id="@+id/tvValueDangerous"
+            style="@style/TitleToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:singleLine="true"
+            android:text="0"
+            app:layout_constraintEnd_toEndOf="@+id/guideline02"
+            app:layout_constraintStart_toStartOf="@+id/guideline02"
+            app:layout_constraintTop_toBottomOf="@+id/ivAlert" />
+
+        <TextView
+            android:id="@+id/tvDangerous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nguy_hai"
+            app:layout_constraintEnd_toEndOf="@+id/guideline02"
+            app:layout_constraintStart_toStartOf="@+id/guideline02"
+            app:layout_constraintTop_toBottomOf="@+id/tvValueDangerous" />
+
+        <ImageView
+            android:id="@+id/ivShield"
+            android:layout_width="@dimen/_38sdp"
+            android:layout_height="@dimen/_38sdp"
+            android:background="@drawable/bg_circle_fff9ed"
+            android:padding="@dimen/_10sdp"
+            android:src="@drawable/ic_shield_off_stats"
+            app:layout_constraintEnd_toEndOf="@+id/guideline05"
+            app:layout_constraintStart_toStartOf="@+id/guideline05"
+            app:layout_constraintTop_toTopOf="@+id/ivAlert" />
+
+        <TextView
+            android:id="@+id/tvValueViolate"
+            style="@style/TitleToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:singleLine="true"
+            android:text="0"
+            app:layout_constraintEnd_toEndOf="@+id/guideline05"
+            app:layout_constraintStart_toStartOf="@+id/guideline05"
+            app:layout_constraintTop_toBottomOf="@+id/ivShield" />
+
+        <TextView
+            android:id="@+id/tvViolate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vi_pham"
+            app:layout_constraintEnd_toEndOf="@+id/guideline05"
+            app:layout_constraintStart_toStartOf="@+id/guideline05"
+            app:layout_constraintTop_toBottomOf="@+id/tvValueViolate" />
+
+        <ImageView
+            android:id="@+id/ivAds"
+            android:layout_width="@dimen/_38sdp"
+            android:layout_height="@dimen/_38sdp"
+            android:background="@drawable/bg_circle_ecf7ff"
+            android:padding="@dimen/_10sdp"
+            android:src="@drawable/ic_ads"
+            app:layout_constraintEnd_toEndOf="@+id/guideline08"
+            app:layout_constraintStart_toStartOf="@+id/guideline08"
+            app:layout_constraintTop_toTopOf="@+id/ivAlert" />
+
+        <TextView
+            android:id="@+id/tvValueAds"
+            style="@style/TitleToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:singleLine="true"
+            android:text="0"
+            app:layout_constraintEnd_toEndOf="@+id/guideline08"
+            app:layout_constraintStart_toStartOf="@+id/guideline08"
+            app:layout_constraintTop_toBottomOf="@+id/ivAds" />
+
+        <TextView
+            android:id="@+id/tvAds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/quang_cao"
+            app:layout_constraintEnd_toEndOf="@+id/guideline08"
+            app:layout_constraintStart_toStartOf="@+id/guideline08"
+            app:layout_constraintTop_toBottomOf="@+id/tvValueAds" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

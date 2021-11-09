@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivSetup"
+            android:layout_width="@dimen/_36dp"
+            android:layout_height="@dimen/_36dp"
+            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:src="@drawable/ic_chan_noi_dung"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12dp"
+            android:layout_marginEnd="@dimen/_8dp"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/text_size_14sp"
+            app:layout_constraintEnd_toStartOf="@id/switchWidget"
+            app:layout_constraintStart_toEndOf="@id/ivSetup"
+            app:layout_constraintTop_toTopOf="@id/ivSetup"
+            tools:text="@string/chan_quang_cao" />
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4dp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:textColor="@color/color_70_222222"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintEnd_toEndOf="@id/tvTitle"
+            app:layout_constraintStart_toStartOf="@id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            tools:text="@string/chan_quang_cao_content" />
+
+        <TextView
+            android:id="@+id/tvAdvance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8dp"
+            android:drawablePadding="@dimen/_10dp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:text="@string/setup_advance"
+            android:textColor="@color/color_15A1FA"
+            android:textSize="@dimen/text_size_13sp"
+            app:drawableEndCompat="@drawable/ic_stroke"
+            app:drawableTint="@color/color_15A1FA"
+            app:layout_constraintStart_toStartOf="@id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvContent" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchWidget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:background="@null"
+            android:thumb="@drawable/thumb_selector"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivSetup"
+            app:track="@drawable/track_selector" />
+
+        <View
+            android:id="@+id/viewDivider"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:background="@color/color_EEEEEE"
+            app:layout_constraintEnd_toEndOf="@id/switchWidget"
+            app:layout_constraintStart_toStartOf="@id/ivSetup"
+            app:layout_constraintTop_toBottomOf="@id/tvAdvance" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

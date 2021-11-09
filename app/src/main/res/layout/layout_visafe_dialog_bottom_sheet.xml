@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="6dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/_8sdp"
+            android:background="@drawable/bg_radius_10dp"
+            android:backgroundTint="@color/color_50_FFFFFF" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_bottom_sheet_dialog"
+            android:padding="@dimen/_24dp">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/block_websites_group"
+                android:textColor="@color/color_222222"
+                android:textSize="@dimen/text_size_14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:text="@string/websites"
+                android:textColor="@color/color_111111"
+                android:textSize="@dimen/text_size_18sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                tools:text="Tên phòng" />
+
+            <LinearLayout
+                android:id="@+id/llEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvName">
+
+                <TextView
+                    android:id="@+id/tvEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_32dp"
+                    android:drawablePadding="@dimen/_12dp"
+                    android:ellipsize="end"
+                    android:gravity="center|start"
+                    android:maxLines="1"
+                    android:text="@string/edit_websites"
+                    android:textColor="@color/color_111111"
+                    android:textSize="@dimen/text_size_14sp"
+                    app:drawableStartCompat="@drawable/ic_edit"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+                <View
+                    android:id="@+id/viewOne"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/_18dp"
+                    android:background="#EDEDED"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvEdit" />
+
+                <TextView
+                    android:id="@+id/tvDelete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_18dp"
+                    android:drawablePadding="12dp"
+                    android:ellipsize="end"
+                    android:gravity="center|start"
+                    android:maxLines="1"
+                    android:text="@string/delete_websites"
+                    android:textColor="@color/color_111111"
+                    android:textSize="@dimen/text_size_14sp"
+                    app:drawableStartCompat="@drawable/ic_delete"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/viewOne" />
+
+                <View
+                    android:id="@+id/viewTwo"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/_18dp"
+                    android:background="#EDEDED"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDelete" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edtInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_32dp"
+                android:background="@drawable/bg_edittext"
+                android:ellipsize="end"
+                android:hint="@string/input_website"
+                android:inputType="text"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/llEdit" />
+
+            <TextView
+                android:id="@+id/tvWarning"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:textColor="@color/color_FF4451"
+                android:textSize="@dimen/_10sdp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/edtInput"
+                app:layout_constraintStart_toStartOf="@+id/edtInput"
+                app:layout_constraintTop_toBottomOf="@+id/edtInput"
+                tools:text="Tên nhóm phải lớn hơn 3 ký tự và ngắn hơn 100 ký tự"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvWarning">
+
+                <TextView
+                    android:id="@+id/tvConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_radius_24dp"
+                    android:backgroundTint="@color/color_FFB31F"
+                    android:gravity="center"
+                    android:padding="@dimen/_14dp"
+                    android:text="@string/confirm"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/bg_radius_24dp"
+                    android:backgroundTint="@color/color_FFB31F"
+                    android:gravity="center"
+                    android:padding="@dimen/_14dp"
+                    android:text="@string/save"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edtInput" />
+
+
+                <TextView
+                    android:id="@+id/tvCancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/bg_radius_24dp"
+                    android:backgroundTint="#1A111111"
+                    android:fontFamily="@font/sf_pro_text_regular_bold"
+                    android:gravity="center"
+                    android:padding="@dimen/_14dp"
+                    android:text="@string/cancel"
+                    android:textColor="@color/color_111111"
+                    android:textSize="@dimen/text_size_16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvConfirm" />
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="OtpEditText">
+        <attr name="oev_length" format="integer|reference" />
+        <attr name="oev_primary_color" format="color|reference" />
+        <attr name="oev_secondary_color" format="color|reference" />
+        <attr name="oev_text_color" format="color|reference" />
+        <attr name="oev_box_style" format="string|reference" />
+        <attr name="oev_mask_input" format="boolean" />
+        <attr name="oev_mask_character" format="string|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ItemLayoutSimple">
+        <attr name="title" format="string" />
+        <attr name="sub_title" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="ProgressView">
+        <attr name="color" format="color" />
+        <attr name="percent" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="VisafeToolbar">
+        <attr name="toolbar_title" format="string" />
+        <attr name="toolbar_visible_title" format="boolean" />
+        <attr name="toolbar_right_icon_src" format="reference" />
+        <attr name="toolbar_left_icon_src" format="reference" />
+        <attr name="toolbar_background" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="CircularSeekBar">
+        <attr name="c_progress" format="float" />
+        <attr name="max" format="integer" />
+        <attr name="move_outside_circle" format="boolean" />
+        <attr name="maintain_equal_circle" format="boolean" />
+        <attr name="use_custom_radii" format="boolean" />
+        <attr name="lock_enabled" format="boolean" />
+        <attr name="circle_x_radius" format="dimension" />
+        <attr name="circle_y_radius" format="dimension" />
+        <attr name="circle_stroke_width" format="dimension" />
+        <attr name="pointer_radius" format="dimension" />
+        <attr name="circle_color" format="color" />
+        <attr name="circle_progress_color" format="color" />
+        <attr name="pointer_color" format="color" />
+        <attr name="start_angle" format="float" />
+        <attr name="end_angle" format="float" />
+        <attr name="circle_fill" format="color" />
+        <attr name="c_clockwise" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SquareProgressBar">
+        <attr name="spb_progressColor" format="color" />
+        <attr name="spb_backgroundColor" format="color" />
+        <attr name="spb_progressWidth" format="dimension" />
+        <attr name="spb_cornerRadius" format="dimension" />
+        <attr name="spb_showBackground" format="boolean" />
+    </declare-styleable>
+</resources>

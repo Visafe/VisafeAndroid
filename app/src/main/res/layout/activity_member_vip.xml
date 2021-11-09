@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true">
+
+        <RelativeLayout
+            android:id="@+id/layoutToolbar"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="@dimen/_28dp"
+                android:layout_height="@dimen/_28dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:adjustViewBounds="true"
+                android:padding="@dimen/_4sdp"
+                android:src="@drawable/ic_baseline_clear_24"
+                app:tint="@color/color_111111" />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/vDivider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_EEEEEE"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutToolbar" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_32dp"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:gravity="center"
+            android:paddingStart="@dimen/_14sdp"
+            android:paddingEnd="@dimen/_14sdp"
+            android:text="@string/title_member_vip"
+            android:textColor="@color/color_111111"
+            android:textSize="@dimen/text_size_20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vDivider" />
+
+        <EditText
+            android:id="@+id/edtInputKey"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_32dp"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:background="@drawable/bg_edittext"
+            android:ellipsize="end"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:hint="@string/nhap_ma_xac_nhan"
+            android:inputType="text"
+            android:maxLength="100"
+            android:paddingVertical="@dimen/_12dp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_30sdp"
+            android:singleLine="true"
+            android:textColor="@color/color_111111"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            tools:text="ljadjjasdlj 123aldjlasjdlaj alsdjlasj jhaksdh 12312 123asddljasdl alksdjlasjdlasjd " />
+
+        <ImageView
+            android:id="@+id/btnClearTextInputEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_9sdp"
+            android:src="@drawable/ic_close_circle"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/edtInputKey"
+            app:layout_constraintEnd_toEndOf="@+id/edtInputKey"
+            app:layout_constraintTop_toTopOf="@+id/edtInputKey"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tvWarning"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:textColor="@color/color_FF4451"
+            android:textSize="@dimen/_10sdp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/edtInputKey"
+            app:layout_constraintStart_toStartOf="@+id/edtInputKey"
+            app:layout_constraintTop_toBottomOf="@+id/edtInputKey"
+            tools:text="Tên nhóm phải lớn hơn 3 ký tự và ngắn hơn 100 ký tự"
+            tools:visibility="visible" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/tvConfirm"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_44sdp"
+            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_32dp"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:background="@drawable/bg_radius_34dp"
+            android:backgroundTint="@color/color_FFB31F"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="@string/confirm"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtInputKey" />
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:fontFamily="@font/sf_pro_text_regular"
+            android:gravity="center"
+            android:paddingStart="@dimen/_12sdp"
+            android:paddingEnd="@dimen/_12sdp"
+            android:text="@string/content_member_vip"
+            android:textSize="@dimen/text_size_12sp"
+            android:visibility="visible"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvConfirm" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

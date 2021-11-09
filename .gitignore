@@ -48,3 +48,9 @@ Thumbs.db
 *.mov
 *.wmv
 
+/.gradle/
+# Local configuration file (sdk path, etc)
+/local.properties
+/tun2socks/build/.transforms/
+/build/
+/app/release/

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true">
+
+        <vn.ncsc.visafe.ui.custom.VisafeToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:toolbar_left_icon_src="@drawable/ic_arrow_left_black"
+            app:toolbar_title="@string/thiet_lap_chan_noi_dung"
+            app:toolbar_visible_title="true" />
+
+        <View
+            android:layout_below="@id/toolbar"
+            android:id="@+id/vDivider"
+            android:background="@color/color_EEEEEE"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btnSave"
+            android:background="@color/white"
+            android:layout_below="@id/vDivider"
+            android:clipToPadding="false"
+            android:paddingBottom="40dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_32dp"
+                    android:gravity="center"
+                    android:text="@string/access_manager"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <vn.ncsc.visafe.ui.custom.SwitchSimpleView
+                    android:id="@+id/itemLimit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                    app:sub_title="@string/limit_search_content_sub"
+                    app:title="@string/limit_search_content" />
+
+                <vn.ncsc.visafe.ui.custom.SwitchSimpleView
+                    android:id="@+id/itemSensitive"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/itemLimit"
+                    app:sub_title="@string/sub_block_sensitive"
+                    app:title="@string/block_sensitive" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="@dimen/_0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8dp"
+                    android:background="@color/color_EEEEEE"
+                    app:layout_constraintEnd_toEndOf="@id/itemSensitive"
+                    app:layout_constraintStart_toStartOf="@id/itemSensitive"
+                    app:layout_constraintTop_toBottomOf="@id/itemSensitive" />
+
+                <vn.ncsc.visafe.ui.custom.SwitchSimpleView
+                    android:id="@+id/itemByPass"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginTop="@dimen/_16dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view"
+                    app:sub_title="Ngăn chặn các tin tức giả, không chính thống"
+                    app:title="Chặn tin tức giả" />
+
+                <FrameLayout
+                    android:id="@+id/btnReset"
+                    android:layout_width="@dimen/_0dp"
+                    android:layout_height="@dimen/_48dp"
+                    android:layout_marginTop="@dimen/_12dp"
+                    android:background="@drawable/bg_radius_8dp"
+                    android:backgroundTint="@color/color_ECF7FE"
+                    app:layout_constraintEnd_toEndOf="@id/itemByPass"
+                    app:layout_constraintStart_toStartOf="@id/itemByPass"
+                    app:layout_constraintTop_toBottomOf="@id/itemByPass">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawablePadding="@dimen/_8dp"
+                        android:fontFamily="@font/sf_pro_text_regular_bold"
+                        android:text="@string/reset"
+                        android:textColor="@color/color_15A1FA"
+                        android:textSize="@dimen/text_size_14sp"
+                        app:drawableStartCompat="@drawable/ic_refesh" />
+                </FrameLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <TextView
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_44sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:layout_marginEnd="@dimen/_24dp"
+            android:layout_marginBottom="@dimen/_16dp"
+            android:background="@drawable/bg_radius_34dp"
+            android:backgroundTint="@color/color_FFB31F"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16sp" />
+    </RelativeLayout>
+
+</layout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="urls">
+        <item>@string/url0</item>
+    </string-array>
+    <string-array name="names">
+        <item>@string/name0</item>
+    </string-array>
+    <string-array name="ips">
+        <item>@string/ips0</item>
+    </string-array>
+    <string-array name="descriptions">
+        <item>@string/description0</item>
+    </string-array>
+    <string-array name="server_websites">
+        <item>@string/website0</item>
+    </string-array>
+</resources>

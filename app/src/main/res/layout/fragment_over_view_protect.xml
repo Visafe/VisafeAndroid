@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_F7F8FA"
+        android:clickable="true"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:focusable="true"
+        android:paddingBottom="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_F7F8FA"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/bgTop"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_170sdp"
+                android:background="@drawable/bg_top_over_view_protect"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_45sdp"
+                    android:fontFamily="@font/sf_pro_text_regular_bold"
+                    android:text="Thiết bị của bạn có an toàn?"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_18sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvTimeScan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:alpha="0.7"
+                    android:fontFamily="@font/sf_pro_text_regular_bold"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10sdp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                    tools:text="Bạn chưa quét lần nào" />
+
+                <TextView
+                    android:id="@+id/tvScan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:background="@drawable/bg_white_radius_32"
+                    android:fontFamily="@font/sf_pro_text_regular_bold"
+                    android:gravity="center"
+                    android:padding="@dimen/_10sdp"
+                    android:text="KIỂM TRA NGAY"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTimeScan" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include
+                android:id="@+id/layoutHomeProtect"
+                layout="@layout/layout_home_protect" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewStatistical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                app:cardCornerRadius="@dimen/_16dp"
+                app:cardElevation="@dimen/_8dp">
+
+                <include
+                    android:id="@+id/viewStatistical"
+                    layout="@layout/layout_statistical" />
+            </androidx.cardview.widget.CardView>
+
+            <include
+                android:id="@+id/layoutAddVpn"
+                layout="@layout/layout_home_add_vpn" />
+
+            <include
+                android:id="@+id/layoutHomeWebsite"
+                layout="@layout/layout_home_website" />
+
+            <include
+                android:id="@+id/layoutHomeProtectFamily"
+                layout="@layout/layout_home_protect_family" />
+
+            <include
+                android:id="@+id/layoutHomePass"
+                layout="@layout/layout_home_pass" />
+
+            <include
+                android:id="@+id/layoutUpgrade"
+                layout="@layout/layout_upgrade" />
+
+            <include
+                android:id="@+id/layoutUtilities"
+                layout="@layout/layout_home_utilities" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>

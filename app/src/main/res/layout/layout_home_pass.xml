@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/cvHomePass"
+    android:layout_marginStart="@dimen/_16sdp"
+    android:layout_marginTop="@dimen/_8sdp"
+    android:layout_marginEnd="@dimen/_16sdp"
+    android:layout_marginBottom="@dimen/_8sdp"
+    app:cardCornerRadius="@dimen/_16dp"
+    app:cardElevation="@dimen/_8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/_16sdp">
+
+        <ImageView
+            android:id="@+id/ivHomePass"
+            android:layout_width="@dimen/_64sdp"
+            android:layout_height="@dimen/_64sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:padding="@dimen/_8sdp"
+            android:src="@drawable/ic_home_pass"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tvHomePassTitle"
+            style="@style/Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/ivHomePass"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_toEndOf="@id/ivHomePass"
+            android:text="@string/home_pass_title" />
+
+        <TextView
+            android:id="@+id/tvHomePassContent"
+            style="@style/Content_Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvHomePassTitle"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_toEndOf="@id/ivHomePass"
+            android:text="@string/home_pass_content" />
+
+        <View
+            android:id="@+id/view"
+            style="@style/Divider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/ivHomePass"
+            android:layout_marginTop="@dimen/_12sdp" />
+
+        <TextView
+            android:id="@+id/btnHomePassCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view"
+            android:gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:fontFamily="@font/sf_pro_text_regular_bold"
+            android:text="@string/create_pass"
+            android:textAllCaps="true"
+            android:textColor="@color/color_FFB31F"
+            android:textSize="@dimen/text_size_14sp" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

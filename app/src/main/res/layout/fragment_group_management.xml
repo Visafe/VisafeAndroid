@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/ctrlDeviceInGroup"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <RelativeLayout
+                    android:id="@+id/bgTop"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_160sdp"
+                    android:background="@drawable/bg_top_protect_family_group"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/viewRainbow"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_36sdp"
+                    android:background="@drawable/bg_intersect"
+                    app:layout_constraintBottom_toBottomOf="@+id/bgTop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/llViewStatistical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/viewRainbow">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardViewStatistical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_13sdp"
+                        android:layout_marginEnd="@dimen/_13sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
+                        android:visibility="visible"
+                        app:cardCornerRadius="@dimen/_16dp"
+                        app:cardElevation="@dimen/_8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/viewRainbow">
+
+                        <include
+                            android:id="@+id/viewStatistical"
+                            layout="@layout/layout_statistical" />
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_36sdp"
+                        android:background="@drawable/bg_intersect"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/bgTop"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </LinearLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/llViewStatistical">
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5" />
+
+                    <TextView
+                        android:id="@+id/tvGroupName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_13sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_13sdp"
+                        android:fontFamily="@font/sf_pro_text_regular_bold"
+                        android:gravity="center"
+                        android:textColor="@color/color_222222"
+                        android:textSize="@dimen/_18sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Gia đình &amp; nhóm" />
+
+                    <TextView
+                        android:id="@+id/tvGroupDescription"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_24sdp"
+                        android:layout_marginEnd="@dimen/_24sdp"
+                        android:alpha="0.7"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:gravity="center"
+                        android:textColor="@color/color_222222"
+                        android:textSize="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvGroupName"
+                        tools:text="Bảo vệ gia đình &amp; người thân trên môi trường mạng" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/btnChangeWorkSpace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@drawable/bg_border_blue_radius_8"
+                        android:padding="@dimen/_4sdp"
+                        app:layout_constraintEnd_toEndOf="@+id/guideline"
+                        app:layout_constraintStart_toStartOf="@+id/guideline"
+                        app:layout_constraintTop_toBottomOf="@+id/tvGroupDescription">
+
+                        <TextView
+                            android:id="@+id/tvChangeWorkSpace"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:alpha="0.7"
+                            android:fontFamily="@font/sf_pro_text_regular"
+                            android:text="Chuyển workspace"
+                            android:textColor="@color/color_15A1FA"
+                            android:textSize="@dimen/_10sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="@dimen/_17sdp"
+                            android:layout_height="@dimen/_17sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:src="@drawable/ic_shield_blue"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvChangeWorkSpace"
+                            app:layout_constraintEnd_toStartOf="@+id/tvChangeWorkSpace"
+                            app:layout_constraintTop_toTopOf="@+id/tvChangeWorkSpace" />
+
+                        <ImageView
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_12sdp"
+                            android:layout_marginStart="@dimen/_4sdp"
+                            android:src="@drawable/ic_stroke"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvChangeWorkSpace"
+                            app:layout_constraintStart_toEndOf="@+id/tvChangeWorkSpace"
+                            app:layout_constraintTop_toTopOf="@+id/tvChangeWorkSpace"
+                            app:tint="@color/color_15A1FA" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/btnCreateNewGroup"
+                        android:layout_width="@dimen/_120sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginTop="@dimen/_13sdp"
+                        android:layout_marginEnd="@dimen/_6sdp"
+                        android:background="@drawable/bg_button_border_color_primary_radius_32"
+                        android:gravity="center"
+                        android:text="Tạo nhóm mới"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/_12sdp"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline"
+                        app:layout_constraintTop_toBottomOf="@+id/btnChangeWorkSpace" />
+
+                    <TextView
+                        android:id="@+id/btnJoinGroup"
+                        android:layout_width="@dimen/_120sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:layout_marginTop="@dimen/_13sdp"
+                        android:background="@drawable/bg_button_border_color_primary_radius_32"
+                        android:gravity="center"
+                        android:text="Tham gia nhóm"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/_12sdp"
+                        app:layout_constraintStart_toEndOf="@+id/guideline"
+                        app:layout_constraintTop_toBottomOf="@+id/btnChangeWorkSpace" />
+
+                    <TextView
+                        android:id="@+id/tvGroupIsOwner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_13sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:fontFamily="@font/sf_pro_text_regular_bold"
+                        android:text="@string/group_is_owner"
+                        android:textColor="@color/color_222222"
+                        android:textSize="@dimen/text_size_16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btnCreateNewGroup" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcvGroupIsOwner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        app:layout_constraintTop_toBottomOf="@id/tvGroupIsOwner"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/item_group" />
+
+                    <TextView
+                        android:id="@+id/tvGroupIsMember"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_13sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:fontFamily="@font/sf_pro_text_regular_bold"
+                        android:text="@string/group_is_member"
+                        android:textColor="@color/color_222222"
+                        android:textSize="@dimen/text_size_16sp"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btnCreateNewGroup" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcvGroupIsMember"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@id/tvGroupIsMember"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/item_group" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ctrlDeviceInGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <View
+                android:layout_marginTop="@dimen/_1sdp"
+                android:id="@+id/viewLine"
+                android:layout_width="@dimen/_0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/_13sdp"
+                android:layout_marginEnd="@dimen/_13sdp"
+                android:background="@color/color_EEEEEE"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvDeviceInGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_13sdp"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:fontFamily="@font/sf_pro_text_regular_bold"
+                android:text="@string/your_device_join_group"
+                android:textColor="@color/color_222222"
+                android:textSize="@dimen/text_size_16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewLine" />
+
+            <include
+                android:id="@+id/layoutItemGroup"
+                layout="@layout/item_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tvDeviceInGroup" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+
+</layout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/navigation_protect"
+        android:icon="@drawable/ic_shield_done"
+        android:title="@string/protect" />
+
+    <item
+        android:id="@+id/navigation_group"
+        android:icon="@drawable/ic_group"
+        android:title="@string/workspaces" />
+
+    <item
+        android:id="@+id/navigation_scan"
+        android:title=""
+        app:itemIconSize="50px" />
+
+    <item
+        android:id="@+id/navigation_notification"
+        android:icon="@drawable/ic_notification"
+        android:title="@string/thong_bao" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/tai_khoan" />
+</menu>
