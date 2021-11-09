@@ -33,9 +33,9 @@
 
     <string name="explanation_starting">Vui lòng chờ. VISAFE đang thiết lập kết nối đến máy chủ.</string>
 
-    <string name="status_waiting">Chờ kết nối</string>
+    <string name="status_waiting">Đang kết nối</string>
 
-    <string name="status_failing">Lỗi kết nối</string>
+    <string name="status_failing">Hệ thống DNS đang bảo trì</string>
 
     <string name="explanation_offline">Thiết bị hiện không có kết nối mạng. VISAFE đang chờ kết nối mạng.</string>
 
@@ -76,7 +76,7 @@
     or undermine this protection.
   </string>
 
-    <string name="status_strict">Được Android bảo vệ</string>
+    <string name="status_strict">Bạn đã được bảo vệ</string>
 
     <string name="explanation_strict">VISAFE đã phát hiện thấy tùy chọn cài đặt DNS riêng tư của Android đang bật. Điều này có nghĩa là truy vấn
     DNS của bạn đã được bảo vệ nên không nhất thiết phải bật VISAFE.</string>
