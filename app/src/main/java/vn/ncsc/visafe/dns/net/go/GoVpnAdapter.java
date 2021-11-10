@@ -116,7 +116,7 @@ public class GoVpnAdapter {
         String dohURL = PersistentState.Companion.getInstance().getServerUrl(vpnService);
 
         try {
-            Log.d("connectTunnel: ", "Starting go-tun2socks");
+            Log.d("connectTunnel: ", "Starting Visafe");
             Transport transport = makeDohTransport(dohURL);
             // connectIntraTunnel makes a copy of the file descriptor.
             tunnel = Tun2socks.connectIntraTunnel(tunFd.getFd(), fakeDns,
@@ -131,7 +131,7 @@ public class GoVpnAdapter {
     private static ParcelFileDescriptor establishVpn(ViSafeVpnService vpnService) {
         try {
             VpnService.Builder builder = vpnService.newBuilder()
-                    .setSession("Visafe go-tun2socks VPN")
+                    .setSession("Visafe Private DNS")
                     .setMtu(VPN_INTERFACE_MTU)
                     .addAddress(LanIp.GATEWAY.make(IPV4_TEMPLATE), IPV4_PREFIX_LENGTH)
                     .addRoute("0.0.0.0", 0)
