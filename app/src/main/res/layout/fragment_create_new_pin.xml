@@ -15,7 +15,7 @@
             android:layout_height="?actionBarSize"
             app:toolbar_background="@color/white"
             app:toolbar_left_icon_src="@drawable/ic_baseline_clear_24"
-            app:toolbar_title="Cập nhật mã Pin"
+            app:toolbar_title="Cập nhật mã bảo vệ"
             app:toolbar_visible_title="true" />
 
         <View
