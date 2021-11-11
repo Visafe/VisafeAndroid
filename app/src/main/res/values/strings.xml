@@ -329,7 +329,7 @@
     <string name="create_account_type">Bạn muốn tên hiển thị của Workspace là gì?</string>
     <string name="create">Tạo</string>
     <string name="change_pass">Đổi mật khẩu</string>
-    <string name="update_pin_title">Quản lý mã PIN</string>
+    <string name="update_pin_title">Quản lý mã bảo vệ</string>
     <string name="setup_noti">Cấu hình thông báo</string>
     <string name="language">Ngôn ngữ</string>
     <string name="vietnamese">Tiếng Việt</string>
@@ -346,12 +346,12 @@
     <string name="fb_com_visafe">fb.com/visafe.vn</string>
     <string name="messenger">Messenger</string>
     <string name="facebook">Facebook</string>
-    <string name="pin_current_title">Nhập mã PIN hiện tại</string>
-    <string name="create_new_pin">Tạo mới mã PIN </string>
-    <string name="create_new_pin_success">Tạo mới mã pin thành công</string>
-    <string name="delete_pin">Xóa mã PIN bảo vệ</string>
-    <string name="input_new_pin_again">Nhập lại mã PIN</string>
-    <string name="confirm_new_pin">Nhập lại mã PIN mới</string>
+    <string name="pin_current_title">Nhập mã bảo vệ hiện tại</string>
+    <string name="create_new_pin">Tạo mới mã bảo vệ </string>
+    <string name="create_new_pin_success">Tạo mới mã bảo vệ thành công</string>
+    <string name="delete_pin">Xóa mã bảo vệ bảo vệ</string>
+    <string name="input_new_pin_again">Nhập lại mã bảo vệ</string>
+    <string name="confirm_new_pin">Nhập lại mã bảo vệ mới</string>
     <string name="nhan_canh_bao">Nhận cảnh báo</string>
     <string name="protect_device">Bảo vệ thiết bị</string>
     <string name="protect_wifi">Bảo vệ Wi-Fi</string>
