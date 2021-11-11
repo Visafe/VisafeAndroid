@@ -123,7 +123,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvGroupName"
-                        tools:text="Bảo vệ gia đình &amp; người thân trên môi trường mạng" />
+                        tools:text="Bảo vệ gia đình &amp; tổ chức trên môi trường mạng" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/btnChangeWorkSpace"

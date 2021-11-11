@@ -58,7 +58,7 @@
         android:layout_marginEnd="@dimen/_16sdp"
         android:fontFamily="@font/sf_pro_text_regular"
         android:gravity="center"
-        android:text="Đăng nhập để bảo mật toàn diện hơn"
+        android:text="Đăng nhập để sử dụng tính năng nâng cao"
         android:textColor="@color/color_aaaaaa"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintEnd_toEndOf="@+id/tv1"

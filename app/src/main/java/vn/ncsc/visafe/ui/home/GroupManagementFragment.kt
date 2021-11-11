@@ -195,7 +195,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
             binding.view1.visibility = View.VISIBLE
             binding.btnChangeWorkSpace.visibility = View.GONE
             binding.tvGroupName.text = "Gia đình & nhóm"
-            binding.tvGroupDescription.text = "Bảo vệ gia đình & người thân trên môi trường mạng"
+            binding.tvGroupDescription.text = "Bảo vệ gia đình & tổ chức trên môi trường mạng"
             binding.tvGroupDescription.visibility = View.VISIBLE
         }
         checkDeviceInGroup()
@@ -308,7 +308,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
                 binding.view1.visibility = View.VISIBLE
                 binding.btnChangeWorkSpace.visibility = View.GONE
                 binding.tvGroupName.text = "Gia đình & nhóm"
-                binding.tvGroupDescription.text = "Bảo vệ gia đình & người thân trên môi trường mạng"
+                binding.tvGroupDescription.text = "Bảo vệ gia đình & tổ chức trên môi trường mạng"
                 binding.tvGroupDescription.visibility = View.VISIBLE
                 listGroupIsOwner.clear()
                 listGroupIsMember.clear()

@@ -63,7 +63,7 @@ enum class TYPE_WORKSPACES(
     FAMILY(
         "FAMILY",
         "Gia đình & nhóm",
-        "Bảo vệ gia đình & người thân trên môi trường mạng",
+        "Bảo vệ gia đình & tổ chức trên môi trường mạng",
         R.drawable.ic_family,
         R.drawable.bg_top_protect_family_group
     ),
@@ -77,13 +77,13 @@ enum class TYPE_WORKSPACES(
     SCHOOL(
         "SCHOOL",
         "Gia đình & nhóm",
-        "Bảo vệ gia đình & người thân trên môi trường mạng", R.drawable.ic_education,
+        "Bảo vệ gia đình & tổ chức trên môi trường mạng", R.drawable.ic_education,
         R.drawable.bg_top_protect_family_group
     ),
     GOVERNMENT_ORGANIZATION(
         "GOVERNMENT_ORGANIZATION",
         "Gia đình & nhóm",
-        "Bảo vệ gia đình & người thân trên môi trường mạng",
+        "Bảo vệ gia đình & tổ chức trên môi trường mạng",
         R.drawable.ic_chinh_phu,
         R.drawable.bg_top_protect_family_group
     );

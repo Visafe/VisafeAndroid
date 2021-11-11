@@ -15,7 +15,7 @@
             android:layout_height="?actionBarSize"
             app:toolbar_background="@color/white"
             app:toolbar_left_icon_src="@drawable/ic_baseline_clear_24"
-            app:toolbar_title="Thay đổi mã PIN bảo vệ"
+            app:toolbar_title="Thay đổi mã bảo vệ"
             app:toolbar_visible_title="true" />
 
         <View
