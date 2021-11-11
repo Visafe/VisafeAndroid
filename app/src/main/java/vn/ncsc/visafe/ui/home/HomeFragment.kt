@@ -116,7 +116,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
 
         (activity as MainActivity).isOpenProtectedDevice.observe(this, { isOpen ->
             if (isOpen) {
-                sendNotificationWhenClickButtonOnOff = true
+                sendNotificationWhenClickButtonOnOff = false
                 if (VERSION.SDK_INT >= 26) {
                     vibrator?.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
                 } else {
@@ -125,8 +125,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                 status_button = 0
                 binding.ivStatus.visibility = View.GONE
                 binding.tvTap.visibility = View.GONE
-                binding.status.text = getString(R.string.status_waiting)
-                prepareAndStartDnsVpn()
+                binding.status.text =
+                    getString(R.string.status_waiting)
+                //active VPN
+//                prepareAndStartDnsVpn()
             } else {
                 status_button = 1
                 stopDnsVpnService()
@@ -188,6 +190,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                 } else {
                     status_button = 0
 //                    binding.roundImage.visibility = View.INVISIBLE
+                    //VPN active
                     prepareAndStartDnsVpn()
                     (activity as MainActivity).isOpenProtectedDevice.value = true
                 }
