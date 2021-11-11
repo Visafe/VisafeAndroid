@@ -138,7 +138,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
                 binding.cardViewStatistical.visibility = View.VISIBLE
                 binding.layoutAddVpn.cardViewAddVpn.visibility = if (SharePreferenceKeyHelper.getInstance(ViSafeApp())
                         .getBoolean(PreferenceKey.STATUS_OPEN_VPN)
-                ) View.GONE else View.VISIBLE
+                ) View.GONE else View.GONE
                 binding.layoutHomeProtectFamily.cardViewHomeProtectFamily.visibility = View.VISIBLE
                 binding.layoutUpgrade.llRegisterNow.visibility = View.GONE
                 binding.layoutHomePass.cvHomePass.visibility =
@@ -256,7 +256,6 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
             if (SharePreferenceKeyHelper.getInstance(ViSafeApp())
                     .getBoolean(PreferenceKey.STATUS_OPEN_VPN)
             ) "Đã kết nối VPN" else "Thêm VPN"
-
         binding.layoutHomeProtect.switchHomeProtectWifi.isChecked =
             SharePreferenceKeyHelper.getInstance(ViSafeApp()).isEnableProtectedWifiHome()
 
