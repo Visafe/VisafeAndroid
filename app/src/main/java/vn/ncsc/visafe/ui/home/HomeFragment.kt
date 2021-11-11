@@ -262,7 +262,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
         try {
             val status = VpnController.instance.getState(context)
             status.let {
-//                binding.roundImage.startAnimation(aniRotateClk)
+                binding.roundImage.startAnimation(aniRotateClk)
                 // Change status and explanation text
                 var privateDnsMode: PrivateDnsMode? = PrivateDnsMode.NONE
                 if (it.activationRequested == true) {
@@ -303,18 +303,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                                 sendNotificationWhenClickButtonOnOff = false
                             }
                             binding.imageStatus.setImageResource(R.drawable.ic_earth)
-//                            binding.buttonStatus.setImageResource(R.drawable.on_button)
-//                            binding.roundImage.clearAnimation()
-//                            binding.roundImage.visibility = View.INVISIBLE
+                            binding.buttonStatus.setImageResource(R.drawable.on_button)
+                            binding.roundImage.clearAnimation()
+                            binding.roundImage.visibility = View.INVISIBLE
                         }
                         else -> {
                             binding.ivStatus.visibility = View.GONE
                             binding.tvTap.visibility = View.GONE
                             binding.status.text = getString(R.string.status_failing)
                             binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
-//                            binding.buttonStatus.setImageResource(R.drawable.off_button)
-//                            binding.roundImage.clearAnimation()
-//                            binding.roundImage.visibility = View.INVISIBLE
+                            binding.buttonStatus.setImageResource(R.drawable.off_button)
+                            binding.roundImage.clearAnimation()
+                            binding.roundImage.visibility = View.INVISIBLE
                         }
                     }
                 } else if (isAnotherVpnActive()) {
@@ -330,9 +330,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                     binding.tvTap.visibility = View.VISIBLE
                     binding.status.text = getString(R.string.bam_de_bat)
                     binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
-//                    binding.buttonStatus.setImageResource(R.drawable.off_button)
+                    binding.buttonStatus.setImageResource(R.drawable.off_button)
 //                    binding.roundImage.clearAnimation()
-//                    binding.roundImage.visibility = View.INVISIBLE
+                    binding.roundImage.visibility = View.VISIBLE
                     if (count_noti_off == 0 && sendNotificationWhenClickButtonOnOff) {
                         sendNotification(
                             "Bạn đã tắt chế độ bảo vệ!",
@@ -350,9 +350,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                         binding.tvTap.visibility = View.GONE
                         binding.status.text = getString(R.string.status_strict)
                         binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
-//                        binding.buttonStatus.setImageResource(R.drawable.off_button)
+                        binding.buttonStatus.setImageResource(R.drawable.off_button)
 //                        binding.roundImage.clearAnimation()
-//                        binding.roundImage.visibility = View.INVISIBLE
+                        binding.roundImage.visibility = View.VISIBLE
                     } else if (privateDnsMode == PrivateDnsMode.UPGRADED) {
                         binding.ivStatus.setImageDrawable(
                             context?.let { it1 ->
@@ -365,9 +365,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                         binding.tvTap.visibility = View.VISIBLE
                         binding.status.text = getString(R.string.bam_de_bat)
                         binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
-//                        binding.buttonStatus.setImageResource(R.drawable.off_button)
+                        binding.buttonStatus.setImageResource(R.drawable.off_button)
 //                        binding.roundImage.clearAnimation()
-//                        binding.roundImage.visibility = View.INVISIBLE
+                        binding.roundImage.visibility = View.VISIBLE
                         if (count_noti_off == 0 && sendNotificationWhenClickButtonOnOff) {
                             sendNotification(
                                 "Bạn đã tắt chế độ bảo vệ!",
@@ -390,9 +390,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                         binding.ivStatus.visibility = View.VISIBLE
                         binding.status.text = getString(R.string.bam_de_bat)
                         binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
-//                        binding.buttonStatus.setImageResource(R.drawable.off_button)
+                        binding.buttonStatus.setImageResource(R.drawable.off_button)
 //                        binding.roundImage.clearAnimation()
-//                        binding.roundImage.visibility = View.INVISIBLE
+                        binding.roundImage.visibility = View.VISIBLE
                         if (count_noti_off == 0 && sendNotificationWhenClickButtonOnOff) {
                             sendNotification(
                                 "Bạn đã tắt chế độ bảo vệ!",

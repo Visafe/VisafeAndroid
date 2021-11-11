@@ -25,11 +25,11 @@
             android:layout_height="0.5dp"/>
 
         <androidx.core.widget.NestedScrollView
-            android:layout_below="@id/vDivider"
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/btnSave"
+            android:layout_below="@id/vDivider"
             android:background="@color/white"
             android:clipToPadding="false"
             android:paddingBottom="40dp">
@@ -91,11 +91,11 @@
                     android:id="@+id/btnBlockWebsite"
                     android:layout_width="@dimen/_0dp"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:fontFamily="@font/sf_pro_text_regular_bold"
                     android:gravity="center"
-                    android:padding="@dimen/_10dp"
                     android:maxLines="1"
-                    android:ellipsize="end"
+                    android:padding="@dimen/_10dp"
                     android:text="@string/block_website"
                     android:textColor="@color/color_222222"
                     android:textSize="@dimen/text_size_16sp"
@@ -104,14 +104,14 @@
                     app:layout_constraintTop_toBottomOf="@id/view" />
 
                 <TextView
-                    android:alpha="0.5"
                     android:id="@+id/btnPrioritizeWebsite"
                     android:layout_width="@dimen/_0dp"
                     android:layout_height="wrap_content"
+                    android:alpha="0.5"
+                    android:ellipsize="end"
                     android:fontFamily="@font/sf_pro_text_regular_bold"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:ellipsize="end"
                     android:padding="@dimen/_10dp"
                     android:text="@string/uu_tien_website"
                     android:textColor="@color/color_222222"
@@ -122,55 +122,55 @@
 
                 <View
                     android:id="@+id/viewBlock"
-                    app:layout_constraintTop_toBottomOf="@id/btnBlockWebsite"
+                    android:layout_width="@dimen/_48dp"
+                    android:layout_height="3dp"
+                    android:background="@color/color_FFB31F"
                     app:layout_constraintEnd_toEndOf="@id/btnBlockWebsite"
                     app:layout_constraintStart_toStartOf="@id/btnBlockWebsite"
-                    android:background="@color/color_FFB31F"
-                    android:layout_width="@dimen/_48dp"
-                    android:layout_height="3dp"/>
+                    app:layout_constraintTop_toBottomOf="@id/btnBlockWebsite" />
 
                 <View
-                    android:visibility="invisible"
                     android:id="@+id/viewPrioritize"
-                    app:layout_constraintTop_toBottomOf="@id/btnPrioritizeWebsite"
+                    android:layout_width="@dimen/_48dp"
+                    android:layout_height="3dp"
+                    android:background="@color/color_FFB31F"
+                    android:visibility="invisible"
                     app:layout_constraintEnd_toEndOf="@id/btnPrioritizeWebsite"
                     app:layout_constraintStart_toStartOf="@id/btnPrioritizeWebsite"
-                    android:background="@color/color_FFB31F"
-                    android:layout_width="@dimen/_48dp"
-                    android:layout_height="3dp"/>
+                    app:layout_constraintTop_toBottomOf="@id/btnPrioritizeWebsite" />
 
                 <LinearLayout
                     android:id="@+id/llList"
-                    app:layout_constraintTop_toBottomOf="@id/viewBlock"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/viewBlock">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvBlock"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvPrioritize"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/btnAddLink"
-                        android:gravity="center_horizontal"
-                        android:drawablePadding="@dimen/_8dp"
-                        android:textSize="@dimen/text_size_14sp"
-                        android:textColor="@color/color_FFB31F"
-                        android:fontFamily="@font/sf_pro_text_regular"
-                        android:padding="@dimen/_12dp"
-                        android:layout_marginStart="@dimen/_12dp"
-                        android:text="@string/add_new_link"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:drawableTint="@color/color_FFB31F"
-                        app:drawableStartCompat="@drawable/ic_baseline_add_24" />
+                        android:layout_marginStart="@dimen/_12dp"
+                        android:drawablePadding="@dimen/_8dp"
+                        android:fontFamily="@font/sf_pro_text_regular"
+                        android:gravity="center_horizontal"
+                        android:padding="@dimen/_12dp"
+                        android:text="@string/add_new_link"
+                        android:textColor="@color/color_FFB31F"
+                        android:textSize="@dimen/text_size_14sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_add_24"
+                        app:drawableTint="@color/color_FFB31F" />
 
                 </LinearLayout>
 
