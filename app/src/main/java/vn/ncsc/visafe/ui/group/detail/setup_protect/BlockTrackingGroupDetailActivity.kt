@@ -131,9 +131,9 @@ class BlockTrackingGroupDetailActivity : BaseSetupProtectActivity(), OnClickMore
         }
         binding.itemBlockTrackingDevice.setOnSwitchItemChangeListener { buttonView, isChecked, position ->
             if (buttonView.isPressed) {
-                Log.e("switchWidget: ", "click")
+                Log.e("switchWidget: ", "handle click switchbutton")
             } else {
-                Log.e("switchWidget: ", "setChecked " + nativeTrackingList[position])
+                Log.e("switchWidget: ", "setChecked switch button ")
                 //triggered due to programmatic assignment using 'setChecked()' method.
             }
             Log.e("initControl: ", " " + position + " " + isChecked + " " + nativeTrackingList.size)

@@ -175,7 +175,7 @@
                             android:text="basic"
                             android:textAllCaps="true"
                             android:textColor="@color/color_444444"
-                            android:textSize="@dimen/text_size_10sp" />
+                            android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
 
                     <View

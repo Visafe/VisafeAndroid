@@ -84,7 +84,7 @@
         android:fontFamily="@font/sf_pro_text_regular"
         android:gravity="center"
         android:text="@string/send_report_website_content"
-        android:textSize="@dimen/text_size_12sp"
+        android:textSize="@dimen/_10sdp"
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -164,15 +165,22 @@ class JoinGroupActivity : BaseActivity() {
                 if (response.code() == NetworkClient.CODE_SUCCESS) {
                     response.body()?.localMsg?.let { showDialogComplete(it) }
                 } else if (response.code() == NetworkClient.CODE_EXISTS_ACCOUNT) {
-                    val builder = AlertDialog.Builder(this@JoinGroupActivity)
-                    with(builder)
-                    {
-                        setTitle(getString(R.string.thong_bao))
-                        setMessage(response.body()?.localMsg)
-                        setPositiveButton(
-                            getString(R.string.dong_y)
-                        ) { _, _ -> finish() }
-                        show()
+                    response.errorBody()?.let {
+                        val buffer = it?.source()?.buffer?.readByteArray()
+                        val dataString = buffer?.decodeToString()
+                        val jsonObject = Gson().fromJson(dataString, BaseResponse::class.java)
+                        jsonObject.localMsg?.let {
+                            val builder = AlertDialog.Builder(this@JoinGroupActivity)
+                            with(builder)
+                            {
+                                setTitle(getString(R.string.thong_bao))
+                                setMessage(it)
+                                setPositiveButton(
+                                    getString(R.string.dong_y)
+                                ) { _, _ -> finish() }
+                                show()
+                            }
+                        }
                     }
                 }
             }

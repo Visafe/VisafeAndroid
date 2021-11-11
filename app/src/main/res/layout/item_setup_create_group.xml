@@ -37,7 +37,7 @@
             android:layout_marginTop="@dimen/_4dp"
             android:fontFamily="@font/sf_pro_text_regular"
             android:textColor="@color/color_70_222222"
-            android:textSize="@dimen/text_size_12sp"
+            android:textSize="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="@id/tvTitle"
             app:layout_constraintStart_toStartOf="@id/tvTitle"
             app:layout_constraintTop_toBottomOf="@id/tvTitle"

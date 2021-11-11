@@ -32,7 +32,7 @@
                 android:layout_width="@dimen/_36sdp"
                 android:layout_height="@dimen/_36sdp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_24dp">
+                android:layout_marginTop="@dimen/_20sdp">
 
                 <ImageView
                     android:id="@+id/ivHomeProtectDevice"
@@ -101,7 +101,7 @@
                 android:layout_width="@dimen/_36sdp"
                 android:layout_height="@dimen/_36sdp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_24dp">
+                android:layout_marginTop="@dimen/_20sdp">
 
                 <ImageView
                     android:id="@+id/tvHomeProtectWifi"

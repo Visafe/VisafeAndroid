@@ -145,7 +145,7 @@
             android:paddingStart="@dimen/_12sdp"
             android:paddingEnd="@dimen/_12sdp"
             android:text="@string/content_member_vip"
-            android:textSize="@dimen/text_size_12sp"
+            android:textSize="@dimen/_10sdp"
             android:visibility="visible"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

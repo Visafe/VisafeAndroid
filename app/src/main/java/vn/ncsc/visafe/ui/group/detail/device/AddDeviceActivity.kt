@@ -136,8 +136,8 @@ class AddDeviceActivity : BaseActivity() {
             smallerDimension = smallerDimension * 3 / 4
             val qrgEncoder = QRGEncoder(textQR, null, QRGContents.Type.TEXT, smallerDimension)
             val bitmapQR = qrgEncoder.encodeAsBitmap()
-            qrBitmapMerge = mergeBitmaps(bitmapQR, myLogo)
-            binding.ivQr.setImageBitmap(qrBitmapMerge)
+//            qrBitmapMerge = mergeBitmaps(bitmapQR, myLogo)//comment lại, cần add logo thì mở ra
+            binding.ivQr.setImageBitmap(bitmapQR)
         } catch (e: Exception) {
             Log.e("Lỗi mã QR", e.toString())
         }

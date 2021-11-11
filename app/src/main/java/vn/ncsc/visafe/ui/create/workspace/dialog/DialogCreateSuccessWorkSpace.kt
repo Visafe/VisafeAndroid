@@ -1,11 +1,10 @@
 package vn.ncsc.visafe.ui.create.workspace.dialog
 
+import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import vn.ncsc.visafe.R
@@ -21,6 +20,15 @@ class DialogCreateSuccessWorkSpace : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val dialog: Dialog? = dialog
+        if (dialog != null) {
+            with(dialog.window) {
+                this?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                this?.requestFeature(Window.FEATURE_NO_TITLE)
+                this?.setGravity(Gravity.BOTTOM)
+            }
+            dialog.setCancelable(false)
+        }
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.dialog_create_success_workspace,
@@ -28,6 +36,16 @@ class DialogCreateSuccessWorkSpace : DialogFragment() {
             false
         )
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val dialog: Dialog? = dialog
+        if (dialog != null) {
+            val width = ViewGroup.LayoutParams.MATCH_PARENT
+            val height = ViewGroup.LayoutParams.WRAP_CONTENT
+            dialog.window?.setLayout(width, height)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

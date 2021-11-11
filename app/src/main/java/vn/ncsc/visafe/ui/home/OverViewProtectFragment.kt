@@ -136,16 +136,28 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
                 binding.layoutHomeProtect.llHomeBlockAds.visibility = View.GONE
                 binding.layoutHomeProtect.llHomeBlockTracking.visibility = View.GONE
                 binding.cardViewStatistical.visibility = View.VISIBLE
-                binding.layoutAddVpn.cardViewAddVpn.visibility = View.VISIBLE
+                binding.layoutAddVpn.cardViewAddVpn.visibility = if (SharePreferenceKeyHelper.getInstance(ViSafeApp())
+                        .getBoolean(PreferenceKey.STATUS_OPEN_VPN)
+                ) View.GONE else View.VISIBLE
                 binding.layoutHomeProtectFamily.cardViewHomeProtectFamily.visibility = View.VISIBLE
                 binding.layoutUpgrade.llRegisterNow.visibility = View.GONE
+                binding.layoutHomePass.cvHomePass.visibility =
+                    if (SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.PIN_CODE)
+                            .isEmpty()
+                    ) View.VISIBLE else View.GONE
             } else {
                 binding.layoutHomeProtect.llHomeBlockAds.visibility = View.GONE
                 binding.layoutHomeProtect.llHomeBlockTracking.visibility = View.GONE
                 binding.cardViewStatistical.visibility = View.GONE
-                binding.layoutAddVpn.cardViewAddVpn.visibility = View.GONE
+                binding.layoutAddVpn.cardViewAddVpn.visibility = if (SharePreferenceKeyHelper.getInstance(ViSafeApp())
+                        .getBoolean(PreferenceKey.STATUS_OPEN_VPN)
+                ) View.GONE else View.VISIBLE
                 binding.layoutHomeProtectFamily.cardViewHomeProtectFamily.visibility = View.GONE
                 binding.layoutUpgrade.llRegisterNow.visibility = View.VISIBLE
+                binding.layoutHomePass.cvHomePass.visibility =
+                    if (SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.PIN_CODE)
+                            .isEmpty()
+                    ) View.VISIBLE else View.GONE
             }
         })
 
@@ -367,9 +379,9 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
 
         //bảo vệ wifi
         binding.layoutHomeProtect.llHomeProtectWifi.setOnSingClickListener {
-            if ((activity as MainActivity).needLogin(MainActivity.POSITION_PROTECT)) {
-                return@setOnSingClickListener
-            }
+//            if ((activity as MainActivity).needLogin(MainActivity.POSITION_PROTECT)) {
+//                return@setOnSingClickListener
+//            }
             val intent = Intent(requireContext(), ProtectWifiActivity::class.java)
             intent.putExtra(
                 ProtectWifiActivity.PROTECT_WIFI_KEY,

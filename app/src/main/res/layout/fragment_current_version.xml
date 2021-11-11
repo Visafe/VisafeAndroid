@@ -46,7 +46,7 @@
                 android:text="@string/premium"
                 android:textAllCaps="true"
                 android:textColor="@color/color_0641448"
-                android:textSize="@dimen/text_size_10sp"
+                android:textSize="@dimen/_8sdp"
                 app:drawableStartCompat="@drawable/ic_subtract" />
         </LinearLayout>
 
@@ -62,7 +62,7 @@
             android:gravity="center"
             android:text="@string/used_premium_content"
             android:textColor="@color/color_80_ffffff"
-            android:textSize="@dimen/text_size_12sp" />
+            android:textSize="@dimen/_10sdp" />
 
         <TextView
             android:id="@+id/tvBuyMore"

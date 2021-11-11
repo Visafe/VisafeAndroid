@@ -28,9 +28,9 @@
         android:paddingBottom="@dimen/_16sdp">
 
         <LinearLayout
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <TextView
@@ -44,9 +44,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clFAQ"
-                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/white">
 
                 <ImageView
                     android:id="@+id/ivFaq"
@@ -90,9 +90,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clRules"
-                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/white">
 
                 <ImageView
                     android:id="@+id/ivRule"
@@ -136,9 +136,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clProtect"
-                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/white">
 
                 <ImageView
                     android:id="@+id/ivProtect"
@@ -148,8 +148,8 @@
                     android:src="@drawable/ic_shield_blue"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription"
-                    app:tint="@color/color_666666" />
+                    app:tint="@color/color_666666"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     style="@style/Content"
@@ -183,9 +183,9 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
-                android:background="@color/color_F7F8FA"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_6sdp"/>
+                android:layout_height="@dimen/_6sdp"
+                android:background="@color/color_F7F8FA" />
 
             <TextView
                 style="@style/Title"
@@ -197,9 +197,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clHotlineSupport"
-                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/white">
 
                 <ImageView
                     android:id="@+id/ivHotline"
@@ -223,12 +223,12 @@
                     app:layout_constraintTop_toTopOf="@id/ivHotline" />
 
                 <TextView
-                    android:textColor="@color/color_15A1FA"
                     style="@style/Content"
-                    android:text="@string/hotline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_24dp"
+                    android:text="@string/hotline"
+                    android:textColor="@color/color_15A1FA"
                     app:layout_constraintBottom_toBottomOf="@id/ivHotline"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/ivHotline"
@@ -246,9 +246,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clEmail"
-                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/white">
 
                 <ImageView
                     android:id="@+id/ivEmail"
@@ -272,12 +272,12 @@
                     app:layout_constraintTop_toTopOf="@id/ivEmail" />
 
                 <TextView
-                    android:textColor="@color/color_15A1FA"
                     style="@style/Content"
-                    android:text="@string/email_support"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_24dp"
+                    android:text="@string/email_support"
+                    android:textColor="@color/color_15A1FA"
                     app:layout_constraintBottom_toBottomOf="@id/ivEmail"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/ivEmail"
@@ -295,9 +295,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clMessenger"
-                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/white">
 
                 <ImageView
                     android:id="@+id/ivMess"
@@ -321,12 +321,12 @@
                     app:layout_constraintTop_toTopOf="@id/ivMess" />
 
                 <TextView
-                    android:textColor="@color/color_15A1FA"
                     style="@style/Content"
-                    android:text="@string/fb_com_govsoc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_24dp"
+                    android:text="@string/fb_com_visafe"
+                    android:textColor="@color/color_15A1FA"
                     app:layout_constraintBottom_toBottomOf="@id/ivMess"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/ivMess"
@@ -344,9 +344,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clFacebook"
-                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/white">
 
                 <ImageView
                     android:id="@+id/ivFacebook"
@@ -370,12 +370,12 @@
                     app:layout_constraintTop_toTopOf="@id/ivFacebook" />
 
                 <TextView
-                    android:textColor="@color/color_15A1FA"
                     style="@style/Content"
-                    android:text="@string/fb_com_govsoc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_24dp"
+                    android:text="@string/fb_com_visafe"
+                    android:textColor="@color/color_15A1FA"
                     app:layout_constraintBottom_toBottomOf="@id/ivFacebook"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/ivFacebook"

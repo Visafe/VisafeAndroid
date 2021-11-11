@@ -179,9 +179,9 @@ class BlockAccessGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreIt
         }
         binding.itemBlockAccess.setOnSwitchItemChangeListener { buttonView, isChecked, position ->
             if (buttonView.isPressed) {
-                Log.e("switchWidget: ", "click")
+                Log.e("switchWidget: ", "handle click switchbutton")
             } else {
-                Log.e("switchWidget: ", "setChecked " + blockServiceList[position])
+                Log.e("switchWidget: ", "setChecked switch button ")
                 //triggered due to programmatic assignment using 'setChecked()' method.
             }
             Log.e("initControl: ", " " + position + " " + isChecked + " " + blockServiceList.size)

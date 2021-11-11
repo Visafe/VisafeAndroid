@@ -347,8 +347,8 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:sub_title="Chặn theo dõi, thu thập dữ liệu thông tin cá nhân trên các thiết bị, hệ điều hành"
-                    app:title="Chặn theo dõi trên thiết bị" />
+                    app:sub_title="Chặn truy cập, thu thập dữ liệu thông tin cá nhân trên các thiết bị, hệ điều hành"
+                    app:title="Chặn truy cập trên thiết bị" />
 
                 <View
                     android:id="@+id/view3"

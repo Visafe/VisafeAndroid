@@ -89,7 +89,7 @@
         android:text="@string/save_64"
         android:textAllCaps="true"
         android:textColor="#061448"
-        android:textSize="@dimen/text_size_10sp"
+        android:textSize="@dimen/_8sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

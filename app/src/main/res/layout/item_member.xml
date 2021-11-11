@@ -61,7 +61,7 @@
             android:paddingEnd="@dimen/_8dp"
             android:paddingBottom="@dimen/_4dp"
             android:textColor="@color/color_FFB31F"
-            android:textSize="@dimen/text_size_12sp"
+            android:textSize="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="@id/tvName"
             app:layout_constraintStart_toEndOf="@+id/tvName"
             app:layout_constraintTop_toTopOf="@id/tvName"

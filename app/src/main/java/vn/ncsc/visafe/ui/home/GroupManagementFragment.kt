@@ -493,6 +493,7 @@ class GroupManagementFragment : BaseFragment<FragmentGroupManagementBinding>() {
                     if (listWorkspaceGroupData.size > 0) {
                         listWorkspaceGroupData[positionTypeChoose].let { workspaceGroupData ->
                             mWorkspaceGroupData = workspaceGroupData
+                            binding.tvGroupName.text = workspaceGroupData.name
                             doGetGroupWithId()
                         }
                     }

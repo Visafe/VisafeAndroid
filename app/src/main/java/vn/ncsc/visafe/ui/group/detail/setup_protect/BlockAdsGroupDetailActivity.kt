@@ -150,7 +150,7 @@ class BlockAdsGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreItemQ
             if (buttonView.isPressed) {
                 Log.e("switchWidget: ", "click")
             } else {
-                Log.e("switchWidget: ", "setChecked " + listAppAdsDefault[position])
+                Log.e("switchWidget: ", "setChecked ")
                 //triggered due to programmatic assignment using 'setChecked()' method.
             }
             Log.e("initControl: ", " " + position + " " + listAppAdsDefault.size)
