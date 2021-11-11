@@ -262,6 +262,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
         try {
             val status = VpnController.instance.getState(context)
             status.let {
+                aniRotateClk!!.duration = 3000
+                binding.roundImage.imageAlpha = 150
                 binding.roundImage.startAnimation(aniRotateClk)
                 // Change status and explanation text
                 var privateDnsMode: PrivateDnsMode? = PrivateDnsMode.NONE
@@ -274,6 +276,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                             binding.status.text = getString(R.string.status_waiting)
                             binding.imageStatus.setImageResource(R.drawable.ic_earth_off)
 //                            binding.buttonStatus.setImageResource(R.drawable.off_button)
+                            aniRotateClk!!.duration = 1000
+                            binding.roundImage.imageAlpha = 255
+                            binding.roundImage.startAnimation(aniRotateClk)
                         }
                         status.connectionState === ViSafeVpnService.State.NEW -> {
                             binding.ivStatus.visibility = View.GONE
