@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:toolbar_background="@color/white"
         app:toolbar_left_icon_src="@drawable/ic_arrow_left_black"
-        app:toolbar_title="Quản lý mã pin"
+        app:toolbar_title="Quản lý mã bảo vệ"
         app:toolbar_visible_title="true" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

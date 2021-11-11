@@ -52,7 +52,7 @@ class CurrentPinFragment : BaseFragment<FragmentCurrentPinBinding>() {
                             binding.etPinCode.setText("")
                         } else {
                             hiddenKeyboard()
-                            showAlert("Thông báo", "Mã pin vừa nhập không đúng!") {
+                            showAlert("Thông báo", "Mã bảo vệ vừa nhập không đúng!") {
                                 binding.etPinCode.setText("")
                             }
                         }

@@ -20,8 +20,8 @@ class CreateNewPinFragment : BaseFragment<FragmentCreateNewPinBinding>() {
         setHideKeyboardFocus(binding.root)
         val pin = ViSafeApp().getPreference().getString(PreferenceKey.PIN_CODE) ?: ""
         binding.btnDeletePin.visibility = if (pin.isEmpty()) View.GONE else View.VISIBLE
-        binding.toolbar.setTitleToolbar(if (pin.isEmpty()) "Cài đặt mã pin bảo vệ" else "Đổi mã pin bảo vệ")
-        binding.tvTitle.text = (if (pin.isEmpty()) getString(R.string.create_new_pin) else "Thay đổi mã PIN bảo vệ")
+        binding.toolbar.setTitleToolbar(if (pin.isEmpty()) "Cài đặt mã bảo vệ" else "Đổi mã bảo vệ")
+        binding.tvTitle.text = (if (pin.isEmpty()) getString(R.string.create_new_pin) else "Thay đổi mã bảo vệ")
 
         binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
             override fun onSingleClick(view: View) {

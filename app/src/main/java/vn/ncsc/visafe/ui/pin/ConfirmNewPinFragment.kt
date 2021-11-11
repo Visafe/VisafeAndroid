@@ -56,20 +56,20 @@ class ConfirmNewPinFragment : BaseFragment<FragmentConfirmNewPinBinding>() {
 
         when (mType) {
             1 -> {
-                binding.toolbar.setTitleToolbar("Xóa mã PIN bảo vệ")
-                binding.tvTitle.text = "Nhập mã PIN hiện tại"
+                binding.toolbar.setTitleToolbar("Xóa mã bảo vệ")
+                binding.tvTitle.text = "Nhập mã bảo vệ hiện tại"
                 binding.btnDeletePin.visibility = View.GONE
             }
             2 -> {
-                binding.toolbar.setTitleToolbar("Xác nhận PIN bảo vệ")
-                binding.tvTitle.text = "Nhập mã PIN để xác nhận"
+                binding.toolbar.setTitleToolbar("Xác nhận mã bảo vệ")
+                binding.tvTitle.text = "Nhập mã bảo vệ để xác nhận"
                 binding.btnDeletePin.visibility = View.GONE
             }
             else -> {
                 val pinSaved = ViSafeApp().getPreference().getString(PreferenceKey.PIN_CODE) ?: ""
-                binding.toolbar.setTitleToolbar(if (pinSaved.isEmpty()) "Cài đặt mã pin bảo vệ" else "Đổi mã pin bảo vệ")
+                binding.toolbar.setTitleToolbar(if (pinSaved.isEmpty()) "Cài đặt mã bảo vệ" else "Đổi mã bảo vệ")
                 binding.tvTitle.text =
-                    (if (pinSaved.isEmpty()) getString(R.string.input_new_pin_again) else "Thay đổi mã PIN bảo vệ")
+                    (if (pinSaved.isEmpty()) getString(R.string.input_new_pin_again) else "Thay đổi mã bảo vệ")
                 binding.btnDeletePin.visibility = if (pinSaved.isEmpty()) View.GONE else View.VISIBLE
             }
         }
@@ -109,10 +109,10 @@ class ConfirmNewPinFragment : BaseFragment<FragmentConfirmNewPinBinding>() {
                             ) {
                                 hiddenKeyboard()
                                 binding.etPinCode.clearFocus()
-                                showDialogDeleteComplete("Xóa mã pin thành công")
+                                showDialogDeleteComplete("Xóa mã bảo vệ thành công")
                             } else {
                                 //báo lỗi sai pin
-                                showAlert("Thông báo", "Mã pin vừa nhập không trùng khớp!") {
+                                showAlert("Thông báo", "Mã bảo vệ vừa nhập không trùng khớp!") {
                                     binding.etPinCode.setText("")
                                 }
                             }
@@ -130,7 +130,7 @@ class ConfirmNewPinFragment : BaseFragment<FragmentConfirmNewPinBinding>() {
                                 }
                             } else {
                                 //báo lỗi sai pin
-                                showAlert("Thông báo", "Mã pin vừa nhập không trùng khớp!") {
+                                showAlert("Thông báo", "Mã bảo vệ vừa nhập không trùng khớp!") {
                                     binding.etPinCode.setText("")
                                 }
                             }
@@ -144,7 +144,7 @@ class ConfirmNewPinFragment : BaseFragment<FragmentConfirmNewPinBinding>() {
                                 hiddenKeyboard()
                                 binding.etPinCode.clearFocus()
                             } else {
-                                showAlert("Thông báo", "Mã pin vừa nhập không trùng khớp!") {
+                                showAlert("Thông báo", "Mã bảo vệ vừa nhập không trùng khớp!") {
                                     binding.etPinCode.setText("")
                                 }
                             }

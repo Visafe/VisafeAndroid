@@ -26,11 +26,11 @@ class SettingPinActivity : BaseActivity() {
     private fun initView() {
         EventUtils.isCreatePass.observe(this, {
             val pinSaved = ViSafeApp().getPreference().getString(PreferenceKey.PIN_CODE) ?: ""
-            binding.tvTitle.text = (if (pinSaved.isEmpty()) "Cài đặt mã PIN bảo vệ" else "Thay đổi mã PIN bảo vệ")
+            binding.tvTitle.text = (if (pinSaved.isEmpty()) "Cài đặt mã bảo vệ" else "Thay đổi mã bảo vệ")
             binding.clDeletePin.visibility = if (pinSaved.isEmpty()) View.GONE else View.VISIBLE
         })
         val pinSaved = ViSafeApp().getPreference().getString(PreferenceKey.PIN_CODE) ?: ""
-        binding.tvTitle.text = (if (pinSaved.isEmpty()) "Cài đặt mã PIN bảo vệ" else "Thay đổi mã PIN bảo vệ")
+        binding.tvTitle.text = (if (pinSaved.isEmpty()) "Cài đặt mã bảo vệ" else "Thay đổi mã bảo vệ")
         binding.clDeletePin.visibility = if (pinSaved.isEmpty()) View.GONE else View.VISIBLE
 
         binding.toolbar.setOnClickLeftButton(object : OnSingleClickListener() {
