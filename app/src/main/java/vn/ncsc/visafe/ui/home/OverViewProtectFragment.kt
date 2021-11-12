@@ -3,7 +3,6 @@ package vn.ncsc.visafe.ui.home
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.text.Html
 import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -11,7 +10,10 @@ import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
+import kotlinx.android.synthetic.main.layout_home_handbook.view.*
+import kotlinx.android.synthetic.main.layout_home_protect.view.*
+import kotlinx.android.synthetic.main.layout_home_utilities.view.*
+import kotlinx.android.synthetic.main.layout_home_utilities.view.rcvOtherUtilities
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,6 +29,7 @@ import vn.ncsc.visafe.model.*
 import vn.ncsc.visafe.model.response.StatsWorkspaceResponse
 import vn.ncsc.visafe.ui.MainActivity
 import vn.ncsc.visafe.ui.WebViewActivity
+import vn.ncsc.visafe.ui.adapter.HandbookAdapter
 import vn.ncsc.visafe.ui.adapter.OtherUtilitiesAdapter
 import vn.ncsc.visafe.ui.adapter.TimeStatistical
 import vn.ncsc.visafe.ui.authentication.RegisterActivity
@@ -35,7 +38,6 @@ import vn.ncsc.visafe.ui.custom.SpaceItemDecoration
 import vn.ncsc.visafe.ui.dialog.DisplayStatisticalForTimeBottomSheet
 import vn.ncsc.visafe.ui.dialog.ImageDialog
 import vn.ncsc.visafe.ui.dialog.OnClickItemTime
-import vn.ncsc.visafe.ui.group.detail.member.MemberManagementActivity
 import vn.ncsc.visafe.ui.group.detail.setup_protect.BlockAdsGroupDetailActivity
 import vn.ncsc.visafe.ui.group.detail.setup_protect.BlockTrackingGroupDetailActivity
 import vn.ncsc.visafe.ui.pin.UpdatePinActivity
@@ -51,6 +53,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
     private var timeType: String = TimeStatistical.HANG_NGAY.time
     private var statsWorkSpace: StatsWorkSpace? = null
     private var otherUtilitiesAdapter: OtherUtilitiesAdapter? = null
+    private var handbookAdapter: HandbookAdapter? = null
     private var groupData: GroupData? = null
 
     private var resultLauncherSwitchWifi =
@@ -296,6 +299,18 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
         binding.layoutUtilities.rcvOtherUtilities.addItemDecoration(SpaceItemDecoration(dpToPx(requireContext(), 10)))
         binding.layoutUtilities.rcvOtherUtilities.isNestedScrollingEnabled = false
         binding.layoutUtilities.rcvOtherUtilities.adapter = otherUtilitiesAdapter
+
+        // cam nang
+        handbookAdapter = HandbookAdapter(getListHandbook(), this)
+        val gridLayoutManager1: RecyclerView.LayoutManager
+        gridLayoutManager1 = GridLayoutManager(context, 4)
+        gridLayoutManager1.setAutoMeasureEnabled(true)
+        binding.layoutHandbook.rcvHandbook.layoutManager = gridLayoutManager1
+        binding.layoutHandbook.rcvHandbook.itemAnimator = DefaultItemAnimator()
+        binding.layoutHandbook.rcvHandbook.addItemDecoration(SpaceItemDecoration(dpToPx(requireContext(), 10)))
+        binding.layoutHandbook.rcvHandbook.isNestedScrollingEnabled = false
+        binding.layoutHandbook.rcvHandbook.adapter = handbookAdapter
+
         initControl()
     }
 
@@ -505,7 +520,10 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
         intentOpenWeb.putExtra(WebViewActivity.URL_KEY, data.value)
         when (data.type) {
             TypeUtilities.TIN_TUC_CANH_BAO, TypeUtilities.KIEM_TRA_WEB_LUA_DAO,
-            TypeUtilities.KIEM_TRA_WIFI, TypeUtilities.KIEM_TRA_DO_LOT_TK, TypeUtilities.NHAN_DIEN_MA_DOC_TONG_TIEN -> {
+            TypeUtilities.KIEM_TRA_WIFI, TypeUtilities.KIEM_TRA_DO_LOT_TK,
+            TypeUtilities.NHAN_DIEN_MA_DOC_TONG_TIEN,
+            TypeUtilities.ANDROID, TypeUtilities.IOS,
+            TypeUtilities.MACOS, TypeUtilities.WINDOWS -> {
                 startActivity(intentOpenWeb)
             }
             TypeUtilities.GUI_BAO_CAO -> {
@@ -550,6 +568,35 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
             OtherUtilitiesModel(
                 "Nhận diện mã độc tống tiền", "https://congcu.khonggianmang.vn/ransomware",
                 R.drawable.ic_ransomware, TypeUtilities.NHAN_DIEN_MA_DOC_TONG_TIEN
+            )
+        )
+        return list
+    }
+
+    private fun getListHandbook(): MutableList<OtherUtilitiesModel> {
+        val list: MutableList<OtherUtilitiesModel> = mutableListOf()
+        list.add(
+            OtherUtilitiesModel(
+                "Windows", "https://congcu.khonggianmang.vn/checklist-windows",
+                R.drawable.ic_handbook_windows, TypeUtilities.WINDOWS
+            )
+        )
+        list.add(
+            OtherUtilitiesModel(
+                "MacOS","https://congcu.khonggianmang.vn/checklist-macos",
+                R.drawable.ic_handbook_mac, TypeUtilities.MACOS
+            )
+        )
+        list.add(
+            OtherUtilitiesModel(
+                "Android", "https://congcu.khonggianmang.vn/checklist-android",
+                R.drawable.ic_handbook_android, TypeUtilities.ANDROID
+            )
+        )
+        list.add(
+            OtherUtilitiesModel(
+                "IOS", "https://congcu.khonggianmang.vn/checklist-ios",
+                R.drawable.ic_handbook_apple, TypeUtilities.IOS
             )
         )
         return list

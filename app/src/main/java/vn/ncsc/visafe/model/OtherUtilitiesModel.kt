@@ -13,5 +13,9 @@ enum class TypeUtilities {
     KIEM_TRA_WIFI,
     KIEM_TRA_DO_LOT_TK,
     KIEM_TRA_WEB_LUA_DAO,
-    NHAN_DIEN_MA_DOC_TONG_TIEN
+    NHAN_DIEN_MA_DOC_TONG_TIEN,
+    WINDOWS,
+    MACOS,
+    ANDROID,
+    IOS
 }

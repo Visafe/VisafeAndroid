@@ -122,6 +122,10 @@
                 android:id="@+id/layoutUtilities"
                 layout="@layout/layout_home_utilities" />
 
+            <include
+                android:id="@+id/layoutHandbook"
+                layout="@layout/layout_home_handbook" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
