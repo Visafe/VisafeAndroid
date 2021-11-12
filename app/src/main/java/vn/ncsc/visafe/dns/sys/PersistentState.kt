@@ -7,15 +7,23 @@ import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.preference.PreferenceManager
 import android.util.Log
+import org.json.JSONException
+import org.json.JSONObject
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.ViSafeApp
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.dns.net.setting.Untemplate.strip
 import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
 import java.util.*
+import javax.net.ssl.HttpsURLConnection
 
 class PersistentState {
 
@@ -138,7 +146,7 @@ class PersistentState {
                 val deviceId = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(
                     PreferenceKey.DEVICE_ID
                 )
-                urlDefault = NetworkClient.DOMAIN + deviceId.lowercase(Locale.getDefault())
+                urlDefault = getDOH() + deviceId.lowercase(Locale.getDefault())
                 val editor = share.edit()
                 editor.putString("userID", deviceId.lowercase(Locale.getDefault()))
                 editor.putString(
@@ -160,7 +168,7 @@ class PersistentState {
                 shareVip.getString("domainVIP", "") + share.getString("userID", "")
             } else {
                 Log.e("expandUrl: ", NetworkClient.DOMAIN + share.getString("userID", ""))
-                NetworkClient.DOMAIN + share.getString("userID", "")
+                getDOH() + share.getString("userID", "")
             }
         }
     }
@@ -177,29 +185,52 @@ class PersistentState {
      * @return Returns the domain name in the URL, or "CUSTOM_SERVER" if the url is not one of the
      * built-in servers.
      */
-    fun extractHostForAnalytics(context: Context, url: String?): String? {
-        val expanded = expandUrl(context, url)
-        val urls = context.resources.getStringArray(R.array.urls)
-        return if (listOf(*urls).contains(expanded)) {
-            extractHost(expanded)
-        } else InternalNames.CUSTOM_SERVER.name
-    }
 
     private fun getApprovalSettings(context: Context): SharedPreferences {
         return context.getSharedPreferences(APPROVAL_PREFS_NAME, Context.MODE_PRIVATE)
     }
 
-    fun getWelcomeApproved(context: Context): Boolean {
-        return getApprovalSettings(context).getBoolean(APPROVED_KEY, false)
-    }
-
-    fun setWelcomeApproved(context: Context, approved: Boolean) {
-        val editor = getApprovalSettings(context).edit()
-        editor.putBoolean(APPROVED_KEY, approved)
-        editor.apply()
-    }
-
     fun getExcludedPackages(context: Context): Set<String?>? {
         return getUserPreferences(context).getStringSet(APPS_KEY, HashSet())
+    }
+    fun getDOH(): String? {
+        var result: String? = null
+        result = ""
+        val resCode: Int
+        val `in`: InputStream
+        try {
+            val url = URL(NetworkClient.URL_ROOT + "routing")
+            val urlConn = url.openConnection()
+            val httpsConn = urlConn as HttpsURLConnection
+            httpsConn.allowUserInteraction = false
+            httpsConn.instanceFollowRedirects = true
+            httpsConn.requestMethod = "GET"
+            httpsConn.connectTimeout = 3000
+            httpsConn.connect()
+            resCode = httpsConn.responseCode
+            if (resCode == HttpURLConnection.HTTP_OK) {
+                `in` = httpsConn.inputStream
+                val br = BufferedReader(InputStreamReader(`in`, "iso-8859-1"), 8)
+                val strCurrentLine: String?
+                strCurrentLine = try {
+                    br.readLine()
+                } catch (e: IOException) {
+                    "0"
+                }
+                var reader: JSONObject? = null
+                try {
+                    reader = JSONObject(strCurrentLine)
+                    result = reader.getString("hostname")
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+                `in`.close()
+            } else {
+                result = "dns.visafe.vn"
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return "https://" + result!!.toLowerCase() + "/dns-query/"
     }
 }
