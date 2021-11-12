@@ -584,18 +584,6 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
         val list: MutableList<OtherUtilitiesModel> = mutableListOf()
         list.add(
             OtherUtilitiesModel(
-                "Windows", "https://congcu.khonggianmang.vn/checklist-windows",
-                R.drawable.ic_handbook_windows, TypeUtilities.WINDOWS
-            )
-        )
-        list.add(
-            OtherUtilitiesModel(
-                "MacOS","https://congcu.khonggianmang.vn/checklist-macos",
-                R.drawable.ic_handbook_mac, TypeUtilities.MACOS
-            )
-        )
-        list.add(
-            OtherUtilitiesModel(
                 "Android", "https://congcu.khonggianmang.vn/checklist-android",
                 R.drawable.ic_handbook_android, TypeUtilities.ANDROID
             )
@@ -606,6 +594,19 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
                 R.drawable.ic_handbook_apple, TypeUtilities.IOS
             )
         )
+        list.add(
+            OtherUtilitiesModel(
+                "Windows", "https://congcu.khonggianmang.vn/checklist-windows",
+                R.drawable.ic_handbook_windows, TypeUtilities.WINDOWS
+            )
+        )
+        list.add(
+            OtherUtilitiesModel(
+                "MacOS","https://congcu.khonggianmang.vn/checklist-macos",
+                R.drawable.ic_handbook_mac, TypeUtilities.MACOS
+            )
+        )
+
         return list
     }
 
