@@ -10,10 +10,17 @@ import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.layout_home_add_vpn.view.*
 import kotlinx.android.synthetic.main.layout_home_handbook.view.*
+import kotlinx.android.synthetic.main.layout_home_pass.view.*
+import kotlinx.android.synthetic.main.layout_home_pass.view.view
 import kotlinx.android.synthetic.main.layout_home_protect.view.*
+import kotlinx.android.synthetic.main.layout_home_protect_family.view.*
 import kotlinx.android.synthetic.main.layout_home_utilities.view.*
 import kotlinx.android.synthetic.main.layout_home_utilities.view.rcvOtherUtilities
+import kotlinx.android.synthetic.main.layout_home_website.view.*
+import kotlinx.android.synthetic.main.layout_statistical.view.*
+import kotlinx.android.synthetic.main.layout_upgrade.view.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
