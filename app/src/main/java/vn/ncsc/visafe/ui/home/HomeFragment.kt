@@ -117,11 +117,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
         (activity as MainActivity).isOpenProtectedDevice.observe(this, { isOpen ->
             if (isOpen) {
                 sendNotificationWhenClickButtonOnOff = false
-                if (VERSION.SDK_INT >= 26) {
-                    vibrator?.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
-                } else {
-                    vibrator?.vibrate(200)
-                }
                 status_button = 0
                 binding.ivStatus.visibility = View.GONE
                 binding.tvTap.visibility = View.GONE
@@ -139,11 +134,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
                 .getBoolean(PreferenceKey.STATUS_OPEN_VPN)
         ) {
             sendNotificationWhenClickButtonOnOff = true
-            if (VERSION.SDK_INT >= 26) {
-                vibrator?.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
-            } else {
-                vibrator?.vibrate(200)
-            }
             status_button = 0
             binding.ivStatus.visibility = View.GONE
             binding.tvTap.visibility = View.GONE

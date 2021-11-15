@@ -543,16 +543,11 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
         val list: MutableList<OtherUtilitiesModel> = mutableListOf()
         list.add(
             OtherUtilitiesModel(
-                "Tin tức, cảnh báo", "https://congcu.khonggianmang.vn/news-feed",
+                "Tin tức,\ncảnh báo", "https://congcu.khonggianmang.vn/news-feed",
                 R.drawable.ic_newspaper, TypeUtilities.TIN_TUC_CANH_BAO
             )
         )
-        list.add(
-            OtherUtilitiesModel(
-                "Gửi cảnh báo", "",
-                R.drawable.ic_send_alert_email, TypeUtilities.GUI_BAO_CAO
-            )
-        )
+
         list.add(
             OtherUtilitiesModel(
                 "Kiểm tra WiFi", "https://congcu.khonggianmang.vn/check-ipma",
@@ -561,7 +556,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
         )
         list.add(
             OtherUtilitiesModel(
-                "Kiểm tra độ lọt tài khoản", "https://congcu.khonggianmang.vn/check-data-leak",
+                "Kiểm tra lộ lọt thông tin", "https://congcu.khonggianmang.vn/check-data-leak",
                 R.drawable.ic_check_data_leak, TypeUtilities.KIEM_TRA_DO_LOT_TK
             )
         )
@@ -633,7 +628,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
                             binding.layoutHomeProtect.switchHomeBlockTracking.isChecked =
                                 it.native_tracking?.isNotEmpty() == true
                             doGetStaticAGroup(false, TimeStatistical.HANG_NGAY.value)
-//                            doGetStaticDevice(it, TimeStatistical.HANG_NGAY.value)
+//                          doGetStaticDevice(it, TimeStatistical.HANG_NGAY.value)
                         }
                     } else {
                         dismissProgress()
