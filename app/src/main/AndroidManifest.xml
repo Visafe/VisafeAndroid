@@ -4,7 +4,7 @@
     package="vn.ncsc.visafe"
     android:installLocation="auto"
     android:versionCode="23"
-    android:versionName="1.5.4.1">
+    android:versionName="@string/version_name">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />

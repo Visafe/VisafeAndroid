@@ -1,5 +1,6 @@
 package vn.ncsc.visafe.ui.home
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -16,14 +17,12 @@ import retrofit2.Response
 import vn.ncsc.visafe.BuildConfig
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.ViSafeApp
-import vn.ncsc.visafe.base.BaseActivity
 import vn.ncsc.visafe.base.BaseFragment
 import vn.ncsc.visafe.data.BaseCallback
 import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.databinding.FragmentProfileBinding
 import vn.ncsc.visafe.model.UserInfo
 import vn.ncsc.visafe.model.request.RegisterRequest
-import vn.ncsc.visafe.model.response.DeviceGroup
 import vn.ncsc.visafe.ui.MainActivity
 import vn.ncsc.visafe.ui.VipMemberActivity
 import vn.ncsc.visafe.ui.authentication.RegisterActivity
@@ -36,43 +35,57 @@ import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 import vn.ncsc.visafe.utils.setOnSingClickListener
 
+
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     override fun layoutRes(): Int = R.layout.fragment_profile
     private var userInfo: UserInfo? = null
 
+    @SuppressLint("SetTextI18n")
     override fun initView() {
-        (activity as MainActivity).isLoadView.observe(this, {
+        (activity as MainActivity).isLoadView.observe(this) {
             if ((activity as MainActivity).isLogin()) {
-                (activity as MainActivity).userInfoLiveData.observe(this, {
+                (activity as MainActivity).userInfoLiveData.observe(this) {
                     if (it != null) {
                         userInfo = it
                         binding.tvName.text = it.fullName
                         binding.tvPhone.text = it.phoneNumber
                     }
+                }
+                binding.ivUser.setImageDrawable(context?.let {
+                    ContextCompat.getDrawable(
+                        it,
+                        R.drawable.ic_anonymous
+                    )
                 })
-                binding.ivUser.setImageDrawable(context?.let { ContextCompat.getDrawable(it, R.drawable.ic_anonymous) })
                 binding.clLogout.visibility = View.VISIBLE
                 binding.clUpgrade.visibility = View.GONE
                 binding.layoutUpgrade.llRegisterNow.visibility = View.GONE
             } else {
-                binding.ivUser.setImageDrawable(context?.let { ContextCompat.getDrawable(it, R.drawable.ic_user_default) })
+                binding.ivUser.setImageDrawable(context?.let {
+                    ContextCompat.getDrawable(
+                        it,
+                        R.drawable.ic_user_default
+                    )
+                })
                 binding.clLogout.visibility = View.GONE
                 binding.clUpgrade.visibility = View.GONE
                 binding.layoutUpgrade.llRegisterNow.visibility = View.VISIBLE
                 binding.tvName.text = getString(R.string.login)
                 binding.tvPhone.text = getString(R.string.login_content)
             }
-        })
+        }
+
+        binding.TextViewTestVersion.text = getString(R.string.phien_ban_thu_nghiem) + " " + getString(R.string.version_name)
 
         if ((activity as MainActivity).isLogin()) {
-            (activity as MainActivity).userInfoLiveData.observe(this, {
+            (activity as MainActivity).userInfoLiveData.observe(this) {
                 if (it != null) {
                     userInfo = it
                     binding.tvName.text = it.fullName
                     binding.tvPhone.text = it.phoneNumber
                 }
-            })
+            }
             binding.ivUser.setImageDrawable(context?.let { ContextCompat.getDrawable(it, R.drawable.ic_anonymous) })
             binding.clLogout.visibility = View.VISIBLE
             binding.clUpgrade.visibility = View.GONE
@@ -83,6 +96,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             binding.clUpgrade.visibility = View.GONE
             binding.layoutUpgrade.llRegisterNow.visibility = View.VISIBLE
         }
+
+
+
         initControl()
     }
 

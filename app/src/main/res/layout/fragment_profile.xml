@@ -490,6 +490,7 @@
                         android:visibility="invisible"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/ivLogout" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <include
@@ -506,7 +507,21 @@
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.core.widget.NestedScrollView>
 
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/TextViewTestVersion"
+            style="@style/Content_Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/_8dp"
+            android:text="@string/phien_ban_thu_nghiem"/>
     </LinearLayout>
 </layout>

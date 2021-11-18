@@ -1,5 +1,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!--==========Demo=============-->
+    <string name="version_name">1.5.4.1</string>
+
     <string name="channel_name">VISAFE đang bảo vệ bạn</string>
     <string name="channel_description">Thông báo này xuất hiện khi VISAFE đang hoạt động.</string>
     <string name="notification_title">VISAFE đang hoạt động</string>
@@ -463,5 +465,6 @@
     <string name="title_member_vip">Bạn là thành viên VIP của Visafe?</string>
     <string name="title_your_save"><![CDATA[Bạn đang <font color=\'#0CD775\'>an toàn</font>]]></string>
     <string name="title_your_dangerous"><![CDATA[Đã phát hiện <font color=\'#E01D1D\'>%s sự cố</font>]]></string>
+  <string name="phien_ban_thu_nghiem">Phiên bản thử nghiệm Visafe:</string>
 
 </resources>
