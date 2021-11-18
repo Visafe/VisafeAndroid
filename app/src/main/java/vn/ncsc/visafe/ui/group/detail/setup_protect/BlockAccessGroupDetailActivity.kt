@@ -349,6 +349,14 @@ class BlockAccessGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreIt
         )
         listBlockServiceDefault.add(
             Subject(
+                "Youtube",
+                "youtube",
+                R.drawable.ic_youtube,
+                false
+            )
+        )
+        listBlockServiceDefault.add(
+            Subject(
                 "Instagram",
                 "instagram",
                 R.drawable.ic_instagram,
@@ -376,6 +384,38 @@ class BlockAccessGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreIt
                 "Netflix",
                 "netflix",
                 R.drawable.ic_netflix,
+                false
+            )
+        )
+        listBlockServiceDefault.add(
+            Subject(
+                "Snapchat",
+                "snapchat",
+                R.drawable.ic_snapchat,
+                false
+            )
+        )
+        listBlockServiceDefault.add(
+            Subject(
+                "Telegram",
+                "telegram",
+                R.drawable.ic_telegram,
+                false
+            )
+        )
+        listBlockServiceDefault.add(
+            Subject(
+                "Skype",
+                "skype",
+                R.drawable.ic_skype,
+                false
+            )
+        )
+        listBlockServiceDefault.add(
+            Subject(
+                "Viber",
+                "viber",
+                R.drawable.ic_viber,
                 false
             )
         )
