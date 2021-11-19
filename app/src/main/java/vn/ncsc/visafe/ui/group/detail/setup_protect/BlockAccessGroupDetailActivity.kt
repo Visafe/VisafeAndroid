@@ -153,7 +153,12 @@ class BlockAccessGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreIt
                 "netflix",
                 "reddit",
                 "9gag",
-                "discord"
+                "discord",
+                "youtube",
+                "viber",
+                "skype",
+                "telegram",
+                "snapchat"
             ) else listOf()
             if (!isChecked) {
                 groupData?.block_webs = mutableListOf()
@@ -173,7 +178,12 @@ class BlockAccessGroupDetailActivity : BaseSetupProtectActivity(), OnClickMoreIt
                 "netflix",
                 "reddit",
                 "9gag",
-                "discord"
+                "discord",
+                "youtube",
+                "viber",
+                "skype",
+                "telegram",
+                "snapchat"
             ) else listOf()
             doUpdateGroup(groupData, this)
         }
