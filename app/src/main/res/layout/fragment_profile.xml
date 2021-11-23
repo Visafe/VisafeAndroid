@@ -281,7 +281,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8dp"
-                        android:text="@string/setting"
+                        android:text="@string/general_setting"
                         android:textColor="@color/color_222222"
                         app:layout_constraintBottom_toBottomOf="@id/ivSetting"
                         app:layout_constraintStart_toEndOf="@id/ivSetting"
