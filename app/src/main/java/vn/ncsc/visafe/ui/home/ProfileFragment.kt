@@ -83,13 +83,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         )
         when (result) {
             "0" -> {
-                binding.statusDns.text = "ATTT Mặc định"
+                binding.statusDns.text = "Mặc định"
             }
             "1" -> {
                 binding.statusDns.text = "Gia đình"
             }
             "2" -> {
-                binding.statusDns.text = "ATTT Nâng cao"
+                binding.statusDns.text = "Nâng cao"
             }
             else -> {
                 binding.statusDns.text = "Cá nhân"
@@ -128,13 +128,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         )
         when (result) {
             "0" -> {
-                binding.statusDns.text = "ATTT Mặc định"
+                binding.statusDns.text = "Mặc định"
             }
             "1" -> {
                 binding.statusDns.text = "Gia đình"
             }
             "2" -> {
-                binding.statusDns.text = "ATTT Nâng cao"
+                binding.statusDns.text = "Nâng cao"
             }
             else -> {
                 binding.statusDns.text = "Cá nhân"

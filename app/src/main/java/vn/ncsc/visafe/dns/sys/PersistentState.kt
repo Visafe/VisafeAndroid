@@ -7,23 +7,16 @@ import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.preference.PreferenceManager
 import android.util.Log
-import org.json.JSONException
-import org.json.JSONObject
+import androidmads.library.qrgenearator.QRGContents
 import vn.ncsc.visafe.R
 import vn.ncsc.visafe.ViSafeApp
-import vn.ncsc.visafe.data.NetworkClient
 import vn.ncsc.visafe.dns.net.setting.Untemplate.strip
 import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStream
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
 import java.util.*
-import javax.net.ssl.HttpsURLConnection
+
 
 class PersistentState {
 
@@ -108,11 +101,12 @@ class PersistentState {
         setServerUrl(context, url)
     }
 
-    private fun setServerUrl(context: Context, url: String?) {
-        val editor = getUserPreferences(context).edit()
-        editor.putString(URL_KEY, url)
+    fun setServerUrl(context: Context?, url: String?) {
+        val editor = getUserPreferences(context!!).edit()
+        editor.putString(QRGContents.URL_KEY, url)
         editor.apply()
     }
+
 
     fun getServerUrl(context: Context): String? {
         val urlTemplate: String = context.let { getUserPreferences(it).getString(URL_KEY, null) }
@@ -151,7 +145,10 @@ class PersistentState {
                 editor.putString("userID", deviceId.lowercase(Locale.getDefault()))
                 editor.putString(
                     "deviceName",
-                    reqString.replace("\\s+".toRegex(), "").replace("[\\+\\.\\^\\-:,%&@*$;!#~=_<>?()]".toRegex(), "")
+                    reqString.replace("\\s+".toRegex(), "").replace(
+                        "[\\+\\.\\^\\-:,%&@*$;!#~=_<>?()]".toRegex(),
+                        ""
+                    )
                         .lowercase(Locale.getDefault())
                 )
                 editor.apply()
