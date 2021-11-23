@@ -29,6 +29,8 @@ class PreferenceKey {
         const val WORKSPACE_CHOOSE = "WORKSPACE_CHOOSE"
 
         const val HOST_NAME = "HOST_NAME"
+
+        const val NOTIFICATION = "Notification"
     }
 
 }
