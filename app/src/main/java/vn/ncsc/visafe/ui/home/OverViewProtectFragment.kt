@@ -547,7 +547,12 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
                 R.drawable.ic_newspaper, TypeUtilities.TIN_TUC_CANH_BAO
             )
         )
-
+        list.add(
+            OtherUtilitiesModel(
+                "Gửi cảnh báo", "",
+                R.drawable.ic_send_alert_email, TypeUtilities.GUI_BAO_CAO
+            )
+        )
         list.add(
             OtherUtilitiesModel(
                 "Kiểm tra WiFi", "https://congcu.khonggianmang.vn/check-ipma",
