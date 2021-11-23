@@ -7,6 +7,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_switch_dns.*
 import vn.ncsc.visafe.R
+import vn.ncsc.visafe.dns.sys.VpnController
 import vn.ncsc.visafe.utils.PreferenceKey
 import vn.ncsc.visafe.utils.SharePreferenceKeyHelper
 import java.util.*
@@ -74,12 +75,15 @@ class SwitchDnsActivity : AppCompatActivity() {
                     }
 
                 }
-
+                startDnsVpnService()
             })
 
         iv_back.setOnClickListener {
             finish()
         }
+    }
+    private fun startDnsVpnService() {
+        applicationContext?.let { VpnController.instance.start(it) }
     }
 
     private fun initView()

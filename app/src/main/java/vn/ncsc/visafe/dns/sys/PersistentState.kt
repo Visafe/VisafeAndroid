@@ -167,7 +167,7 @@ class PersistentState {
                 println(shareVip.getString("domainVIP", "") + share.getString("userID", ""))
                 shareVip.getString("domainVIP", "") + share.getString("userID", "")
             } else {
-                Log.e("expandUrl: ", NetworkClient.DOMAIN + share.getString("userID", ""))
+                Log.e("expandUrl: ", getDOH() + share.getString("userID", ""))
                 getDOH() + share.getString("userID", "")
             }
         }

@@ -65,38 +65,43 @@ class SplashActivity : BaseActivity() {
         }
         handleDeeplink()
         getDeviceId()
-        val client = NetworkClient()
-        val call = client.clientWithoutToken(context = applicationContext).doGetDnsUrl()
-        call.enqueue(object : Callback<RoutingResponse> {
-            override fun onResponse(call: Call<RoutingResponse>, response: Response<RoutingResponse>) {
-                if (response.code() == NetworkClient.CODE_SUCCESS) {
-                    response.body()?.let {
-                        SharePreferenceKeyHelper.getInstance(application)
-                            .putString(
-                                PreferenceKey.HOST_NAME,
-                                "https://" + it.hostname?.lowercase(Locale.getDefault()) + "/dns-query/"
-                            )
-                    }
-                } else {
-                    SharePreferenceKeyHelper.getInstance(application)
-                        .putString(
-                            PreferenceKey.HOST_NAME,
-                            NetworkClient.DOMAIN
-                        )
-                }
+//        val client = NetworkClient()
+//        val call = client.clientWithoutToken(context = applicationContext).doGetDnsUrl()
+//        call.enqueue(object : Callback<RoutingResponse> {
+//            override fun onResponse(call: Call<RoutingResponse>, response: Response<RoutingResponse>) {
+//                if (response.code() == NetworkClient.CODE_SUCCESS) {
+//                    response.body()?.let {
+        SharePreferenceKeyHelper.getInstance(application)
+            .putString(
+                PreferenceKey.HOST_NAME,
+                "https://security.visafe.vn/dns-query/"
+            )
+        SharePreferenceKeyHelper.getInstance(application)
+            .putString(
+                PreferenceKey.RADIO_BUTTON_DNS,
+                "0"
+            )
+//                    }
+//                } else {
+//                    SharePreferenceKeyHelper.getInstance(application)
+//                        .putString(
+//                            PreferenceKey.HOST_NAME,
+//                            NetworkClient.DOMAIN
+//                        )
+//                }
                 handleProcessing()
-            }
+//            }
+//
+//            override fun onFailure(call: Call<RoutingResponse>, t: Throwable) {
+//                SharePreferenceKeyHelper.getInstance(application)
+//                    .putString(
+//                        PreferenceKey.HOST_NAME,
+//                        NetworkClient.DOMAIN
+//                    )
+//                handleProcessing()
+//            }
 
-            override fun onFailure(call: Call<RoutingResponse>, t: Throwable) {
-                SharePreferenceKeyHelper.getInstance(application)
-                    .putString(
-                        PreferenceKey.HOST_NAME,
-                        NetworkClient.DOMAIN
-                    )
-                handleProcessing()
-            }
-
-        })
+//        })
     }
 
     private fun handleProcessing() {
