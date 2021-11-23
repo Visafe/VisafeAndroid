@@ -31,6 +31,8 @@ class PreferenceKey {
         const val HOST_NAME = "HOST_NAME"
 
         const val NOTIFICATION = "Notification"
+
+        const val RADIO_BUTTON_DNS = "RADIO_BUTTON_DNS"
     }
 
 }
