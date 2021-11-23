@@ -471,5 +471,13 @@
     <string name="title_your_save"><![CDATA[Bạn đang <font color=\'#0CD775\'>an toàn</font>]]></string>
     <string name="title_your_dangerous"><![CDATA[Đã phát hiện <font color=\'#E01D1D\'>%s sự cố</font>]]></string>
   <string name="phien_ban_thu_nghiem">Phiên bản thử nghiệm Visafe:</string>
+    <string name="ca_nhan_hoa_subtext">Bảo vệ theo chính sách tuỳ chỉnh,\nyêu cầu có tài khoản tại <i>app.visafe.vn</i></string>
+  <string name="ca_nhan_hoa">Cá nhân hoá</string>
+  <string name="attt_nang_cao_subtext">Chế độ chú trọng ATTT cao nhất, chỉ nên\nsử dụng khi giao dịch trực tuyến</string>
+  <string name="attt_nang_cao">An toàn thông tin (nâng cao)</string>
+  <string name="gia_dinh_subtext">Bảo vệ trẻ em an toàn khi truy cập\ntrên mạng (chặn nội dung người lớn,…)</string>
+  <string name="gia_dinh">Gia đình</string>
+  <string name="attt_mac_dinh_subtext">Bảo vệ phần lớn tấn công mạng,\nphù hợp cho mọi người</string>
+  <string name="attt_mac_dinh">An toàn thông tin (mặc định)</string>
 
 </resources>
