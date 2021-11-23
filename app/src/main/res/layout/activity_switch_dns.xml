@@ -79,7 +79,7 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_shield_done"
                 android:scaleType="center"
-                app:tint="@color/colorPrimary"
+                app:tint="@color/cardview_dark_background"
                 android:layout_marginEnd="@dimen/_2dp"/>
 
             <LinearLayout
@@ -128,9 +128,9 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_shield_done"
+                android:src="@drawable/ic_baseline_child_care"
                 android:scaleType="center"
-                app:tint="@color/colorPrimary"
+                app:tint="@color/cardview_dark_background"
                 android:layout_marginEnd="@dimen/_2dp"/>
 
             <LinearLayout
@@ -178,9 +178,9 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_shield_done"
+                android:src="@drawable/ic_baseline_credit_card"
                 android:scaleType="center"
-                app:tint="@color/colorPrimary"
+                app:tint="@color/cardview_dark_background"
                 android:layout_marginEnd="@dimen/_2dp"/>
 
             <LinearLayout
@@ -228,9 +228,9 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_shield_done"
+                android:src="@drawable/ic_baseline_blur_circular"
                 android:scaleType="center"
-                app:tint="@color/colorPrimary"
+                app:tint="@color/cardview_dark_background"
                 android:layout_marginEnd="@dimen/_2dp"/>
 
             <LinearLayout
