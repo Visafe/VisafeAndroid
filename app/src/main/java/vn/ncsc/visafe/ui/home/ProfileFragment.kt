@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.google.gson.Gson
@@ -105,6 +106,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     private fun initControl() {
         binding.clSetting.setOnSingClickListener {
             startActivity(Intent(context, SettingActivity::class.java))
+        }
+        binding.setDNSServer.setOnSingClickListener {
+            Toast.makeText(context, "Thiết lập DNS server", Toast.LENGTH_SHORT).show()
         }
         binding.clSupport.setOnSingClickListener {
             startActivity(Intent(context, SupportCenterActivity::class.java))

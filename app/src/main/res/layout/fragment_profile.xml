@@ -193,12 +193,78 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clSetting"
+                    android:id="@+id/setDNSServer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/clUpgrade">
+
+                    <ImageView
+                        android:id="@+id/imageSetDNSServer"
+                        android:layout_width="@dimen/_20dp"
+                        android:layout_height="@dimen/_20dp"
+                        android:layout_margin="@dimen/_14dp"
+                        android:src="@drawable/ic_dns"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        style="@style/Content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8dp"
+                        android:text="@string/DNSsetting"
+                        android:textColor="@color/color_222222"
+                        app:layout_constraintBottom_toBottomOf="@id/imageSetDNSServer"
+                        app:layout_constraintStart_toEndOf="@id/imageSetDNSServer"
+                        app:layout_constraintTop_toTopOf="@id/imageSetDNSServer" />
+
+                    <ImageView
+                        android:id="@+id/ivArrow0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_24dp"
+                        android:src="@drawable/ic_stroke"
+                        app:layout_constraintBottom_toBottomOf="@id/imageSetDNSServer"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/imageSetDNSServer"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        style="@style/Content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_12dp"
+                        android:text="@string/dns_hien_tai"
+                        android:textColor="@color/color_666666"
+                        app:layout_constraintBottom_toBottomOf="@id/imageSetDNSServer"
+                        app:layout_constraintEnd_toStartOf="@id/ivArrow0"
+                        app:layout_constraintTop_toTopOf="@id/imageSetDNSServer" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="@dimen/_16dp"
+                        android:background="@color/color_EEEEEE"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/imageSetDNSServer" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="@dimen/_0dp"
+                    android:background="@color/color_EEEEEE"
+                    app:layout_constraintTop_toBottomOf="@id/setDNSServer" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clSetting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/setDNSServer">
 
                     <ImageView
                         android:id="@+id/ivSetting"
@@ -215,7 +281,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8dp"
-                        android:text="@string/setting"
+                        android:text="@string/general_setting"
                         android:textColor="@color/color_222222"
                         app:layout_constraintBottom_toBottomOf="@id/ivSetting"
                         app:layout_constraintStart_toEndOf="@id/ivSetting"

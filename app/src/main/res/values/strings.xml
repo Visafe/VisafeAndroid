@@ -119,6 +119,8 @@
     <string name="thanh_vien">Thành viên</string>
     <string name="protect">Trang chủ</string>
     <string name="setting">Cài đặt</string>
+    <string name="general_setting">Cài đặt chung</string>
+    <string name="DNSsetting">Cấu hình bảo vệ</string>
     <string name="utilities">Tiện ích</string>
     <string name="no_register">Chưa đăng ký</string>
     <string name="register_device">Tham gia nhóm</string>
@@ -310,7 +312,8 @@
     <string name="login_content">Đăng nhập để sử dụng tính năng nâng cao</string>
     <string name="nang_cap_goi">Nâng cấp gói</string>
     <string name="goi_cuoc_dang_dung">Gói cước đang dùng</string>
-    <string name="mat_khau_bao_mat">Mật khẩu &amp; bảo mật</string>
+    <string name="mat_khau_bao_mat">Bảo mật &amp; Thông báo</string>
+    <string name="dns_hien_tai">Mặc định</string>
     <string name="nhap_ma">Nhập mã</string>
     <string name="trung_tam_tro_giup">Trung tâm trợ giúp</string>
     <string name="rate_app">Đánh giá ứng dụng</string>

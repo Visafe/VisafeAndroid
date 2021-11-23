@@ -355,22 +355,22 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
         }
 
         //bảo vệ thiết bị
-        binding.layoutHomeProtect.llHomeProtectDevice.setOnSingClickListener {
-            if ((activity as MainActivity).needLogin(MainActivity.POSITION_PROTECT)) {
-                return@setOnSingClickListener
-            }
-            val intent = Intent(requireContext(), ProtectDeviceActivity::class.java)
-            intent.putExtra(ProtectDeviceActivity.DATA_GROUP_KEY, groupData)
-            intent.putExtra(
-                ProtectDeviceActivity.NUM_DANGEROUS_DOMAIN,
-                statsWorkSpace?.num_dangerous_domain
-            )
-            intent.putExtra(
-                ProtectDeviceActivity.NUM_DANGEROUS_DOMAIN_ALL,
-                statsWorkSpace?.num_dangerous_domain_all
-            )
-            resultLauncherProtectDevice.launch(intent)
-        }
+//        binding.layoutHomeProtect.llHomeProtectDevice.setOnSingClickListener {
+//            if ((activity as MainActivity).needLogin(MainActivity.POSITION_PROTECT)) {
+//                return@setOnSingClickListener
+//            }
+//            val intent = Intent(requireContext(), ProtectDeviceActivity::class.java)
+//            intent.putExtra(ProtectDeviceActivity.DATA_GROUP_KEY, groupData)
+//            intent.putExtra(
+//                ProtectDeviceActivity.NUM_DANGEROUS_DOMAIN,
+//                statsWorkSpace?.num_dangerous_domain
+//            )
+//            intent.putExtra(
+//                ProtectDeviceActivity.NUM_DANGEROUS_DOMAIN_ALL,
+//                statsWorkSpace?.num_dangerous_domain_all
+//            )
+//            resultLauncherProtectDevice.launch(intent)
+//        }
         //switch thiết bị
         binding.layoutHomeProtect.switchHomeProtectDevice.setOnCheckedChangeListener { buttonView, isChecked ->
             if (buttonView.isPressed) {//switchWidget: ", "click
