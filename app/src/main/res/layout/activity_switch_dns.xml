@@ -19,7 +19,7 @@
             android:layout_height="@dimen/_40dp"
             android:layout_marginStart="@dimen/_4sdp"
             android:padding="@dimen/_10dp"
-            android:src="@drawable/ic_back"
+            android:src="@drawable/ic_arrow_left_black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,11 +38,11 @@
             android:paddingEnd="@dimen/_40sdp"
             android:paddingStart="@dimen/_40sdp"
             android:textSize="@dimen/text_size_16sp"
+            android:text="@string/DNSsetting"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Cấu hình DNS" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -73,16 +73,17 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_shield_done"
                     android:scaleType="center"
-                    app:tint="@color/colorPrimary"
+                    app:tint="@color/cardview_dark_background"
                     android:layout_marginEnd="@dimen/_2dp"/>
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10dp">
                     <TextView
                         android:text="Bảo vệ mặc định"
-                        android:textStyle="bold"
+                        android:textColor="@color/color_222222"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
@@ -103,18 +104,19 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_shield_done"
+                    android:src="@drawable/ic_baseline_child_care"
                     android:scaleType="center"
-                    app:tint="@color/colorPrimary"
+                    app:tint="@color/cardview_dark_background"
                     android:layout_marginEnd="@dimen/_2dp"/>
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
+                    android:layout_marginLeft="@dimen/_10dp"
                     android:layout_height="wrap_content">
                     <TextView
                         android:text="Bảo vệ trẻ em"
-                        android:textStyle="bold"
+                        android:textColor="@color/color_222222"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
@@ -135,18 +137,19 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_shield_done"
+                    android:src="@drawable/ic_baseline_credit_card"
                     android:scaleType="center"
-                    app:tint="@color/colorPrimary"
+                    app:tint="@color/cardview_dark_background"
                     android:layout_marginEnd="@dimen/_2dp"/>
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
+                    android:layout_marginLeft="@dimen/_10dp"
                     android:layout_height="wrap_content">
                     <TextView
                         android:text="Bảo vệ khi thanh toán trực tuyến"
-                        android:textStyle="bold"
+                        android:textColor="@color/color_222222"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
@@ -167,18 +170,19 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_shield_done"
+                    android:src="@drawable/ic_baseline_blur_circular"
                     android:scaleType="center"
-                    app:tint="@color/colorPrimary"
+                    app:tint="@color/cardview_dark_background"
                     android:layout_marginEnd="@dimen/_2dp"/>
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
+                    android:layout_marginLeft="@dimen/_10dp"
                     android:layout_height="wrap_content">
                     <TextView
                         android:text="Bảo vệ theo cấu hình riêng"
-                        android:textStyle="bold"
+                        android:textColor="@color/color_222222"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
