@@ -267,14 +267,14 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 openTab(POSITION_SCAN)
                 return true
             }
-            R.id.navigation_notification -> {
-                openTab(POSITION_NOTIFICATION)
-                return true
-            }
-//            R.id.navigation_profile -> {
-//                openTab(POSITION_PROFILE)
+//            R.id.navigation_notification -> {
+//                openTab(POSITION_NOTIFICATION)
 //                return true
 //            }
+            R.id.navigation_profile -> {
+                openTab(POSITION_PROFILE)
+                return true
+            }
             else -> {
                 return false
             }
