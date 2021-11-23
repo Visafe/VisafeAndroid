@@ -187,42 +187,47 @@ class PersistentState {
     }
     fun getDOH(): String? {
         var result: String? = null
-        result = ""
-        val resCode: Int
-        val `in`: InputStream
-        try {
-            val url = URL(NetworkClient.URL_ROOT + "routing")
-            val urlConn = url.openConnection()
-            val httpsConn = urlConn as HttpsURLConnection
-            httpsConn.allowUserInteraction = false
-            httpsConn.instanceFollowRedirects = true
-            httpsConn.requestMethod = "GET"
-            httpsConn.connectTimeout = 3000
-            httpsConn.connect()
-            resCode = httpsConn.responseCode
-            if (resCode == HttpURLConnection.HTTP_OK) {
-                `in` = httpsConn.inputStream
-                val br = BufferedReader(InputStreamReader(`in`, "iso-8859-1"), 8)
-                val strCurrentLine: String?
-                strCurrentLine = try {
-                    br.readLine()
-                } catch (e: IOException) {
-                    "0"
-                }
-                var reader: JSONObject? = null
-                try {
-                    reader = JSONObject(strCurrentLine)
-                    result = reader.getString("hostname")
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-                `in`.close()
-            } else {
-                result = "dns.visafe.vn"
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return "https://" + result!!.toLowerCase() + "/dns-query/"
+        result = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(
+            PreferenceKey.HOST_NAME
+        )
+        return result
     }
+
 }
+
+
+//        val resCode: Int
+//        val `in`: InputStream
+//        try {
+//            val url = URL(NetworkClient.URL_ROOT + "routing")
+//            val urlConn = url.openConnection()
+//            val httpsConn = urlConn as HttpsURLConnection
+//            httpsConn.allowUserInteraction = false
+//            httpsConn.instanceFollowRedirects = true
+//            httpsConn.requestMethod = "GET"
+//            httpsConn.connectTimeout = 3000
+//            httpsConn.connect()
+//            resCode = httpsConn.responseCode
+//            if (resCode == HttpURLConnection.HTTP_OK) {
+//                `in` = httpsConn.inputStream
+//                val br = BufferedReader(InputStreamReader(`in`, "iso-8859-1"), 8)
+//                val strCurrentLine: String?
+//                strCurrentLine = try {
+//                    br.readLine()
+//                } catch (e: IOException) {
+//                    "0"
+//                }
+//                var reader: JSONObject? = null
+//                try {
+//                    reader = JSONObject(strCurrentLine)
+//                    result = reader.getString("hostname")
+//                } catch (e: JSONException) {
+//                    e.printStackTrace()
+//                }
+//                `in`.close()
+//            } else {
+//                result = "dns.visafe.vn"
+//            }
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//        }
