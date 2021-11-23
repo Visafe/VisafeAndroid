@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        style="@style/TitleToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:gravity="center"
+        android:text="Cấu hình DNS" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:background="@color/color_EEEEEE"/>
+
+    <RadioGroup
+        android:id="@+id/switch_dns_button_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_3sdp"
+            android:layout_margin="@dimen/_2sdp"
+            tools:ignore="RtlSymmetry">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Bảo vệ mặc định"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="Bảo vệ Bảo vệ mặc định"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:id="@+id/radio0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimary"
+                android:checked="true"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_3sdp"
+            android:layout_margin="@dimen/_2sdp">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Bảo vệ trẻ em"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="Bảo vệ trẻ em"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:id="@+id/radio1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimary"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_3sdp"
+            android:layout_margin="@dimen/_2sdp">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Bảo vệ khi thanh toán trực tuyến"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="Bảo khi thanh toán trực tuyến"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:id="@+id/radio2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimary"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_3sdp"
+            android:layout_margin="@dimen/_2sdp">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Bảo vệ theo cấu hình riêng"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="Bảo vệ theo cấu hình riêng"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:id="@+id/radio3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimary"/>
+
+        </LinearLayout>
+
+    </RadioGroup>
+
+</LinearLayout>
+
+<!--<RadioButton-->
+<!--android:id="@+id/radio0"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:checked="true"-->
+<!--android:buttonTint="@color/colorPrimary"-->
+<!--android:paddingLeft="@dimen/_16sdp"-->
+<!--android:paddingTop="@dimen/_3sdp"-->
+<!--android:paddingRight="@dimen/_16sdp"-->
+<!--android:paddingBottom="@dimen/_3sdp"-->
+<!--android:layout_margin="@dimen/_2sdp"-->
+<!--android:layoutDirection="rtl"-->
+<!--android:textAlignment="textStart"-->
+<!--android:layout_gravity="start"-->
+<!--android:text="Bảo vệ mặc định"-->
+<!--    />-->
+
+<!--<RadioButton-->
+<!--android:id="@+id/radio1"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:buttonTint="@color/colorPrimary"-->
+<!--android:paddingLeft="@dimen/_16sdp"-->
+<!--android:paddingTop="@dimen/_3sdp"-->
+<!--android:paddingRight="@dimen/_16sdp"-->
+<!--android:paddingBottom="@dimen/_3sdp"-->
+<!--android:layout_margin="@dimen/_2sdp"-->
+<!--android:layoutDirection="rtl"-->
+<!--android:textAlignment="textStart"-->
+<!--android:layout_gravity="start"-->
+<!--android:text="Bảo vệ trẻ em"/>-->
+
+<!--<RadioButton-->
+<!--android:id="@+id/radio2"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:buttonTint="@color/colorPrimary"-->
+<!--android:paddingLeft="@dimen/_16sdp"-->
+<!--android:paddingTop="@dimen/_3sdp"-->
+<!--android:paddingRight="@dimen/_16sdp"-->
+<!--android:paddingBottom="@dimen/_3sdp"-->
+<!--android:layout_margin="@dimen/_2sdp"-->
+<!--android:layoutDirection="rtl"-->
+<!--android:textAlignment="textStart"-->
+<!--android:layout_gravity="start"-->
+<!--android:text="Bảo vệ khi thanh toán trực tuyến"/>-->
+<!--<RadioButton-->
+<!--android:id="@+id/radio3"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:buttonTint="@color/colorPrimary"-->
+<!--android:paddingLeft="@dimen/_16sdp"-->
+<!--android:paddingTop="@dimen/_3sdp"-->
+<!--android:paddingRight="@dimen/_16sdp"-->
+<!--android:paddingBottom="@dimen/_3sdp"-->
+<!--android:layout_margin="@dimen/_2sdp"-->
+<!--android:layoutDirection="rtl"-->
+<!--android:textAlignment="textStart"-->
+<!--android:layout_gravity="start"-->
+<!--android:text="Bảo vệ theo cấu hình riêng"/>-->
