@@ -88,14 +88,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10dp">
                     <TextView
-                        android:text="An toàn thông tin (mặc định)"
+                        android:text="@string/attt_mac_dinh"
                         android:textColor="@color/color_222222"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
-                        android:text="Bảo vệ phần lớn tấn công mạng,\nphù hợp cho mọi người"
+                        android:text="@string/attt_mac_dinh_subtext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -126,14 +126,14 @@
                     android:layout_marginLeft="@dimen/_10dp"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:text="Gia đình"
+                        android:text="@string/gia_dinh"
                         android:textColor="@color/color_222222"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
-                        android:text="Bảo vệ trẻ em an toàn khi truy cập\ntrên mạng (chặn nội dung người lớn,…)"
+                        android:text="@string/gia_dinh_subtext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -164,14 +164,14 @@
                     android:layout_marginLeft="@dimen/_10dp"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:text="An toàn thông tin (nâng cao)"
+                        android:text="@string/attt_nang_cao"
                         android:textColor="@color/color_222222"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
-                        android:text="Chế độ chú trọng ATTT cao nhất, chỉ nên\nsử dụng khi giao dịch trực tuyến"
+                        android:text="@string/attt_nang_cao_subtext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -205,7 +205,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Cá nhân hoá"
+                        android:text="@string/ca_nhan_hoa"
                         android:textColor="@color/color_222222"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -213,7 +213,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Bảo vệ theo chính sách tuỳ chỉnh,\nyêu cầu có tài khoản tại app.visafe.vn" />
+                        android:text="@string/ca_nhan_hoa_subtext" />
                 </LinearLayout>
 
             </LinearLayout>
