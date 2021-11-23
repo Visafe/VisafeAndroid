@@ -19,7 +19,7 @@
             android:layout_height="@dimen/_40dp"
             android:layout_marginStart="@dimen/_4sdp"
             android:padding="@dimen/_10dp"
-            android:src="@drawable/ic_back"
+            android:src="@drawable/ic_arrow_left_black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -42,7 +42,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Cấu hình DNS" />
+            tools:text="@string/DNSsetting" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
