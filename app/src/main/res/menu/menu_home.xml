@@ -24,6 +24,6 @@
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/ic_setting"
         android:title="@string/tai_khoan" />
 </menu>
