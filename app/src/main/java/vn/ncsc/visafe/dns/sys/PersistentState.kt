@@ -178,14 +178,6 @@ class PersistentState {
         return extractHost(expandUrl(context, getServerUrl(context)))
     }
 
-    /**
-     * Extract the hostname from the URL, while avoiding disclosure of custom servers.
-     *
-     * @param url A DoH server configuration url (or url template).
-     * @return Returns the domain name in the URL, or "CUSTOM_SERVER" if the url is not one of the
-     * built-in servers.
-     */
-
     private fun getApprovalSettings(context: Context): SharedPreferences {
         return context.getSharedPreferences(APPROVAL_PREFS_NAME, Context.MODE_PRIVATE)
     }

@@ -57,7 +57,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
     private var count_noti_on = 0
     private var count_noti_off = 0
     private var sendNotificationWhenClickButtonOnOff = false
-
+    private var first_start:Boolean = true
     companion object {
         const val REQUEST_CODE_PREPARE_VPN = 100
         fun newInstance() = HomeFragment()
@@ -111,24 +111,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), SharedPreferences.OnSh
     override fun layoutRes(): Int = R.layout.fragment_home
 
     override fun initView() {
-        binding.roundImage.visibility = View.VISIBLE
+        binding.roundImage.visibility = View.INVISIBLE
         binding.roundImage.startAnimation(aniRotateClk)
-
-        (activity as MainActivity).isOpenProtectedDevice.observe(this, { isOpen ->
-            if (isOpen) {
-                sendNotificationWhenClickButtonOnOff = false
-                status_button = 0
-                binding.ivStatus.visibility = View.GONE
-                binding.tvTap.visibility = View.GONE
-                binding.status.text =
-                    getString(R.string.status_waiting)
-                //active VPN
-//                prepareAndStartDnsVpn()
-            } else {
-                status_button = 1
-                stopDnsVpnService()
-            }
-        })
 
         if (SharePreferenceKeyHelper.getInstance(ViSafeApp())
                 .getBoolean(PreferenceKey.STATUS_OPEN_VPN)

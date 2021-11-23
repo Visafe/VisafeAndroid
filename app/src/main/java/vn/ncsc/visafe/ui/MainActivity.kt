@@ -259,10 +259,10 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 openTab(POSITION_PROTECT)
                 return true
             }
-            R.id.navigation_group -> {
-                openTab(POSITION_GROUP)
-                return true
-            }
+//            R.id.navigation_group -> {
+//                openTab(POSITION_GROUP)
+//                return true
+//            }
             R.id.navigation_scan -> {
                 openTab(POSITION_SCAN)
                 return true
@@ -271,10 +271,10 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 openTab(POSITION_NOTIFICATION)
                 return true
             }
-            R.id.navigation_profile -> {
-                openTab(POSITION_PROFILE)
-                return true
-            }
+//            R.id.navigation_profile -> {
+//                openTab(POSITION_PROFILE)
+//                return true
+//            }
             else -> {
                 return false
             }

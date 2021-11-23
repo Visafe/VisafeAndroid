@@ -7,10 +7,10 @@
         android:icon="@drawable/ic_home"
         android:title="@string/protect" />
 
-    <item
-        android:id="@+id/navigation_group"
-        android:icon="@drawable/ic_user"
-        android:title="@string/workspaces" />
+<!--    <item-->
+<!--        android:id="@+id/navigation_group"-->
+<!--        android:icon="@drawable/ic_user"-->
+<!--        android:title="@string/workspaces" />-->
 
     <item
         android:id="@+id/navigation_scan"
@@ -22,8 +22,8 @@
         android:icon="@drawable/ic_notification"
         android:title="@string/thong_bao" />
 
-    <item
-        android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_profile"
-        android:title="@string/tai_khoan" />
+<!--    <item-->
+<!--        android:id="@+id/navigation_profile"-->
+<!--        android:icon="@drawable/ic_profile"-->
+<!--        android:title="@string/tai_khoan" />-->
 </menu>
