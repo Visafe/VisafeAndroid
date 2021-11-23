@@ -259,7 +259,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
                     R.drawable.ic_info_circle
                 }
             )
-            binding.layoutAddVpn.cardViewAddVpn.visibility = if (it) View.GONE else View.VISIBLE
+            binding.layoutAddVpn.cardViewAddVpn.visibility = if (it) View.GONE else View.GONE
         })
 
         binding.layoutAddVpn.btnHomeVpnAdd.text =
@@ -284,7 +284,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
             binding.layoutHomeProtect.llHomeBlockAds.visibility = View.GONE
             binding.layoutHomeProtect.llHomeBlockTracking.visibility = View.GONE
             binding.cardViewStatistical.visibility = View.VISIBLE
-            binding.layoutAddVpn.cardViewAddVpn.visibility = View.VISIBLE
+            binding.layoutAddVpn.cardViewAddVpn.visibility = View.GONE
             binding.layoutHomeProtectFamily.cardViewHomeProtectFamily.visibility = View.VISIBLE
             binding.layoutUpgrade.llRegisterNow.visibility = View.GONE
         } else {

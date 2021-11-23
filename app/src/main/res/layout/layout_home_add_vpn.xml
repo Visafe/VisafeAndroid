@@ -10,6 +10,7 @@
     android:layout_marginEnd="@dimen/_16sdp"
     android:layout_marginBottom="@dimen/_8sdp"
     app:cardCornerRadius="@dimen/_16dp"
+    android:visibility="gone"
     app:cardElevation="@dimen/_8dp">
 
     <RelativeLayout
