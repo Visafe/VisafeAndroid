@@ -25,6 +25,7 @@ import vn.ncsc.visafe.databinding.FragmentProfileBinding
 import vn.ncsc.visafe.model.UserInfo
 import vn.ncsc.visafe.model.request.RegisterRequest
 import vn.ncsc.visafe.ui.MainActivity
+import vn.ncsc.visafe.ui.SwitchDnsActivity
 import vn.ncsc.visafe.ui.VipMemberActivity
 import vn.ncsc.visafe.ui.authentication.RegisterActivity
 import vn.ncsc.visafe.ui.create.group.access_manager.Action
@@ -108,7 +109,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             startActivity(Intent(context, SettingActivity::class.java))
         }
         binding.setDNSServer.setOnSingClickListener {
-            Toast.makeText(context, "Thiết lập DNS server", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, "Thiết lập DNS server", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(context, SwitchDnsActivity::class.java))
         }
         binding.clSupport.setOnSingClickListener {
             startActivity(Intent(context, SupportCenterActivity::class.java))
