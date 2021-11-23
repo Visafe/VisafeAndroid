@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/color_EEEEEE">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_container"
@@ -54,21 +55,24 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/_15sdp"
-        android:layout_marginRight="@dimen/_10sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="@dimen/_200sdp"
-            android:layout_height="wrap_content">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_32dp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height_radio"
                 android:paddingBottom="@dimen/_3sdp"
-                android:layout_margin="@dimen/_2sdp">
+                android:paddingStart="@dimen/_10dp"
+                tools:ignore="RtlSymmetry"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:background="@color/white">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -84,12 +88,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10dp">
                     <TextView
-                        android:text="Bảo vệ mặc định"
+                        android:text="An toàn thông tin (mặc định)"
                         android:textColor="@color/color_222222"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
-                        android:text="Bảo vệ Bảo vệ mặc định"
+                        android:text="Bảo vệ phần lớn tấn công mạng,\nphù hợp cho mọi người"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -99,9 +105,12 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_32dp"
+                android:layout_height="@dimen/layout_height_radio"
                 android:paddingBottom="@dimen/_3sdp"
-                android:layout_margin="@dimen/_2sdp">
+                android:paddingStart="@dimen/_10dp"
+                tools:ignore="RtlSymmetry"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:background="@color/white">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -117,12 +126,14 @@
                     android:layout_marginLeft="@dimen/_10dp"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:text="Bảo vệ trẻ em"
+                        android:text="Gia đình"
                         android:textColor="@color/color_222222"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
-                        android:text="Bảo vệ trẻ em"
+                        android:text="Bảo vệ trẻ em an toàn khi truy cập\ntrên mạng (chặn nội dung người lớn,…)"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -132,9 +143,12 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_32dp"
+                android:layout_height="@dimen/layout_height_radio"
                 android:paddingBottom="@dimen/_3sdp"
-                android:layout_margin="@dimen/_2sdp">
+                android:paddingStart="@dimen/_10dp"
+                tools:ignore="RtlSymmetry"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:background="@color/white">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -146,16 +160,18 @@
 
                 <LinearLayout
                     android:orientation="vertical"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_marginLeft="@dimen/_10dp"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:text="Bảo vệ khi thanh toán trực tuyến"
+                        android:text="An toàn thông tin (nâng cao)"
                         android:textColor="@color/color_222222"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
-                        android:text="Bảo khi thanh toán trực tuyến"
+                        android:text="Chế độ chú trọng ATTT cao nhất, chỉ nên\nsử dụng khi giao dịch trực tuyến"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -163,53 +179,52 @@
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_32dp"
+                android:layout_height="@dimen/layout_height_radio"
+                android:orientation="horizontal"
                 android:paddingBottom="@dimen/_3sdp"
-                android:layout_margin="@dimen/_2sdp">
+                android:paddingStart="@dimen/_10dp"
+                tools:ignore="RtlSymmetry"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:background="@color/white">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_baseline_blur_circular"
+                    android:layout_marginEnd="@dimen/_2dp"
                     android:scaleType="center"
-                    app:tint="@color/cardview_dark_background"
-                    android:layout_marginEnd="@dimen/_2dp"/>
+                    android:src="@drawable/ic_baseline_blur_circular"
+                    app:tint="@color/cardview_dark_background" />
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10dp"
-                    android:layout_height="wrap_content">
+                    android:orientation="vertical">
+
                     <TextView
-                        android:text="Bảo vệ theo cấu hình riêng"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cá nhân hoá"
                         android:textColor="@color/color_222222"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
                     <TextView
-                        android:text="Bảo vệ theo cấu hình riêng"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:text="Bảo vệ theo chính sách tuỳ chỉnh,\nyêu cầu có tài khoản tại app.visafe.vn" />
                 </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
         <RadioGroup
             android:id="@+id/radio_group"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:orientation="vertical"
+            android:gravity="end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -217,32 +232,44 @@
             <RadioButton
                 android:id="@+id/radio0"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_32dp"
+                android:layout_height="@dimen/layout_height_radio"
                 android:paddingBottom="@dimen/_3sdp"
-                android:layout_margin="@dimen/_2sdp"
+                android:paddingEnd="@dimen/_10dp"
+                tools:ignore="RtlSymmetry"
                 android:buttonTint="@color/colorPrimary"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:background="@color/white"
                 android:checked="true"/>
             <RadioButton
                 android:id="@+id/radio1"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_32dp"
+                android:layout_height="@dimen/layout_height_radio"
                 android:paddingBottom="@dimen/_3sdp"
-                android:layout_margin="@dimen/_2sdp"
-                android:buttonTint="@color/colorPrimary"/>
+                android:paddingEnd="@dimen/_10dp"
+                tools:ignore="RtlSymmetry"
+                android:buttonTint="@color/colorPrimary"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:background="@color/white"/>
             <RadioButton
                 android:id="@+id/radio2"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_32dp"
+                android:layout_height="@dimen/layout_height_radio"
                 android:paddingBottom="@dimen/_3sdp"
-                android:layout_margin="@dimen/_2sdp"
-                android:buttonTint="@color/colorPrimary"/>
+                android:paddingEnd="@dimen/_10dp"
+                tools:ignore="RtlSymmetry"
+                android:buttonTint="@color/colorPrimary"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:background="@color/white"/>
             <RadioButton
                 android:id="@+id/radio3"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_32dp"
+                android:layout_height="@dimen/layout_height_radio"
                 android:paddingBottom="@dimen/_3sdp"
-                android:layout_margin="@dimen/_2sdp"
-                android:buttonTint="@color/colorPrimary"/>
+                android:paddingEnd="@dimen/_10dp"
+                tools:ignore="RtlSymmetry"
+                android:buttonTint="@color/colorPrimary"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:background="@color/white" />
         </RadioGroup>
     </LinearLayout>
 
