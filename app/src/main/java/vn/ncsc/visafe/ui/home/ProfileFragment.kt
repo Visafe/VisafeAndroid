@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_switch_dns.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -77,7 +78,23 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                 binding.tvPhone.text = getString(R.string.login_content)
             }
         }
-
+        val result:String =  SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(
+            PreferenceKey.RADIO_BUTTON_DNS
+        )
+        when (result) {
+            "0" -> {
+                binding.statusDns.text = "ATTT Mặc định"
+            }
+            "1" -> {
+                binding.statusDns.text = "Gia đình"
+            }
+            "2" -> {
+                binding.statusDns.text = "ATTT Nâng cao"
+            }
+            else -> {
+                binding.statusDns.text = "Cá nhân"
+            }
+        }
         binding.TextViewTestVersion.text = getString(R.string.phien_ban_thu_nghiem) + " " + getString(R.string.version_name)
 
         if ((activity as MainActivity).isLogin()) {
@@ -104,6 +121,26 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         initControl()
     }
 
+    override fun onResume() {
+        super.onResume()
+        val result:String =  SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(
+            PreferenceKey.RADIO_BUTTON_DNS
+        )
+        when (result) {
+            "0" -> {
+                binding.statusDns.text = "ATTT Mặc định"
+            }
+            "1" -> {
+                binding.statusDns.text = "Gia đình"
+            }
+            "2" -> {
+                binding.statusDns.text = "ATTT Nâng cao"
+            }
+            else -> {
+                binding.statusDns.text = "Cá nhân"
+            }
+        }
+    }
     private fun initControl() {
         binding.clSetting.setOnSingClickListener {
             startActivity(Intent(context, SettingActivity::class.java))

@@ -234,6 +234,7 @@
 
                     <TextView
                         style="@style/Content"
+                        android:id="@+id/status_dns"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_12dp"

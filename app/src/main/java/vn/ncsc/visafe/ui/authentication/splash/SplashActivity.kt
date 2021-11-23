@@ -71,16 +71,24 @@ class SplashActivity : BaseActivity() {
 //            override fun onResponse(call: Call<RoutingResponse>, response: Response<RoutingResponse>) {
 //                if (response.code() == NetworkClient.CODE_SUCCESS) {
 //                    response.body()?.let {
-        SharePreferenceKeyHelper.getInstance(application)
-            .putString(
-                PreferenceKey.HOST_NAME,
-                "https://security.visafe.vn/dns-query/"
+        val result:String =  SharePreferenceKeyHelper.getInstance(application)
+            .getString(
+                PreferenceKey.HOST_NAME
             )
-        SharePreferenceKeyHelper.getInstance(application)
-            .putString(
-                PreferenceKey.RADIO_BUTTON_DNS,
-                "0"
-            )
+        if (result == "")
+        {
+            SharePreferenceKeyHelper.getInstance(application)
+                .putString(
+                    PreferenceKey.HOST_NAME,
+                    "https://security.visafe.vn/dns-query/"
+                )
+            SharePreferenceKeyHelper.getInstance(application)
+                .putString(
+                    PreferenceKey.RADIO_BUTTON_DNS,
+                    "0"
+                )
+        }
+
 //                    }
 //                } else {
 //                    SharePreferenceKeyHelper.getInstance(application)
