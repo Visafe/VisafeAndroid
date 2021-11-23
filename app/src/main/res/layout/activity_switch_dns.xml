@@ -85,7 +85,8 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10dp">
                 <TextView
                     android:text="Bảo vệ mặc định"
                     android:textStyle="bold"
@@ -135,6 +136,7 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/_10dp"
                 android:layout_height="wrap_content">
                 <TextView
                     android:text="Bảo vệ trẻ em"
@@ -184,6 +186,7 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/_10dp"
                 android:layout_height="wrap_content">
                 <TextView
                     android:text="Bảo vệ khi thanh toán trực tuyến"
@@ -233,6 +236,7 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/_10dp"
                 android:layout_height="wrap_content">
                 <TextView
                     android:text="Bảo vệ theo cấu hình riêng"
