@@ -164,21 +164,21 @@
             android:name=".ui.WebViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeSplash" />
-
         <activity
             android:name=".ui.protect.AdvancedScanActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeMain" />
-
         <activity
             android:name=".ui.pin.SettingPinActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeSplash" />
-
         <activity
             android:name=".ui.VipMemberActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeSplash" />
+        <activity
+            android:name=".ui.SwitchDnsActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
