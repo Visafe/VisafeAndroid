@@ -111,7 +111,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
             if (result.resultCode == Activity.RESULT_OK) {
                 if (SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.TIME_LAST_SCAN).isNotEmpty()) {
                     val time = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.TIME_LAST_SCAN)
-                    binding.tvTimeScan.text = "Lần quét gần đây nhất ${getTimeAgo(time.toLong())}"
+                    binding.tvTimeScan.text = "Lần quét gần đây nhất: Đã quét ${getTimeAgo(time.toLong())}"
                 }
                 val errorNumber = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.NUMBER_OF_ERROR)
                 if (errorNumber.isNotEmpty()
@@ -203,7 +203,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
             binding.tvScan.text = "KIỂM TRA NGAY"
         } else {
             val time = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.TIME_LAST_SCAN)
-            binding.tvTimeScan.text = "Lần quét gần đây nhất ${getTimeAgo(time.toLong())}"
+            binding.tvTimeScan.text = "Lần quét gần đây nhất: Đã quét ${getTimeAgo(time.toLong())}"
             binding.tvTimeScan.visibility = View.VISIBLE
             binding.tvScan.text = "QUÉT LẦN NỮA"
             val errorNumber = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.NUMBER_OF_ERROR)
@@ -229,7 +229,7 @@ class OverViewProtectFragment : BaseFragment<FragmentOverViewProtectBinding>(), 
                 binding.tvTimeScan.visibility = View.GONE
                 binding.tvScan.text = "KIỂM TRA NGAY"
             } else {
-                binding.tvTimeScan.text = "Lần quét gần đây nhất ${getTimeAgo(it.toLong())}"
+                binding.tvTimeScan.text = "Lần quét gần đây nhất: Đã quét ${getTimeAgo(it.toLong())}"
                 binding.tvTimeScan.visibility = View.VISIBLE
                 binding.tvScan.text = "QUÉT LẦN NỮA"
                 val errorNumber = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.NUMBER_OF_ERROR)

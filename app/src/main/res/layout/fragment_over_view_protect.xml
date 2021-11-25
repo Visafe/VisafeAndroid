@@ -80,7 +80,8 @@
 
             <include
                 android:id="@+id/layoutHomeProtect"
-                layout="@layout/layout_home_protect" />
+                layout="@layout/layout_home_protect"
+                android:visibility="gone"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewStatistical"

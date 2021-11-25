@@ -140,7 +140,7 @@ class AdvancedScanActivity : BaseActivity() {
                 binding.layoutScanSuccess.ctrlSuccess.visibility = View.VISIBLE
                 if (SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.TIME_LAST_SCAN).isNotEmpty()) {
                     val time = SharePreferenceKeyHelper.getInstance(ViSafeApp()).getString(PreferenceKey.TIME_LAST_SCAN)
-                    binding.layoutScanSuccess.tvTimeScan.text = "Lần quét gần đây nhất ${getTimeAgo(time.toLong())}"
+                    binding.layoutScanSuccess.tvTimeScan.text = "Lần quét gần đây nhất: Đã quét ${getTimeAgo(time.toLong())}"
                 }
                 SharePreferenceKeyHelper.getInstance(application)
                     .putString(PreferenceKey.NUMBER_OF_ERROR, listError.size.toString())

@@ -468,8 +468,8 @@
     <string name="nhap_ma_xac_nhan">Nhập mã xác nhận</string>
     <string name="content_member_vip">Mỗi thành viên VIP của Visafe sẽ được cung cấp \ngiải pháp bảo mật tối ưu nhất</string>
     <string name="title_member_vip">Bạn là thành viên VIP của Visafe?</string>
-    <string name="title_your_save"><![CDATA[Thiết bị đang <font color=\'#0CD775\'>an toàn</font>]]></string>
-    <string name="title_your_dangerous"><![CDATA[Đã phát hiện <font color=\'#E01D1D\'>%s sự cố</font>]]></string>
+    <string name="title_your_save"><![CDATA[Thiết bị đã được <font color=\'#0CD775\'>bảo vệ</font>]]></string>
+    <string name="title_your_dangerous"><![CDATA[Đã phát hiện <font color=\'#E01D1D\'>%s vấn đề cần xử lý</font>]]></string>
   <string name="phien_ban_thu_nghiem">Phiên bản thử nghiệm Visafe:</string>
     <string name="ca_nhan_hoa_subtext">Bảo vệ theo chính sách tuỳ chỉnh,\nyêu cầu có tài khoản tại <i>app.visafe.vn</i></string>
   <string name="ca_nhan_hoa">Cá nhân hoá</string>
